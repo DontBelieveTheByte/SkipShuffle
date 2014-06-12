@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SkipShuffle.iml" filepath="$PROJECT_DIR$/SkipShuffle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/filePickerLibrary/filePickerLibrary.iml" filepath="$PROJECT_DIR$/filePickerLibrary/filePickerLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skipshuffle/skipshuffle.iml" filepath="$PROJECT_DIR$/skipshuffle/skipshuffle.iml" />
+    </modules>
+  </component>
+</project>
+

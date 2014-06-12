@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SkipShuffle</string>
+    <string name="play">Playing</string>
+    <string name="pause">Paused</string>
+    <string name="skip">Skipped</string>
+    <string name="prev">Previous</string>
+    <string name="shuffle">Re-suffling</string>
+    <string name="playlist">Playlist view</string>
+    <string name="sel_target_directories">Select target directories</string>
+    <string name="no_directory">No directory selected</string>
+    <string name="scan_directory_valid">Scanning : %s</string>
+    <string name="scan_directory_invalid">Invalid directory : %s</string>
+</resources>
