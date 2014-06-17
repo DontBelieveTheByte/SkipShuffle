@@ -55,11 +55,11 @@ public class MainActivity extends Activity {
 
                 if (isPaused == true) {
                     toastMessage = getResources().getString(R.string.pause);
-                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause));
+                    playBtn.setBackground(getResources().getDrawable(R.drawable.pause_btn));
                     isPaused = false;
                 } else {
                     toastMessage = getResources().getString(R.string.play);
-                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                    playBtn.setBackground(getResources().getDrawable(R.drawable.play_btn));
                     isPaused = true;
                 }
                 Toast.makeText(getApplicationContext(), toastMessage , Toast.LENGTH_SHORT).show();
