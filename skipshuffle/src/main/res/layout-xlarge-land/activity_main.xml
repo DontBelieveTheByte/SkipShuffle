@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:focusableInTouchMode="true"
+    android:paddingTop="35dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="35dp"
+    android:clickable="false">
+
+    <ImageButton
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/playBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:baselineAlignBottom="false"
+        android:clickable="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/play_btn"
+        android:background="@android:color/transparent" />
+
+    <ImageButton
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/skipBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/next_btn"
+        android:scaleType="fitXY" />
+
+    <ImageButton
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/shuffleBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent"
+        android:layout_alignParentEnd="false"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/shuffle_btn" />
+    <ImageButton
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/prevBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/prev_btn"
+        android:scaleType="fitXY" />
+
+    <ImageButton
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/playlistBtn"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/playlist_btn" />
+</RelativeLayout>
