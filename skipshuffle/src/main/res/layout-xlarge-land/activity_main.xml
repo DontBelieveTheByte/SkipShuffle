@@ -26,7 +26,7 @@
             <ImageButton
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:id="@+id/imageButton0"
+                android:id="@+id/playBtn"
                 android:src="@drawable/play_btn"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
@@ -36,7 +36,7 @@
             <ImageButton
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:id="@+id/imageButton1"
+                android:id="@+id/skipBtn"
                 android:src="@drawable/next_btn"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
@@ -56,7 +56,7 @@
             <ImageButton
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:id="@+id/imageButton2"
+                android:id="@+id/prevBtn"
                 android:src="@drawable/playlist_btn"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
@@ -75,7 +75,7 @@
             <ImageButton
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:id="@+id/imageButton3"
+                android:id="@+id/shuffleBtn"
                 android:src="@drawable/shuffle_btn"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
@@ -85,7 +85,7 @@
             <ImageButton
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:id="@+id/imageButton4"
+                android:id="@+id/playlistBtn"
                 android:src="@drawable/prev_btn"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
