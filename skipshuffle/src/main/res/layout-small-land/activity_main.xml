@@ -4,63 +4,97 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:focusableInTouchMode="true"
-    android:paddingTop="35dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="35dp"
-    android:clickable="false">
+    android:padding="20dp">
 
-    <ImageButton
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:id="@+id/playBtn"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:baselineAlignBottom="false"
-        android:clickable="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/play_btn"
-        android:background="@android:color/transparent" />
-
-    <ImageButton
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:id="@+id/skipBtn"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/transparent"
-        android:src="@drawable/next_btn"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:id="@+id/shuffleBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@android:color/transparent"
-        android:layout_alignParentEnd="false"
-        android:cropToPadding="false"
-        android:scaleType="fitXY"
-        android:src="@drawable/shuffle_btn" />
-    <ImageButton
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:id="@+id/prevBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/transparent"
-        android:src="@drawable/prev_btn"
-        android:scaleType="fitXY" />
-
-    <ImageButton
-        android:layout_width="120dp"
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/playlistBtn"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent"
-        android:scaleType="fitXY"
-        android:src="@drawable/playlist_btn" />
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:columnCount="3"
+        android:rowCount="3"
+        android:layout_centerInParent="true"
+        android:id="@+id/gridLayout">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_height="wrap_content"
+            android:layout_rowSpan="1"
+            android:layout_columnSpan="3">
+
+            <ImageButton
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:id="@+id/imageButton0"
+                android:src="@drawable/play_btn"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="60dp" />
+
+            <ImageButton
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:id="@+id/imageButton1"
+                android:src="@drawable/next_btn"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="45dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:layout_rowSpan="1"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp">
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/imageButton2"
+                android:src="@drawable/playlist_btn"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_column="0"
+            android:layout_row="2"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="3"
+            android:layout_rowSpan="1"
+            android:paddingBottom="10dp">
+
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imageButton3"
+                android:src="@drawable/shuffle_btn"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="75dp" />
+
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imageButton4"
+                android:src="@drawable/prev_btn"
+                android:scaleType="fitXY"
+                android:background="@android:color/transparent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="55dp" />
+        </RelativeLayout>
+
+    </GridLayout>
+
 </RelativeLayout>
