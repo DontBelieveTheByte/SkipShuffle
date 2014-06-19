@@ -58,7 +58,7 @@
             <ImageButton
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:id="@+id/prevBtn"
+                android:id="@+id/playlistBtn"
                 android:src="@drawable/playlist_btn"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
@@ -88,7 +88,7 @@
             <ImageButton
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                android:id="@+id/playlistBtn"
+                android:id="@+id/prevBtn"
                 android:src="@drawable/prev_btn"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
