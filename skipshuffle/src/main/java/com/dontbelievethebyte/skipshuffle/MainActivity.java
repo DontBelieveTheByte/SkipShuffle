@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
+import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -47,10 +49,17 @@ public class MainActivity extends Activity {
 
         playlistBtn = (ImageButton) findViewById(R.id.playlistBtn);
 
+        //Register haptic feedback for all buttons.
+        playBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        playlistBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        suffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+
+
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String toastMessage;
 
                 if (isPaused == true) {
@@ -62,7 +71,8 @@ public class MainActivity extends Activity {
                     playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
                     isPaused = true;
                 }
-                Toast.makeText(getApplicationContext(), toastMessage , Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -156,4 +166,15 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+    private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if (MotionEvent.ACTION_DOWN == event.getAction()){
+                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                Toast.makeText(getApplicationContext(), "derp", Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        }
+    };
 }
