@@ -6,4 +6,10 @@
     <item
         android:state_pressed="true"
         android:drawable="@drawable/next_btn_pressed"/>
+
+    <item android:state_focused="true"
+        android:drawable="@drawable/next_btn_pressed" />
+
+    <item android:state_hovered="true"
+        android:drawable="@drawable/next_btn_pressed" />
 </selector>

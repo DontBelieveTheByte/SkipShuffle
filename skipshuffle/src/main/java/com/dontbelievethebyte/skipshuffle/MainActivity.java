@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.MotionEvent;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -64,11 +66,15 @@ public class MainActivity extends Activity {
 
                 if (isPaused == true) {
                     toastMessage = getResources().getString(R.string.pause);
-                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+                    Animation ltr = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ltr);
+                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+                    playBtn.startAnimation(ltr);
                     isPaused = false;
                 } else {
                     toastMessage = getResources().getString(R.string.play);
-                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+                    Animation blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+                    playBtn.startAnimation(blinkAnimation);
                     isPaused = true;
                 }
 
@@ -79,6 +85,8 @@ public class MainActivity extends Activity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation flipRightAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_right);
+                skipBtn.startAnimation(flipRightAnimation);
                 Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
         });
@@ -86,6 +94,8 @@ public class MainActivity extends Activity {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
+                prevBtn.startAnimation(flipLeftAnimation);
                 Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
         });
@@ -93,6 +103,8 @@ public class MainActivity extends Activity {
         suffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Animation flipDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_down);
+                suffleBtn.startAnimation(flipDownAnimation);
                 Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
         });
@@ -172,7 +184,6 @@ public class MainActivity extends Activity {
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-                Toast.makeText(getApplicationContext(), "derp", Toast.LENGTH_SHORT).show();
             }
             return false;
         }
