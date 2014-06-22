@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.coderplus.filepicker.FilePickerActivity" />
+        <service android:name=".SkipShuffleMediaPlayer" ></service>
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

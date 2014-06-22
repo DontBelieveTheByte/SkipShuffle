@@ -2,39 +2,57 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
-import android.view.View;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import android.app.ProgressDialog;
+
+import com.coderplus.filepicker.FilePickerActivity;
 
 import java.io.File;
 import java.util.List;
-
-import com.coderplus.filepicker.FilePickerActivity;
+import java.util.Iterator;
 
 public class MainActivity extends Activity {
 
 
     protected static int REQUEST_PICK_FILE = 777;
 
-    protected ImageButton playBtn;
-    protected ImageButton skipBtn;
-    protected ImageButton prevBtn;
-    protected ImageButton playlistBtn;
-    protected ImageButton suffleBtn;
+    private ImageButton playBtn;
+    private ImageButton skipBtn;
 
-    List<File> mediaDirectories;
-    List<File> mediaFiles;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-    protected boolean isPaused = true;
+        //Stop the mediaPlayer service.
+
+        stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
+    }
+
+    private ImageButton prevBtn;
+    private ImageButton playlistBtn;
+    private ImageButton shuffleBtn;
+
+    private Animation ltr;
+    private Animation flipRightAnimation;
+    private Animation flipDownAnimation;
+    private Animation flipLeftAnimation;
+    private Animation blinkAnimation;
+
+    private ProgressDialog pd;
 
     private static final String TAG = "SkipShuffleMain";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +65,29 @@ public class MainActivity extends Activity {
 
         prevBtn = (ImageButton) findViewById(R.id.prevBtn);
 
-        suffleBtn = (ImageButton) findViewById(R.id.shuffleBtn);
+        shuffleBtn = (ImageButton) findViewById(R.id.shuffleBtn);
 
         playlistBtn = (ImageButton) findViewById(R.id.playlistBtn);
+
+        //Set up generic animations
+
+        ltr = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ltr);
+        flipRightAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_right);
+        flipDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_down);
+        flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
+        blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+
+
+        //Start the mediaPlayer service.
+
+        startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         //Register haptic feedback for all buttons.
         playBtn.setOnTouchListener(onTouchDownHapticFeedback);
         skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
         playlistBtn.setOnTouchListener(onTouchDownHapticFeedback);
         prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        suffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
 
 
         playBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,18 +95,14 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 String toastMessage;
 
-                if (isPaused == true) {
+                if (true) {
                     toastMessage = getResources().getString(R.string.pause);
-                    Animation ltr = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ltr);
                     playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
                     playBtn.startAnimation(ltr);
-                    isPaused = false;
                 } else {
                     toastMessage = getResources().getString(R.string.play);
                     playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-                    Animation blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
                     playBtn.startAnimation(blinkAnimation);
-                    isPaused = true;
                 }
 
                 Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
@@ -85,8 +112,13 @@ public class MainActivity extends Activity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation flipRightAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_right);
+                playBtn.clearAnimation();
+                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+                playBtn.startAnimation(blinkAnimation);
                 skipBtn.startAnimation(flipRightAnimation);
+                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+
+                playBtn.startAnimation(ltr);
                 Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
         });
@@ -94,17 +126,25 @@ public class MainActivity extends Activity {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
+                playBtn.clearAnimation();
+                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+                playBtn.startAnimation(blinkAnimation);
                 prevBtn.startAnimation(flipLeftAnimation);
+                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+                playBtn.startAnimation(ltr);
                 Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
         });
 
-        suffleBtn.setOnClickListener(new View.OnClickListener() {
+        shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation flipDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_down);
-                suffleBtn.startAnimation(flipDownAnimation);
+                playBtn.clearAnimation();
+                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+                playBtn.startAnimation(blinkAnimation);
+                shuffleBtn.startAnimation(flipDownAnimation);
+                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+                playBtn.startAnimation(ltr);
                 Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
         });
@@ -118,12 +158,19 @@ public class MainActivity extends Activity {
             }
         });
 
-        getMediaFiles();
     }
 
-    protected void getMediaFiles() {
-        Log.v(TAG, "I ran");
-    }
+/*    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 
     protected boolean isEmptyPlaylist(){
         return true;
@@ -143,6 +190,7 @@ public class MainActivity extends Activity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if(resultCode == RESULT_OK) {
             switch(requestCode) {
                 case 777:
@@ -153,28 +201,69 @@ public class MainActivity extends Activity {
                         if(directories.isEmpty()){
                             Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
                         } else {
-                            scanMedia(directories, mediaFiles);
+                            for (Iterator<File> iterator = directories.iterator(); iterator.hasNext(); ) {
+                                File directory = iterator.next();
+                                new AsyncMediaScanner().execute(directory);
+                            }
                         }
                     }
             }
         }
     }
 
-    protected void scanMedia (List<File> files, List<File> media) {
+    private class AsyncMediaScanner extends AsyncTask<File, String, Void> {
 
-        //List<File> foundDirectories;
+        protected List<File> validFilesList;
 
-        for(File file:files){
+        @Override
+        protected Void doInBackground(File... directories) {
+            AudioFileTypeValidator audioFileTypeValidator = new AudioFileTypeValidator();
+            for(File file:directories){
+                recursiveFileList(file, audioFileTypeValidator);
+            }
+            return null;
+        }
 
-            if(file.isDirectory()){
-                Toast.makeText(getApplicationContext(), "Directory : "+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
-                //foundDirectories.add(file);
-                //scanMedia(foundDirectories, media);
-            } else {
-                media.add(file);
-                Log.v(TAG,file.getAbsolutePath());
+        @Override
+        protected void onPreExecute() {
+            //super.onPreExecute();
+            pd = new ProgressDialog(getApplicationContext());
+            pd.setTitle("Scanning Media files...");
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
 
-                Toast.makeText(getApplicationContext(), "File : "+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        @Override
+        protected void onPostExecute(Void validFilesList) {
+            //super.onPostExecute(validFilesList);
+            pd.dismiss();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            pd.setMessage(values.toString());
+            //super.onProgressUpdate(values);
+        }
+        private void recursiveFileList(File dir, AudioFileTypeValidator audioFileTypeValidator) {
+            //Get list of all files and folders in directory
+            File[] files = dir.listFiles();
+
+            //For all files and folders in directory
+            for (int i = 0; i < files.length; i++) {
+                //Check if directory
+                if (files[i].isDirectory())
+                    //Recursively call file list function on the new directory
+                    recursiveFileList(files[i], audioFileTypeValidator);
+                else {
+                    //If not a directory, print the file path
+                    if (audioFileTypeValidator.VALID == audioFileTypeValidator.validate(files[i].getAbsolutePath())) {
+                        publishProgress(files[i].getName());
+                        //validFilesList.add(files[i]);
+                        Log.v(TAG, "I'm a valid File");
+                    }
+                }
             }
         }
     }
@@ -188,4 +277,5 @@ public class MainActivity extends Activity {
             return false;
         }
     };
+
 }

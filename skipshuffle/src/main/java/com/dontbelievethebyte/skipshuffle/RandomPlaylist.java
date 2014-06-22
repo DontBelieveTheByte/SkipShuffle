@@ -11,23 +11,34 @@ public class RandomPlaylist implements Playlist{
 
     protected List<File> playlist;
 
-    public RandomPlaylist(List list) {
-        playlist = list;
-        Collections.shuffle(playlist);
-    }
-
     @Override
-    public File next() {
-        //playlist.remove();
+    public String getFirst() {
         return null;
     }
 
     @Override
-    public File prev() {
+    public String getNext() {
         return null;
     }
 
+    @Override
+    public String getPrev() {
+        return null;
+    }
+
+    @Override
+    public int getCursorPosition() {
+        return 0;
+    }
+
+    @Override
+    public void setCursorPosition(int position) {
+
+    }
+
+    @Override
     public void shuffle(){
-        Collections.shuffle(playlist);
+
     }
+
 }
