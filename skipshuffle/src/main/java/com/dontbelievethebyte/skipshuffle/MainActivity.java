@@ -23,24 +23,13 @@ import java.util.Iterator;
 
 public class MainActivity extends Activity {
 
+    private Integer playState = 0;
 
-    protected static int REQUEST_PICK_FILE = 777;
-
-    private ImageButton playBtn;
-    private ImageButton skipBtn;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //Stop the mediaPlayer service.
-
-        stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
-    }
-
-    private ImageButton prevBtn;
     private ImageButton playlistBtn;
+    private ImageButton prevBtn;
+    private ImageButton playBtn;
     private ImageButton shuffleBtn;
+    private ImageButton skipBtn;
 
     private Animation ltr;
     private Animation flipRightAnimation;
@@ -51,8 +40,34 @@ public class MainActivity extends Activity {
     private ProgressDialog pd;
 
     private static final String TAG = "SkipShuffleMain";
+    private static final String PLAY_STATE = "playState";
+    private static final Integer PLAYING = 1;
+    private static final Integer PAUSED = -1;
 
+    protected static int REQUEST_PICK_FILE = 777;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(resultCode == RESULT_OK) {
+            switch(requestCode) {
+                case 777:
+                    if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
+                        // Get the file path
+                        @SuppressWarnings("unchecked")
+                        List<File> directories = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                        if(directories.isEmpty()){
+                            Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
+                        } else {
+                            for (Iterator<File> iterator = directories.iterator(); iterator.hasNext(); ) {
+                                File directory = iterator.next();
+                                new AsyncMediaScanner().execute(directory);
+                            }
+                        }
+                    }
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +95,7 @@ public class MainActivity extends Activity {
 
         //Start the mediaPlayer service.
 
-        startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
+        //startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         //Register haptic feedback for all buttons.
         playBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -95,16 +110,19 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 String toastMessage;
 
-                if (true) {
+                if (playState == PLAYING) {
                     doUIPause();
                     toastMessage = getResources().getString(R.string.pause);
+                    playState = PAUSED;
 
                 } else {
-                    doUIplay();
+                    doUIPlay();
                     toastMessage = getResources().getString(R.string.play);
+                    playState = PLAYING;
                 }
 
                 Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -143,8 +161,42 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-    protected boolean isEmptyPlaylist(){
+        //Stop the mediaPlayer service.
+
+        stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        playState = savedInstanceState.getInt(PLAY_STATE);
+        rebootUI();
+    }
+
+    @Override
+    protected void onPause(){
+        //Give a break to GPU when hidden
+        playBtn.clearAnimation();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        rebootUI();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(PLAY_STATE, playState);
+        super.onSaveInstanceState(outState);
+    }
+
+    private boolean isEmptyPlaylist(){
         return true;
     }
 
@@ -160,28 +212,7 @@ public class MainActivity extends Activity {
 
         Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(resultCode == RESULT_OK) {
-            switch(requestCode) {
-                case 777:
-                    if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
-                        // Get the file path
-                        @SuppressWarnings("unchecked")
-                        List<File> directories = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                        if(directories.isEmpty()){
-                            Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
-                        } else {
-                            for (Iterator<File> iterator = directories.iterator(); iterator.hasNext(); ) {
-                                File directory = iterator.next();
-                                new AsyncMediaScanner().execute(directory);
-                            }
-                        }
-                    }
-            }
-        }
-    }
 
     private class AsyncMediaScanner extends AsyncTask<File, String, Void> {
 
@@ -240,14 +271,14 @@ public class MainActivity extends Activity {
         }
     }
 
-    private void doUIplay() {
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-        playBtn.startAnimation(blinkAnimation);
+    private void doUIPlay() {
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+        playBtn.startAnimation(ltr);
     }
 
     private void doUIPause() {
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-        playBtn.startAnimation(ltr);
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+        playBtn.startAnimation(blinkAnimation);
     }
 
     private void doUISkip() {
@@ -277,6 +308,13 @@ public class MainActivity extends Activity {
         playBtn.startAnimation(ltr);
     }
 
+    private void rebootUI(){
+        if(PLAYING == playState) {
+            doUIPlay();
+        } else if (PAUSED == playState) {
+            doUIPause();
+        }
+    }
 
     private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
