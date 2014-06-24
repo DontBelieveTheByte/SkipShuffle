@@ -23,6 +23,7 @@ import java.util.Iterator;
 
 public class MainActivity extends Activity {
 
+    private boolean isPlaylistSet = false;
     private Integer playState = 0;
 
     private ImageButton playlistBtn;
@@ -153,9 +154,7 @@ public class MainActivity extends Activity {
         playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isEmptyPlaylist()){
-                    pickMediaDirectories();
-                }
+                pickMediaDirectories();
             }
         });
 
@@ -196,10 +195,6 @@ public class MainActivity extends Activity {
         super.onSaveInstanceState(outState);
     }
 
-    private boolean isEmptyPlaylist(){
-        return true;
-    }
-
     protected void pickMediaDirectories() {
 
         Intent intent = new Intent(this, FilePickerActivity.class);
@@ -211,8 +206,9 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, REQUEST_PICK_FILE);
 
         Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
-    }
 
+        isPlaylistSet = true;
+    }
 
     private class AsyncMediaScanner extends AsyncTask<File, String, Void> {
 
@@ -321,6 +317,11 @@ public class MainActivity extends Activity {
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                if(isPlaylistSet == false) {
+                    pickMediaDirectories();
+                    //Return true because we already handled the event and want to prevent bubbling.
+                    return true;
+                }
             }
             return false;
         }
