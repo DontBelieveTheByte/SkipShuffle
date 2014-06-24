@@ -15,11 +15,6 @@ public class AudioFileTypeValidator {
         pattern = Pattern.compile(FILE_TYPES_PATTERN);
     }
 
-    /**
-     * Validate image with regular expression
-     * @param filename filename for validation
-     * @return true valid extension, false invalid extension.
-     */
     public boolean validate(final String filename){
 
         matcher = pattern.matcher(filename);
