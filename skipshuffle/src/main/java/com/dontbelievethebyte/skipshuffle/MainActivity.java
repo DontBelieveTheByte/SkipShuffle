@@ -96,13 +96,12 @@ public class MainActivity extends Activity {
                 String toastMessage;
 
                 if (true) {
+                    doUIPause();
                     toastMessage = getResources().getString(R.string.pause);
-                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-                    playBtn.startAnimation(ltr);
+
                 } else {
+                    doUIplay();
                     toastMessage = getResources().getString(R.string.play);
-                    playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-                    playBtn.startAnimation(blinkAnimation);
                 }
 
                 Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
@@ -112,13 +111,7 @@ public class MainActivity extends Activity {
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playBtn.clearAnimation();
-                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-                playBtn.startAnimation(blinkAnimation);
-                skipBtn.startAnimation(flipRightAnimation);
-                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-
-                playBtn.startAnimation(ltr);
+                doUISkip();
                 Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
         });
@@ -126,12 +119,7 @@ public class MainActivity extends Activity {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playBtn.clearAnimation();
-                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-                playBtn.startAnimation(blinkAnimation);
-                prevBtn.startAnimation(flipLeftAnimation);
-                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-                playBtn.startAnimation(ltr);
+                doUIPrev();
                 Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
         });
@@ -139,12 +127,7 @@ public class MainActivity extends Activity {
         shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                playBtn.clearAnimation();
-                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-                playBtn.startAnimation(blinkAnimation);
-                shuffleBtn.startAnimation(flipDownAnimation);
-                playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-                playBtn.startAnimation(ltr);
+                doUIShuffle();
                 Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
         });
@@ -160,17 +143,6 @@ public class MainActivity extends Activity {
 
     }
 
-/*    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     protected boolean isEmptyPlaylist(){
         return true;
@@ -267,6 +239,44 @@ public class MainActivity extends Activity {
             }
         }
     }
+
+    private void doUIplay() {
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+        playBtn.startAnimation(blinkAnimation);
+    }
+
+    private void doUIPause() {
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+        playBtn.startAnimation(ltr);
+    }
+
+    private void doUISkip() {
+        playBtn.clearAnimation();
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+        playBtn.startAnimation(blinkAnimation);
+        skipBtn.startAnimation(flipRightAnimation);
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+        playBtn.startAnimation(ltr);
+    }
+
+    private void doUIPrev() {
+        playBtn.clearAnimation();
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+        playBtn.startAnimation(blinkAnimation);
+        prevBtn.startAnimation(flipLeftAnimation);
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+        playBtn.startAnimation(ltr);
+    }
+
+    private void doUIShuffle() {
+        playBtn.clearAnimation();
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+        playBtn.startAnimation(blinkAnimation);
+        shuffleBtn.startAnimation(flipDownAnimation);
+        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+        playBtn.startAnimation(ltr);
+    }
+
 
     private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
