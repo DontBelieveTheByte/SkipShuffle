@@ -11,4 +11,5 @@
     <string name="no_directory">No directory selected</string>
     <string name="scan_directory_valid">Scanning : %s</string>
     <string name="scan_directory_invalid">Invalid directory : %s</string>
+    <string name="media_scan_dialog_title">Scanning media in : %s</string>
 </resources>
