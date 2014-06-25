@@ -1,10 +1,13 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -18,6 +21,7 @@ import android.app.ProgressDialog;
 import com.coderplus.filepicker.FilePickerActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -25,6 +29,8 @@ public class MainActivity extends Activity {
 
     private boolean isPlaylistSet = false;
     private Integer playState = 0;
+
+    private List<File> mediaDirectoriesToScan ;
 
     private ImageButton playlistBtn;
     private ImageButton prevBtn;
@@ -37,8 +43,6 @@ public class MainActivity extends Activity {
     private Animation flipDownAnimation;
     private Animation flipLeftAnimation;
     private Animation blinkAnimation;
-
-    private ProgressDialog pd;
 
     private static final String TAG = "SkipShuffleMain";
     private static final String PLAY_STATE = "playState";
@@ -55,14 +59,16 @@ public class MainActivity extends Activity {
                 case 777:
                     if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
                         // Get the file path
-                        @SuppressWarnings("unchecked")
-                        List<File> directories = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                        if(directories.isEmpty()){
+                        mediaDirectoriesToScan = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                        if(mediaDirectoriesToScan.isEmpty()){
                             Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
                         } else {
-                            for (Iterator<File> iterator = directories.iterator(); iterator.hasNext(); ) {
+                            registerMediaScannerBroadcastReceiver();
+                            for (Iterator<File> iterator = mediaDirectoriesToScan.iterator(); iterator.hasNext(); ) {
                                 File directory = iterator.next();
-                                new AsyncMediaScanner().execute(directory);
+                                Intent mediaScannerIntent = new Intent(this, SkipShuffleMediaScannerService.class);
+                                mediaScannerIntent.putExtra(BroadcastMessageInterface.DIRECTORIES_LIST, directory.getAbsolutePath());
+                                startService(mediaScannerIntent);
                             }
                         }
                     }
@@ -74,6 +80,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         playBtn = (ImageButton) findViewById(R.id.playBtn);
 
@@ -180,90 +188,57 @@ public class MainActivity extends Activity {
     protected void onPause(){
         //Give a break to GPU when hidden
         playBtn.clearAnimation();
+        unregisterMediaScannerBroadcastReceiver();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if(mediaDirectoriesToScan != null) {
+            registerMediaScannerBroadcastReceiver();
+        }
         rebootUI();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(PLAY_STATE, playState);
+        if(mediaDirectoriesToScan != null) {
+            registerMediaScannerBroadcastReceiver();
+        }
         super.onSaveInstanceState(outState);
     }
 
     protected void pickMediaDirectories() {
-
         Intent intent = new Intent(this, FilePickerActivity.class);
         intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
         intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
-
-        //Set the initial directory to the sdcard.
         intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
         startActivityForResult(intent, REQUEST_PICK_FILE);
-
         Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
-
-        isPlaylistSet = true;
     }
 
-    private class AsyncMediaScanner extends AsyncTask<File, String, Void> {
+    public class MediaScanDialog {
 
-        protected List<File> validFilesList;
+        public ProgressDialog pd;
 
-        @Override
-        protected Void doInBackground(File... directories) {
-            AudioFileTypeValidator audioFileTypeValidator = new AudioFileTypeValidator();
-            for(File file:directories){
-                recursiveFileList(file, audioFileTypeValidator);
+        MediaScanDialog(List<String> directories) {
+
+            for (Iterator<String> iterator = directories.iterator(); iterator.hasNext(); ) {
+                String directory = iterator.next();
+                pd = new ProgressDialog(MainActivity.this);
+                pd.setTitle("Scanning audio files... " + directory);
+                pd.setMessage("Please wait.");
+                pd.setCancelable(false);
+                pd.setIndeterminate(true);
+                pd.show();
+                iterator.remove();
+
+                    pd.dismiss();
+
             }
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            //super.onPreExecute();
-            pd = new ProgressDialog(getApplicationContext());
-            pd.setTitle("Scanning Media files...");
-            pd.setMessage("Please wait.");
-            pd.setCancelable(false);
-            pd.setIndeterminate(true);
-            pd.show();
-        }
-
-        @Override
-        protected void onPostExecute(Void validFilesList) {
-            //super.onPostExecute(validFilesList);
-            pd.dismiss();
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            pd.setMessage(values.toString());
-            //super.onProgressUpdate(values);
-        }
-        private void recursiveFileList(File dir, AudioFileTypeValidator audioFileTypeValidator) {
-            //Get list of all files and folders in directory
-            File[] files = dir.listFiles();
-
-            //For all files and folders in directory
-            for (int i = 0; i < files.length; i++) {
-                //Check if directory
-                if (files[i].isDirectory())
-                    //Recursively call file list function on the new directory
-                    recursiveFileList(files[i], audioFileTypeValidator);
-                else {
-                    //If not a directory, print the file path
-                    if (audioFileTypeValidator.VALID == audioFileTypeValidator.validate(files[i].getAbsolutePath())) {
-                        publishProgress(files[i].getName());
-                        //validFilesList.add(files[i]);
-                        Log.v(TAG, "I'm a valid File");
-                    }
-                }
-            }
+            isPlaylistSet = true;
         }
     }
 
@@ -324,6 +299,21 @@ public class MainActivity extends Activity {
                 }
             }
             return false;
+        }
+    };
+
+    public void registerMediaScannerBroadcastReceiver() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(mediaScannerReceiver, new IntentFilter(BroadcastMessageInterface.CURRENT_FILE_PROCESSING));
+    }
+    public void unregisterMediaScannerBroadcastReceiver() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mediaScannerReceiver);
+    }
+
+    private BroadcastReceiver mediaScannerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String currentFile = intent.getStringExtra(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
+            Log.d(TAG, "Currently processing : " + currentFile);
         }
     };
 
