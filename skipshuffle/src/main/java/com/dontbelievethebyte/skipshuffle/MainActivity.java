@@ -21,7 +21,6 @@ import android.app.ProgressDialog;
 import com.coderplus.filepicker.FilePickerActivity;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -32,17 +31,8 @@ public class MainActivity extends Activity {
 
     private List<File> mediaDirectoriesToScan ;
 
-    private ImageButton playlistBtn;
-    private ImageButton prevBtn;
-    private ImageButton playBtn;
-    private ImageButton shuffleBtn;
-    private ImageButton skipBtn;
+    private UI ui;
 
-    private Animation ltr;
-    private Animation flipRightAnimation;
-    private Animation flipDownAnimation;
-    private Animation flipLeftAnimation;
-    private Animation blinkAnimation;
 
     private static final String TAG = "SkipShuffleMain";
     private static final String PLAY_STATE = "playState";
@@ -50,6 +40,66 @@ public class MainActivity extends Activity {
     private static final Integer PAUSED = -1;
 
     protected static int REQUEST_PICK_FILE = 777;
+
+    private class UI {
+        public ImageButton playlistBtn = (ImageButton) findViewById(R.id.playBtn);
+        public ImageButton prevBtn = (ImageButton) findViewById(R.id.prevBtn);
+        public ImageButton playBtn = (ImageButton) findViewById(R.id.playlistBtn);
+        public ImageButton shuffleBtn = (ImageButton) findViewById(R.id.shuffleBtn);
+        public ImageButton skipBtn = (ImageButton) findViewById(R.id.skipBtn);
+
+        public Animation ltr = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ltr);
+        public Animation flipRightAnimation  = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_right);
+        public Animation flipDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_down);
+        public Animation flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
+        public Animation blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+
+        public void doPlay() {
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+            playBtn.startAnimation(ltr);
+        }
+
+        public void doPause() {
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+            playBtn.startAnimation(blinkAnimation);
+        }
+
+        private void doSkip() {
+            playBtn.clearAnimation();
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+            playBtn.startAnimation(blinkAnimation);
+            skipBtn.startAnimation(flipRightAnimation);
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+            playBtn.startAnimation(ltr);
+        }
+
+        private void doPrev() {
+            playBtn.clearAnimation();
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+            playBtn.startAnimation(blinkAnimation);
+            prevBtn.startAnimation(flipLeftAnimation);
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+            playBtn.startAnimation(ltr);
+        }
+
+        private void doShuffle() {
+            playBtn.clearAnimation();
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+            playBtn.startAnimation(blinkAnimation);
+            shuffleBtn.startAnimation(flipDownAnimation);
+            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+            playBtn.startAnimation(ltr);
+        }
+
+        private void reboot(){
+            if(PLAYING == playState) {
+                doPlay();
+            } else if (PAUSED == playState) {
+                doPause();
+            }
+        }
+
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -64,6 +114,7 @@ public class MainActivity extends Activity {
                             Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
                         } else {
                             registerMediaScannerBroadcastReceiver();
+                            MediaScannerDialog mediaScannerDialog = new MediaScannerDialog();
                             for (Iterator<File> iterator = mediaDirectoriesToScan.iterator(); iterator.hasNext(); ) {
                                 File directory = iterator.next();
                                 Intent mediaScannerIntent = new Intent(this, SkipShuffleMediaScannerService.class);
@@ -81,51 +132,33 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-        playBtn = (ImageButton) findViewById(R.id.playBtn);
-
-        skipBtn = (ImageButton) findViewById(R.id.skipBtn);
-
-        prevBtn = (ImageButton) findViewById(R.id.prevBtn);
-
-        shuffleBtn = (ImageButton) findViewById(R.id.shuffleBtn);
-
-        playlistBtn = (ImageButton) findViewById(R.id.playlistBtn);
-
-        //Set up generic animations
-
-        ltr = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ltr);
-        flipRightAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_right);
-        flipDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_down);
-        flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
-        blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
-
+        //Set up UI, this can be later instantiated from a factory to produce a different UI.
+        ui = new UI();
 
         //Start the mediaPlayer service.
 
         //startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         //Register haptic feedback for all buttons.
-        playBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        playlistBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
 
 
-        playBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String toastMessage;
 
                 if (playState == PLAYING) {
-                    doUIPause();
+                    ui.doPause();
                     toastMessage = getResources().getString(R.string.pause);
                     playState = PAUSED;
 
                 } else {
-                    doUIPlay();
+                    ui.doPlay();
                     toastMessage = getResources().getString(R.string.play);
                     playState = PLAYING;
                 }
@@ -135,31 +168,31 @@ public class MainActivity extends Activity {
             }
         });
 
-        skipBtn.setOnClickListener(new View.OnClickListener() {
+        ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doUISkip();
+                ui.doSkip();
                 Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
         });
 
-        prevBtn.setOnClickListener(new View.OnClickListener() {
+        ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doUIPrev();
+                ui.doPrev();
                 Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
         });
 
-        shuffleBtn.setOnClickListener(new View.OnClickListener() {
+        ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                doUIShuffle();
+                ui.doShuffle();
                 Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
         });
 
-        playlistBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickMediaDirectories();
@@ -181,13 +214,13 @@ public class MainActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         playState = savedInstanceState.getInt(PLAY_STATE);
-        rebootUI();
+        ui.reboot();
     }
 
     @Override
     protected void onPause(){
         //Give a break to GPU when hidden
-        playBtn.clearAnimation();
+        ui.playBtn.clearAnimation();
         unregisterMediaScannerBroadcastReceiver();
         super.onPause();
     }
@@ -198,7 +231,7 @@ public class MainActivity extends Activity {
         if(mediaDirectoriesToScan != null) {
             registerMediaScannerBroadcastReceiver();
         }
-        rebootUI();
+        ui.reboot();
     }
 
     @Override
@@ -217,74 +250,6 @@ public class MainActivity extends Activity {
         intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
         startActivityForResult(intent, REQUEST_PICK_FILE);
         Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
-    }
-
-    public class MediaScanDialog {
-
-        public ProgressDialog pd;
-
-        MediaScanDialog(List<String> directories) {
-
-            for (Iterator<String> iterator = directories.iterator(); iterator.hasNext(); ) {
-                String directory = iterator.next();
-                pd = new ProgressDialog(MainActivity.this);
-                pd.setTitle("Scanning audio files... " + directory);
-                pd.setMessage("Please wait.");
-                pd.setCancelable(false);
-                pd.setIndeterminate(true);
-                pd.show();
-                iterator.remove();
-
-                    pd.dismiss();
-
-            }
-            isPlaylistSet = true;
-        }
-    }
-
-    private void doUIPlay() {
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-        playBtn.startAnimation(ltr);
-    }
-
-    private void doUIPause() {
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-        playBtn.startAnimation(blinkAnimation);
-    }
-
-    private void doUISkip() {
-        playBtn.clearAnimation();
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-        playBtn.startAnimation(blinkAnimation);
-        skipBtn.startAnimation(flipRightAnimation);
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-        playBtn.startAnimation(ltr);
-    }
-
-    private void doUIPrev() {
-        playBtn.clearAnimation();
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-        playBtn.startAnimation(blinkAnimation);
-        prevBtn.startAnimation(flipLeftAnimation);
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-        playBtn.startAnimation(ltr);
-    }
-
-    private void doUIShuffle() {
-        playBtn.clearAnimation();
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-        playBtn.startAnimation(blinkAnimation);
-        shuffleBtn.startAnimation(flipDownAnimation);
-        playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-        playBtn.startAnimation(ltr);
-    }
-
-    private void rebootUI(){
-        if(PLAYING == playState) {
-            doUIPlay();
-        } else if (PAUSED == playState) {
-            doUIPause();
-        }
     }
 
     private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
@@ -317,4 +282,31 @@ public class MainActivity extends Activity {
         }
     };
 
+    private class MediaScannerDialog {
+
+        private ProgressDialog pd = new ProgressDialog(MainActivity.this);
+
+        MediaScannerDialog() {
+
+                    pd.setTitle("Scanning audio files... ");
+                    pd.setMessage("Please wait.");
+                    pd.setCancelable(false);
+                    pd.setIndeterminate(true);
+
+                isPlaylistSet = true;
+        }
+        public void show() {
+            pd.show();
+        }
+
+        public void setMessage(String message) {
+            pd.setMessage(message);
+        }
+        private void setTitle(String title) {
+            pd.setTitle(getString(R.string.media_scan_dialog_title, title));
+        }
+        public void dismiss() {
+            pd.dismiss();
+        }
+    };
 }
