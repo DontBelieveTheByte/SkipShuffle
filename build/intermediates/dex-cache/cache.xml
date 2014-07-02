@@ -14,8 +14,8 @@
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
     <item
-        dex="/Users/killthesystem/AndroidStudioProjects/SkipShuffle/skipshuffle/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        dex="/Users/killthesystem/AndroidStudioProjects/SkipShuffle/skipshuffle/build/intermediates/pre-dexed/debug/support-v4-19.1.0-d8648f9249df09469ae79892050121be0fe60a45.jar"
+        jar="/Applications/android-sdk-macosx/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>

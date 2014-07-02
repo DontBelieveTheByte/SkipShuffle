@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import com.coderplus.filepicker.FilePickerActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -29,12 +30,13 @@ public class MainActivity extends Activity {
     private boolean isPlaylistSet = false;
     private Integer playState = 0;
 
-    private List<File> mediaDirectoriesToScan ;
-
     private UI ui;
 
+    private MediaScannerDialog mediaScannerDialog;
+    private BroadcastReceiver mediaScannerReceiver ;
 
     private static final String TAG = "SkipShuffleMain";
+    private static final String IS_SCANNING_MEDIA = "isScanningMedia";
     private static final String PLAY_STATE = "playState";
     private static final Integer PLAYING = 1;
     private static final Integer PAUSED = -1;
@@ -101,26 +103,108 @@ public class MainActivity extends Activity {
 
     };
 
+    private class MediaScannerDialog {
+
+        private ProgressDialog pd;
+
+        public boolean isScanningMedia = false;
+
+        private boolean isDialogShowing = false;
+
+        MediaScannerDialog(ProgressDialog progressDialog) {
+            pd = progressDialog;
+            pd.setTitle("Scanning audio files... ");
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+        }
+        public void show() {
+            if(!isDialogShowing){
+                pd.show();
+            }
+            isDialogShowing = true;
+        }
+
+        public void setMessage(String message) {
+            pd.setMessage(message);
+        }
+        private void setTitle(String title) {
+            pd.setTitle(getString(R.string.media_scan_dialog_title, title));
+        }
+        public void dismiss() {
+            if(isDialogShowing){
+                pd.dismiss();
+            }
+            isDialogShowing = false;
+        }
+
+        public void registerMediaScannerBroadcastReceiver() {
+            if (null == mediaScannerReceiver) {
+                mediaScannerReceiver=  new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        String currentDirectory = intent.getStringExtra(BroadcastMessageInterface.CURRENT_DIRECTORY_PROCESSING);
+                        String currentFile = intent.getStringExtra(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
+                        boolean isLast = intent.getBooleanExtra(BroadcastMessageInterface.IS_LAST_FILE_PROCESSING, false);
+                        mediaScannerDialog.show();
+                        mediaScannerDialog.setTitle(currentDirectory);
+                        mediaScannerDialog.setMessage(currentFile);
+                        if(isLast){
+                            mediaScannerDialog.dismiss();
+                            unregisterMediaScannerBroadcastReceiver();
+                        }
+                    }
+                };
+            }
+            LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mediaScannerReceiver, new IntentFilter(BroadcastMessageInterface.CURRENT_FILE_PROCESSING));
+        }
+        public void unregisterMediaScannerBroadcastReceiver() {
+            if(mediaScannerReceiver != null){
+                LocalBroadcastManager.getInstance(MainActivity.this).unregisterReceiver(mediaScannerReceiver);
+                mediaScannerReceiver = null;
+            }
+            mediaScannerDialog.dismiss();
+            isScanningMedia = false;
+        }
+
+        public void doScan(ArrayList<String> directories){
+            registerMediaScannerBroadcastReceiver();
+            Intent mediaScannerIntent = new Intent(MainActivity.this, SkipShuffleMediaScannerService.class);
+            mediaScannerIntent.putExtra(BroadcastMessageInterface.DIRECTORIES_LIST, directories);
+            startService(mediaScannerIntent);
+            isScanningMedia = true;
+        }
+        protected void pickMediaDirectories() {
+            Intent intent = new Intent(getApplicationContext(), FilePickerActivity.class);
+            intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
+            intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
+            intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
+            startActivityForResult(intent, REQUEST_PICK_FILE);
+            Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
+        }
+    };
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        ArrayList<String> mediaDirectoriesToScan= new ArrayList<String>();
         if(resultCode == RESULT_OK) {
             switch(requestCode) {
                 case 777:
                     if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
                         // Get the file path
-                        mediaDirectoriesToScan = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                        if(mediaDirectoriesToScan.isEmpty()){
+                        List<File> filePickerActivityResult = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                        if(filePickerActivityResult.isEmpty()){
                             Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
                         } else {
-                            registerMediaScannerBroadcastReceiver();
-                            MediaScannerDialog mediaScannerDialog = new MediaScannerDialog();
-                            for (Iterator<File> iterator = mediaDirectoriesToScan.iterator(); iterator.hasNext(); ) {
+                            //Save to a class instance array in case the activity needs to restart.
+                            for (Iterator<File> iterator = filePickerActivityResult.iterator(); iterator.hasNext(); ) {
                                 File directory = iterator.next();
-                                Intent mediaScannerIntent = new Intent(this, SkipShuffleMediaScannerService.class);
-                                mediaScannerIntent.putExtra(BroadcastMessageInterface.DIRECTORIES_LIST, directory.getAbsolutePath());
-                                startService(mediaScannerIntent);
+                                mediaDirectoriesToScan.add(directory.getAbsolutePath());
                             }
+                            if(null == mediaScannerDialog) {
+                                mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                            }
+                            mediaScannerDialog.doScan(mediaDirectoriesToScan);
                         }
                     }
             }
@@ -164,7 +248,6 @@ public class MainActivity extends Activity {
                 }
 
                 Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -195,7 +278,10 @@ public class MainActivity extends Activity {
         ui.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickMediaDirectories();
+                if(null == mediaScannerDialog){
+                    mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                }
+                mediaScannerDialog.pickMediaDirectories();
             }
         });
 
@@ -206,30 +292,37 @@ public class MainActivity extends Activity {
         super.onDestroy();
 
         //Stop the mediaPlayer service.
-
         stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        playState = savedInstanceState.getInt(PLAY_STATE);
-        ui.reboot();
     }
 
     @Override
     protected void onPause(){
         //Give a break to GPU when hidden
         ui.playBtn.clearAnimation();
-        unregisterMediaScannerBroadcastReceiver();
+        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.dismiss();
+        }
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(mediaDirectoriesToScan != null) {
-            registerMediaScannerBroadcastReceiver();
+        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.show();
+        }
+        ui.reboot();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        playState = savedInstanceState.getInt(PLAY_STATE);
+        boolean onGoingScanState = savedInstanceState.getBoolean(IS_SCANNING_MEDIA);
+        if(onGoingScanState){
+            mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            Log.d(TAG, "media directories to scan wasn't NULL");
         }
         ui.reboot();
     }
@@ -237,76 +330,25 @@ public class MainActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(PLAY_STATE, playState);
-        if(mediaDirectoriesToScan != null) {
-            registerMediaScannerBroadcastReceiver();
-        }
+        outState.putBoolean(IS_SCANNING_MEDIA, true);
         super.onSaveInstanceState(outState);
-    }
-
-    protected void pickMediaDirectories() {
-        Intent intent = new Intent(this, FilePickerActivity.class);
-        intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
-        intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
-        intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
-        startActivityForResult(intent, REQUEST_PICK_FILE);
-        Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
     }
 
     private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
-            if (MotionEvent.ACTION_DOWN == event.getAction()){
-                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-                if(isPlaylistSet == false) {
-                    pickMediaDirectories();
-                    //Return true because we already handled the event and want to prevent bubbling.
-                    return true;
-                }
-            }
+//            if (MotionEvent.ACTION_DOWN == event.getAction()){
+//                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+//                if(isPlaylistSet == false) {
+//                    if(null == mediaScannerDialog) {
+//                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+//                    }
+//                    mediaScannerDialog.pickMediaDirectories();
+//                    //Return true because we already handled the event and want to prevent bubbling.
+//                    return true;
+//                }
+//            }
             return false;
-        }
-    };
-
-    public void registerMediaScannerBroadcastReceiver() {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mediaScannerReceiver, new IntentFilter(BroadcastMessageInterface.CURRENT_FILE_PROCESSING));
-    }
-    public void unregisterMediaScannerBroadcastReceiver() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mediaScannerReceiver);
-    }
-
-    private BroadcastReceiver mediaScannerReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String currentFile = intent.getStringExtra(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
-            Log.d(TAG, "Currently processing : " + currentFile);
-        }
-    };
-
-    private class MediaScannerDialog {
-
-        private ProgressDialog pd = new ProgressDialog(MainActivity.this);
-
-        MediaScannerDialog() {
-
-                    pd.setTitle("Scanning audio files... ");
-                    pd.setMessage("Please wait.");
-                    pd.setCancelable(false);
-                    pd.setIndeterminate(true);
-
-                isPlaylistSet = true;
-        }
-        public void show() {
-            pd.show();
-        }
-
-        public void setMessage(String message) {
-            pd.setMessage(message);
-        }
-        private void setTitle(String title) {
-            pd.setTitle(getString(R.string.media_scan_dialog_title, title));
-        }
-        public void dismiss() {
-            pd.dismiss();
         }
     };
 }
