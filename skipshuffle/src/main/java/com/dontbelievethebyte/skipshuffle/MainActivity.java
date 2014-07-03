@@ -44,9 +44,9 @@ public class MainActivity extends Activity {
     protected static int REQUEST_PICK_FILE = 777;
 
     private class UI {
-        public ImageButton playlistBtn = (ImageButton) findViewById(R.id.playBtn);
+        public ImageButton playlistBtn = (ImageButton) findViewById(R.id.playlistBtn);
         public ImageButton prevBtn = (ImageButton) findViewById(R.id.prevBtn);
-        public ImageButton playBtn = (ImageButton) findViewById(R.id.playlistBtn);
+        public ImageButton playBtn = (ImageButton) findViewById(R.id.playBtn);
         public ImageButton shuffleBtn = (ImageButton) findViewById(R.id.shuffleBtn);
         public ImageButton skipBtn = (ImageButton) findViewById(R.id.skipBtn);
 
@@ -280,10 +280,8 @@ public class MainActivity extends Activity {
         ui.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(null == mediaScannerDialog){
-                    mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-                }
-                mediaScannerDialog.pickMediaDirectories();
+                Intent playlistActivity = new Intent(getApplicationContext(), PlaylistActivity.class);
+                startActivity(playlistActivity);
             }
         });
 
@@ -344,14 +342,14 @@ public class MainActivity extends Activity {
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-                if(isPlaylistSet == false) {
-                    if(null == mediaScannerDialog) {
-                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-                    }
-                    mediaScannerDialog.pickMediaDirectories();
-                    //Return true because we already handled the event and want to prevent bubbling.
-                    return true;
-                }
+//                if(isPlaylistSet == false) {
+//                    if(null == mediaScannerDialog) {
+//                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+//                    }
+//                    mediaScannerDialog.pickMediaDirectories();
+//                    //Return true because we already handled the event and want to prevent bubbling.
+//                    return true;
+//                }
             }
             return false;
         }
