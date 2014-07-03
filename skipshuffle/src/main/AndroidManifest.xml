@@ -17,8 +17,14 @@
             </intent-filter>
         </activity>
         <activity android:name="com.coderplus.filepicker.FilePickerActivity" />
-        <service android:name=".SkipShuffleMediaPlayer" ></service>
-        <service android:name=".SkipShuffleMediaScannerService" ></service>
+
+        <service android:name=".SkipShuffleMediaPlayer" />
+        <service android:name=".SkipShuffleMediaScannerService" />
+
+        <activity
+            android:name=".PlaylistActivity"
+            android:label="@string/title_activity_playlist" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

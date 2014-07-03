@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">SkipShuffle</string>
     <string name="play">Playing</string>
     <string name="pause">Paused</string>
@@ -12,4 +13,19 @@
     <string name="scan_directory_valid">Scanning : %s</string>
     <string name="scan_directory_invalid">Invalid directory : %s</string>
     <string name="media_scan_dialog_title">Scanning media in : %s</string>
+    <string name="title_activity_playlist">Playlist</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="tracks">
+        <item>derpdfhdsfsd</item>
+        <item>herp</item>
+        <item>merp</item>
+        <item>cerp</item>
+        <item>fderp</item>
+        <item>dasdaerp</item>
+        <item>dedsa2rp</item>
+        <item>der3p</item>
+        <item>derpwewqewqe</item>
+        <item>chirp zixup</item>
+    </string-array>
 </resources>
