@@ -56,6 +56,57 @@ public class MainActivity extends Activity {
         public Animation flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
         public Animation blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
 
+        public UI(){
+            flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    skipBtn.setImageDrawable(getResources().getDrawable(R.drawable.next_btn_pressed));
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    skipBtn.setImageDrawable(getResources().getDrawable(R.drawable.next_states));
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    prevBtn.setImageDrawable(getResources().getDrawable(R.drawable.prev_btn_pressed));
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    prevBtn.setImageDrawable(getResources().getDrawable(R.drawable.prev_states));
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    shuffleBtn.setImageDrawable(getResources().getDrawable(R.drawable.shuffle_btn_pressed));
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    shuffleBtn.setImageDrawable(getResources().getDrawable(R.drawable.shuffle_states));
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+
         public void doPlay() {
             playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
             playBtn.startAnimation(ltr);
