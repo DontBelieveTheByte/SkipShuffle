@@ -23,9 +23,11 @@ public class SkipShuffleMediaScannerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //ArrayList<String> directoryPath = intent.getStringArrayExtra(BroadcastMessageInterface.DIRECTORIES_LIST);
-        //File directory = new File(directoryPath);
-        //recursiveFileList(directory);
+        String[] directoryPaths = intent.getStringArrayExtra(BroadcastMessageInterface.DIRECTORIES_LIST);
+        for (String directory : directoryPaths) {
+            File dir = new File(directory);
+            recursiveFileList(dir);
+        }
     }
 
     private void recursiveFileList(File dir) {

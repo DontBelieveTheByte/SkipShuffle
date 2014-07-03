@@ -167,7 +167,7 @@ public class MainActivity extends Activity {
             isScanningMedia = false;
         }
 
-        public void doScan(ArrayList<String> directories){
+        public void doScan(String[] directories){
             registerMediaScannerBroadcastReceiver();
             Intent mediaScannerIntent = new Intent(MainActivity.this, SkipShuffleMediaScannerService.class);
             mediaScannerIntent.putExtra(BroadcastMessageInterface.DIRECTORIES_LIST, directories);
@@ -186,7 +186,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ArrayList<String> mediaDirectoriesToScan= new ArrayList<String>();
         if(resultCode == RESULT_OK) {
             switch(requestCode) {
                 case 777:
@@ -196,10 +195,13 @@ public class MainActivity extends Activity {
                         if(filePickerActivityResult.isEmpty()){
                             Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
                         } else {
+                            String[] mediaDirectoriesToScan= new String[filePickerActivityResult.size()];
+                            int i = 0;
                             //Save to a class instance array in case the activity needs to restart.
                             for (Iterator<File> iterator = filePickerActivityResult.iterator(); iterator.hasNext(); ) {
                                 File directory = iterator.next();
-                                mediaDirectoriesToScan.add(directory.getAbsolutePath());
+                                mediaDirectoriesToScan[i] = directory.getAbsolutePath();
+                                i++;
                             }
                             if(null == mediaScannerDialog) {
                                 mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
@@ -331,23 +333,26 @@ public class MainActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(PLAY_STATE, playState);
         outState.putBoolean(IS_SCANNING_MEDIA, true);
+        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.dismiss();
+        }
         super.onSaveInstanceState(outState);
     }
 
     private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
-//            if (MotionEvent.ACTION_DOWN == event.getAction()){
-//                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-//                if(isPlaylistSet == false) {
-//                    if(null == mediaScannerDialog) {
-//                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-//                    }
-//                    mediaScannerDialog.pickMediaDirectories();
-//                    //Return true because we already handled the event and want to prevent bubbling.
-//                    return true;
-//                }
-//            }
+            if (MotionEvent.ACTION_DOWN == event.getAction()){
+                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                if(isPlaylistSet == false) {
+                    if(null == mediaScannerDialog) {
+                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                    }
+                    mediaScannerDialog.pickMediaDirectories();
+                    //Return true because we already handled the event and want to prevent bubbling.
+                    return true;
+                }
+            }
             return false;
         }
     };
