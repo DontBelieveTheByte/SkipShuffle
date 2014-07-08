@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -21,13 +23,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import android.app.ProgressDialog;
 
 import com.coderplus.filepicker.FilePickerActivity;
 
 import java.io.File;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends Activity {
 
@@ -35,6 +36,7 @@ public class MainActivity extends Activity {
     private Integer playState = 0;
 
     private UI ui;
+    private PreferencesHelper preferencesHelper;
 
     private MediaScannerDialog mediaScannerDialog;
     private BroadcastReceiver mediaScannerReceiver ;
@@ -164,21 +166,28 @@ public class MainActivity extends Activity {
 
         public PreferencesHelper(){
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            //hapticFeedback = sharedPreferences.getBoolean(getResources().getString(R.string.pref_haptic_feedback));
-            //directories = sharedPreferences.getStringSet();
+            hapticFeedback = sharedPreferences.getBoolean(getString(R.string.pref_haptic_feedback), false);
+            //directories = sharedPreferences.getStringSet(getString(R.string.pref_media_directories));
         }
 
         public boolean isHapticFeedback() {
             return hapticFeedback;
         }
 
-        public boolean hapticFeedbackToggle(){
-            if(hapticFeedback){
+        public void hapticFeedbackToggle(){
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            long[] pattern = {0L, 500L, 110L, 500L, 110L, 450L, 110L, 200L, 110L, 170L, 40L, 450L, 110L, 200L, 110L, 170L, 40L, 500L};
+
+            if(hapticFeedback && vibrator.hasVibrator()){
                 setHapticFeedback(false);
-                return false;
+                Toast.makeText(getApplicationContext(), R.string.haptic_feedback_off, Toast.LENGTH_SHORT).show();
             } else {
                 setHapticFeedback(true);
-                return true;
+                if(vibrator.hasVibrator()){
+                    vibrator.vibrate(pattern, -1);
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.haptic_feedback_not_available, Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
@@ -315,7 +324,11 @@ public class MainActivity extends Activity {
         //Set up UI, this can be later instantiated from a factory to produce a different UI.
         ui = new UI();
 
+        //Set up preferences
+        preferencesHelper = new PreferencesHelper();
+
         //Start the mediaPlayer service.
+
 
         //startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
@@ -456,7 +469,6 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        PreferencesHelper preferencesHelper = new PreferencesHelper();
         switch (item.getItemId()){
             case R.id.refresh_media:
                 if(null == mediaScannerDialog){
