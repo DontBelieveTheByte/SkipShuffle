@@ -446,7 +446,9 @@ public class MainActivity extends Activity {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
-                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                if(preferencesHelper.isHapticFeedback()){
+                    view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                }
 //                if(isPlaylistSet == false) {
 //                    if(null == mediaScannerDialog) {
 //                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
