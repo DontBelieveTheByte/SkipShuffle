@@ -26,7 +26,6 @@ import android.app.ProgressDialog;
 import com.coderplus.filepicker.FilePickerActivity;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -385,8 +384,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        //Stop the mediaPlayer service.
         stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
     }
 
@@ -459,6 +456,29 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        PreferencesHelper preferencesHelper = new PreferencesHelper();
+        switch (item.getItemId()){
+            case R.id.refresh_media:
+                if(null == mediaScannerDialog){
+                    mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                }
+                if(null == preferencesHelper.getMediaDirectories()){
+                    mediaScannerDialog.pickMediaDirectories();
+                } else {
+                    mediaScannerDialog.doScan(preferencesHelper.getMediaDirectories());
+                }
+                return true;
+            case R.id.set_target_directories:
+                if(null == mediaScannerDialog){
+                    mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                }
+                mediaScannerDialog.pickMediaDirectories();
+                return true;
+            case R.id.haptic_feedback_toggle:
+                preferencesHelper.hapticFeedbackToggle();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
