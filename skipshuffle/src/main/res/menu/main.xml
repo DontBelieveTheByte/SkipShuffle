@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.dontbelievethebyte.skipshuffle.MainActivity" >
+    <item
+        android:title="@string/refresh"
+        android:id="@+id/refresh_media"
+        android:icon="@drawable/refresh">
+    </item>
+    <item
+        android:title="@string/set_music_dir"
+        android:id="@+id/set_target_directories"
+        android:icon="@drawable/folder">
+    </item>
+    <item
+        android:title="@string/haptic_feedback"
+        android:id="@+id/haptic_feedback_toggle"
+        android:icon="@drawable/vibration">
+    </item>
+</menu>

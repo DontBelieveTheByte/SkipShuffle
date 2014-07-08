@@ -12,19 +12,20 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.coderplus.filepicker.FilePickerActivity" />
-
-        <service android:name=".SkipShuffleMediaPlayer" />
-        <service android:name=".SkipShuffleMediaScannerService" />
-
+        <activity
+            android:name="com.coderplus.filepicker.FilePickerActivity" >
+        </activity>
         <activity
             android:name=".PlaylistActivity"
             android:label="@string/title_activity_playlist" >
         </activity>
+
+        <service android:name=".SkipShuffleMediaPlayer" />
+        <service android:name=".SkipShuffleMediaScannerService" />
+
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

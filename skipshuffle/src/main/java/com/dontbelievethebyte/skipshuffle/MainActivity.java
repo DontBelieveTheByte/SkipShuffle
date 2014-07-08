@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -152,6 +154,45 @@ public class MainActivity extends Activity {
             }
         }
 
+    };
+    private class PreferencesHelper {
+        boolean hapticFeedback;
+        String[] directories;
+        SharedPreferences sharedPreferences;
+
+        public PreferencesHelper(){
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+            //hapticFeedback = sharedPreferences.getBoolean(getResources().getString(R.string.pref_haptic_feedback));
+            //directories = sharedPreferences.getStringSet();
+        }
+
+        public boolean isHapticFeedback() {
+            return hapticFeedback;
+        }
+
+        public boolean hapticFeedbackToggle(){
+            if(hapticFeedback){
+                setHapticFeedback(false);
+                return false;
+            } else {
+                setHapticFeedback(true);
+                return true;
+            }
+        }
+
+        public void setHapticFeedback(boolean hapticFeedback) {
+            sharedPreferences.edit().putBoolean(getString(R.string.pref_haptic_feedback), true);
+            this.hapticFeedback = hapticFeedback;
+        }
+
+        public String[] getMediaDirectories() {
+            return directories;
+        }
+
+        public void setMediaDirectories(String[] directories) {
+            this.directories = directories;
+            //sharedPreferences.edit().putStringSet(getString(R.string.pref_media_directories), directories);
+        }
     };
 
     private class MediaScannerDialog {

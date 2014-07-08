@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">SkipShuffle</string>
     <string name="play">Playing</string>
     <string name="pause">Paused</string>
@@ -28,4 +27,9 @@
         <item>derpwewqewqe</item>
         <item>chirp zixup</item>
     </string-array>
+    <string name="refresh">Refresh</string>
+    <string name="set_music_dir">Set music directories</string>
+    <string name="haptic_feedback">Haptic feedback toggle (vibration)</string>
+    <string name="pref_haptic_feedback">PREF_HAPTIC_FEEDBACK</string>
+    <string name="pref_media_directories">PREF_MEDIA_DIRECTORIES</string>
 </resources>
