@@ -160,16 +160,22 @@ public class MainActivity extends Activity {
 
     };
     private class PreferencesHelper {
-        boolean hapticFeedback;
-        String[] directories;
-        SharedPreferences sharedPreferences;
+        private boolean hapticFeedback;
+        private String[] directories;
+        private SharedPreferences sharedPreferences;
 
         public PreferencesHelper(){
+            Log.d(TAG, "Constructing....");
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
             hapticFeedback = sharedPreferences.getBoolean(getString(R.string.pref_haptic_feedback), false);
-            //directories = sharedPreferences.getStringSet(getString(R.string.pref_media_directories));
+            String directoriesString = sharedPreferences.getString(getString(R.string.pref_media_directories), null);
+            if(directoriesString != null){
+                directories = directoriesString.split("ಠ_ಠ");
+                Log.v(TAG, "MEDIA STRING NOT NULL : " + directoriesString.toString());
+            } else {
+                Log.v(TAG, "MEDIA STRING was WAS WAS NULL");
+            }
         }
-
         public boolean isHapticFeedback() {
             return hapticFeedback;
         }
@@ -192,7 +198,7 @@ public class MainActivity extends Activity {
         }
 
         public void setHapticFeedback(boolean hapticFeedback) {
-            sharedPreferences.edit().putBoolean(getString(R.string.pref_haptic_feedback), true);
+            sharedPreferences.edit().putBoolean(getString(R.string.pref_haptic_feedback), true).apply();
             this.hapticFeedback = hapticFeedback;
         }
 
@@ -201,8 +207,12 @@ public class MainActivity extends Activity {
         }
 
         public void setMediaDirectories(String[] directories) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int i=0; i<directories.length; i++){
+                stringBuilder.append(directories[i]).append("ಠ_ಠ");
+            }
+            sharedPreferences.edit().putString(getString(R.string.pref_media_directories), stringBuilder.toString()).apply();
             this.directories = directories;
-            //sharedPreferences.edit().putStringSet(getString(R.string.pref_media_directories), directories);
         }
     };
 
@@ -309,6 +319,7 @@ public class MainActivity extends Activity {
                             if(null == mediaScannerDialog) {
                                 mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
                             }
+                            preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
                             mediaScannerDialog.doScan(mediaDirectoriesToScan);
                         }
                     }
@@ -328,8 +339,6 @@ public class MainActivity extends Activity {
         preferencesHelper = new PreferencesHelper();
 
         //Start the mediaPlayer service.
-
-
         //startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         //Register haptic feedback for all buttons.
@@ -423,8 +432,9 @@ public class MainActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         playState = savedInstanceState.getInt(PLAY_STATE);
-        boolean onGoingScanState = savedInstanceState.getBoolean(IS_SCANNING_MEDIA);
-        if(onGoingScanState){
+
+        //Check if we're scanning media beforehand and.
+        if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
             mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             Log.d(TAG, "media directories to scan wasn't NULL");
