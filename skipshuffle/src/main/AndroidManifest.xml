@@ -25,18 +25,6 @@
 
         <service android:name=".SkipShuffleMediaPlayer" />
         <service android:name=".SkipShuffleMediaScannerService" />
-        <receiver android:name=".SkipShuffleMediaPlayer$MediaCommandReceiver">
-            <intent-filter>
-                <action android:name="com.dontbelievethebyte.cmd.PLAY"></action>
-                <action android:name="com.dontbelievethebyte.cmd.PAUSE"></action>
-                <action android:name="com.dontbelievethebyte.cmd.SKIP"></action>
-                <action android:name="com.dontbelievethebyte.cmd.PREV"></action>
-                <action android:name="com.dontbelievethebyte.cmd.SHUFFLE_PLAYLIST"></action>
-                <action android:name="com.dontbelievethebyte.cmd.GET_PLAYER_STATE"></action>
-                <action android:name="android.intent.action.HEADSET_PLUG"></action>
-                <action android:name="android.intent.action.MEDIA_BUTTON"></action>
-            </intent-filter>
-        </receiver>
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
