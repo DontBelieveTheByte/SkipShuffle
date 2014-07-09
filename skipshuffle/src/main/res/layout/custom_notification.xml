@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    android:gravity="center_horizontal">
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/prev"
+        android:src="@drawable/prev_states"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="8dp" />
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/shuffle"
+        android:longClickable="false"
+        android:src="@drawable/shuffle_states"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp" />
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/play"
+        android:src="@drawable/play_states"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp" />
+
+    <ImageButton
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/next"
+        android:src="@drawable/next_states"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="4dp"
+        android:cropToPadding="false" />
+</LinearLayout>

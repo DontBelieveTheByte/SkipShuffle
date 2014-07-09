@@ -1,15 +1,21 @@
 package com.dontbelievethebyte.skipshuffle;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -84,18 +90,19 @@ public class SkipShuffleMediaPlayer extends Service {
     }
 
     public void doPlay() {
-        if(false != isPlaylistSet()) {
-            //If we're at the start of the playlist.
-            if(0 == playlist.getCursorPosition()){
-                loadAudioFile(playlist.getFirst());
-            } else if (true == isPaused) {
-                mp.start();
-            }
-            mp.start();
-            isPaused = false;
-        } else {
-            Log.v(TAG, "PPPLAYLIST EMPTY!");
-        }
+//        if(false != isPlaylistSet()) {
+//            //If we're at the start of the playlist.
+//            if(0 == playlist.getCursorPosition()){
+//                loadAudioFile(playlist.getFirst());
+//            } else if (true == isPaused) {
+//                mp.start();
+//            }
+//            mp.start();
+//            isPaused = false;
+//        } else {
+//            Log.v(TAG, "PPPLAYLIST EMPTY!");
+//        }
+        setNotification();
     }
 
     public void doPause() {
@@ -159,20 +166,21 @@ public class SkipShuffleMediaPlayer extends Service {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     String command = intent.getStringExtra(SkipShuflleMediaPlayerCommands.COMMAND);
-                    if(SkipShuflleMediaPlayerCommands.CMD_PLAY == command){
-                        doPlay();
-                    } else if (SkipShuflleMediaPlayerCommands.CMD_PAUSE == command){
-                        doPause();
-                    } else if(SkipShuflleMediaPlayerCommands.CMD_SKIP == command){
-                        doSkip();
-                    } else if(SkipShuflleMediaPlayerCommands.CMD_PREV == command){
-                        doPrev();
-                    } else if(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST == command){
-                        doShuffle();
-                    } else {
-                        Log.v(TAG, getString(R.string.media_player_unkown_command));
-                    }
-                    Toast.makeText(getApplicationContext(), "Command received", Toast.LENGTH_SHORT).show();
+//                    if(SkipShuflleMediaPlayerCommands.CMD_PLAY == command){
+//                        doPlay();
+//                    } else if (SkipShuflleMediaPlayerCommands.CMD_PAUSE == command){
+//                        doPause();
+//                    } else if(SkipShuflleMediaPlayerCommands.CMD_SKIP == command){
+//                        doSkip();
+//                    } else if(SkipShuflleMediaPlayerCommands.CMD_PREV == command){
+//                        doPrev();
+//                    } else if(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST == command){
+//                        doShuffle();
+//                    } else {
+//                        Log.v(TAG, getString(R.string.media_player_unkown_command));
+//                    }
+                    setNotification();
+                    Toast.makeText(getApplicationContext(), "Command received : " + command, Toast.LENGTH_SHORT).show();
                 }
             };
         }
@@ -187,5 +195,25 @@ public class SkipShuffleMediaPlayer extends Service {
 
     public void brodcastToUI() {
 
+    }
+
+    private void setNotification(){
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
+        Resources res = getResources();
+        float height = res.getDimension(android.R.dimen.notification_large_icon_height);
+        float width = res.getDimension(android.R.dimen.notification_large_icon_width);
+
+        BitmapDrawable ssIconDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ss_icon);
+
+        Bitmap largeIconBitmap = ssIconDrawable.getBitmap();
+
+        largeIconBitmap = Bitmap.createScaledBitmap(largeIconBitmap, (int) width, (int) height, false);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        notificationBuilder.setSmallIcon(R.drawable.ss_icon)
+                           .setLargeIcon(largeIconBitmap)
+                           .setContent(remoteViews);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(9001, notificationBuilder.build());
     }
 }

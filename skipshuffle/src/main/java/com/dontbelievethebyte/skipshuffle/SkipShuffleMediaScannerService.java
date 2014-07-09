@@ -62,4 +62,5 @@ public class SkipShuffleMediaScannerService extends IntentService {
         intent.putExtra(BroadcastMessageInterface.IS_LAST_FILE_PROCESSING, isLast);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
 }
