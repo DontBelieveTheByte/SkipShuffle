@@ -34,4 +34,5 @@
     <string name="haptic_feedback">Haptic feedback toggle (vibration)</string>
     <string name="pref_haptic_feedback">PREF_HAPTIC_FEEDBACK</string>
     <string name="pref_media_directories">PREF_MEDIA_DIRECTORIES</string>
+    <string name="media_player_unkown_command">Unknown command.</string>
 </resources>
