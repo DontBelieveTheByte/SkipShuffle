@@ -1,10 +1,14 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,11 +22,26 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private MediaPlayer mp;
 
+    private BroadcastReceiver mediaPlayerCommandReceiver;
+
+    //private MediaCommandReceiver mediaCommandReceiver;
+
+    public class MediaCommandReceiver extends BroadcastReceiver {
+        public MediaCommandReceiver(){
+            super();
+        }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "Intent detected.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private boolean isPaused = true;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(getApplicationContext(), "I'M A FUCKING SERVICE!!!", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Media player service started", Toast.LENGTH_LONG).show();
+        registerMediaPlayerBroadcastReceiver();
         //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -31,6 +50,7 @@ public class SkipShuffleMediaPlayer extends Service {
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "BOUND");
         //return mBinder;
+        registerMediaPlayerBroadcastReceiver();
         return null;
     }
     /**
@@ -38,14 +58,20 @@ public class SkipShuffleMediaPlayer extends Service {
      */
     @Override
     public void onCreate(){
+        registerMediaPlayerBroadcastReceiver();
         mp = new MediaPlayer();
         mp.setOnCompletionListener(new OnCompletionListener(){
             //WTF to do when the track is done playing? Implement next cursor.
             @Override
             public void onCompletion(MediaPlayer mp) {
-                doNext();
+                doSkip();
             }
         });
+    }
+
+    @Override
+    public void onDestroy(){
+        unregisterMediaPlayerBroadcastReceiver();
     }
 
     public void setPlaylist(Playlist playlist) {
@@ -77,7 +103,7 @@ public class SkipShuffleMediaPlayer extends Service {
         isPaused = true;
     }
 
-    public void doNext() {
+    public void doSkip() {
         loadAudioFile(playlist.getNext());
         doPlay();
     }
@@ -123,5 +149,43 @@ public class SkipShuffleMediaPlayer extends Service {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
+    }
+
+    public void registerMediaPlayerBroadcastReceiver() {
+        if (null == mediaPlayerCommandReceiver) {
+            Toast.makeText(getApplicationContext(), "Registerd...", Toast.LENGTH_SHORT).show();
+
+            mediaPlayerCommandReceiver =  new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String command = intent.getStringExtra(SkipShuflleMediaPlayerCommands.COMMAND);
+                    if(SkipShuflleMediaPlayerCommands.CMD_PLAY == command){
+                        doPlay();
+                    } else if (SkipShuflleMediaPlayerCommands.CMD_PAUSE == command){
+                        doPause();
+                    } else if(SkipShuflleMediaPlayerCommands.CMD_SKIP == command){
+                        doSkip();
+                    } else if(SkipShuflleMediaPlayerCommands.CMD_PREV == command){
+                        doPrev();
+                    } else if(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST == command){
+                        doShuffle();
+                    } else {
+                        Log.v(TAG, getString(R.string.media_player_unkown_command));
+                    }
+                    Toast.makeText(getApplicationContext(), "Command received", Toast.LENGTH_SHORT).show();
+                }
+            };
+        }
+        LocalBroadcastManager.getInstance(this).registerReceiver(mediaPlayerCommandReceiver, new IntentFilter(BroadcastMessageInterface.CURRENT_FILE_PROCESSING));
+    }
+    public void unregisterMediaPlayerBroadcastReceiver() {
+        if(mediaPlayerCommandReceiver != null){
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(mediaPlayerCommandReceiver);
+            mediaPlayerCommandReceiver = null;
+        }
+    }
+
+    public void brodcastToUI() {
+
     }
 }
