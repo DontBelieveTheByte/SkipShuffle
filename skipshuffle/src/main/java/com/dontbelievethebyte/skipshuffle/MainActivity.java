@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     private PreferencesHelper preferencesHelper;
 
     private MediaScannerDialog mediaScannerDialog;
-    private BroadcastReceiver mediaScannerReceiver ;
+    private BroadcastReceiver mediaScannerReceiver;
 
     private static final String TAG = "SkipShuffleMain";
     private static final String IS_SCANNING_MEDIA = "isScanningMedia";
@@ -339,7 +339,7 @@ public class MainActivity extends Activity {
         preferencesHelper = new PreferencesHelper();
 
         //Start the mediaPlayer service.
-        //startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
+        startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -355,11 +355,13 @@ public class MainActivity extends Activity {
                 String toastMessage;
 
                 if (playState == PLAYING) {
+                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_PAUSE);
                     ui.doPause();
                     toastMessage = getResources().getString(R.string.pause);
                     playState = PAUSED;
 
                 } else {
+                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_PAUSE);
                     ui.doPlay();
                     toastMessage = getResources().getString(R.string.play);
                     playState = PLAYING;
@@ -372,6 +374,7 @@ public class MainActivity extends Activity {
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_SKIP);
                 ui.doSkip();
                 Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
@@ -380,6 +383,7 @@ public class MainActivity extends Activity {
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_PREV);
                 ui.doPrev();
                 Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
@@ -388,6 +392,7 @@ public class MainActivity extends Activity {
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST);
                 ui.doShuffle();
                 Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
@@ -396,11 +401,11 @@ public class MainActivity extends Activity {
         ui.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_GET_PLAYER_STATE);
                 Intent playlistActivity = new Intent(getApplicationContext(), PlaylistActivity.class);
                 startActivity(playlistActivity);
             }
         });
-
     }
 
     @Override
@@ -504,5 +509,11 @@ public class MainActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void broadcastToMediaPlayer(String command){
+        Intent intent = new Intent(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
+        intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
