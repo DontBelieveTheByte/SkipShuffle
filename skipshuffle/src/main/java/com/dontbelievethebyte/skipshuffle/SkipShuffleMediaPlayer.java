@@ -31,7 +31,6 @@ public class SkipShuffleMediaPlayer extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        Toast.makeText(getApplicationContext(), "Media player service started", Toast.LENGTH_LONG).show();
         registerMediaPlayerBroadcastReceiver();
         //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
@@ -42,9 +41,7 @@ public class SkipShuffleMediaPlayer extends Service {
         Log.d(TAG, "BOUND");
         return null;
     }
-    /**
-     * Initialize the media player
-     */
+
     @Override
     public void onCreate(){
         registerMediaPlayerBroadcastReceiver();
