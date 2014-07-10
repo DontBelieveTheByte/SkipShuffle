@@ -8,7 +8,7 @@
     <ImageButton
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/prev"
+        android:id="@+id/notif_prev"
         android:src="@drawable/prev_states"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -17,7 +17,7 @@
     <ImageButton
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/shuffle"
+        android:id="@+id/notif_shuffle"
         android:longClickable="false"
         android:src="@drawable/shuffle_states"
         android:scaleType="fitCenter"
@@ -28,7 +28,7 @@
     <ImageButton
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/play"
+        android:id="@+id/notif_play"
         android:src="@drawable/play_states"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -38,7 +38,7 @@
     <ImageButton
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/next"
+        android:id="@+id/notif_next"
         android:src="@drawable/next_states"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"
