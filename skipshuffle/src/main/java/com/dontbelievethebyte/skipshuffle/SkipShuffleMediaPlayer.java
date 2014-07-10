@@ -1,14 +1,12 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
@@ -184,7 +182,7 @@ public class SkipShuffleMediaPlayer extends Service {
                 }
             };
         }
-        LocalBroadcastManager.getInstance(this).registerReceiver(mediaPlayerCommandReceiver, new IntentFilter(BroadcastMessageInterface.CURRENT_FILE_PROCESSING));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mediaPlayerCommandReceiver, new IntentFilter(SkipShuflleMediaPlayerCommands.COMMAND));
     }
     public void unregisterMediaPlayerBroadcastReceiver() {
         if(mediaPlayerCommandReceiver != null){
@@ -193,27 +191,24 @@ public class SkipShuffleMediaPlayer extends Service {
         }
     }
 
-    public void brodcastToUI() {
-
-    }
-
     private void setNotification(){
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
-        Resources res = getResources();
-        float height = res.getDimension(android.R.dimen.notification_large_icon_height);
-        float width = res.getDimension(android.R.dimen.notification_large_icon_width);
-
-        BitmapDrawable ssIconDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ss_icon);
-
-        Bitmap largeIconBitmap = ssIconDrawable.getBitmap();
-
-        largeIconBitmap = Bitmap.createScaledBitmap(largeIconBitmap, (int) width, (int) height, false);
+        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV));
+        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST));
+        remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY));
+        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP));
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ss_icon)
-                           .setLargeIcon(largeIconBitmap)
                            .setContent(remoteViews);
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(9001, notificationBuilder.build());
+    }
+    private PendingIntent buildNotificationPendingIntent(String command){
+        Intent intent = new Intent(SkipShuflleMediaPlayerCommands.COMMAND);
+        intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
     }
 }
