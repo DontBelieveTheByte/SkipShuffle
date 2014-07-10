@@ -38,7 +38,7 @@
     <ImageButton
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:id="@+id/notif_next"
+        android:id="@+id/notif_skip"
         android:src="@drawable/next_states"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"
