@@ -44,7 +44,7 @@ public class SkipShuffleMediaPlayer extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(getApplicationContext(), "Media player service started", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Media player service started", Toast.LENGTH_LONG).show();
         registerMediaPlayerBroadcastReceiver();
         //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
@@ -53,8 +53,6 @@ public class SkipShuffleMediaPlayer extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "BOUND");
-        //return mBinder;
-        registerMediaPlayerBroadcastReceiver();
         return null;
     }
     /**
@@ -158,7 +156,7 @@ public class SkipShuffleMediaPlayer extends Service {
 
     public void registerMediaPlayerBroadcastReceiver() {
         if (null == mediaPlayerCommandReceiver) {
-            Toast.makeText(getApplicationContext(), "Registerd...", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Registerd...", Toast.LENGTH_SHORT).show();
 
             mediaPlayerCommandReceiver =  new BroadcastReceiver() {
                 @Override
@@ -193,10 +191,10 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void setNotification(){
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
-        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV));
-        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST));
-        remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY));
-        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP));
+        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV, 0));
+        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST, 1));
+        remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY, 2));
+        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP, 3));
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ss_icon)
@@ -205,10 +203,10 @@ public class SkipShuffleMediaPlayer extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(9001, notificationBuilder.build());
     }
-    private PendingIntent buildNotificationPendingIntent(String command){
+    private PendingIntent buildNotificationPendingIntent(String command, int requestCode){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommands.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         return pendingIntent;
     }
 }
