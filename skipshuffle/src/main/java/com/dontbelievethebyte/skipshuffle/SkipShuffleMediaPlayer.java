@@ -27,8 +27,6 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private BroadcastReceiver mediaPlayerCommandReceiver;
 
-    //private MediaCommandReceiver mediaCommandReceiver;
-
     public class MediaCommandReceiver extends BroadcastReceiver {
         public MediaCommandReceiver(){
             super();
@@ -160,8 +158,8 @@ public class SkipShuffleMediaPlayer extends Service {
                 public void onReceive(Context context, Intent intent) {
                     String actionStringId = intent.getAction();
 
-                    if(SkipShuflleMediaPlayerCommands.COMMAND == actionStringId) {
-                        String command = intent.getStringExtra(SkipShuflleMediaPlayerCommands.COMMAND);
+                    if(SkipShuflleMediaPlayerCommandsContract.COMMAND == actionStringId) {
+                        String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
                         if(command != null){
                             //                    if(SkipShuflleMediaPlayerCommands.CMD_PLAY == command){
 //                        doPlay();
@@ -183,15 +181,19 @@ public class SkipShuffleMediaPlayer extends Service {
                     } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
 
                         //Filter out sticky broadcast on service start.
-                        boolean headphonesSate =  intent.getIntExtra("state", 0) > 0 && !isInitialStickyBroadcast();
+                        boolean headphonesSate =  (intent.getIntExtra("state", 0) > 0) && !isInitialStickyBroadcast();
                         Toast.makeText(getApplicationContext(), "Headphones plug Event received : " + headphonesSate, Toast.LENGTH_SHORT).show();
+                    } else if(Intent.ACTION_MEDIA_BUTTON == actionStringId) {
+                        String key = intent.getStringExtra(Intent.EXTRA_KEY_EVENT);
+                        Toast.makeText(getApplicationContext(), "Key Event received : " + key, Toast.LENGTH_SHORT).show();
                     }
                 }
             };
         }
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(SkipShuflleMediaPlayerCommands.COMMAND);
+        intentFilter.addAction(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
+        intentFilter.addAction(Intent.ACTION_MEDIA_BUTTON);
         registerReceiver(mediaPlayerCommandReceiver, intentFilter);
     }
     public void unregisterMediaPlayerBroadcastReceiver() {
@@ -203,15 +205,15 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void setNotification(){
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
-        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV, 0));
-        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST, 1));
-        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP, 3));
+        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, 0));
+        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, 1));
+        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, 3));
 
         if(isPaused){
             remoteViews.setImageViewResource(R.id.notif_play, R.drawable.pause_states);
-            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PAUSE, 2));
+            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 2));
         } else {
-            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY, 2));
+            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, 2));
         }
 
         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -227,8 +229,8 @@ public class SkipShuffleMediaPlayer extends Service {
         notificationManager.notify(9001, notificationBuilder.build());
     }
     private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode){
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommands.COMMAND);
-        intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
+        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
+        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         return pendingIntent;
     }

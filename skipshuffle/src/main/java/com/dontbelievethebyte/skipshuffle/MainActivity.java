@@ -256,9 +256,9 @@ public class MainActivity extends Activity {
                 mediaScannerReceiver=  new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
-                        String currentDirectory = intent.getStringExtra(MediaScannerBroadcastMessageInterface.CURRENT_DIRECTORY_PROCESSING);
-                        String currentFile = intent.getStringExtra(MediaScannerBroadcastMessageInterface.CURRENT_FILE_PROCESSING);
-                        boolean isLast = intent.getBooleanExtra(MediaScannerBroadcastMessageInterface.IS_LAST_FILE_PROCESSING, false);
+                        String currentDirectory = intent.getStringExtra(MediaScannerBroadcastMessageContract.CURRENT_DIRECTORY_PROCESSING);
+                        String currentFile = intent.getStringExtra(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING);
+                        boolean isLast = intent.getBooleanExtra(MediaScannerBroadcastMessageContract.IS_LAST_FILE_PROCESSING, false);
                         mediaScannerDialog.show();
                         mediaScannerDialog.setTitle(currentDirectory);
                         mediaScannerDialog.setMessage(currentFile);
@@ -269,7 +269,7 @@ public class MainActivity extends Activity {
                     }
                 };
             }
-            LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mediaScannerReceiver, new IntentFilter(MediaScannerBroadcastMessageInterface.CURRENT_FILE_PROCESSING));
+            LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mediaScannerReceiver, new IntentFilter(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING));
         }
         public void unregisterMediaScannerBroadcastReceiver() {
             if(mediaScannerReceiver != null){
@@ -283,7 +283,7 @@ public class MainActivity extends Activity {
         public void doScan(String[] directories){
             registerMediaScannerBroadcastReceiver();
             Intent mediaScannerIntent = new Intent(MainActivity.this, SkipShuffleMediaScannerService.class);
-            mediaScannerIntent.putExtra(MediaScannerBroadcastMessageInterface.DIRECTORIES_LIST, directories);
+            mediaScannerIntent.putExtra(MediaScannerBroadcastMessageContract.DIRECTORIES_LIST, directories);
             startService(mediaScannerIntent);
             isScanningMedia = true;
         }
@@ -355,13 +355,13 @@ public class MainActivity extends Activity {
                 String toastMessage;
 
                 if (playState == PLAYING) {
-                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_PAUSE);
+                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
                     ui.doPause();
                     toastMessage = getResources().getString(R.string.pause);
                     playState = PAUSED;
 
                 } else {
-                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_PAUSE);
+                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
                     ui.doPlay();
                     toastMessage = getResources().getString(R.string.play);
                     playState = PLAYING;
@@ -374,7 +374,7 @@ public class MainActivity extends Activity {
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_SKIP);
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
                 ui.doSkip();
                 Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
@@ -383,7 +383,7 @@ public class MainActivity extends Activity {
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_PREV);
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
                 ui.doPrev();
                 Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
@@ -392,7 +392,7 @@ public class MainActivity extends Activity {
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST);
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
                 ui.doShuffle();
                 Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
@@ -401,7 +401,7 @@ public class MainActivity extends Activity {
         ui.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommands.CMD_GET_PLAYER_STATE);
+                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE);
                 Intent playlistActivity = new Intent(getApplicationContext(), PlaylistActivity.class);
                 startActivity(playlistActivity);
             }
@@ -511,8 +511,8 @@ public class MainActivity extends Activity {
         }
     }
     private void broadcastToMediaPlayer(String command){
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommands.COMMAND);
-        intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
+        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
+        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
         sendBroadcast(intent);
     }
 }

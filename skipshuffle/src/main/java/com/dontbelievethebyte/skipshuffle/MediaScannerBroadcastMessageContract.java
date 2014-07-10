@@ -1,6 +1,6 @@
 package com.dontbelievethebyte.skipshuffle;
 
-public class MediaScannerBroadcastMessageInterface {
+public class MediaScannerBroadcastMessageContract {
     public static final String DIRECTORIES_LIST = "com.dontbelievethebyte.skipshuffle.directoriesList";
     public static final String CURRENT_DIRECTORY_PROCESSING = "com.dontbelievethebyte.skipshuffle.currentDirectoryProcessing";
     public static final String CURRENT_FILE_PROCESSING = "com.dontbelievethebyte.skipshuffle.currentFileProcessing";
