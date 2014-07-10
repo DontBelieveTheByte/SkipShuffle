@@ -256,9 +256,9 @@ public class MainActivity extends Activity {
                 mediaScannerReceiver=  new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
-                        String currentDirectory = intent.getStringExtra(BroadcastMessageInterface.CURRENT_DIRECTORY_PROCESSING);
-                        String currentFile = intent.getStringExtra(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
-                        boolean isLast = intent.getBooleanExtra(BroadcastMessageInterface.IS_LAST_FILE_PROCESSING, false);
+                        String currentDirectory = intent.getStringExtra(MediaScannerBroadcastMessageInterface.CURRENT_DIRECTORY_PROCESSING);
+                        String currentFile = intent.getStringExtra(MediaScannerBroadcastMessageInterface.CURRENT_FILE_PROCESSING);
+                        boolean isLast = intent.getBooleanExtra(MediaScannerBroadcastMessageInterface.IS_LAST_FILE_PROCESSING, false);
                         mediaScannerDialog.show();
                         mediaScannerDialog.setTitle(currentDirectory);
                         mediaScannerDialog.setMessage(currentFile);
@@ -269,7 +269,7 @@ public class MainActivity extends Activity {
                     }
                 };
             }
-            LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mediaScannerReceiver, new IntentFilter(BroadcastMessageInterface.CURRENT_FILE_PROCESSING));
+            LocalBroadcastManager.getInstance(MainActivity.this).registerReceiver(mediaScannerReceiver, new IntentFilter(MediaScannerBroadcastMessageInterface.CURRENT_FILE_PROCESSING));
         }
         public void unregisterMediaScannerBroadcastReceiver() {
             if(mediaScannerReceiver != null){
@@ -283,7 +283,7 @@ public class MainActivity extends Activity {
         public void doScan(String[] directories){
             registerMediaScannerBroadcastReceiver();
             Intent mediaScannerIntent = new Intent(MainActivity.this, SkipShuffleMediaScannerService.class);
-            mediaScannerIntent.putExtra(BroadcastMessageInterface.DIRECTORIES_LIST, directories);
+            mediaScannerIntent.putExtra(MediaScannerBroadcastMessageInterface.DIRECTORIES_LIST, directories);
             startService(mediaScannerIntent);
             isScanningMedia = true;
         }

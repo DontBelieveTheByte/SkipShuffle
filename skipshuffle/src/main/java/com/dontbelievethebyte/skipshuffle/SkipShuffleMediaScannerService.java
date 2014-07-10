@@ -23,7 +23,7 @@ public class SkipShuffleMediaScannerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String[] directoryPaths = intent.getStringArrayExtra(BroadcastMessageInterface.DIRECTORIES_LIST);
+        String[] directoryPaths = intent.getStringArrayExtra(MediaScannerBroadcastMessageInterface.DIRECTORIES_LIST);
         for (String directory : directoryPaths) {
             File dir = new File(directory);
             recursiveFileList(dir);
@@ -56,10 +56,10 @@ public class SkipShuffleMediaScannerService extends IntentService {
     }
 
     private void broadcastIntentStatus(String directory, String status, boolean isLast){
-        Intent intent = new Intent(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
-        intent.putExtra(BroadcastMessageInterface.CURRENT_DIRECTORY_PROCESSING, directory);
-        intent.putExtra(BroadcastMessageInterface.CURRENT_FILE_PROCESSING, status);
-        intent.putExtra(BroadcastMessageInterface.IS_LAST_FILE_PROCESSING, isLast);
+        Intent intent = new Intent(MediaScannerBroadcastMessageInterface.CURRENT_FILE_PROCESSING);
+        intent.putExtra(MediaScannerBroadcastMessageInterface.CURRENT_DIRECTORY_PROCESSING, directory);
+        intent.putExtra(MediaScannerBroadcastMessageInterface.CURRENT_FILE_PROCESSING, status);
+        intent.putExtra(MediaScannerBroadcastMessageInterface.IS_LAST_FILE_PROCESSING, isLast);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
