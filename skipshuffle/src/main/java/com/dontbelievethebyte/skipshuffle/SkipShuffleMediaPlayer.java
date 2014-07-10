@@ -15,7 +15,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
-
 import java.io.IOException;
 
 public class SkipShuffleMediaPlayer extends Service {
@@ -156,13 +155,15 @@ public class SkipShuffleMediaPlayer extends Service {
 
     public void registerMediaPlayerBroadcastReceiver() {
         if (null == mediaPlayerCommandReceiver) {
-//            Toast.makeText(getApplicationContext(), "Registerd...", Toast.LENGTH_SHORT).show();
-
             mediaPlayerCommandReceiver =  new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    String command = intent.getStringExtra(SkipShuflleMediaPlayerCommands.COMMAND);
-//                    if(SkipShuflleMediaPlayerCommands.CMD_PLAY == command){
+                    String actionStringId = intent.getAction();
+
+                    if(SkipShuflleMediaPlayerCommands.COMMAND == actionStringId) {
+                        String command = intent.getStringExtra(SkipShuflleMediaPlayerCommands.COMMAND);
+                        if(command != null){
+                            //                    if(SkipShuflleMediaPlayerCommands.CMD_PLAY == command){
 //                        doPlay();
 //                    } else if (SkipShuflleMediaPlayerCommands.CMD_PAUSE == command){
 //                        doPause();
@@ -175,12 +176,23 @@ public class SkipShuffleMediaPlayer extends Service {
 //                    } else {
 //                        Log.v(TAG, getString(R.string.media_player_unkown_command));
 //                    }
-                    setNotification();
-                    Toast.makeText(getApplicationContext(), "Command received : " + command, Toast.LENGTH_SHORT).show();
+                            setNotification();
+                            Toast.makeText(getApplicationContext(), "Command received : " + command, Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
+
+                        //Filter out sticky broadcast on service start.
+                        boolean headphonesSate =  intent.getIntExtra("state", 0) > 0 && !isInitialStickyBroadcast();
+                        Toast.makeText(getApplicationContext(), "Headphones plug Event received : " + headphonesSate, Toast.LENGTH_SHORT).show();
+                    }
                 }
             };
         }
-        registerReceiver(mediaPlayerCommandReceiver, new IntentFilter(SkipShuflleMediaPlayerCommands.COMMAND));
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SkipShuflleMediaPlayerCommands.COMMAND);
+        intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(mediaPlayerCommandReceiver, intentFilter);
     }
     public void unregisterMediaPlayerBroadcastReceiver() {
         if(mediaPlayerCommandReceiver != null){
