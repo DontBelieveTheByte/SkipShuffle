@@ -191,16 +191,21 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void setNotification(){
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
-        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV, 0));
-        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST, 1));
-        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP, 3));
+        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV, 0));
+        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST, 1));
+        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP, 3));
 
         if(isPaused){
             remoteViews.setImageViewResource(R.id.notif_play, R.drawable.pause_states);
-            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PAUSE, 2));
+            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PAUSE, 2));
         } else {
-            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY, 2));
+            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY, 2));
         }
+
+        Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 4, mainActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        remoteViews.setOnClickPendingIntent(R.id.notif_all, mainActivityPendingIntent);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ss_icon)
@@ -209,7 +214,7 @@ public class SkipShuffleMediaPlayer extends Service {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(9001, notificationBuilder.build());
     }
-    private PendingIntent buildNotificationPendingIntent(String command, int requestCode){
+    private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommands.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
