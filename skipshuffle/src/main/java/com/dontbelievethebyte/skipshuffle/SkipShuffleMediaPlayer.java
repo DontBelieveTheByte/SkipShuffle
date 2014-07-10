@@ -27,16 +27,6 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private BroadcastReceiver mediaPlayerCommandReceiver;
 
-    public class MediaCommandReceiver extends BroadcastReceiver {
-        public MediaCommandReceiver(){
-            super();
-        }
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context, "Intent detected.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private boolean isPaused = true;
 
     @Override
