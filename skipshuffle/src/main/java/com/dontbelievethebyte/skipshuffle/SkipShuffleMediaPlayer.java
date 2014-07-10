@@ -193,8 +193,14 @@ public class SkipShuffleMediaPlayer extends Service {
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
         remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PREV, 0));
         remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SHUFFLE_PLAYLIST, 1));
-        remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY, 2));
         remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_SKIP, 3));
+
+        if(isPaused){
+            remoteViews.setImageViewResource(R.id.notif_play, R.drawable.pause_states);
+            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PAUSE, 2));
+        } else {
+            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationPendingIntent(SkipShuflleMediaPlayerCommands.CMD_PLAY, 2));
+        }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ss_icon)
