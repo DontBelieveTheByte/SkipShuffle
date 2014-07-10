@@ -182,7 +182,7 @@ public class SkipShuffleMediaPlayer extends Service {
                 }
             };
         }
-        LocalBroadcastManager.getInstance(this).registerReceiver(mediaPlayerCommandReceiver, new IntentFilter(SkipShuflleMediaPlayerCommands.COMMAND));
+        registerReceiver(mediaPlayerCommandReceiver, new IntentFilter(SkipShuflleMediaPlayerCommands.COMMAND));
     }
     public void unregisterMediaPlayerBroadcastReceiver() {
         if(mediaPlayerCommandReceiver != null){

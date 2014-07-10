@@ -510,10 +510,9 @@ public class MainActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     private void broadcastToMediaPlayer(String command){
-        Intent intent = new Intent(BroadcastMessageInterface.CURRENT_FILE_PROCESSING);
+        Intent intent = new Intent(SkipShuflleMediaPlayerCommands.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommands.COMMAND, command);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        sendBroadcast(intent);
     }
 }
