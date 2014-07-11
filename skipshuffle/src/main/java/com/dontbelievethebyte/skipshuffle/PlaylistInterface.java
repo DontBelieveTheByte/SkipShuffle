@@ -1,6 +1,6 @@
 package com.dontbelievethebyte.skipshuffle;
 
-public interface Playlist {
+public interface PlaylistInterface {
 
     public String getFirst();
 
@@ -13,5 +13,5 @@ public interface Playlist {
     public void setCursorPosition(int position);
 
     public void shuffle();
-
+    
 }
