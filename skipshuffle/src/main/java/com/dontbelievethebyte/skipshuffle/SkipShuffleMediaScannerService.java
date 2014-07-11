@@ -15,7 +15,10 @@ public class SkipShuffleMediaScannerService extends IntentService {
 
     private AudioFileTypeValidator _audioFileTypeValidator = new AudioFileTypeValidator();
 
-    private List<File> mediaListReference ;
+    private Playlist _playlist ;
+
+    private SkipShuffleDbHandler _skipShuffleDbHandler;
+
 
     public SkipShuffleMediaScannerService(){
         super("SkipShuffleMediaScanner");
@@ -24,6 +27,7 @@ public class SkipShuffleMediaScannerService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String[] directoryPaths = intent.getStringArrayExtra(MediaScannerBroadcastMessageContract.DIRECTORIES_LIST);
+        //_skipShuffleDbHandler = new SkipShuffleDbHandler(getApplicationContext());
         for (String directory : directoryPaths) {
             File dir = new File(directory);
             recursiveFileList(dir);
@@ -50,6 +54,8 @@ public class SkipShuffleMediaScannerService extends IntentService {
 
         for (int j = 0; j < validFiles.size();j++){
             broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
+            Track track = new Track();
+            track.setPath(validFiles.get(j));
             //Add to database here.
             SystemClock.sleep(3000);
         }

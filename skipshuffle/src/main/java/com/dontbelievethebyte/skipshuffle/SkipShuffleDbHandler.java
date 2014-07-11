@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -19,8 +20,8 @@ public class SkipShuffleDbHandler extends SQLiteOpenHelper {
     public static final String COLUMN_CHECKSUM_ID = "checksum";
 
 
-    public SkipShuffleDbHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public SkipShuffleDbHandler(Context context, SQLiteDatabase.CursorFactory factory) {
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
@@ -61,8 +62,15 @@ public class SkipShuffleDbHandler extends SQLiteOpenHelper {
     }
 
     public Track getTrack(String checksum){
-
-        return new Track();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, "WHERE path=?", null, null, null, null);
+        Track track = new Track();
+        if(cursor.moveToFirst()){
+            cursor.moveToFirst();
+            track.setId(cursor.getInt(0));
+            track.setPath(cursor.getString(1));
+        }
+        return track;
     }
 
     public void removeAllTracks(){
@@ -72,6 +80,14 @@ public class SkipShuffleDbHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+    public void deletePlaylist(){
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete(TABLE_PLAYLIST, null, null);
+        sqLiteDatabase.close();
+    }
+    public Playlist makePlaylist() {
+        return new RandomPlaylist();
+    }
     public void addToPlaylist(){
 
     }

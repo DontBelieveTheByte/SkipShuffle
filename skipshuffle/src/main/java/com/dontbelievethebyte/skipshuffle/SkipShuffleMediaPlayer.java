@@ -21,11 +21,13 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
 
-    private Playlist playlist;
+    private Playlist _playlist;
 
-    private MediaPlayer mp;
+    private MediaPlayer _mp;
 
     private BroadcastReceiver mediaPlayerCommandReceiver;
+
+    private SkipShuffleDbHandler _skipShuffleDbHandler;
 
     private boolean isPaused = true;
 
@@ -45,8 +47,8 @@ public class SkipShuffleMediaPlayer extends Service {
     @Override
     public void onCreate(){
         registerMediaPlayerBroadcastReceiver();
-        mp = new MediaPlayer();
-        mp.setOnCompletionListener(new OnCompletionListener(){
+        _mp = new MediaPlayer();
+        _mp.setOnCompletionListener(new OnCompletionListener() {
             //WTF to do when the track is done playing? Implement next cursor.
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -61,12 +63,12 @@ public class SkipShuffleMediaPlayer extends Service {
     }
 
     public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
+        this._playlist = playlist;
         doPlay();
     }
 
     public Playlist getPlaylist() {
-        return playlist;
+        return _playlist;
     }
 
     public void doPlay() {
@@ -75,9 +77,9 @@ public class SkipShuffleMediaPlayer extends Service {
 //            if(0 == playlist.getCursorPosition()){
 //                loadAudioFile(playlist.getFirst());
 //            } else if (true == isPaused) {
-//                mp.start();
+//                _mp.start();
 //            }
-//            mp.start();
+//            _mp.start();
 //            isPaused = false;
 //        } else {
 //            Log.v(TAG, "PPPLAYLIST EMPTY!");
@@ -86,40 +88,40 @@ public class SkipShuffleMediaPlayer extends Service {
     }
 
     public void doPause() {
-        mp.pause();
+        _mp.pause();
         isPaused = true;
     }
 
     public void doSkip() {
-        loadAudioFile(playlist.getNext());
+        loadAudioFile(_playlist.getNext());
         doPlay();
     }
 
     public void doPrev() {
-        loadAudioFile(playlist.getPrev());
+        loadAudioFile(_playlist.getPrev());
         doPlay();
     }
 
     public void doShuffle() {
-        playlist.shuffle();
-        playlist.setCursorPosition(0);
-        loadAudioFile(playlist.getFirst());
+        _playlist.shuffle();
+        _playlist.setCursorPosition(0);
+        loadAudioFile(_playlist.getFirst());
         doPlay();
     }
 
     public int getPlaylistCursorPosition(){
-        return playlist.getCursorPosition();
+        return _playlist.getCursorPosition();
     }
 
     public void setPlaylistCursorPosition(int position){
-        playlist.setCursorPosition(position);
+        _playlist.setCursorPosition(position);
         doPlay();
     }
     public boolean isPaused() {
         return isPaused;
     }
     public boolean isPlaylistSet() {
-        if (null == playlist) {
+        if (null == _playlist) {
             return false;
         } else {
             return true;
@@ -128,9 +130,9 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void loadAudioFile(String mediaFile) {
         try {
-            mp.reset();
-            mp.setDataSource(mediaFile);
-            mp.prepare();
+            _mp.reset();
+            _mp.setDataSource(mediaFile);
+            _mp.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
@@ -209,7 +211,7 @@ public class SkipShuffleMediaPlayer extends Service {
         remoteViews.setOnClickPendingIntent(R.id.notif_all, mainActivityPendingIntent);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ss_icon)
+        notificationBuilder.setSmallIcon(R.drawable.ss_icon_notif)
                            .setContent(remoteViews);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
