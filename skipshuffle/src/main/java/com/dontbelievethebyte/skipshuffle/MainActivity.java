@@ -32,7 +32,6 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    private boolean isPlaylistSet = false;
     private Integer playState = 0;
 
     private UI ui;
@@ -40,6 +39,7 @@ public class MainActivity extends Activity {
 
     private MediaScannerDialog mediaScannerDialog;
     private BroadcastReceiver mediaScannerReceiver;
+    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     private static final String TAG = "SkipShuffleMain";
     private static final String IS_SCANNING_MEDIA = "isScanningMedia";
@@ -347,6 +347,11 @@ public class MainActivity extends Activity {
         //Start the mediaPlayer service.
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
+        //Register mediaplayer broadcast receiver, mandatory to get the current state of the player.
+
+        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver();
+        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
+
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -418,6 +423,11 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
+        if(mediaScannerDialog != null){
+            mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
+            mediaScannerDialog.dismiss();
+        }
+        unregisterReceiver(mediaPlayerBroadcastReceiver);
     }
 
     @Override
@@ -426,7 +436,9 @@ public class MainActivity extends Activity {
         ui.playBtn.clearAnimation();
         if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
             mediaScannerDialog.dismiss();
+            mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
         }
+        unregisterReceiver(mediaPlayerBroadcastReceiver);
         super.onPause();
     }
 
@@ -434,14 +446,18 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
         }
+        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE));
         ui.reboot();
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+
+        //Probably don't need this anymore...@TODO
         playState = savedInstanceState.getInt(PLAY_STATE);
 
         //Check if we're scanning media beforehand and.
@@ -457,9 +473,9 @@ public class MainActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(PLAY_STATE, playState);
         outState.putBoolean(IS_SCANNING_MEDIA, true);
-        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
-            mediaScannerDialog.dismiss();
-        }
+//        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+//            mediaScannerDialog.dismiss();
+//        }
         super.onSaveInstanceState(outState);
     }
 
@@ -470,14 +486,14 @@ public class MainActivity extends Activity {
                 if(preferencesHelper.isHapticFeedback()){
                     view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
-//                if(isPlaylistSet == false) {
-//                    if(null == mediaScannerDialog) {
-//                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-//                    }
-//                    mediaScannerDialog.pickMediaDirectories();
-//                    //Return true because we already handled the event and want to prevent bubbling.
-//                    return true;
-//                }
+                if(mediaPlayerBroadcastReceiver == null || mediaPlayerBroadcastReceiver.getPlaylistID() == 0) {
+                    if(null == mediaScannerDialog) {
+                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                    }
+                    mediaScannerDialog.pickMediaDirectories();
+                    //Return true because we already handled the event and want to prevent bubbling.
+                    return true;
+                }
             }
             return false;
         }
