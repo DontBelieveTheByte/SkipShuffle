@@ -66,12 +66,14 @@ public class MainActivity extends Activity {
             flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
+                    doPause();
                     skipBtn.setImageDrawable(getResources().getDrawable(R.drawable.next_btn_pressed));
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     skipBtn.setImageDrawable(getResources().getDrawable(R.drawable.next_states));
+                    doPlay();
                 }
 
                 @Override
@@ -82,12 +84,14 @@ public class MainActivity extends Activity {
             flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
+                    doPause();
                     prevBtn.setImageDrawable(getResources().getDrawable(R.drawable.prev_btn_pressed));
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     prevBtn.setImageDrawable(getResources().getDrawable(R.drawable.prev_states));
+                    doPlay();
                 }
 
                 @Override
@@ -98,12 +102,14 @@ public class MainActivity extends Activity {
             flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
+                    doPause();
                     shuffleBtn.setImageDrawable(getResources().getDrawable(R.drawable.shuffle_btn_pressed));
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     shuffleBtn.setImageDrawable(getResources().getDrawable(R.drawable.shuffle_states));
+                    doPlay();
                 }
 
                 @Override
