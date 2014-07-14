@@ -9,4 +9,6 @@ public class SkipShuflleMediaPlayerCommandsContract {
     public static final String CMD_PREV = "com.dontbelievethebyte.cmd.PREV";
     public static final String CMD_SHUFFLE_PLAYLIST = "com.dontbelievethebyte.cmd.SHUFFLE_PLAYLIST";
     public static final String CMD_GET_PLAYER_STATE = "com.dontbelievethebyte.cmd.GET_PLAYER_STATE";
+    public static final String PLAYLIST_ID = "com.dontbelievethebyte.state.PLAYLIST_ID";
+    public static final String PLAYLIST_CURSOR_POSITION = "com.dontbelievethebyte.state.PLAYLIST_ID";
 }
