@@ -2,7 +2,6 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 
 import java.io.File;
@@ -15,7 +14,7 @@ public class SkipShuffleMediaScannerService extends IntentService {
 
     private AudioFileTypeValidator _audioFileTypeValidator = new AudioFileTypeValidator();
 
-    private Playlist _playlist ;
+    private PlaylistInterface _playlist ;
 
     private SkipShuffleDbHandler _skipShuffleDbHandler;
 
@@ -27,14 +26,14 @@ public class SkipShuffleMediaScannerService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String[] directoryPaths = intent.getStringArrayExtra(MediaScannerBroadcastMessageContract.DIRECTORIES_LIST);
-        //_skipShuffleDbHandler = new SkipShuffleDbHandler(getApplicationContext());
+        _skipShuffleDbHandler = new SkipShuffleDbHandler(getApplicationContext());
         for (String directory : directoryPaths) {
             File dir = new File(directory);
-            recursiveFileList(dir);
+            recursiveMediaDirectoryScan(dir);
         }
     }
 
-    private void recursiveFileList(File dir) {
+    private void recursiveMediaDirectoryScan(File dir) {
 
         File[] files = dir.listFiles();
 
@@ -43,7 +42,7 @@ public class SkipShuffleMediaScannerService extends IntentService {
         for (int i = 0; i < files.length; i++) {
             //Check if directory
             if (files[i].isDirectory())
-                recursiveFileList(files[i]);
+                recursiveMediaDirectoryScan(files[i]);
             else {
                 //Fill an array list with valid files since when can't trust the last file position index to be a valid audio file.
                 if (_audioFileTypeValidator.VALID == _audioFileTypeValidator.validate(files[i].getAbsolutePath())) {
@@ -51,13 +50,12 @@ public class SkipShuffleMediaScannerService extends IntentService {
                 }
             }
         }
-
+        RandomPlaylist randomPlaylist = new RandomPlaylist(_skipShuffleDbHandler);
         for (int j = 0; j < validFiles.size();j++){
             broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
             Track track = new Track();
             track.setPath(validFiles.get(j));
-            //Add to database here.
-            SystemClock.sleep(3000);
+            _skipShuffleDbHandler.addTrack(track);
         }
     }
 
