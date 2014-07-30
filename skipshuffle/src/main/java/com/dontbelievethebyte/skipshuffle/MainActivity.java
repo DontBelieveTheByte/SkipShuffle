@@ -294,42 +294,46 @@ public class MainActivity extends Activity {
             isScanningMedia = true;
         }
         protected void pickMediaDirectories() {
-            Intent intent = new Intent(getApplicationContext(), FilePickerActivity.class);
+            Intent intent = new Intent(MainActivity.this, FilePickerActivity.class);
             intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
             intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
             intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
-            startActivityForResult(intent, REQUEST_PICK_FILE);
             Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
+            MainActivity.this.startActivityForResult(intent, 777);
         }
     };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
-            switch(requestCode) {
-                case 777:
-                    if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
-                        // Get the file path
-                        List<File> filePickerActivityResult = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                        if(filePickerActivityResult.isEmpty()){
-                            Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
-                        } else {
-                            String[] mediaDirectoriesToScan= new String[filePickerActivityResult.size()];
-                            int i = 0;
-                            //Save to a class instance array in case the activity needs to restart.
-                            for (Iterator<File> iterator = filePickerActivityResult.iterator(); iterator.hasNext(); ) {
-                                File directory = iterator.next();
-                                mediaDirectoriesToScan[i] = directory.getAbsolutePath();
-                                i++;
-                            }
-                            if(null == mediaScannerDialog) {
-                                mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-                            }
-                            preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
-                            mediaScannerDialog.doScan(mediaDirectoriesToScan);
-                        }
-                    }
-            }
+//        if(resultCode == RESULT_OK && requestCode == 777) {
+        Log.d(TAG, "R code = : " + requestCode);
+            if(resultCode == RESULT_OK) {
+
+                Log.d(TAG, "OKOKOKOOK");
+//            if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
+//                // Get the file path
+//                List<File> filePickerActivityResult = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
+//                if(filePickerActivityResult.isEmpty()){
+//                    Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
+//                } else {
+//                    //Check this shit.
+//                    String[] mediaDirectoriesToScan= new String[filePickerActivityResult.size()];
+//                    int i = 0;
+//                    //Save to a class instance array in case the activity needs to restart.
+//                    for (Iterator<File> iterator = filePickerActivityResult.iterator(); iterator.hasNext(); ) {
+//                        File directory = iterator.next();
+//                        mediaDirectoriesToScan[i] = directory.getAbsolutePath();
+//                        i++;
+//                    }
+//                    if(null == mediaScannerDialog) {
+//                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+//                    }
+//                    preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
+//                    mediaScannerDialog.doScan(mediaDirectoriesToScan);
+//                }
+//            }
+        } else {
+            Log.d(TAG, "NOPE nwo :(");
         }
     }
 
