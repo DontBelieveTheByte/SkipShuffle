@@ -16,7 +16,7 @@ public interface PlaylistInterface {
 
     public int setCursorPosition(int position);
 
-    public int addTrack(Track track);
+    public void addTrack(Track track);
 
     public void removeTrack(Track track);
 
