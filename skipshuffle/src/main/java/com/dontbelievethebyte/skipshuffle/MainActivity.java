@@ -6,11 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -19,9 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.coderplus.filepicker.FilePickerActivity;
@@ -42,130 +36,14 @@ public class MainActivity extends Activity {
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     private static final String TAG = "SkipShuffleMain";
-    private static final String IS_SCANNING_MEDIA = "isScanningMedia";
-    private static final String PLAY_STATE = "playState";
-    private static final Integer PLAYING = 1;
-    private static final Integer PAUSED = -1;
+
+    private static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
+
+    public static final String PLAY_STATE = "PLAY_STATE";
+    public static final Integer PLAYING = 1;
+    public static final Integer PAUSED = -1;
 
     protected static int REQUEST_PICK_FILE = 777;
-
-    private class UI {
-        public ImageButton playlistBtn = (ImageButton) findViewById(R.id.playlistBtn);
-        public ImageButton prevBtn = (ImageButton) findViewById(R.id.prevBtn);
-        public ImageButton playBtn = (ImageButton) findViewById(R.id.playBtn);
-        public ImageButton shuffleBtn = (ImageButton) findViewById(R.id.shuffleBtn);
-        public ImageButton skipBtn = (ImageButton) findViewById(R.id.skipBtn);
-
-        public Animation ltr = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.ltr);
-        public Animation flipRightAnimation  = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_right);
-        public Animation flipDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_down);
-        public Animation flipLeftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flip_left);
-        public Animation blinkAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
-
-        public UI(){
-            flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    doPause();
-                    skipBtn.setImageDrawable(getResources().getDrawable(R.drawable.next_btn_pressed));
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    skipBtn.setImageDrawable(getResources().getDrawable(R.drawable.next_states));
-                    doPlay();
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    doPause();
-                    prevBtn.setImageDrawable(getResources().getDrawable(R.drawable.prev_btn_pressed));
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    prevBtn.setImageDrawable(getResources().getDrawable(R.drawable.prev_states));
-                    doPlay();
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                    doPause();
-                    shuffleBtn.setImageDrawable(getResources().getDrawable(R.drawable.shuffle_btn_pressed));
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    shuffleBtn.setImageDrawable(getResources().getDrawable(R.drawable.shuffle_states));
-                    doPlay();
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-        }
-
-        public void doPlay() {
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-            playBtn.startAnimation(ltr);
-        }
-
-        public void doPause() {
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-            playBtn.startAnimation(blinkAnimation);
-        }
-
-        private void doSkip() {
-            playBtn.clearAnimation();
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-            playBtn.startAnimation(blinkAnimation);
-            skipBtn.startAnimation(flipRightAnimation);
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-            playBtn.startAnimation(ltr);
-        }
-
-        private void doPrev() {
-            playBtn.clearAnimation();
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-            playBtn.startAnimation(blinkAnimation);
-            prevBtn.startAnimation(flipLeftAnimation);
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-            playBtn.startAnimation(ltr);
-        }
-
-        private void doShuffle() {
-            playBtn.clearAnimation();
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
-            playBtn.startAnimation(blinkAnimation);
-            shuffleBtn.startAnimation(flipDownAnimation);
-            playBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
-            playBtn.startAnimation(ltr);
-        }
-
-        private void reboot(){
-            if(PLAYING == playState) {
-                doPlay();
-            } else if (PAUSED == playState) {
-                doPause();
-            }
-        }
-
-    };
-
 
     private class MediaScannerDialog {
 
@@ -231,10 +109,9 @@ public class MainActivity extends Activity {
             isScanningMedia = false;
         }
 
-        public void doScan(String[] directories){
+        public void doScan(){
             registerMediaScannerBroadcastReceiver();
-            Intent mediaScannerIntent = new Intent(MainActivity.this, SkipShuffleMediaScannerService.class);
-            mediaScannerIntent.putExtra(MediaScannerBroadcastMessageContract.DIRECTORIES_LIST, directories);
+            Intent mediaScannerIntent = new Intent(MainActivity.this, MediaScannerService.class);
             startService(mediaScannerIntent);
             isScanningMedia = true;
         }
@@ -247,6 +124,10 @@ public class MainActivity extends Activity {
             MainActivity.this.startActivityForResult(intent, REQUEST_PICK_FILE);
         }
     };
+
+    public Integer getPlayState(){
+        return playState;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -270,7 +151,7 @@ public class MainActivity extends Activity {
                         mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
                     }
                     preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
-                    mediaScannerDialog.doScan(mediaDirectoriesToScan);
+                    mediaScannerDialog.doScan();
                 }
             }
         }
@@ -281,8 +162,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Set up UI, this can be later instantiated from a factory to produce a different UI.
-        ui = new UI();
+        //Set up UI, this can be later instantiated user prefs to get an alternative UI.
+        ui = UI.createUI(MainActivity.this);
 
         //Set up preferences
         preferencesHelper = new PreferencesHelper(getApplicationContext());
@@ -421,7 +302,7 @@ public class MainActivity extends Activity {
         super.onSaveInstanceState(outState);
     }
 
-    private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
+    public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
@@ -458,7 +339,7 @@ public class MainActivity extends Activity {
                 if(null == preferencesHelper.getMediaDirectories()){
                     mediaScannerDialog.pickMediaDirectories();
                 } else {
-                    mediaScannerDialog.doScan(preferencesHelper.getMediaDirectories());
+                    mediaScannerDialog.doScan();
                 }
                 return true;
             case R.id.set_target_directories:
