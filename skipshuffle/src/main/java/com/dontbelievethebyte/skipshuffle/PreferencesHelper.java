@@ -64,8 +64,8 @@ public class PreferencesHelper {
 
     public void setMediaDirectories(String[] newDirectories) {
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i=0; i<newDirectories.length; i++){
-            stringBuilder.append(newDirectories[i]).append(context.getString(R.string.pref_media_directories_separator));
+        for(String directory : newDirectories){
+            stringBuilder.append(directory).append(context.getString(R.string.pref_media_directories_separator));
         }
         sharedPreferences.edit().putString(context.getString(R.string.pref_media_directories), stringBuilder.toString()).apply();
         directories = newDirectories;
@@ -78,4 +78,4 @@ public class PreferencesHelper {
         //return sharedPreferences.getInt(getString(R.string.pref_current_playlist_id), 0);
         return 1;
     }
-};
+}
