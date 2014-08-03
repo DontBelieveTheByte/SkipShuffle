@@ -8,6 +8,9 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class PreferencesHelper {
+
+    private static final String TAG = "SkipShufflePrefsHelper";
+
     private boolean hapticFeedback;
     private String[] directories;
     private SharedPreferences sharedPreferences;
