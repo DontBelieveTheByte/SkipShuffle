@@ -171,16 +171,8 @@ public class MainActivity extends Activity {
         private SharedPreferences sharedPreferences;
 
         public PreferencesHelper(){
-            Log.d(TAG, "Constructing....");
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-            hapticFeedback = sharedPreferences.getBoolean(getString(R.string.pref_haptic_feedback), false);
-            String directoriesString = sharedPreferences.getString(getString(R.string.pref_media_directories), null);
-            if(directoriesString != null){
-                directories = directoriesString.split("ಠ_ಠ");
-                Log.v(TAG, "MEDIA STRING NOT NULL : " + directoriesString.toString());
-            } else {
-                Log.v(TAG, "MEDIA STRING was WAS WAS NULL");
-            }
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         }
         public boolean isHapticFeedback() {
             return hapticFeedback;
@@ -209,16 +201,33 @@ public class MainActivity extends Activity {
         }
 
         public String[] getMediaDirectories() {
+            if(null == directories){
+                String directoriesString = sharedPreferences.getString(
+                        getString(R.string.pref_media_directories),
+                        Environment.getExternalStorageDirectory().getAbsolutePath()
+                );
+                directories = directoriesString.split(getString(R.string.pref_media_directories_separator));
+                //Cleanup the last path because it won't split.
+                directories[directories.length-1] = directories[directories.length-1].replace(getString(R.string.pref_media_directories_separator), "");
+            }
             return directories;
         }
 
-        public void setMediaDirectories(String[] directories) {
+        public void setMediaDirectories(String[] newDirectories) {
             StringBuilder stringBuilder = new StringBuilder();
-            for(int i=0; i<directories.length; i++){
-                stringBuilder.append(directories[i]).append("ಠ_ಠ");
+            for(int i=0; i<newDirectories.length; i++){
+                stringBuilder.append(newDirectories[i]).append(getString(R.string.pref_media_directories_separator));
             }
             sharedPreferences.edit().putString(getString(R.string.pref_media_directories), stringBuilder.toString()).apply();
-            this.directories = directories;
+            directories = newDirectories;
+        }
+        public void setCurrentPlaylist(int id){
+            sharedPreferences.edit().putInt(getString(R.string.pref_current_playlist_id), id).apply();
+        }
+
+        public int getCurrentPlaylist(){
+            //return sharedPreferences.getInt(getString(R.string.pref_current_playlist_id), 0);
+            return 1;
         }
     };
 
@@ -305,35 +314,29 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(resultCode == RESULT_OK && requestCode == 777) {
-        Log.d(TAG, "R code = : " + requestCode);
-            if(resultCode == RESULT_OK) {
-
-                Log.d(TAG, "OKOKOKOOK");
-//            if(data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
-//                // Get the file path
-//                List<File> filePickerActivityResult = (List<File>)data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-//                if(filePickerActivityResult.isEmpty()){
-//                    Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
-//                } else {
-//                    //Check this shit.
-//                    String[] mediaDirectoriesToScan= new String[filePickerActivityResult.size()];
-//                    int i = 0;
-//                    //Save to a class instance array in case the activity needs to restart.
-//                    for (Iterator<File> iterator = filePickerActivityResult.iterator(); iterator.hasNext(); ) {
-//                        File directory = iterator.next();
-//                        mediaDirectoriesToScan[i] = directory.getAbsolutePath();
-//                        i++;
-//                    }
-//                    if(null == mediaScannerDialog) {
-//                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-//                    }
-//                    preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
-//                    mediaScannerDialog.doScan(mediaDirectoriesToScan);
-//                }
-//            }
-        } else {
-            Log.d(TAG, "NOPE nwo :(");
+        if(resultCode == RESULT_OK && requestCode == 777) {
+            if (data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
+                // Get the file path
+                List<File> filePickerActivityResult = (List<File>) data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                if (filePickerActivityResult.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
+                } else {
+                    //Check this shit.
+                    String[] mediaDirectoriesToScan = new String[filePickerActivityResult.size()];
+                    int i = 0;
+                    //Save to a class instance array in case the activity needs to restart.
+                    for (Iterator<File> iterator = filePickerActivityResult.iterator(); iterator.hasNext(); ) {
+                        File directory = iterator.next();
+                        mediaDirectoriesToScan[i] = directory.getAbsolutePath();
+                        i++;
+                    }
+                    if (null == mediaScannerDialog) {
+                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+                    }
+                    preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
+                    mediaScannerDialog.doScan(mediaDirectoriesToScan);
+                }
+            }
         }
     }
 
@@ -477,9 +480,9 @@ public class MainActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(PLAY_STATE, playState);
         outState.putBoolean(IS_SCANNING_MEDIA, true);
-//        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
-//            mediaScannerDialog.dismiss();
-//        }
+        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.dismiss();
+        }
         super.onSaveInstanceState(outState);
     }
 
@@ -490,7 +493,7 @@ public class MainActivity extends Activity {
                 if(preferencesHelper.isHapticFeedback()){
                     view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
-                if(mediaPlayerBroadcastReceiver == null || mediaPlayerBroadcastReceiver.getPlaylistID() == 0) {
+                if(mediaPlayerBroadcastReceiver == null || preferencesHelper.getCurrentPlaylist() == 0) {
                     if(null == mediaScannerDialog) {
                         mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
                     }
