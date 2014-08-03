@@ -1,21 +1,14 @@
 package com.dontbelievethebyte.skipshuffle;
 
 public class Track {
-    private int _id;
+    private long _id;
     private String _path;
 
-    public Track(){
+    public Track(){}
 
-    }
-
-    public Track(String path){
-        _path = path;
-    }
-
-    public int getId() {
+    public long getId() {
         return _id;
     }
-
 
     public String getPath() {
         return _path;
