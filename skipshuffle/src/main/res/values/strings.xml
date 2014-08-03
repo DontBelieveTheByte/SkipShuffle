@@ -17,22 +17,12 @@
     <string name="action_settings">Settings</string>
     <string name="haptic_feedback_not_available">Your device doesn\'t support haptic feedback.</string>
     <string name="haptic_feedback_off">Haptic feedback turned off.</string>
-    <string-array name="tracks">
-        <item>derpdfhdsfsd</item>
-        <item>herp</item>
-        <item>merp</item>
-        <item>cerp</item>
-        <item>fderp</item>
-        <item>dasdaerp</item>
-        <item>dedsa2rp</item>
-        <item>der3p</item>
-        <item>derpwewqewqe</item>
-        <item>chirp zixup</item>
-    </string-array>
     <string name="refresh">Refresh</string>
     <string name="set_music_dir">Set music directories</string>
     <string name="haptic_feedback">Haptic feedback toggle (vibration)</string>
     <string name="pref_haptic_feedback">PREF_HAPTIC_FEEDBACK</string>
     <string name="pref_media_directories">PREF_MEDIA_DIRECTORIES</string>
+    <string name="pref_media_directories_separator">☃ಠ_ಠ☃</string>
+    <string name="pref_current_playlist_id">PREF_MEDIA_DIRECTORIES</string>
     <string name="media_player_unkown_command">Unknown command.</string>
 </resources>
