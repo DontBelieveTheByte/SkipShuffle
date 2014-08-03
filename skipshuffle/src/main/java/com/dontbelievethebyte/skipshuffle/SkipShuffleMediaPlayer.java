@@ -20,11 +20,13 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
 
-    private Playlist _playlist;
+    private PlaylistInterface _playlist;
 
     private BroadcastReceiver mediaPlayerCommandReceiver;
 
     private PlayerWrapper _playerWrapper;
+
+    private int _playlistID;
 
     private class PlayerWrapper {
 
@@ -42,55 +44,49 @@ public class SkipShuffleMediaPlayer extends Service {
                 }
             });
         }
-        public void setPlaylist(Playlist playlist) {
-            _playlist = playlist;
+        public void setPlaylist(int Id) {
+            _playlist = new RandomPlaylist(Id, new DbHandler(getApplicationContext()));
         }
 
         public void doPlay() {
-            if(null != _playlist) {
-                //If we're at the start of the playlist.
-                if(0 == _playlist.getCursorPosition()){
-                    loadAudioFile(_playlist.getFirst());
-                } else if (true == isPaused) {
-                    _mp.start();
-                }
-                _mp.start();
-                isPaused = false;
-            } else {
-                //Throw empty playlist exception here.
-            }
-            broadcastCurrentState(buildBroadcastSate());
+//            if(null != _playlist) {
+//                //If we're at the start of the playlist.
+//                if(0 == _playlist.getCursorPosition()){
+//                    loadAudioFile(_playlist.getFirst());
+//                } else if (true == isPaused) {
+//                    _mp.start();
+//                }
+//                _mp.start();
+//                isPaused = false;
+//            } else {
+//                //Throw empty playlist exception here.
+//            }
+            broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, _playlistID, _playlist.getCursorPosition());
             setNotification();
         }
 
         public void doPause() {
-            _mp.pause();
-            isPaused = true;
-            broadcastCurrentState(buildBroadcastSate());
+//            _mp.pause();
+//            isPaused = true;
+            broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, _playlistID, _playlist.getCursorPosition());
             setNotification();
         }
 
         public void doSkip() {
-            loadAudioFile(_playlist.getNext());
+//            loadAudioFile(_playlist.getNext());
             doPlay();
-            broadcastCurrentState(buildBroadcastSate());
-            setNotification();
         }
 
         public void doPrev() {
-            loadAudioFile(_playlist.getPrev());
+//            loadAudioFile(_playlist.getPrev());
             doPlay();
-            broadcastCurrentState(buildBroadcastSate());
-            setNotification();
         }
 
         public void doShuffle() {
-            _playlist.shuffle();
-            _playlist.setCursorPosition(0);
-            loadAudioFile(_playlist.getFirst());
+//            _playlist.shuffle();
+//            _playlist.setCursorPosition(0);
+//            loadAudioFile(_playlist.getFirst());
             doPlay();
-            broadcastCurrentState(buildBroadcastSate());
-            setNotification();
         }
 
         public int getPlaylistCursorPosition(){
@@ -120,7 +116,6 @@ public class SkipShuffleMediaPlayer extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        registerMediaPlayerBroadcastReceiver();
         //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -134,7 +129,10 @@ public class SkipShuffleMediaPlayer extends Service {
     @Override
     public void onCreate(){
         registerMediaPlayerBroadcastReceiver();
+        broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 0, 0);
+
         _playerWrapper = new PlayerWrapper();
+        _playerWrapper.setPlaylist(1);
     }
 
     @Override
@@ -224,13 +222,11 @@ public class SkipShuffleMediaPlayer extends Service {
         return pendingIntent;
     }
 
-    private void broadcastCurrentState(String state){
+    private void broadcastCurrentState(String state, int playlistID, int position){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, state);
+        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, playlistID);
+        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION, position);
         sendStickyBroadcast(intent);
-    }
-
-    private String buildBroadcastSate(){
-        return "I'm a state";
     }
 }

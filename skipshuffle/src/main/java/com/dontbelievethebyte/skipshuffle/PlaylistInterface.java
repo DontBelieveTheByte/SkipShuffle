@@ -1,17 +1,26 @@
 package com.dontbelievethebyte.skipshuffle;
 
+import java.util.List;
+
 public interface PlaylistInterface {
 
-    public String getFirst();
+    public Track getFirst();
 
-    public String getNext();
+    public Track getNext();
 
-    public String getPrev();
+    public Track getPrev();
+
+    public List<Integer> getList();
 
     public int getCursorPosition();
 
-    public void setCursorPosition(int position);
+    public int setCursorPosition(int position);
+
+    public int addTrack(Track track);
+
+    public void removeTrack(Track track);
 
     public void shuffle();
-    
+
+    public void save();
 }

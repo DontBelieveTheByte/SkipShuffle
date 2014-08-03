@@ -9,15 +9,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkipShuffleMediaScannerService extends IntentService {
+public class MediaScannerService extends IntentService {
 
     private static final String TAG = "SkipShuffleMediaScan";
 
     private AudioFileTypeValidator _audioFileTypeValidator = new AudioFileTypeValidator();
 
-    private SkipShuffleDbHandler _skipShuffleDbHandler;
+    private DbHandler _DbHandler;
 
-    public SkipShuffleMediaScannerService(){
+    public MediaScannerService(){
         super("SkipShuffleMediaScanner");
     }
 
@@ -25,7 +25,7 @@ public class SkipShuffleMediaScannerService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
         String[] directoryPaths = preferencesHelper.getMediaDirectories();
-        _skipShuffleDbHandler = new SkipShuffleDbHandler(getApplicationContext());
+        _DbHandler = new DbHandler(getApplicationContext());
         for (String directory : directoryPaths) {
             Log.d(TAG, "PATH: " + directory.toString());
             File dir = new File(directory.toString());
@@ -52,12 +52,12 @@ public class SkipShuffleMediaScannerService extends IntentService {
                 }
             }
         }
-        RandomPlaylist playlist = new RandomPlaylist(1, _skipShuffleDbHandler);
+        RandomPlaylist playlist = new RandomPlaylist(1, _DbHandler);
         for (int j = 0; j < validFiles.size();j++){
             broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
             Track track = new Track();
             track.setPath(validFiles.get(j));
-            _skipShuffleDbHandler.addTrack(track);
+            _DbHandler.addTrack(track);
             playlist.addTrack(track);
             Log.v(TAG,"ADDDDINNNG TRACK");
         }

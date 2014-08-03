@@ -1,44 +1,109 @@
 package com.dontbelievethebyte.skipshuffle;
 
-import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-/**
- * Created by killthesystem on 2014-06-11.
- */
-public class RandomPlaylist implements Playlist{
+public class RandomPlaylist implements PlaylistInterface {
 
-    protected List<File> playlist;
+    private Integer playlistId;
 
-    @Override
-    public String getFirst() {
-        return null;
+    private DbHandler _DbHandler;
+
+    private int _cursor = 0;
+
+    private List<Integer> _tracksIds = new ArrayList<Integer>();
+
+    public RandomPlaylist(DbHandler dbHandler){
+        _DbHandler = dbHandler;
+    }
+    public RandomPlaylist(int Id, DbHandler dbHandler){
+        _DbHandler = dbHandler;
+        playlistId = Id;
     }
 
     @Override
-    public String getNext() {
-        return null;
-    }
+    public List<Integer> getList(){
+        return _tracksIds;
+    };
 
     @Override
-    public String getPrev() {
-        return null;
-    }
-
-    @Override
-    public int getCursorPosition() {
+    public int addTrack(Track track) {
+        if(!_tracksIds.contains(track.getId())){
+            _tracksIds.add(track.getId());
+        }
         return 0;
     }
 
     @Override
-    public void setCursorPosition(int position) {
+    public void removeTrack(Track track) {
+        if(_tracksIds.contains(track.getId())){
+            _tracksIds.remove(track.getId());
+        }
+    }
 
+    @Override
+    public Track getFirst() {
+        return _DbHandler.getTrack(0);
+    }
+
+    @Override
+    public Track getNext() {
+        if(_cursor >= _tracksIds.size()){
+            _cursor = 0;
+        } else {
+            _cursor++;
+        }
+        Track track;
+        track = _DbHandler.getTrack(_cursor);
+        return track;
+    }
+
+    @Override
+    public Track getPrev() {
+        if(_cursor <= 0){
+            _cursor = 0;
+        } else {
+            _cursor--;
+        }
+        Track track;
+        track = _DbHandler.getTrack(_cursor);
+        return track;
+    }
+
+    @Override
+    public int getCursorPosition() {
+        return _cursor;
+    }
+
+    @Override
+    public int setCursorPosition(int position) {
+        if(position > _tracksIds.size()){
+            _cursor = _tracksIds.size();
+        } else if(position < 0){
+            _cursor = 0;
+        } else {
+            _cursor = position;
+        }
+        return _cursor;
     }
 
     @Override
     public void shuffle(){
-
+        Collections.shuffle(_tracksIds);
+        _cursor = 0;
     }
 
+    @Override
+    public void save(){
+        if(playlistId != null) {
+            _DbHandler.savePlaylist(playlistId, _tracksIds);
+        } else {
+            _DbHandler.savePlaylist(null, _tracksIds);
+        }
+    }
+
+    public List<Track> getAllTracks(){
+        return _DbHandler.getAllPlaylistTracks(_tracksIds);
+    }
 }
