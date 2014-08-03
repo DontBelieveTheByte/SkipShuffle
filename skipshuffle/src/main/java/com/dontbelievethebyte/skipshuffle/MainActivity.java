@@ -165,71 +165,7 @@ public class MainActivity extends Activity {
         }
 
     };
-    private class PreferencesHelper {
-        private boolean hapticFeedback;
-        private String[] directories;
-        private SharedPreferences sharedPreferences;
 
-        public PreferencesHelper(){
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        }
-        public boolean isHapticFeedback() {
-            return hapticFeedback;
-        }
-
-        public void hapticFeedbackToggle(){
-            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            long[] pattern = {0L, 500L, 110L, 500L, 110L, 450L, 110L, 200L, 110L, 170L, 40L, 450L, 110L, 200L, 110L, 170L, 40L, 500L};
-
-            if(hapticFeedback && vibrator.hasVibrator()){
-                setHapticFeedback(false);
-                Toast.makeText(getApplicationContext(), R.string.haptic_feedback_off, Toast.LENGTH_SHORT).show();
-            } else {
-                setHapticFeedback(true);
-                if(vibrator.hasVibrator()){
-                    vibrator.vibrate(pattern, -1);
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.haptic_feedback_not_available, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-        public void setHapticFeedback(boolean hapticFeedback) {
-            sharedPreferences.edit().putBoolean(getString(R.string.pref_haptic_feedback), true).apply();
-            this.hapticFeedback = hapticFeedback;
-        }
-
-        public String[] getMediaDirectories() {
-            if(null == directories){
-                String directoriesString = sharedPreferences.getString(
-                        getString(R.string.pref_media_directories),
-                        Environment.getExternalStorageDirectory().getAbsolutePath()
-                );
-                directories = directoriesString.split(getString(R.string.pref_media_directories_separator));
-                //Cleanup the last path because it won't split.
-                directories[directories.length-1] = directories[directories.length-1].replace(getString(R.string.pref_media_directories_separator), "");
-            }
-            return directories;
-        }
-
-        public void setMediaDirectories(String[] newDirectories) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for(int i=0; i<newDirectories.length; i++){
-                stringBuilder.append(newDirectories[i]).append(getString(R.string.pref_media_directories_separator));
-            }
-            sharedPreferences.edit().putString(getString(R.string.pref_media_directories), stringBuilder.toString()).apply();
-            directories = newDirectories;
-        }
-        public void setCurrentPlaylist(int id){
-            sharedPreferences.edit().putInt(getString(R.string.pref_current_playlist_id), id).apply();
-        }
-
-        public int getCurrentPlaylist(){
-            //return sharedPreferences.getInt(getString(R.string.pref_current_playlist_id), 0);
-            return 1;
-        }
-    };
 
     private class MediaScannerDialog {
 
@@ -308,13 +244,13 @@ public class MainActivity extends Activity {
             intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
             intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
             Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
-            MainActivity.this.startActivityForResult(intent, 777);
+            MainActivity.this.startActivityForResult(intent, REQUEST_PICK_FILE);
         }
     };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode == 777) {
+        if(resultCode == RESULT_OK && requestCode == REQUEST_PICK_FILE) {
             if (data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
                 // Get the file path
                 List<File> filePickerActivityResult = (List<File>) data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
@@ -349,13 +285,12 @@ public class MainActivity extends Activity {
         ui = new UI();
 
         //Set up preferences
-        preferencesHelper = new PreferencesHelper();
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
 
         //Start the mediaPlayer service.
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
-        //Register mediaplayer broadcast receiver, mandatory to get the current state of the player.
-
+        //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver();
         registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
 
