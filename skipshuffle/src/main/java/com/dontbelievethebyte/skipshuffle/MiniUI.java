@@ -14,6 +14,8 @@ public class MiniUI extends UI {
 
     public MiniUI(MainActivity mainActivity){
         super(mainActivity);
+        mainActivity.setContentView(R.layout.activity_main);
+
         playlistBtn = (ImageButton) mainActivity.findViewById(R.id.playlistBtn);
         prevBtn = (ImageButton) mainActivity.findViewById(R.id.prevBtn);
         playBtn = (ImageButton) mainActivity.findViewById(R.id.playBtn);
@@ -116,5 +118,14 @@ public class MiniUI extends UI {
         shuffleBtn.startAnimation(flipDownAnimation);
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.play_states));
         playBtn.startAnimation(ltr);
+    }
+
+    @Override
+    public void reboot(){
+        if(mainActivity.mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY) {
+            doPlay();
+        } else {
+            doPause();
+        }
     }
 }
