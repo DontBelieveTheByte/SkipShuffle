@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 public class MiniUI extends UI {
 
@@ -83,15 +82,12 @@ public class MiniUI extends UI {
     public void doPlay() {
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.play_states));
         playBtn.startAnimation(ltr);
-        Toast.makeText(mainActivity, mainActivity.getString(R.string.play), Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
     public void doPause() {
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.pause_states));
         playBtn.startAnimation(blinkAnimation);
-        Toast.makeText(mainActivity, mainActivity.getString(R.string.pause), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -102,7 +98,6 @@ public class MiniUI extends UI {
         skipBtn.startAnimation(flipRightAnimation);
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.play_states));
         playBtn.startAnimation(ltr);
-        Toast.makeText(mainActivity, R.string.skip, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -113,7 +108,6 @@ public class MiniUI extends UI {
         prevBtn.startAnimation(flipLeftAnimation);
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.play_states));
         playBtn.startAnimation(ltr);
-        Toast.makeText(mainActivity, R.string.prev, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -124,7 +118,6 @@ public class MiniUI extends UI {
         shuffleBtn.startAnimation(flipDownAnimation);
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.play_states));
         playBtn.startAnimation(ltr);
-        Toast.makeText(mainActivity, R.string.shuffle, Toast.LENGTH_LONG).show();
     }
 
     @Override
