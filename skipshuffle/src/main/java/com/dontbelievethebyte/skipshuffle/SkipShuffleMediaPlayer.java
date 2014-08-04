@@ -114,9 +114,18 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void setNotification(){
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
-        remoteViews.setOnClickPendingIntent(R.id.notif_prev, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, 0));
-        remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, 1));
-        remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, 3));
+        remoteViews.setOnClickPendingIntent(
+                R.id.notif_prev,
+                buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, 0)
+        );
+        remoteViews.setOnClickPendingIntent(
+                R.id.notif_shuffle,
+                buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, 1)
+        );
+        remoteViews.setOnClickPendingIntent(
+                R.id.notif_skip,
+                buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, 3)
+        );
 
         if(playerWrapper.isPaused()){
             remoteViews.setImageViewResource(R.id.notif_play, R.drawable.pause_states);
@@ -141,7 +150,12 @@ public class SkipShuffleMediaPlayer extends Service {
     private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT
+        );
         return pendingIntent;
     }
 
