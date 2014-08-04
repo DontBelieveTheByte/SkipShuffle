@@ -7,112 +7,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
-import java.io.IOException;
 
 public class SkipShuffleMediaPlayer extends Service {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
 
-    private PlaylistInterface _playlist;
+    private PlaylistInterface playlist;
 
     private BroadcastReceiver mediaPlayerCommandReceiver;
 
-    private PlayerWrapper _playerWrapper;
+    private AndroidPlayerWrapper playerWrapper;
 
-    private int _playlistID;
-
-    private class PlayerWrapper {
-
-        private boolean isPaused = true;
-
-        private MediaPlayer _mp;
-
-        public PlayerWrapper(){
-            _mp = new MediaPlayer();
-            _mp.setOnCompletionListener(new OnCompletionListener() {
-                //WTF to do when the track is done playing? Implement next cursor.
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    doSkip();
-                }
-            });
-        }
-        public void setPlaylist(long id) {
-            _playlist = new RandomPlaylist(id, new DbHandler(getApplicationContext()));
-        }
-
-        public void doPlay() {
-//            if(null != _playlist) {
-//                //If we're at the start of the playlist.
-//                if(0 == _playlist.getCursorPosition()){
-//                    loadAudioFile(_playlist.getFirst());
-//                } else if (true == isPaused) {
-//                    _mp.start();
-//                }
-//                _mp.start();
-//                isPaused = false;
-//            } else {
-//                //Throw empty playlist exception here.
-//            }
-            broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, _playlistID, _playlist.getCursorPosition());
-            setNotification();
-        }
-
-        public void doPause() {
-//            _mp.pause();
-//            isPaused = true;
-            broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, _playlistID, _playlist.getCursorPosition());
-            setNotification();
-        }
-
-        public void doSkip() {
-//            loadAudioFile(_playlist.getNext());
-            doPlay();
-        }
-
-        public void doPrev() {
-//            loadAudioFile(_playlist.getPrev());
-            doPlay();
-        }
-
-        public void doShuffle() {
-//            _playlist.shuffle();
-//            _playlist.setCursorPosition(0);
-//            loadAudioFile(_playlist.getFirst());
-            doPlay();
-        }
-
-        public long getPlaylistCursorPosition(){
-            return _playlist.getCursorPosition();
-        }
-
-        public void setPlaylistCursorPosition(int position){
-            _playlist.setCursorPosition(position);
-            doPlay();
-        }
-        public boolean isPaused() {
-            return isPaused;
-        }
-
-        private void loadAudioFile(String mediaFile) {
-            try {
-                _mp.reset();
-                _mp.setDataSource(mediaFile);
-                _mp.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            }
-        }
-    };
+    private PreferencesHelper preferencesHelper;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -122,7 +33,6 @@ public class SkipShuffleMediaPlayer extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.d(TAG, "BOUND");
         return null;
     }
 
@@ -131,8 +41,16 @@ public class SkipShuffleMediaPlayer extends Service {
         registerMediaPlayerBroadcastReceiver();
         broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 0, 0);
 
-        _playerWrapper = new PlayerWrapper();
-        _playerWrapper.setPlaylist(1);
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
+
+        playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
+
+        playlist = new RandomPlaylist(
+                        preferencesHelper.getCurrentPlaylist(),
+                        new DbHandler(getApplicationContext())
+                    );
+        playerWrapper.setPlaylist(playlist);
+
     }
 
     @Override
@@ -146,36 +64,33 @@ public class SkipShuffleMediaPlayer extends Service {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     String actionStringId = intent.getAction();
-
-                    if(SkipShuflleMediaPlayerCommandsContract.COMMAND == actionStringId) {
+                    if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
                         String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-                        if(command != null){
-                            if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY == command){
-                                _playerWrapper.doPlay();
-                            } else if (SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE == command){
-                                _playerWrapper.doPause();
-                            } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command){
-                                _playerWrapper.doSkip();
-                            } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command){
-                                _playerWrapper.doPrev();
-                            } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST == command){
-                                _playerWrapper.doShuffle();
-                            } else {
-                                Log.v(TAG, getString(R.string.media_player_unkown_command));
-                            }
+                        if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY == command){
+                            playerWrapper.doPlay();
+                        } else if (SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE == command){
+                            playerWrapper.doPause();
+                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command){
+                            playerWrapper.doSkip();
+                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command){
+                            playerWrapper.doPrev();
+                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST == command){
+                            playerWrapper.doShuffle();
                         }
-
+                        broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, preferencesHelper.getCurrentPlaylist(), playlist.getCursorPosition());
+                        setNotification();
                     } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
                         //Filter out sticky broadcast on service start.
                         boolean isHeadphonesPlugged = (intent.getIntExtra("state", 0) > 0) && !isInitialStickyBroadcast();
-                        if(!_playerWrapper.isPaused() && isHeadphonesPlugged) {
-                            _playerWrapper.doPause();
+                        if(!playerWrapper.isPaused() && isHeadphonesPlugged) {
+                            playerWrapper.doPause();
                             setNotification();
                         }
                     }
                 }
             };
         }
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
@@ -195,7 +110,7 @@ public class SkipShuffleMediaPlayer extends Service {
         remoteViews.setOnClickPendingIntent(R.id.notif_shuffle, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, 1));
         remoteViews.setOnClickPendingIntent(R.id.notif_skip, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, 3));
 
-        if(_playerWrapper.isPaused()){
+        if(playerWrapper.isPaused()){
             remoteViews.setImageViewResource(R.id.notif_play, R.drawable.pause_states);
             remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 2));
         } else {
