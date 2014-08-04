@@ -69,10 +69,8 @@ public class DbHandler extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID}, COLUMN_PATH + "=?", new String[]{track.getPath()}, null, null, null);
 
         if(cursor.moveToFirst()){
-            Log.d(TAG, "NOT INSERTED");
             trackId = cursor.getLong(0);
         } else {
-            Log.d(TAG, "WAS INDEED INSERTED");
             trackId = sqLiteDatabase.insert(TABLE_TRACKS, null, contentValues);
         }
         track.setId(trackId);
@@ -127,7 +125,6 @@ public class DbHandler extends SQLiteOpenHelper {
             Cursor cursor = sqLiteDatabase.query(TABLE_PLAYLIST, new String[]{COLUMN_TRACKS}, COLUMN_ID + "=?", new String[]{playlistId.toString()}, null, null, null);
             if(cursor.moveToFirst()){
                 JSONArray jsonArray = new JSONArray(cursor.getString(0));
-                Log.d("DERP", cursor.getString(0));
                 for(int i=0; i<jsonArray.length(); i++){
                     playlistTracks.add(jsonArray.getLong(i));
                 }
