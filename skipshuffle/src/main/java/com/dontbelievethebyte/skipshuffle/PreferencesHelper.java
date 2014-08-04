@@ -70,12 +70,11 @@ public class PreferencesHelper {
         sharedPreferences.edit().putString(context.getString(R.string.pref_media_directories), stringBuilder.toString()).apply();
         directories = newDirectories;
     }
-    public void setCurrentPlaylist(int id){
-        sharedPreferences.edit().putInt(context.getString(R.string.pref_current_playlist_id), id).apply();
+    public void setCurrentPlaylist(long id){
+        sharedPreferences.edit().putLong(context.getString(R.string.pref_current_playlist_id), id).apply();
     }
 
     public long getCurrentPlaylist(){
-        //return sharedPreferences.getInt(getString(R.string.pref_current_playlist_id), 0);
-        return 1L;
+        return sharedPreferences.getLong(context.getString(R.string.pref_current_playlist_id), 1);
     }
 }
