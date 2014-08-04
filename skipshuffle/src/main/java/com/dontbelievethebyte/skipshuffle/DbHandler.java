@@ -15,7 +15,9 @@ import java.util.List;
 
 public class DbHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final String TAG = "SkipShuffleDB";
+
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "skipshuffle.db";
     private static final String TABLE_TRACKS = "tracks";
     private static final String TABLE_PLAYLIST = "playlist";
@@ -55,15 +57,26 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     //int return is newly added id of the row or -1 on error
-    public long addTrack(Track track) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PATH, track.getPath());
+    public void addTrack(Track track) {
+
+        long trackId;
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PATH, track.getPath());
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        long trackId = sqLiteDatabase.insert(TABLE_TRACKS, null, values);
+        Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID}, COLUMN_PATH + "=?", new String[]{track.getPath()}, null, null, null);
+
+        if(cursor.moveToFirst()){
+            Log.d(TAG, "NOT INSERTED");
+            trackId = cursor.getLong(0);
+        } else {
+            Log.d(TAG, "WAS INDEED INSERTED");
+            trackId = sqLiteDatabase.insert(TABLE_TRACKS, null, contentValues);
+        }
+        track.setId(trackId);
         sqLiteDatabase.close();
-        return trackId;
     }
 
     public long addPlaylist(PlaylistInterface playlistInterface){
@@ -77,9 +90,9 @@ public class DbHandler extends SQLiteOpenHelper {
         return playlistId;
     };
 
-    public Track getTrack(int id){
+    public Track getTrack(Long id){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, "WHERE " + COLUMN_ID + "=?", new String[]{}, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, COLUMN_ID + "=?", new String[]{id.toString()}, null, null, null);
         Track track = new Track();
         if(cursor.moveToFirst()){
             cursor.moveToFirst();
@@ -90,12 +103,12 @@ public class DbHandler extends SQLiteOpenHelper {
         return track;
     }
 
-    public List<Track> getAllPlaylistTracks(List<Integer> tracksIds){
+    public List<Track> getAllPlaylistTracks(List<Long> tracksIds){
         List<Track> tracks = new ArrayList<Track>();
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        for(Integer trackId : tracksIds){
+        for(Long trackId : tracksIds){
             Track track = new Track();
-            Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, "WHERE "+ COLUMN_ID+"=?", new String[]{}, null, null, null);
+            Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, COLUMN_ID+"=?", new String[]{trackId.toString()}, null, null, null);
             if(cursor.moveToFirst()){
                 cursor.moveToFirst();
                 track.setId(cursor.getInt(0));
@@ -106,46 +119,32 @@ public class DbHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return tracks;
     }
-    public void removeAllTracks(){
+
+//    public List<Integer> loadPlaylist(Integer playlistId) throws JSONException {
+//        List<Integer> playlistTracks = new ArrayList<Integer>();
+//        if(playlistId != null){
+//            SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+//            Cursor cursor = sqLiteDatabase.query(TABLE_PLAYLIST, new String[]{COLUMN_ID}, "WHERE " + COLUMN_ID + "=?", new String[]{playlistId.toString()}, null, null, null);
+//            if(cursor.moveToFirst()){
+//                JSONArray jsonArray = new JSONArray(cursor.getString(0));
+//                Log.d("DERP", cursor.getString(0));
+//                for(int i=0; i<jsonArray.length(); i++){
+//                    playlistTracks.add(jsonArray.getInt(i));
+//                }
+//            }
+//            return playlistTracks;
+//        } else {
+//            return null;
+//        }
+//    }
+
+    public void deletePlaylist(int id){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_TRACKS, null, null);
         sqLiteDatabase.delete(TABLE_PLAYLIST, null, null);
         sqLiteDatabase.close();
     }
 
-    public void deletePlaylist(){
-        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_PLAYLIST, null, null);
-        sqLiteDatabase.close();
-    }
-
-    public void addToPlaylist(){
-
-    }
-
-    public void getLastPlayed(){
-//        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-//        sqLiteDatabase.query(TABLE_PLAYLIST, COLUMN_CHECKSUM_ID, "WHERE ",null );
-    }
-
-    public List<Integer> loadPlaylist(Integer playlistId) throws JSONException {
-        List<Integer> playlistTracks = new ArrayList<Integer>();
-        if(playlistId != null){
-            SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.query(TABLE_PLAYLIST, new String[]{COLUMN_ID}, "WHERE " + COLUMN_ID + "=?", new String[]{playlistId.toString()}, null, null, null);
-            if(cursor.moveToFirst()){
-                JSONArray jsonArray = new JSONArray(cursor.getString(0));
-                Log.d("DERP", cursor.getString(0));
-                for(int i=0; i<jsonArray.length(); i++){
-                    playlistTracks.add(jsonArray.getInt(i));
-                }
-            }
-            return playlistTracks;
-        } else {
-            return null;
-        }
-    }
-    public void savePlaylist(Integer playlistId, List<Integer> trackIndexes){
+    public void savePlaylist(Integer playlistId, List<Long> trackIndexes){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         //@TODO not error safe.
         JSONArray jsonArray = new JSONArray(trackIndexes);
