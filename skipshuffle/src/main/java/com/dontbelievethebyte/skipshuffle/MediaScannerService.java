@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class MediaScannerService extends IntentService {
         super("SkipShuffleMediaScanner");
     }
 
+    private RandomPlaylist playlist;
+
     @Override
     protected void onHandleIntent(Intent intent) {
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
@@ -34,6 +37,10 @@ public class MediaScannerService extends IntentService {
     }
 
     private void recursiveMediaDirectoryScan(File dir) {
+
+        if(null == playlist){
+            playlist = new RandomPlaylist(1, _DbHandler);
+        }
 
         Log.d(TAG, "PATH: " + dir.getAbsolutePath());
 
@@ -52,16 +59,17 @@ public class MediaScannerService extends IntentService {
                 }
             }
         }
-        RandomPlaylist playlist = new RandomPlaylist(1, _DbHandler);
         for (int j = 0; j < validFiles.size();j++){
             broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
             Track track = new Track();
             track.setPath(validFiles.get(j));
             _DbHandler.addTrack(track);
             playlist.addTrack(track);
-            Log.v(TAG,"ADDDDINNNG TRACK");
+            Log.v(TAG," TRACK : __ : " + track.getId());
         }
         playlist.save();
+        Log.d("GGGG", "MERP : " + playlist.getList().toString());
+        Toast.makeText(getApplicationContext(), R.string.media_scan_done, Toast.LENGTH_SHORT);
     }
 
     private void broadcastIntentStatus(String directory, String status, boolean isLast){
