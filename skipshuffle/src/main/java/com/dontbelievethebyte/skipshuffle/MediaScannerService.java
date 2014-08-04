@@ -39,7 +39,7 @@ public class MediaScannerService extends IntentService {
     private void recursiveMediaDirectoryScan(File dir) {
 
         if(null == playlist){
-            playlist = new RandomPlaylist(1, _DbHandler);
+            playlist = new RandomPlaylist(1L, _DbHandler);
         }
 
         Log.d(TAG, "PATH: " + dir.getAbsolutePath());

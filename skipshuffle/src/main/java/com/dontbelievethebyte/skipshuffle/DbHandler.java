@@ -120,31 +120,31 @@ public class DbHandler extends SQLiteOpenHelper {
         return tracks;
     }
 
-//    public List<Integer> loadPlaylist(Integer playlistId) throws JSONException {
-//        List<Integer> playlistTracks = new ArrayList<Integer>();
-//        if(playlistId != null){
-//            SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-//            Cursor cursor = sqLiteDatabase.query(TABLE_PLAYLIST, new String[]{COLUMN_ID}, "WHERE " + COLUMN_ID + "=?", new String[]{playlistId.toString()}, null, null, null);
-//            if(cursor.moveToFirst()){
-//                JSONArray jsonArray = new JSONArray(cursor.getString(0));
-//                Log.d("DERP", cursor.getString(0));
-//                for(int i=0; i<jsonArray.length(); i++){
-//                    playlistTracks.add(jsonArray.getInt(i));
-//                }
-//            }
-//            return playlistTracks;
-//        } else {
-//            return null;
-//        }
-//    }
+    public List<Long> loadPlaylist(Long playlistId) throws JSONException {
+        List<Long> playlistTracks = new ArrayList<Long>();
+        if(playlistId != null){
+            SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+            Cursor cursor = sqLiteDatabase.query(TABLE_PLAYLIST, new String[]{COLUMN_TRACKS}, COLUMN_ID + "=?", new String[]{playlistId.toString()}, null, null, null);
+            if(cursor.moveToFirst()){
+                JSONArray jsonArray = new JSONArray(cursor.getString(0));
+                Log.d("DERP", cursor.getString(0));
+                for(int i=0; i<jsonArray.length(); i++){
+                    playlistTracks.add(jsonArray.getLong(i));
+                }
+            }
+            return playlistTracks;
+        } else {
+            return null;
+        }
+    }
 
-    public void deletePlaylist(int id){
+    public void deletePlaylist(long id){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         sqLiteDatabase.delete(TABLE_PLAYLIST, null, null);
         sqLiteDatabase.close();
     }
 
-    public void savePlaylist(Integer playlistId, List<Long> trackIndexes){
+    public void savePlaylist(Long playlistId, List<Long> trackIndexes){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         //@TODO not error safe.
         JSONArray jsonArray = new JSONArray(trackIndexes);

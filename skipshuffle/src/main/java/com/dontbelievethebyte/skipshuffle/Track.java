@@ -17,8 +17,8 @@ public class Track {
     public void setPath(String _path) {
         this._path = _path;
     }
-    public void setId(int _id) {
-        this._id = _id;
+    public void setId(long id) {
+        this._id = id;
     }
 
 }

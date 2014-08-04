@@ -74,8 +74,8 @@ public class PreferencesHelper {
         sharedPreferences.edit().putInt(context.getString(R.string.pref_current_playlist_id), id).apply();
     }
 
-    public int getCurrentPlaylist(){
+    public long getCurrentPlaylist(){
         //return sharedPreferences.getInt(getString(R.string.pref_current_playlist_id), 0);
-        return 1;
+        return 1L;
     }
 }

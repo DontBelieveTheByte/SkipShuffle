@@ -1,38 +1,48 @@
 package com.dontbelievethebyte.skipshuffle;
 
+import android.util.Log;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RandomPlaylist implements PlaylistInterface {
 
-    private Integer playlistId;
+    private Long playlistId;
 
-    private DbHandler _DbHandler;
+    private DbHandler dbHandler;
 
-    private int _cursor = 0;
+    private long _cursor = 0;
 
-    private List<Integer> _tracksIds = new ArrayList<Integer>();
+    private List<Long> _tracksIds = new ArrayList<Long>();
 
     public RandomPlaylist(DbHandler dbHandler){
-        _DbHandler = dbHandler;
+        this.dbHandler = dbHandler;
     }
-    public RandomPlaylist(int Id, DbHandler dbHandler){
-        _DbHandler = dbHandler;
-        playlistId = Id;
+
+    public RandomPlaylist(Long playlistId, DbHandler dbHandler){
+        this.dbHandler = dbHandler;
+        this.playlistId = playlistId;
+        try {
+            _tracksIds = dbHandler.loadPlaylist(playlistId);
+        } catch (JSONException e) {
+            Log.d("TAGGG", e.toString());
+        }
+        Log.d("PLAYLIST INFO", _tracksIds.toString());
     }
 
     @Override
-    public List<Integer> getList(){
+    public List<Long> getList(){
         return _tracksIds;
     };
 
     @Override
-    public int addTrack(Track track) {
+    public void addTrack(Track track) {
         if(!_tracksIds.contains(track.getId())){
             _tracksIds.add(track.getId());
         }
-        return 0;
     }
 
     @Override
@@ -44,7 +54,7 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public Track getFirst() {
-        return _DbHandler.getTrack(0);
+        return dbHandler.getTrack(_tracksIds.get(0));
     }
 
     @Override
@@ -55,7 +65,7 @@ public class RandomPlaylist implements PlaylistInterface {
             _cursor++;
         }
         Track track;
-        track = _DbHandler.getTrack(_cursor);
+        track = dbHandler.getTrack(_cursor);
         return track;
     }
 
@@ -67,25 +77,24 @@ public class RandomPlaylist implements PlaylistInterface {
             _cursor--;
         }
         Track track;
-        track = _DbHandler.getTrack(_cursor);
+        track = dbHandler.getTrack(_cursor);
         return track;
     }
 
     @Override
-    public int getCursorPosition() {
+    public long getCursorPosition() {
         return _cursor;
     }
 
     @Override
-    public int setCursorPosition(int position) {
-        if(position > _tracksIds.size()){
+    public void setCursorPosition(long position) {
+        if(position > (long) _tracksIds.size()){
             _cursor = _tracksIds.size();
         } else if(position < 0){
             _cursor = 0;
         } else {
             _cursor = position;
         }
-        return _cursor;
     }
 
     @Override
@@ -97,13 +106,13 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void save(){
         if(playlistId != null) {
-            _DbHandler.savePlaylist(playlistId, _tracksIds);
+            dbHandler.savePlaylist(playlistId, _tracksIds);
         } else {
-            _DbHandler.savePlaylist(null, _tracksIds);
+            dbHandler.savePlaylist(null, _tracksIds);
         }
     }
 
     public List<Track> getAllTracks(){
-        return _DbHandler.getAllPlaylistTracks(_tracksIds);
+        return dbHandler.getAllPlaylistTracks(_tracksIds);
     }
 }

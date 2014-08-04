@@ -44,8 +44,8 @@ public class SkipShuffleMediaPlayer extends Service {
                 }
             });
         }
-        public void setPlaylist(int Id) {
-            _playlist = new RandomPlaylist(Id, new DbHandler(getApplicationContext()));
+        public void setPlaylist(long id) {
+            _playlist = new RandomPlaylist(id, new DbHandler(getApplicationContext()));
         }
 
         public void doPlay() {
@@ -89,7 +89,7 @@ public class SkipShuffleMediaPlayer extends Service {
             doPlay();
         }
 
-        public int getPlaylistCursorPosition(){
+        public long getPlaylistCursorPosition(){
             return _playlist.getCursorPosition();
         }
 
@@ -222,7 +222,7 @@ public class SkipShuffleMediaPlayer extends Service {
         return pendingIntent;
     }
 
-    private void broadcastCurrentState(String state, int playlistID, int position){
+    private void broadcastCurrentState(String state, long playlistID, long position){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, state);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, playlistID);

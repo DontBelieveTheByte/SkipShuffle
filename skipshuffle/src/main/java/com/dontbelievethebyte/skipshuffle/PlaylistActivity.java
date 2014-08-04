@@ -1,28 +1,29 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+
+import java.util.List;
 
 public class PlaylistActivity extends Activity {
 
     private static final String TAG = "SkipShufflePlaylist";
 
     private RandomPlaylist playlist;
-    private Integer currentPlaylistId;
-    private SharedPreferences sharedPreferences;
+    private PreferencesHelper preferencesHelper;
+    private List<Track> tracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        currentPlaylistId = sharedPreferences.getInt(getString(R.string.pref_current_playlist_id), 1);
-        currentPlaylistId = 1;
-        playlist = new RandomPlaylist(currentPlaylistId, new DbHandler(getApplicationContext()));
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        playlist = new RandomPlaylist(
+                preferencesHelper.getCurrentPlaylist(),
+                new DbHandler(getApplicationContext())
+        );
         populate();
     }
 
@@ -33,8 +34,9 @@ public class PlaylistActivity extends Activity {
         return true;
     }
     private void populate(){
-        playlist.getAllTracks();
-        Track first = playlist.getFirst();
-        Log.d(TAG, first.getPath());
+
+        tracks = playlist.getAllTracks();
+        List<Long> list = playlist.getList();
+        Log.d(TAG, list.toString());
     }
 }
