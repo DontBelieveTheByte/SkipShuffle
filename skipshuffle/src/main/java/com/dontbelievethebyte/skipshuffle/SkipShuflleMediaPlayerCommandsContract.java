@@ -1,8 +1,8 @@
 package com.dontbelievethebyte.skipshuffle;
 
 public class SkipShuflleMediaPlayerCommandsContract {
+    public static final String CURRENT_STATE = "com.dontbelievethebyte.CURRENT_STATE";
     public static final String COMMAND = "com.dontbelievethebyte.cmd.COMMAND";
-    public static final String CURRENT_STATE = "com.dontbelievethebyte.cmd.CURRENT_STATE";
     public static final String CMD_PLAY = "com.dontbelievethebyte.cmd.PLAY";
     public static final String CMD_PAUSE = "com.dontbelievethebyte.cmd.PAUSE";
     public static final String CMD_SKIP = "com.dontbelievethebyte.cmd.SKIP";
