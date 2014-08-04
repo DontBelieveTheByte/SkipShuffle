@@ -26,22 +26,16 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
-    private Integer playState = 0;
-
     private UI ui;
     private PreferencesHelper preferencesHelper;
 
     private MediaScannerDialog mediaScannerDialog;
     private BroadcastReceiver mediaScannerReceiver;
-    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
+    public MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     private static final String TAG = "SkipShuffleMain";
 
     private static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
-
-    public static final String PLAY_STATE = "PLAY_STATE";
-    public static final Integer PLAYING = 1;
-    public static final Integer PAUSED = -1;
 
     protected static int REQUEST_PICK_FILE = 777;
 
@@ -125,10 +119,6 @@ public class MainActivity extends Activity {
         }
     };
 
-    public Integer getPlayState(){
-        return playState;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK && requestCode == REQUEST_PICK_FILE) {
@@ -160,7 +150,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         //Set up UI, this can be later instantiated user prefs to get an alternative UI.
         ui = UI.createUI(MainActivity.this);
@@ -186,22 +175,13 @@ public class MainActivity extends Activity {
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String toastMessage;
-
-                if (playState == PLAYING) {
+                if (mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY) {
                     broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
                     ui.doPause();
-                    toastMessage = getResources().getString(R.string.pause);
-                    playState = PAUSED;
-
                 } else {
-                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
+                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY);
                     ui.doPlay();
-                    toastMessage = getResources().getString(R.string.play);
-                    playState = PLAYING;
                 }
-
-                Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -210,7 +190,6 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
                 ui.doSkip();
-                Toast.makeText(getApplicationContext(), R.string.skip, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -219,7 +198,6 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
                 ui.doPrev();
-                Toast.makeText(getApplicationContext(), R.string.prev, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -228,14 +206,12 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
                 ui.doShuffle();
-                Toast.makeText(getApplicationContext(), R.string.shuffle, Toast.LENGTH_LONG).show();
             }
         });
 
         ui.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE);
                 Intent playlistActivity = new Intent(getApplicationContext(), PlaylistActivity.class);
                 startActivity(playlistActivity);
             }
@@ -280,9 +256,6 @@ public class MainActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        //Probably don't need this anymore...@TODO
-        playState = savedInstanceState.getInt(PLAY_STATE);
-
         //Check if we're scanning media beforehand and.
         if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
             mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
@@ -294,7 +267,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(PLAY_STATE, playState);
         outState.putBoolean(IS_SCANNING_MEDIA, true);
         if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
             mediaScannerDialog.dismiss();
