@@ -66,18 +66,26 @@ public class SkipShuffleMediaPlayer extends Service {
                     String actionStringId = intent.getAction();
                     if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
                         String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-                        if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY == command){
+                        String state = SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE;
+
+                        if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY){
                             playerWrapper.doPlay();
-                        } else if (SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE == command){
+                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PLAY;
+                        } else if (command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE){
                             playerWrapper.doPause();
-                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command){
+                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE;
+                        } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SKIP){
                             playerWrapper.doSkip();
-                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command){
+                            state = SkipShuflleMediaPlayerCommandsContract.CMD_SKIP;
+                        } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_PREV){
                             playerWrapper.doPrev();
-                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST == command){
+                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PREV;
+                        } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST){
                             playerWrapper.doShuffle();
+                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PLAY;
                         }
-                        broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, preferencesHelper.getCurrentPlaylist(), playlist.getCursorPosition());
+
+                        broadcastCurrentState(state, preferencesHelper.getCurrentPlaylist(), playlist.getCursorPosition());
                         setNotification();
                     } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
                         //Filter out sticky broadcast on service start.
