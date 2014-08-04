@@ -32,11 +32,5 @@ public class UI {
 
     public void doShuffle() {}
 
-    public void reboot(){
-        if(MainActivity.PLAYING == mainActivity.getPlayState()) {
-            doPlay();
-        } else if (MainActivity.PAUSED == mainActivity.getPlayState()) {
-            doPause();
-        }
-    }
+    public void reboot(){}
 }
