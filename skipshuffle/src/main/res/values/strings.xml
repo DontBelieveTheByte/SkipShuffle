@@ -12,6 +12,7 @@
     <string name="scan_directory_valid">Scanning : %s</string>
     <string name="scan_directory_invalid">Invalid directory : %s</string>
     <string name="media_scan_dialog_title">Scanning media in : %s</string>
+    <string name="media_scan_done">Done scanning media.</string>
     <string name="title_activity_playlist">Playlist</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -25,4 +26,5 @@
     <string name="pref_media_directories_separator">☃ಠ_ಠ☃</string>
     <string name="pref_current_playlist_id">PREF_MEDIA_DIRECTORIES</string>
     <string name="media_player_unkown_command">Unknown command.</string>
+    <string name="metadata_unknown_artist">Unknown artist</string>
 </resources>
