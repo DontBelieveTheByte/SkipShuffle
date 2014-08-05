@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.media.MediaMetadataRetriever;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,19 +19,21 @@ public class MediaScannerService extends IntentService {
 
     private DbHandler _DbHandler;
 
+    private RandomPlaylist playlist;
+
+    private MediaMetadataRetriever mediaMetadataRetriever;
+
     public MediaScannerService(){
         super("SkipShuffleMediaScanner");
     }
-
-    private RandomPlaylist playlist;
 
     @Override
     protected void onHandleIntent(Intent intent) {
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
         String[] directoryPaths = preferencesHelper.getMediaDirectories();
         _DbHandler = new DbHandler(getApplicationContext());
+        mediaMetadataRetriever = new MediaMetadataRetriever();
         for (String directory : directoryPaths) {
-            Log.d(TAG, "PATH: " + directory.toString());
             File dir = new File(directory.toString());
             recursiveMediaDirectoryScan(dir);
         }
@@ -41,8 +44,6 @@ public class MediaScannerService extends IntentService {
         if(null == playlist){
             playlist = new RandomPlaylist(1L, _DbHandler);
         }
-
-        Log.d(TAG, "PATH: " + dir.getAbsolutePath());
 
         File[] files = dir.listFiles();
 
@@ -63,12 +64,15 @@ public class MediaScannerService extends IntentService {
             broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
             Track track = new Track();
             track.setPath(validFiles.get(j));
+            mediaMetadataRetriever.setDataSource(track.getPath());
+            track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+            track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+            track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+            track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
             _DbHandler.addTrack(track);
             playlist.addTrack(track);
-            Log.v(TAG," TRACK : __ : " + track.getId());
         }
         playlist.save();
-        Log.d("GGGG", "MERP : " + playlist.getList().toString());
         Toast.makeText(getApplicationContext(), R.string.media_scan_done, Toast.LENGTH_SHORT);
     }
 
