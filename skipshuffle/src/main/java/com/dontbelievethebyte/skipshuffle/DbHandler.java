@@ -5,11 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,35 +67,86 @@ public class DbHandler extends SQLiteOpenHelper {
         long trackId;
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_PATH, track.getPath());
+        contentValues.put(
+                COLUMN_PATH,
+                track.getPath()
+        );
+        contentValues.put(
+                COLUMN_METADATA_TITLE,
+                track.getTitle()
+        );
+        contentValues.put(
+                COLUMN_METADATA_ARTIST,
+                track.getArtist()
+        );
+        contentValues.put(
+                COLUMN_METADATA_ALBUM,
+                track.getAlbum()
+        );
+        contentValues.put(
+                COLUMN_METADATA_GENRE,
+                track.getGenre()
+        );
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
-        Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID}, COLUMN_PATH + "=?", new String[]{track.getPath()}, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(
+                TABLE_TRACKS, //From the tracks table
+                new String[]{COLUMN_ID}, //Get the id back as a result
+                COLUMN_PATH + "=?", //Where path
+                new String[]{track.getPath()}, //path from track
+                null,
+                null,
+                null
+        );
 
         if(cursor.moveToFirst()){
             trackId = cursor.getLong(0);
         } else {
-            trackId = sqLiteDatabase.insert(TABLE_TRACKS, null, contentValues);
+            trackId = sqLiteDatabase.insert(
+                    TABLE_TRACKS, //Into the tracks table
+                    null,
+                    contentValues //Values extracted from the Track instance.
+            );
         }
-        track.setId(trackId);
+        track.setId(trackId); //This is necessary to set manually for the first time into the live
+                              // instance Track object if it's a newly inserted track in order to
+                              // build a playlist.
         sqLiteDatabase.close();
     }
 
     public long addPlaylist(PlaylistInterface playlistInterface){
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PATH, playlistInterface.toString());
-        values.put(COLUMN_TRACKS, new JSONArray(playlistInterface.getList()).toString());
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(
+                COLUMN_PATH,
+                playlistInterface.toString()
+        );
+        contentValues.put(
+                COLUMN_TRACKS,
+                new JSONArray(playlistInterface.getList()).toString() //Transform the Collection to a JSon string before saving as TEXT
+        );
 
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        long playlistId = sqLiteDatabase.insert(TABLE_TRACKS, null, values);
+        long playlistId = sqLiteDatabase.insert(
+                TABLE_TRACKS,
+                null,
+                contentValues
+        );
         sqLiteDatabase.close();
         return playlistId;
     };
 
     public Track getTrack(Long id){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, COLUMN_ID + "=?", new String[]{id.toString()}, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(
+                TABLE_TRACKS,
+                new String[]{COLUMN_ID, COLUMN_PATH},
+                COLUMN_ID + "=?",
+                new String[]{id.toString()},
+                null,
+                null,
+                null
+        );
         Track track = new Track();
         if(cursor.moveToFirst()){
             cursor.moveToFirst();
@@ -114,7 +162,15 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         for(Long trackId : tracksIds){
             Track track = new Track();
-            Cursor cursor = sqLiteDatabase.query(TABLE_TRACKS, new String[]{COLUMN_ID, COLUMN_PATH}, COLUMN_ID+"=?", new String[]{trackId.toString()}, null, null, null);
+            Cursor cursor = sqLiteDatabase.query(
+                    TABLE_TRACKS,
+                    new String[]{COLUMN_ID, COLUMN_PATH},
+                    COLUMN_ID+"=?",
+                    new String[]{trackId.toString()},
+                    null,
+                    null,
+                    null
+            );
             if(cursor.moveToFirst()){
                 cursor.moveToFirst();
                 track.setId(cursor.getInt(0));
@@ -130,7 +186,15 @@ public class DbHandler extends SQLiteOpenHelper {
         List<Long> playlistTracks = new ArrayList<Long>();
         if(playlistId != null){
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-            Cursor cursor = sqLiteDatabase.query(TABLE_PLAYLIST, new String[]{COLUMN_TRACKS}, COLUMN_ID + "=?", new String[]{playlistId.toString()}, null, null, null);
+            Cursor cursor = sqLiteDatabase.query(
+                    TABLE_PLAYLIST,
+                    new String[]{COLUMN_TRACKS},
+                    COLUMN_ID + "=?",
+                    new String[]{playlistId.toString()},
+                    null,
+                    null,
+                    null
+            );
             if(cursor.moveToFirst()){
                 JSONArray jsonArray = new JSONArray(cursor.getString(0));
                 for(int i=0; i<jsonArray.length(); i++){
@@ -145,7 +209,11 @@ public class DbHandler extends SQLiteOpenHelper {
 
     public void deletePlaylist(long id){
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_PLAYLIST, null, null);
+        sqLiteDatabase.delete(
+                TABLE_PLAYLIST,
+                null,
+                null
+        );
         sqLiteDatabase.close();
     }
 
@@ -160,9 +228,19 @@ public class DbHandler extends SQLiteOpenHelper {
         if(playlistId != null){
             contentValues.put(COLUMN_ID, playlistId);
         }
-        int insert = (int) sqLiteDatabase.insertWithOnConflict(TABLE_PLAYLIST, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        int insert = (int) sqLiteDatabase.insertWithOnConflict(
+                TABLE_PLAYLIST,
+                null,
+                contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE
+        );
         if(insert == -1){
-            sqLiteDatabase.update(TABLE_PLAYLIST, contentValues, COLUMN_ID+"=?", new String[]{playlistId.toString()});
+            sqLiteDatabase.update(
+                    TABLE_PLAYLIST,
+                    contentValues,
+                    COLUMN_ID+"=?",
+                    new String[]{playlistId.toString()}
+            );
         }
         sqLiteDatabase.close();
     }
