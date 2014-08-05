@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 public class SkipShuffleMediaPlayer extends Service {
@@ -39,9 +38,15 @@ public class SkipShuffleMediaPlayer extends Service {
     @Override
     public void onCreate(){
         registerMediaPlayerBroadcastReceiver();
-        broadcastCurrentState(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 0, 0);
 
         preferencesHelper = new PreferencesHelper(getApplicationContext());
+
+        broadcastCurrentState(
+                SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, //Issue paused state on start.
+                preferencesHelper.getCurrentPlaylist(), //Playlist from preferences.
+                0 //@TODO issue position from preferences.
+        );
+
 
         playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
 
@@ -85,13 +90,26 @@ public class SkipShuffleMediaPlayer extends Service {
                             state = SkipShuflleMediaPlayerCommandsContract.CMD_PLAY;
                         }
 
-                        broadcastCurrentState(state, preferencesHelper.getCurrentPlaylist(), playlist.getCursorPosition());
+                        broadcastCurrentState(
+                                state, //State from known/received command.
+                                preferencesHelper.getCurrentPlaylist(),
+                                playlist.getCursorPosition()
+                        );
                         setNotification();
+
                     } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
-                        //Filter out sticky broadcast on service start.
-                        boolean isHeadphonesPlugged = (intent.getIntExtra("state", 0) > 0) && !isInitialStickyBroadcast();
+
+                        boolean isHeadphonesPlugged =
+                                (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
+                                && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
+
                         if(!playerWrapper.isPaused() && isHeadphonesPlugged) {
                             playerWrapper.doPause();
+                            broadcastCurrentState(
+                                    SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE,
+                                    preferencesHelper.getCurrentPlaylist(),
+                                    playlist.getCursorPosition()
+                            );
                             setNotification();
                         }
                     }
