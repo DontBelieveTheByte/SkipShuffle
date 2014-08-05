@@ -17,7 +17,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     private static final String TAG = "SkipShuffleDB";
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "skipshuffle.db";
     private static final String TABLE_TRACKS = "tracks";
     private static final String TABLE_PLAYLIST = "playlist";
@@ -25,6 +25,10 @@ public class DbHandler extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TRACKS = "tracks";
     public static final String COLUMN_PATH = "path";
+    public static final String COLUMN_METADATA_ALBUM = "album";
+    public static final String COLUMN_METADATA_ARTIST = "artist";
+    public static final String COLUMN_METADATA_TITLE = "title";
+    public static final String COLUMN_METADATA_GENRE = "genre";
 
 
     public DbHandler(Context context) {
@@ -36,7 +40,11 @@ public class DbHandler extends SQLiteOpenHelper {
         String CREATE_TRACKS_TABLE = "CREATE TABLE " +
                 TABLE_TRACKS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_PATH + " TEXT" +
+                COLUMN_PATH + " TEXT," +
+                COLUMN_METADATA_TITLE + " TEXT," +
+                COLUMN_METADATA_ARTIST + " TEXT," +
+                COLUMN_METADATA_ALBUM + " TEXT," +
+                COLUMN_METADATA_GENRE + " TEXT" +
                 ")";
         sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
 
