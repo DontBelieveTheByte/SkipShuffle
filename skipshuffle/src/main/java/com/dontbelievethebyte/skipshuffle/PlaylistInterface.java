@@ -10,6 +10,8 @@ public interface PlaylistInterface {
 
     public Track getPrev();
 
+    public int getSize();
+
     public List<Long> getList();
 
     public long getCursorPosition();

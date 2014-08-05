@@ -112,6 +112,11 @@ public class RandomPlaylist implements PlaylistInterface {
         }
     }
 
+    @Override
+    public int getSize(){
+        return _tracksIds.size();
+    }
+
     public List<Track> getAllTracks(){
         return dbHandler.getAllPlaylistTracks(_tracksIds);
     }
