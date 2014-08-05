@@ -6,6 +6,10 @@ public interface PlaylistInterface {
 
     public Track getFirst();
 
+    public Track getCurrent();
+
+    public Track getAtPosition(int position);
+
     public Track getNext();
 
     public Track getPrev();
