@@ -128,14 +128,25 @@ public class SkipShuffleMediaPlayer extends Service {
         );
 
         if(playerWrapper.isPaused()){
-            remoteViews.setImageViewResource(R.id.notif_play, R.drawable.pause_states);
-            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 2));
+            remoteViews.setImageViewResource(
+                    R.id.notif_play,
+                    R.drawable.pause_states
+            );
+            remoteViews.setOnClickPendingIntent(
+                    R.id.notif_play,
+                    buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 2)
+            );
         } else {
             remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, 2));
         }
 
         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 4, mainActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
+                this,
+                4,
+                mainActivityIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT
+        );
 
         remoteViews.setOnClickPendingIntent(R.id.notif_all, mainActivityPendingIntent);
 
@@ -161,9 +172,9 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void broadcastCurrentState(String state, long playlistID, long position){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, state);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, playlistID);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION, position);
+        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, state)
+              .putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, playlistID)
+              .putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION, position);
         sendStickyBroadcast(intent);
     }
 }
