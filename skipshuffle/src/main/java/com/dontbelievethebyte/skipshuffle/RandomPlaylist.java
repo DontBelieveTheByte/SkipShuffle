@@ -33,6 +33,14 @@ public class RandomPlaylist implements PlaylistInterface {
         Log.d("PLAYLIST INFO", _tracksIds.toString());
     }
 
+    public Long getPlaylistId() {
+        return playlistId;
+    }
+
+    public void setPlaylistId(Long playlistId) {
+        this.playlistId = playlistId;
+    }
+
     @Override
     public List<Long> getList(){
         return _tracksIds;

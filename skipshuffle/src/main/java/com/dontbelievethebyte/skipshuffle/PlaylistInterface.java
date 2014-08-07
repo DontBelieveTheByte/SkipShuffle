@@ -29,4 +29,8 @@ public interface PlaylistInterface {
     public void shuffle();
 
     public void save();
+
+    public Long getPlaylistId();
+
+    public void setPlaylistId(Long playlistId);
 }
