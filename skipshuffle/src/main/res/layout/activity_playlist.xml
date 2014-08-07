@@ -1,20 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.dontbelievethebyte.skipshuffle.PlaylistActivity"
-    android:background="#ff68718b">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#1E2C56">
+
 
     <ListView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/playlist"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/current_playlist1"
         android:footerDividersEnabled="true"
-        android:headerDividersEnabled="true" />
-</RelativeLayout>
+        android:headerDividersEnabled="true"
+        android:focusable="false"
+        android:divider="#ffff00d1"
+        android:layout_weight="1"
+        android:dividerHeight="0.5dp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:id="@+id/playlist_controls"
+        android:gravity="center"
+        android:background="#1E2C56">
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/notif_prev"
+            android:src="@drawable/prev_states"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="10dp" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/notif_shuffle"
+            android:longClickable="false"
+            android:src="@drawable/shuffle_states"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/notif_play"
+            android:src="@drawable/play_states"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/notif_skip"
+            android:src="@drawable/next_states"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="4dp"
+            android:cropToPadding="false" />
+
+    </LinearLayout>
+
+</LinearLayout>
