@@ -14,7 +14,7 @@ public class RandomPlaylist implements PlaylistInterface {
 
     private DbHandler dbHandler;
 
-    private long _cursor = 0;
+    private int playlistPosition = 0;
 
     private List<Long> _tracksIds = new ArrayList<Long>();
 
@@ -60,7 +60,7 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public Track getCurrent() {
-        return dbHandler.getTrack(_tracksIds.get((int)_cursor));
+        return dbHandler.getTrack(_tracksIds.get((int) playlistPosition));
     }
 
     @Override
@@ -73,48 +73,48 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public Track getNext() {
-        if(_cursor >= _tracksIds.size()){
-            _cursor = 0;
+        if(playlistPosition >= _tracksIds.size()){
+            playlistPosition = 0;
         } else {
-            _cursor++;
+            playlistPosition++;
         }
         Track track;
-        track = dbHandler.getTrack(_cursor);
+        track = dbHandler.getTrack((long)playlistPosition);
         return track;
     }
 
     @Override
     public Track getPrev() {
-        if(_cursor <= 0){
-            _cursor = 0;
+        if(playlistPosition <= 0){
+            playlistPosition = 0;
         } else {
-            _cursor--;
+            playlistPosition--;
         }
         Track track;
-        track = dbHandler.getTrack(_cursor);
+        track = dbHandler.getTrack((long)playlistPosition);
         return track;
     }
 
     @Override
-    public long getCursorPosition() {
-        return _cursor;
+    public int getPosition() {
+        return playlistPosition;
     }
 
     @Override
-    public void setCursorPosition(long position) {
-        if(position > (long) _tracksIds.size()){
-            _cursor = _tracksIds.size();
+    public void setPosition(int position) {
+        if(position > _tracksIds.size()){
+            playlistPosition = _tracksIds.size();
         } else if(position < 0){
-            _cursor = 0;
+            playlistPosition = 0;
         } else {
-            _cursor = position;
+            playlistPosition = position;
         }
     }
 
     @Override
     public void shuffle(){
         Collections.shuffle(_tracksIds);
-        _cursor = 0;
+        playlistPosition = 0;
     }
 
     @Override

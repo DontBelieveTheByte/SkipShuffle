@@ -93,7 +93,7 @@ public class SkipShuffleMediaPlayer extends Service {
                         broadcastCurrentState(
                                 state, //State from known/received command.
                                 preferencesHelper.getCurrentPlaylist(),
-                                playlist.getCursorPosition()
+                                playlist.getPosition()
                         );
                         setNotification();
 
@@ -108,7 +108,7 @@ public class SkipShuffleMediaPlayer extends Service {
                             broadcastCurrentState(
                                     SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE,
                                     preferencesHelper.getCurrentPlaylist(),
-                                    playlist.getCursorPosition()
+                                    playlist.getPosition()
                             );
                             setNotification();
                         }
@@ -188,7 +188,7 @@ public class SkipShuffleMediaPlayer extends Service {
         return pendingIntent;
     }
 
-    private void broadcastCurrentState(String state, long playlistID, long position){
+    private void broadcastCurrentState(String state, long playlistID, int position){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, state)
               .putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, playlistID)

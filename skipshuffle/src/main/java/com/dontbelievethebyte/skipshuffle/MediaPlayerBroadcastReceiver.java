@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
+    public static interface Callback {
+
+    };
+
     private static final String TAG = "PLAYER_BROADCAST_RECEIVER";
     private long playlistID;
     private int playlistPosition;
@@ -31,14 +35,13 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID)){
-            playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, 1);
-        }
-        if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION)){
-            playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, 0);
-        }
+        playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, 1);
+        playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, 0);
         if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE)){
             playerState = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE);
+        } else {
+            playerState = SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE;
         }
+        playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION, 0);
     }
 }

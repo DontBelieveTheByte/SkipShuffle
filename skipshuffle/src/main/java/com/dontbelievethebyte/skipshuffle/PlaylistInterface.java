@@ -18,9 +18,9 @@ public interface PlaylistInterface {
 
     public List<Long> getList();
 
-    public long getCursorPosition();
+    public int getPosition();
 
-    public void setCursorPosition(long position);
+    public void setPosition(int position);
 
     public void addTrack(Track track);
 

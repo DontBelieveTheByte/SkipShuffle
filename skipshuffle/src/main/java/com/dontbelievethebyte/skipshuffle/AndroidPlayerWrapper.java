@@ -36,7 +36,7 @@ public class AndroidPlayerWrapper {
     public void doPlay() {
         if(null != playlist) {
             //If we're at the start of the playlist.
-            if (0 == playlist.getCursorPosition()) {
+            if (0 == playlist.getPosition()) {
                 loadAudioFile(playlist.getFirst());
             }
             mp.start();
@@ -61,17 +61,17 @@ public class AndroidPlayerWrapper {
 
     public void doShuffle() {
         playlist.shuffle();
-        playlist.setCursorPosition(0);
+        playlist.setPosition(0);
         loadAudioFile(playlist.getFirst());
         doPlay();
     }
 
     public long getPlaylistCursorPosition(){
-        return playlist.getCursorPosition();
+        return playlist.getPosition();
     }
 
     public void setPlaylistCursorPosition(int position){
-        playlist.setCursorPosition(position);
+        playlist.setPosition(position);
         doPlay();
     }
     public boolean isPaused() {
