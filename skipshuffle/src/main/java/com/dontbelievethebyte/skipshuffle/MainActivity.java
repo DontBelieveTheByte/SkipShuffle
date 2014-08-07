@@ -161,7 +161,7 @@ public class MainActivity extends Activity {
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         //Is mandatory to get the current state of the player.
-        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver();
+        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
         registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
 
         //Register haptic feedback for all buttons.
@@ -176,10 +176,10 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if (mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY) {
-                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
+                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
                     ui.doPause();
                 } else {
-                    broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY);
+                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY);
                     ui.doPlay();
                 }
             }
@@ -188,7 +188,7 @@ public class MainActivity extends Activity {
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
                 ui.doSkip();
             }
         });
@@ -196,7 +196,7 @@ public class MainActivity extends Activity {
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
                 ui.doPrev();
             }
         });
@@ -204,7 +204,7 @@ public class MainActivity extends Activity {
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
                 ui.doShuffle();
             }
         });
@@ -326,10 +326,5 @@ public class MainActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-    private void broadcastToMediaPlayer(String command){
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        sendBroadcast(intent);
     }
 }

@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 public class PlaylistAdapter extends BaseAdapter {
 
-    PlaylistInterface playlist;
-    LayoutInflater layoutInflater;
-    Context context;
+    private PlaylistInterface playlist;
+    private LayoutInflater layoutInflater;
+    private Context context;
 
     public PlaylistAdapter(Context context, PlaylistInterface playlist){
         this.context = context;
@@ -36,7 +36,7 @@ public class PlaylistAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
 
         ViewHolder viewHolder;
         Track track = playlist.getAtPosition(position);

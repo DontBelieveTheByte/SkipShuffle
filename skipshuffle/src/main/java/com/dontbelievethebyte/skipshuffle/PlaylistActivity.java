@@ -1,14 +1,16 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-
-import java.util.List;
 
 public class PlaylistActivity extends Activity {
 
@@ -16,12 +18,12 @@ public class PlaylistActivity extends Activity {
     private ImageButton playlistPrev;
     private ImageButton playlistSkip;
     private ImageButton playlistShuffle;
+    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     private static final String TAG = "SkipShufflePlaylist";
 
     private PlaylistInterface playlist;
     private PreferencesHelper preferencesHelper;
-    private List<Track> tracks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,31 +36,33 @@ public class PlaylistActivity extends Activity {
         playlistSkip = (ImageButton) findViewById(R.id.playlist_layout_skip);
         playlistPrev = (ImageButton) findViewById(R.id.playlist_layout_prev);
 
+        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
+
         playlistPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("YOOO", "WAS CLICKED");
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY);
             }
         });
 
         playlistPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("YOOO", "WAS CLICKED");
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
             }
         });
 
         playlistSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("YOOO", "WAS CLICKED");
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
             }
         });
 
         playlistShuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("YOOO", "WAS CLICKED");
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
             }
         });
     }
@@ -76,7 +80,27 @@ public class PlaylistActivity extends Activity {
                 new DbHandler(getApplicationContext())
         );
 
-        ListView listView = (ListView) findViewById(R.id.current_playlist);
-        listView.setAdapter(new PlaylistAdapter(getApplicationContext(), playlist));
+        final ListView listView = (ListView) findViewById(R.id.current_playlist);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.d("POS", ": " + position);
+            }
+        });
+        PlaylistAdapter playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
+        listView.setAdapter(playlistAdapter);
     }
+
+
+    public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            if (MotionEvent.ACTION_DOWN == event.getAction()){
+                if(preferencesHelper.isHapticFeedback()){
+                    view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                }
+            }
+            return false;
+        }
+    };
 }
