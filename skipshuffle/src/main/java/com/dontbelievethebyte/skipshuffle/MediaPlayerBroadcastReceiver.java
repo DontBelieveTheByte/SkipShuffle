@@ -3,17 +3,16 @@ package com.dontbelievethebyte.skipshuffle;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import java.util.ArrayList;
 
 public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
-    public static interface Callback {
-
-    };
 
     private static final String TAG = "PLAYER_BROADCAST_RECEIVER";
     private long playlistID;
     private int playlistPosition;
     private String playerState;
     private Context context;
+    private ArrayList<Callback> callbacks;
 
     public long getPlaylistID() {
         return playlistID;
@@ -25,6 +24,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
 
     MediaPlayerBroadcastReceiver(Context context) {
         this.context = context;
+        callbacks = new ArrayList<Callback>();
     }
 
     public void broadcastToMediaPlayer(String command){
@@ -43,5 +43,12 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
             playerState = SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE;
         }
         playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION, 0);
+        for(Callback callback : callbacks) {
+            callback.callback();
+        }
+    }
+
+    public void registerCallback(Callback callback){
+        callbacks.add(callback);
     }
 }
