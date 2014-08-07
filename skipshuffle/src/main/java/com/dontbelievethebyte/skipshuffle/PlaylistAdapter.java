@@ -1,7 +1,6 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,37 +48,37 @@ public class PlaylistAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.title = setTitle(convertView, R.id.title, track);
-        viewHolder.artist = setArtist(convertView, R.id.artist, track);
-        viewHolder.image = setImage(convertView, R.id.image, track);
+        viewHolder.title = setTitle(convertView, R.id.track_title, track);
+        viewHolder.artist = setArtist(convertView, R.id.track_artist, track);
+        viewHolder.image = setImage(convertView, R.id.track_image, track);
         return convertView;
     }
 
     private ImageView setImage(View view, int resourceId, Track track){
         ImageView iv = (ImageView) view.findViewById(resourceId);
-        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.play_btn));
+        if(track.getId() == playlist.getCurrent().getId()){
+            iv.setImageDrawable(context.getResources().getDrawable(R.drawable.play_btn));
+        } else {
+            iv.setImageDrawable(null);
+        }
         return iv;
     }
 
     private TextView setTitle(View view, int resourceId, Track track){
         TextView tv = (TextView) view.findViewById(resourceId);
-        String title;
-        if(track.getTitle() != null){
-            title = track.getTitle();
-        } else {
+        String title = track.getTitle();
+        if(title == null){
             title = track.getPath();
+            title = title.substring(title.lastIndexOf("/") + 1);
         }
-        Log.d("TITLE", "TITLE : " + title);
         tv.setText(title);
         return tv;
     }
 
     private TextView setArtist(View view, int resourceId, Track track) {
-        String artist;
+        String artist = track.getArtist();
         TextView tv = (TextView) view.findViewById(resourceId);
-        if(track.getArtist() != null){
-            artist = track.getArtist();
-        } else {
+        if(artist == null){
             artist = context.getString(R.string.metadata_unknown_artist);
         }
         tv.setText(artist);
@@ -87,8 +86,8 @@ public class PlaylistAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView title;
-        TextView artist;
-        ImageView image;
+        public TextView title;
+        public TextView artist;
+        public ImageView image;
     }
 }
