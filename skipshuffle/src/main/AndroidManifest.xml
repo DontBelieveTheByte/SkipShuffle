@@ -25,7 +25,7 @@
         </activity>
 
         <service android:name=".SkipShuffleMediaPlayer" />
-        <service android:name=".SkipShuffleMediaScannerService" />
+        <service android:name=".MediaScannerService" />
     </application>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
