@@ -2,15 +2,14 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 public class PlaylistActivity extends Activity implements MediaBroadcastReceiverCallback {
@@ -38,6 +37,7 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
                 preferencesHelper.getLastPlaylist(),
                 new DbHandler(getApplicationContext())
         );
+        playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
         listView = (ListView) findViewById(R.id.current_playlist);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,6 +93,10 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
         playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
         playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
         playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+
+        //Make sure we adjust the volume of the media player and not something else
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
     }
 
     @Override

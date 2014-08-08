@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -218,6 +219,9 @@ public class MainActivity extends Activity implements MediaBroadcastReceiverCall
                 startActivity(playlistActivity);
             }
         });
+
+        //Make sure we adjust the volume of the media player and not something else
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     @Override
