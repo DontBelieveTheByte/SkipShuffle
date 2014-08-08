@@ -8,13 +8,13 @@ import java.util.ArrayList;
 public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
 
     private static final String TAG = "PLAYER_BROADCAST_RECEIVER";
-    private long playlistID;
+    private int playlistID;
     private int playlistPosition;
     private String playerState;
     private Context context;
     private ArrayList<MediaBroadcastReceiverCallback> mediaBroadcastReceiverCallbacks;
 
-    public long getPlaylistID() {
+    public int getPlaylistID() {
         return playlistID;
     }
     public int getPlaylistPosition(){
@@ -38,7 +38,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, 1);
+        playlistID = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, 1);
         playerState = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
         if(null == playerState){
             playerState = SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE;
