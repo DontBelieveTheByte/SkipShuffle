@@ -271,7 +271,7 @@ public class MainActivity extends Activity implements Callback{
                 if(preferencesHelper.isHapticFeedback()){
                     view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
-                if(mediaPlayerBroadcastReceiver == null || preferencesHelper.getCurrentPlaylist() == 0) {
+                if(mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0) {
                     if(null == mediaScannerDialog) {
                         mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
                     }

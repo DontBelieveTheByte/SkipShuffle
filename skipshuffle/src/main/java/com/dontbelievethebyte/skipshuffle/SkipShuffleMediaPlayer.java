@@ -42,12 +42,12 @@ public class SkipShuffleMediaPlayer extends Service {
         preferencesHelper = new PreferencesHelper(getApplicationContext());
 
         playlist = new RandomPlaylist(
-                preferencesHelper.getCurrentPlaylist(),
+                preferencesHelper.getLastPlaylist(),
                 new DbHandler(getApplicationContext())
         );
 
         //@TODO initialize playlist position from prefs helper.
-        playlist.setPosition(0);
+        playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
         broadcastCurrentState(
                 SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //Issue paused state on start.
@@ -64,6 +64,8 @@ public class SkipShuffleMediaPlayer extends Service {
     @Override
     public void onDestroy(){
         unregisterMediaPlayerBroadcastReceiver();
+        preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
+        preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
     }
 
     public void registerMediaPlayerBroadcastReceiver() {

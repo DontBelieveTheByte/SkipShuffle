@@ -84,7 +84,7 @@ public class PlaylistActivity extends Activity implements Callback{
     private void populate(){
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         playlist = new RandomPlaylist(
-                1L,
+                preferencesHelper.getLastPlaylist(),
                 new DbHandler(getApplicationContext())
         );
 

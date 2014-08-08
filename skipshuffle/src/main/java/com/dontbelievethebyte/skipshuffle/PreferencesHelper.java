@@ -12,9 +12,12 @@ public class PreferencesHelper {
     private static final String TAG = "SkipShufflePrefsHelper";
 
     private boolean hapticFeedback;
+    private Integer currentPlaylist;
+    private Integer currentPlaylistPosition;
     private String[] directories;
     private SharedPreferences sharedPreferences;
     private Context context;
+
 
     public PreferencesHelper(Context context){
         this.context = context;
@@ -70,11 +73,25 @@ public class PreferencesHelper {
         sharedPreferences.edit().putString(context.getString(R.string.pref_media_directories), stringBuilder.toString()).apply();
         directories = newDirectories;
     }
-    public void setCurrentPlaylist(long id){
-        sharedPreferences.edit().putLong(context.getString(R.string.pref_current_playlist_id), id).apply();
+    public void setLastPlaylist(int id){
+        currentPlaylist = id;
+        sharedPreferences.edit().putLong(context.getString(R.string.pref_current_playlist_id), currentPlaylist).apply();
     }
 
-    public long getCurrentPlaylist(){
-        return sharedPreferences.getLong(context.getString(R.string.pref_current_playlist_id), 1);
+    public Integer getLastPlaylist(){
+        if(null == currentPlaylist){
+            currentPlaylist = sharedPreferences.getInt(context.getString(R.string.pref_current_playlist_id), 1);
+        }
+        return currentPlaylist;
+    }
+    public Integer getLastPlaylistPosition(){
+        if(null == currentPlaylistPosition){
+            currentPlaylistPosition = sharedPreferences.getInt(context.getString(R.string.pref_current_playlist_position), 0);
+        }
+        return currentPlaylistPosition;
+    }
+    public void setLastPlaylistPosition(int position){
+        currentPlaylistPosition = position;
+        sharedPreferences.edit().putInt(context.getString(R.string.pref_current_playlist_position), currentPlaylistPosition).apply();
     }
 }
