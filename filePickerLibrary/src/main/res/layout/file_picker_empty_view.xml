@@ -22,5 +22,4 @@
   android:text="...empty"
   android:textStyle="italic"
 	android:textSize="28sp"
-	android:gravity="center_vertical|center_horizontal"
-	/>
+	android:gravity="center_vertical|center_horizontal" />
