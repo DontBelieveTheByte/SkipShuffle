@@ -46,7 +46,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, 0);
 
         for(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback : mediaBroadcastReceiverCallbacks) {
-            mediaBroadcastReceiverCallback.callback();
+            mediaBroadcastReceiverCallback.mediaBroadcastReceiverCallback();
         }
     }
 

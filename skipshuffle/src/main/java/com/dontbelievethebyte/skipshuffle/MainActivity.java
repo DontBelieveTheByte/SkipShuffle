@@ -255,7 +255,7 @@ public class MainActivity extends Activity implements MediaBroadcastReceiverCall
     }
 
     @Override
-    public void callback() {
+    public void mediaBroadcastReceiverCallback() {
         String state = mediaPlayerBroadcastReceiver.getPlayerState();
         if(state == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
             ui.doPlay();

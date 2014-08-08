@@ -100,7 +100,7 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     }
 
     @Override
-    public void callback(){
+    public void mediaBroadcastReceiverCallback(){
         if(mediaPlayerBroadcastReceiver.getPlayerState().intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
             playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
         } else {
