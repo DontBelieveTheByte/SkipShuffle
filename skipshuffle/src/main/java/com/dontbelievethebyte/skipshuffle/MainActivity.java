@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Callback{
 
     private UI ui;
     private PreferencesHelper preferencesHelper;
@@ -38,6 +38,8 @@ public class MainActivity extends Activity {
     private static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
 
     protected static int REQUEST_PICK_FILE = 777;
+
+
 
     private class MediaScannerDialog {
 
@@ -162,6 +164,7 @@ public class MainActivity extends Activity {
 
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
+        mediaPlayerBroadcastReceiver.registerCallback(this);
         registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
 
         //Register haptic feedback for all buttons.
@@ -175,20 +178,19 @@ public class MainActivity extends Activity {
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY) {
-                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE);
+                if (mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
                     ui.doPause();
                 } else {
-                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY);
                     ui.doPlay();
                 }
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, null);
             }
         });
 
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, null);
                 ui.doSkip();
             }
         });
@@ -196,7 +198,7 @@ public class MainActivity extends Activity {
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, null);
                 ui.doPrev();
             }
         });
@@ -204,7 +206,7 @@ public class MainActivity extends Activity {
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, null);
                 ui.doShuffle();
             }
         });
@@ -253,25 +255,13 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        //Check if we're scanning media beforehand and.
-        if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
-            mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
-            Log.d(TAG, "media directories to scan wasn't NULL");
+    public void callback() {
+        String state = mediaPlayerBroadcastReceiver.getPlayerState();
+        if(state == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
+            ui.doPlay();
+        } else {
+            ui.doPause();
         }
-        ui.reboot();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(IS_SCANNING_MEDIA, true);
-        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
-            mediaScannerDialog.dismiss();
-        }
-        super.onSaveInstanceState(outState);
     }
 
     public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
@@ -326,5 +316,27 @@ public class MainActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //Check if we're scanning media beforehand and.
+        if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
+            mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
+            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            Log.d(TAG, "media directories to scan wasn't NULL");
+        }
+        ui.reboot();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(IS_SCANNING_MEDIA, true);
+        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.dismiss();
+        }
+        super.onSaveInstanceState(outState);
     }
 }

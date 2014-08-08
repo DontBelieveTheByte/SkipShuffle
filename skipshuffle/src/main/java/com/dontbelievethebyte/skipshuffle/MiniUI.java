@@ -122,7 +122,7 @@ public class MiniUI extends UI {
 
     @Override
     public void reboot(){
-        if(mainActivity.mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY) {
+        if(mainActivity.mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
             doPlay();
         } else {
             doPause();

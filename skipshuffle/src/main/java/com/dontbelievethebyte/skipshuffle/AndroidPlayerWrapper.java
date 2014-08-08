@@ -33,6 +33,10 @@ public class AndroidPlayerWrapper {
         this.playlist = playlist;
     }
 
+    public boolean isPlaying(){
+        return mp.isPlaying();
+    }
+
     public void doPlay() {
         if(null != playlist) {
             //If we're at the start of the playlist.

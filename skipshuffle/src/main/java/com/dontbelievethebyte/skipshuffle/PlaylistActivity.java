@@ -1,9 +1,8 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -12,12 +11,12 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class PlaylistActivity extends Activity {
+public class PlaylistActivity extends Activity implements Callback{
 
-    private ImageButton playlistPlay;
-    private ImageButton playlistPrev;
-    private ImageButton playlistSkip;
-    private ImageButton playlistShuffle;
+    private ImageButton playlistPlayBtn;
+    private ImageButton playlistPrevBtn;
+    private ImageButton playlistSkipBtn;
+    private ImageButton playlistShuffleBtn;
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     private static final String TAG = "SkipShufflePlaylist";
@@ -31,40 +30,49 @@ public class PlaylistActivity extends Activity {
         setContentView(R.layout.activity_playlist);
         populate();
 
-        playlistPlay = (ImageButton) findViewById(R.id.playlist_layout_play);
-        playlistShuffle = (ImageButton) findViewById(R.id.playlist_layout_shuffle);
-        playlistSkip = (ImageButton) findViewById(R.id.playlist_layout_skip);
-        playlistPrev = (ImageButton) findViewById(R.id.playlist_layout_prev);
+        playlistPlayBtn = (ImageButton) findViewById(R.id.playlist_layout_play);
+        playlistShuffleBtn = (ImageButton) findViewById(R.id.playlist_layout_shuffle);
+        playlistSkipBtn = (ImageButton) findViewById(R.id.playlist_layout_skip);
+        playlistPrevBtn = (ImageButton) findViewById(R.id.playlist_layout_prev);
 
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
+        mediaPlayerBroadcastReceiver.registerCallback(this);
+        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
 
-        playlistPlay.setOnClickListener(new View.OnClickListener() {
+
+        playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, null);
             }
         });
 
-        playlistPrev.setOnClickListener(new View.OnClickListener() {
+        playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, null);
             }
         });
 
-        playlistSkip.setOnClickListener(new View.OnClickListener() {
+        playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, null);
             }
         });
 
-        playlistShuffle.setOnClickListener(new View.OnClickListener() {
+        playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, null);
             }
         });
+
+        //Register haptic feedback for all buttons.
+        playlistPlayBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
     }
 
     @Override
@@ -84,13 +92,21 @@ public class PlaylistActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Log.d("POS", ": " + position);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
             }
         });
         PlaylistAdapter playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
         listView.setAdapter(playlistAdapter);
     }
 
+    @Override
+    public void callback(){
+        if(mediaPlayerBroadcastReceiver.getPlayerState().intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
+            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+        } else {
+            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+        }
+    }
 
     public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override

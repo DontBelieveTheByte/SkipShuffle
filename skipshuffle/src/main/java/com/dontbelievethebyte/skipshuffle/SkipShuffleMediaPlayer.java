@@ -41,19 +41,22 @@ public class SkipShuffleMediaPlayer extends Service {
 
         preferencesHelper = new PreferencesHelper(getApplicationContext());
 
-        broadcastCurrentState(
-                SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, //Issue paused state on start.
-                preferencesHelper.getCurrentPlaylist(), //Playlist from preferences.
-                0 //@TODO issue position from preferences.
+        playlist = new RandomPlaylist(
+                preferencesHelper.getCurrentPlaylist(),
+                new DbHandler(getApplicationContext())
         );
 
+        //@TODO initialize playlist position from prefs helper.
+        playlist.setPosition(0);
+
+        broadcastCurrentState(
+                SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //Issue paused state on start.
+                playlist.getPlaylistId(),
+                playlist.getPosition()
+        );
 
         playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
 
-        playlist = new RandomPlaylist(
-                        preferencesHelper.getCurrentPlaylist(),
-                        new DbHandler(getApplicationContext())
-                    );
         playerWrapper.setPlaylist(playlist);
 
     }
@@ -71,28 +74,31 @@ public class SkipShuffleMediaPlayer extends Service {
                     String actionStringId = intent.getAction();
                     if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
                         String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-                        String state = SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE;
 
-                        if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY){
-                            playerWrapper.doPlay();
-                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PLAY;
-                        } else if (command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE){
-                            playerWrapper.doPause();
-                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE;
-                        } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SKIP){
+                        if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE == command.intern()){
+                            if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)){
+                                playlist.setPosition(intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, 0));
+                                playerWrapper.doPlay();
+                            } else {
+                                if(playerWrapper.isPlaying()){
+                                    playerWrapper.doPause();
+                                } else {
+                                    playerWrapper.doPlay();
+                                }
+                            }
+                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command.intern()){
                             playerWrapper.doSkip();
-                            state = SkipShuflleMediaPlayerCommandsContract.CMD_SKIP;
-                        } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_PREV){
+                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command.intern()){
                             playerWrapper.doPrev();
-                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PREV;
                         } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST){
                             playerWrapper.doShuffle();
-                            state = SkipShuflleMediaPlayerCommandsContract.CMD_PLAY;
                         }
 
                         broadcastCurrentState(
-                                state, //State from known/received command.
-                                preferencesHelper.getCurrentPlaylist(),
+                                playerWrapper.isPlaying() ?
+                                        SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
+                                        SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //State from known/received command.
+                                playlist.getPlaylistId(),
                                 playlist.getPosition()
                         );
                         setNotification();
@@ -106,8 +112,10 @@ public class SkipShuffleMediaPlayer extends Service {
                         if(!playerWrapper.isPaused() && isHeadphonesPlugged) {
                             playerWrapper.doPause();
                             broadcastCurrentState(
-                                    SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE,
-                                    preferencesHelper.getCurrentPlaylist(),
+                                    playerWrapper.isPlaying() ?
+                                            SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
+                                            SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE,
+                                    playlist.getPlaylistId(),
                                     playlist.getPosition()
                             );
                             setNotification();
@@ -150,13 +158,12 @@ public class SkipShuffleMediaPlayer extends Service {
                     R.id.notif_play,
                     R.drawable.pause_states
             );
-            remoteViews.setOnClickPendingIntent(
-                    R.id.notif_play,
-                    buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PAUSE, 2)
-            );
-        } else {
-            remoteViews.setOnClickPendingIntent(R.id.notif_play, buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY, 2));
         }
+
+        remoteViews.setOnClickPendingIntent(
+                R.id.notif_play,
+                buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, 2)
+        );
 
         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
         PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
@@ -190,9 +197,9 @@ public class SkipShuffleMediaPlayer extends Service {
 
     private void broadcastCurrentState(String state, long playlistID, int position){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, state)
-              .putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_ID, playlistID)
-              .putExtra(SkipShuflleMediaPlayerCommandsContract.PLAYLIST_CURSOR_POSITION, position);
+        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE, state)
+              .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, playlistID)
+              .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, position);
         sendStickyBroadcast(intent);
     }
 }
