@@ -30,5 +30,4 @@
             android:divider="@color/mini_ui_playlist_divider"
             android:dividerHeight="0.2dp" />
     </RelativeLayout>
-
 </LinearLayout>
