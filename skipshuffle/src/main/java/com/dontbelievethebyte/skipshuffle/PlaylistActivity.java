@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class PlaylistActivity extends Activity implements Callback{
+public class PlaylistActivity extends Activity implements MediaBroadcastReceiverCallback {
 
     private ImageButton playlistPlayBtn;
     private ImageButton playlistPrevBtn;

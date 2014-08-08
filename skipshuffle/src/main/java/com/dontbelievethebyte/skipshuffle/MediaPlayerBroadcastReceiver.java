@@ -12,7 +12,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     private int playlistPosition;
     private String playerState;
     private Context context;
-    private ArrayList<Callback> callbacks;
+    private ArrayList<MediaBroadcastReceiverCallback> mediaBroadcastReceiverCallbacks;
 
     public long getPlaylistID() {
         return playlistID;
@@ -24,7 +24,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
 
     MediaPlayerBroadcastReceiver(Context context) {
         this.context = context;
-        callbacks = new ArrayList<Callback>();
+        mediaBroadcastReceiverCallbacks = new ArrayList<MediaBroadcastReceiverCallback>();
     }
 
     public void broadcastToMediaPlayer(String command, Integer playlistPosition){
@@ -45,12 +45,12 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         }
         playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, 0);
 
-        for(Callback callback : callbacks) {
-            callback.callback();
+        for(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback : mediaBroadcastReceiverCallbacks) {
+            mediaBroadcastReceiverCallback.callback();
         }
     }
 
-    public void registerCallback(Callback callback){
-        callbacks.add(callback);
+    public void registerCallback(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback){
+        mediaBroadcastReceiverCallbacks.add(mediaBroadcastReceiverCallback);
     }
 }

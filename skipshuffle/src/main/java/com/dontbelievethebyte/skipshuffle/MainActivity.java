@@ -24,7 +24,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
-public class MainActivity extends Activity implements Callback{
+public class MainActivity extends Activity implements MediaBroadcastReceiverCallback {
 
     private UI ui;
     private PreferencesHelper preferencesHelper;
