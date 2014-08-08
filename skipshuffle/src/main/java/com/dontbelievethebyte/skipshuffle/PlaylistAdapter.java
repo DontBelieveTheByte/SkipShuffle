@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.ViewGroup.LayoutParams;
 
 public class PlaylistAdapter extends BaseAdapter {
 
     private PlaylistInterface playlist;
     private LayoutInflater layoutInflater;
     private Context context;
+    private View currentPlayView;
 
     public PlaylistAdapter(Context context, PlaylistInterface playlist){
         this.context = context;
@@ -56,11 +58,15 @@ public class PlaylistAdapter extends BaseAdapter {
 
     private ImageView setImage(View view, int resourceId, Track track){
         ImageView iv = (ImageView) view.findViewById(resourceId);
+        LayoutParams params = iv.getLayoutParams();
         if(track.getId() == playlist.getCurrent().getId()){
+            params.width = params.height;
             iv.setImageDrawable(context.getResources().getDrawable(R.drawable.play_btn));
         } else {
             iv.setImageDrawable(null);
+            params.width = 0;
         }
+        iv.setLayoutParams(params);
         return iv;
     }
 

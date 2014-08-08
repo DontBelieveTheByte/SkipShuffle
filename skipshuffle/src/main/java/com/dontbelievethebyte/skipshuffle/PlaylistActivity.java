@@ -3,12 +3,14 @@ package com.dontbelievethebyte.skipshuffle;
 import android.app.Activity;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 public class PlaylistActivity extends Activity implements MediaBroadcastReceiverCallback {
@@ -18,6 +20,8 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     private ImageButton playlistSkipBtn;
     private ImageButton playlistShuffleBtn;
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
+    private ListView listView;
+    PlaylistAdapter playlistAdapter;
 
     private static final String TAG = "SkipShufflePlaylist";
 
@@ -28,7 +32,23 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
-        populate();
+
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        playlist = new RandomPlaylist(
+                preferencesHelper.getLastPlaylist(),
+                new DbHandler(getApplicationContext())
+        );
+
+        listView = (ListView) findViewById(R.id.current_playlist);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
+            }
+        });
+
+        playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
+        listView.setAdapter(playlistAdapter);
 
         playlistPlayBtn = (ImageButton) findViewById(R.id.playlist_layout_play);
         playlistShuffleBtn = (ImageButton) findViewById(R.id.playlist_layout_shuffle);
@@ -81,23 +101,6 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    private void populate(){
-        preferencesHelper = new PreferencesHelper(getApplicationContext());
-        playlist = new RandomPlaylist(
-                preferencesHelper.getLastPlaylist(),
-                new DbHandler(getApplicationContext())
-        );
-
-        final ListView listView = (ListView) findViewById(R.id.current_playlist);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
-            }
-        });
-        PlaylistAdapter playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
-        listView.setAdapter(playlistAdapter);
-    }
 
     @Override
     public void mediaBroadcastReceiverCallback(){
@@ -106,6 +109,8 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
         } else {
             playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
         }
+        playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
+        playlistAdapter.notifyDataSetChanged();
     }
 
     public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
