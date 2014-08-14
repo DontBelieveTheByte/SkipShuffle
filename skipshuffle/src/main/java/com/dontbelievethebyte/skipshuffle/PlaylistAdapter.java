@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class PlaylistAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+        new TrackFetchTask().execute(playlist);
+        
         return playlist.getAtPosition(position);
     }
 
@@ -56,6 +59,13 @@ public class PlaylistAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private class TrackFetchTask extends AsyncTask<PlaylistInterface, Integer, Track> {
+        @Override
+        protected Track doInBackground(PlaylistInterface... playlistInterfaces) {
+                Track track = playlist.getCurrent();
+                return track;
+        }
+    }
     private ImageView setImage(View view, int resourceId, Track track){
         ImageView iv = (ImageView) view.findViewById(resourceId);
         LayoutParams params = iv.getLayoutParams();
