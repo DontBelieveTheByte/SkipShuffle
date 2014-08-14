@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class PlaylistActivity extends Activity implements MediaBroadcastReceiverCallback {
 
@@ -49,6 +50,8 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
 
         playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
         listView.setAdapter(playlistAdapter);
+        TextView emptyText = (TextView)findViewById(android.R.id.empty);
+        listView.setEmptyView(emptyText);
 
         playlistPlayBtn = (ImageButton) findViewById(R.id.playlist_layout_play);
         playlistShuffleBtn = (ImageButton) findViewById(R.id.playlist_layout_shuffle);
