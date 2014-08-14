@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SkipShuffle.iml" filepath="$PROJECT_DIR$/SkipShuffle.iml" />
       <module fileurl="file://$PROJECT_DIR$/filePickerLibrary/filePickerLibrary.iml" filepath="$PROJECT_DIR$/filePickerLibrary/filePickerLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/skipshuffle/skipshuffle.iml" filepath="$PROJECT_DIR$/skipshuffle/skipshuffle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skipshuffle.iml" filepath="$PROJECT_DIR$/skipshuffle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/skipshuffle/skipshuffle-skipshuffle.iml" filepath="$PROJECT_DIR$/skipshuffle/skipshuffle-skipshuffle.iml" />
     </modules>
   </component>
 </project>
