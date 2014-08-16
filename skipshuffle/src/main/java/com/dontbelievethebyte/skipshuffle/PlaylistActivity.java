@@ -38,7 +38,7 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.drawer_layout);
+        setContentView(R.layout.activity_playlist;
 
         drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -155,7 +155,7 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
         drawerList.setItemChecked(position, true);
         drawerLayout.closeDrawer(drawerList);
     }
-    public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
+    private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
