@@ -2,4 +2,5 @@
 <resources>
     <color name="mini_ui_background">#1E2C56</color>
     <color name="mini_ui_playlist_divider">#ffff00d1</color>
+    <color name="mini_ui_song_label">#ffff7f00</color>
 </resources>
