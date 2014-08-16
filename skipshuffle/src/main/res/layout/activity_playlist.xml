@@ -1,10 +1,9 @@
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/mini_ui_background">
-
 
     <ListView
         android:layout_width="fill_parent"

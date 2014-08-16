@@ -29,4 +29,10 @@
     <string name="media_player_unkown_command">Unknown command.</string>
     <string name="metadata_unknown_artist">Unknown artist</string>
     <string name="empty_playlist">There are no items yet, you may scan for media by selecting a target location from the menu.</string>
+    <string-array name="drawer_menu">
+        <item>Songs</item>
+        <item>Artists</item>
+        <item>Album</item>
+        <item>Genre</item>
+    </string-array>
 </resources>

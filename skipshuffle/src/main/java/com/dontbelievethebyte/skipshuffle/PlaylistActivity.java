@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +24,10 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     private ImageButton playlistShuffleBtn;
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
     private ListView listView;
-    PlaylistAdapter playlistAdapter;
+    private PlaylistAdapter playlistAdapter;
+    private String[] drawerMenuTitles;
+    private DrawerLayout drawerLayout;
+    private ListView drawerList;
 
     private static final String TAG = "SkipShufflePlaylist";
 
@@ -31,7 +37,21 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playlist);
+
+        setContentView(R.layout.drawer_layout);
+
+        drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer);
+
+        drawerList.setAdapter(new ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_list_item_1,
+                        drawerMenuTitles
+                )
+        );
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
+
 
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         playlist = new RandomPlaylist(
@@ -119,7 +139,22 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
         playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
         playlistAdapter.notifyDataSetChanged();
     }
+    protected class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
 
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+
+        Log.d(TAG, "POSITION : " + Integer.toString(position));
+
+        // Highlight the selected item, update the title, and close the drawer
+        drawerList.setItemChecked(position, true);
+        drawerLayout.closeDrawer(drawerList);
+    }
     public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent event) {

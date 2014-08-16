@@ -1,0 +1,97 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/mini_ui_background">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/current_playlist"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:focusable="false"
+            android:layout_weight="1"
+            android:dividerHeight="0.5dp"
+            android:fastScrollEnabled="true"
+            android:smoothScrollbar="true"
+            android:paddingTop="12dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:divider="@color/mini_ui_playlist_divider"
+            android:drawSelectorOnTop="false" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:id="@+id/playlist_controls"
+            android:gravity="center"
+            android:background="@color/mini_ui_background">
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/playlist_layout_prev"
+                android:src="@drawable/prev_states"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="10dp" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/playlist_layout_shuffle"
+                android:longClickable="false"
+                android:src="@drawable/shuffle_states"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/playlist_layout_play"
+                android:src="@drawable/play_states"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/playlist_layout_skip"
+                android:src="@drawable/next_states"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="4dp"
+                android:cropToPadding="false" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_playlist" />
+
+    </LinearLayout>
+    <!-- The navigation drawer -->
+    <ListView android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+</android.support.v4.widget.DrawerLayout>
