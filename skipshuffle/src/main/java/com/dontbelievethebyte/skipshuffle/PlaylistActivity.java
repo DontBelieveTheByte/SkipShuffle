@@ -38,7 +38,7 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_playlist;
+        setContentView(R.layout.activity_playlist);
 
         drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
