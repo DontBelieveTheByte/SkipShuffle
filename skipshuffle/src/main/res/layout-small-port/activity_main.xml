@@ -54,16 +54,22 @@
             android:layout_columnSpan="1"
             android:layout_rowSpan="1">
 
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/playlistBtn"
-                android:src="@drawable/playlist_states"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text kljoguyguiguytf dasdasdasdas"
+                android:id="@+id/song_label"
+                android:textColor="@color/mini_ui_song_label"
+                android:typeface="monospace"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="25dp" />
+                android:autoText="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:textAlignment="center" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -84,6 +90,16 @@
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp" />
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/playlistBtn"
+                android:src="@drawable/playlist_states"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp" />
 
             <ImageButton
                 android:layout_width="90dp"

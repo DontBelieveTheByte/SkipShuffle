@@ -3,6 +3,7 @@ package com.dontbelievethebyte.skipshuffle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class MiniUI extends UI {
 
@@ -21,6 +22,7 @@ public class MiniUI extends UI {
         playBtn = (ImageButton) mainActivity.findViewById(R.id.playBtn);
         shuffleBtn = (ImageButton) mainActivity.findViewById(R.id.shuffleBtn);
         skipBtn = (ImageButton) mainActivity.findViewById(R.id.skipBtn);
+        songTitle = (TextView) mainActivity.findViewById(R.id.song_label);
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -127,5 +129,9 @@ public class MiniUI extends UI {
         } else {
             doPause();
         }
+    }
+    @Override
+    public void setSongTitle(String title){
+        songTitle.setText(title);
     }
 }

@@ -40,8 +40,6 @@ public class MainActivity extends Activity implements MediaBroadcastReceiverCall
 
     protected static int REQUEST_PICK_FILE = 777;
 
-
-
     private class MediaScannerDialog {
 
         private ProgressDialog pd;
@@ -266,6 +264,7 @@ public class MainActivity extends Activity implements MediaBroadcastReceiverCall
         } else {
             ui.doPause();
         }
+        ui.setSongTitle("derpderperpep");
     }
 
     public View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {

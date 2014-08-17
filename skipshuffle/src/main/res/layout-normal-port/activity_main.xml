@@ -57,14 +57,21 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp">
 
-            <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/playlistBtn"
-                android:src="@drawable/playlist_states"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
-                android:layout_centerInParent="true" />
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text kljoguyguiguytf dasdasdasdas"
+                android:id="@+id/song_label"
+                android:textColor="@color/mini_ui_song_label"
+                android:typeface="monospace"
+                android:layout_centerInParent="true"
+                android:autoText="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:ellipsize="marquee"
+                android:textAlignment="center" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -85,6 +92,15 @@
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="20dp" />
+
+            <ImageButton
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/playlistBtn"
+                android:src="@drawable/playlist_states"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_centerInParent="true" />
 
             <ImageButton
                 android:layout_width="100dp"
