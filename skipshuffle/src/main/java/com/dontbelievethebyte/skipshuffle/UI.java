@@ -1,12 +1,13 @@
 package com.dontbelievethebyte.skipshuffle;
 
+import android.graphics.Typeface;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class UI {
 
     public static UI createUI(MainActivity mainActivity){
-        return new MiniUI(mainActivity);
+        return new NeonUI(mainActivity);
     }
 
     private static final String TAG = "SkipShuffleUI";
@@ -19,6 +20,7 @@ public class UI {
     public ImageButton shuffleBtn;
     public ImageButton skipBtn;
     protected TextView songTitle;
+    protected Typeface typeface;
 
     public UI(MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -37,4 +39,8 @@ public class UI {
     public void reboot(){}
 
     public void setSongTitle(String title){}
+
+    public Typeface getTypeFace(){
+        return typeface;
+    }
 }
