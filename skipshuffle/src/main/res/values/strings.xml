@@ -35,4 +35,5 @@
         <item>Album</item>
         <item>Genre</item>
     </string-array>
+    <string name="player_wrapper_song_error">Error playing file : </string>
 </resources>
