@@ -2,7 +2,7 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -43,13 +43,17 @@ public class AndroidPlayerWrapper {
             if (0 == playlist.getPosition()) {
                 loadAudioFile(playlist.getFirst());
             }
-            mp.start();
+            if(!mp.isPlaying()){
+                mp.start();
+            }
             isPaused = false;
         }
     }
 
     public void doPause() {
-        mp.pause();
+        if(mp.isPlaying()){
+            mp.pause();
+        }
         isPaused = true;
     }
 
@@ -83,15 +87,18 @@ public class AndroidPlayerWrapper {
     }
 
     private void loadAudioFile(Track track) {
-        Log.d(TAG, "TRACK : " + track.getPath());
         try {
             mp.reset();
             mp.setDataSource(track.getPath());
             mp.prepare();
         } catch (IOException e) {
-            e.printStackTrace();
+            Track song = playlist.getCurrent();
+            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + song.getPath(), Toast.LENGTH_SHORT).show();
+            doSkip();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            Track song = playlist.getCurrent();
+            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + song.getPath(), Toast.LENGTH_SHORT).show();
+            doSkip();
         }
     }
 }
