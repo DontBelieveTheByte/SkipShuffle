@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
         super.onCreate(savedInstanceState);
 
         //Set up UI, this can be later instantiated user prefs to get an alternative UI.
-        ui = UI.createUI(MainActivity.this);
+        ui = UI.createUI(MainActivity.this, preferencesHelper.getUIType());
 
         //Start the mediaPlayer service.
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
@@ -81,8 +81,6 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
         });
 
     }
-
-
 
     @Override
     protected void onPause(){
