@@ -1,38 +1,26 @@
 package com.dontbelievethebyte.skipshuffle;
 
-import android.app.Activity;
 import android.content.IntentFilter;
-import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.HapticFeedbackConstants;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PlaylistActivity extends Activity implements MediaBroadcastReceiverCallback {
+public class PlaylistActivity extends BaseActivity implements MediaBroadcastReceiverCallback {
 
     private ImageButton playlistPlayBtn;
     private ImageButton playlistPrevBtn;
     private ImageButton playlistSkipBtn;
     private ImageButton playlistShuffleBtn;
-    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
+
     private ListView listView;
     private PlaylistAdapter playlistAdapter;
-    private String[] drawerMenuTitles;
-    private DrawerLayout drawerLayout;
-    private ListView drawerList;
 
     private static final String TAG = "SkipShufflePlaylist";
 
     private PlaylistInterface playlist;
-    private PreferencesHelper preferencesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +28,6 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
 
         setContentView(R.layout.activity_playlist);
 
-        drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-
-        drawerList.setAdapter(new ArrayAdapter<String>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        drawerMenuTitles
-                )
-        );
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-
-        preferencesHelper = new PreferencesHelper(getApplicationContext());
         playlist = new RandomPlaylist(
                 preferencesHelper.getLastPlaylist(),
                 new DbHandler(getApplicationContext())
@@ -117,53 +91,17 @@ public class PlaylistActivity extends Activity implements MediaBroadcastReceiver
         playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
         playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
 
-        //Make sure we adjust the volume of the media player and not something else
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
     public void mediaBroadcastReceiverCallback(){
         if(mediaPlayerBroadcastReceiver.getPlayerState().intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
-            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.play_states));
+            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_play_states));
         } else {
-            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.pause_states));
+            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_pause_states));
         }
         playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
         playlistAdapter.notifyDataSetChanged();
     }
-    protected class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
 
-    /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
-
-        Log.d(TAG, "POSITION : " + Integer.toString(position));
-
-        // Highlight the selected item, update the title, and close the drawer
-        drawerList.setItemChecked(position, true);
-        drawerLayout.closeDrawer(drawerList);
-    }
-    private View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent event) {
-            if (MotionEvent.ACTION_DOWN == event.getAction()){
-                if(preferencesHelper.isHapticFeedback()){
-                    view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-                }
-            }
-            return false;
-        }
-    };
 }
