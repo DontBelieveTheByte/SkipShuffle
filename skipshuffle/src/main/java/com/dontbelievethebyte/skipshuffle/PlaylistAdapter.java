@@ -71,7 +71,7 @@ public class PlaylistAdapter extends BaseAdapter {
         LayoutParams params = iv.getLayoutParams();
         if(track.getId() == playlist.getCurrent().getId()){
             params.width = params.height;
-            iv.setImageDrawable(context.getResources().getDrawable(R.drawable.play_btn));
+            iv.setImageDrawable(context.getResources().getDrawable(R.drawable.neon_play_btn));
         } else {
             iv.setImageDrawable(null);
             params.width = 0;

@@ -14,6 +14,7 @@ public class PreferencesHelper {
     private boolean hapticFeedback;
     private Integer currentPlaylist;
     private Integer currentPlaylistPosition;
+    private Integer currentUIType;
     private String[] directories;
     private SharedPreferences sharedPreferences;
     private Context context;
@@ -93,5 +94,16 @@ public class PreferencesHelper {
     public void setLastPlaylistPosition(int position){
         currentPlaylistPosition = position;
         sharedPreferences.edit().putInt(context.getString(R.string.pref_current_playlist_position), currentPlaylistPosition).apply();
+    }
+
+    public Integer getUIType(){
+        if(null == currentUIType){
+            currentPlaylistPosition = sharedPreferences.getInt(context.getString(R.string.pref_current_ui_type), 0);
+        }
+        return currentPlaylistPosition;
+    }
+    public void setUIType(int type){
+        currentUIType = type;
+        sharedPreferences.edit().putInt(context.getString(R.string.pref_current_ui_type), currentUIType).apply();
     }
 }

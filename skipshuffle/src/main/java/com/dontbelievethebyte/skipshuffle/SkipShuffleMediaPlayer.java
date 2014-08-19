@@ -64,6 +64,7 @@ public class SkipShuffleMediaPlayer extends Service {
     @Override
     public void onDestroy(){
         unregisterMediaPlayerBroadcastReceiver();
+        playerWrapper.doPause();
         preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
         preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
     }
@@ -158,7 +159,7 @@ public class SkipShuffleMediaPlayer extends Service {
         if(playerWrapper.isPaused()){
             remoteViews.setImageViewResource(
                     R.id.notif_play,
-                    R.drawable.pause_states
+                    R.drawable.neon_pause_states
             );
         }
 
@@ -178,7 +179,7 @@ public class SkipShuffleMediaPlayer extends Service {
         remoteViews.setOnClickPendingIntent(R.id.notif_all, mainActivityPendingIntent);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ss_icon_notif)
+        notificationBuilder.setSmallIcon(R.drawable.ic_neon_notif)
                            .setContent(remoteViews);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
