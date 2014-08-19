@@ -26,6 +26,7 @@
     <string name="pref_media_directories_separator">☃ಠ_ಠ☃</string>
     <string name="pref_current_playlist_id">PREF_PLAYLIST_ID</string>
     <string name="pref_current_playlist_position">PREF_PLAYLIST_POSITION</string>
+    <string name="pref_current_ui_type">PREF_CURRENT_UI_TYPE</string>
     <string name="media_player_unkown_command">Unknown command.</string>
     <string name="metadata_unknown_artist">Unknown artist</string>
     <string name="empty_playlist">There are no items yet, you may scan for media by selecting a target location from the menu.</string>
