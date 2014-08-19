@@ -16,7 +16,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:id="@+id/imageView"
-            android:src="@drawable/ss_icon_notif"
+            android:src="@drawable/ic_neon_notif"
             android:layout_gravity="center" />
     </LinearLayout>
 
@@ -30,7 +30,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/notif_prev"
-            android:src="@drawable/prev_states"
+            android:src="@drawable/neon_prev_states"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:layout_marginRight="10dp" />
@@ -40,7 +40,7 @@
             android:layout_height="48dp"
             android:id="@+id/notif_shuffle"
             android:longClickable="false"
-            android:src="@drawable/shuffle_states"
+            android:src="@drawable/neon_shuffle_states"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_marginLeft="8dp"
@@ -50,7 +50,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/notif_play"
-            android:src="@drawable/play_states"
+            android:src="@drawable/neon_play_states"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:layout_marginLeft="8dp"
@@ -60,7 +60,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/notif_skip"
-            android:src="@drawable/next_states"
+            android:src="@drawable/neon_next_states"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_marginLeft="4dp"

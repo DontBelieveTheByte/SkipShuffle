@@ -4,16 +4,16 @@
     <item
         android:title="@string/refresh"
         android:id="@+id/refresh_media"
-        android:icon="@drawable/refresh">
+        android:icon="@drawable/neon_refresh">
     </item>
     <item
         android:title="@string/set_music_dir"
         android:id="@+id/set_target_directories"
-        android:icon="@drawable/folder">
+        android:icon="@drawable/neon_folder">
     </item>
     <item
         android:title="@string/haptic_feedback"
         android:id="@+id/haptic_feedback_toggle"
-        android:icon="@drawable/vibration">
+        android:icon="@drawable/neon_vibration">
     </item>
 </menu>

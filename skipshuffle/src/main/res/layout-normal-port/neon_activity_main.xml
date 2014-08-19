@@ -26,26 +26,24 @@
             android:layout_columnSpan="3">
 
             <ImageButton
-                android:layout_width="210dp"
-                android:layout_height="210dp"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
                 android:id="@+id/playBtn"
-                android:src="@drawable/play_states"
+                android:src="@drawable/neon_play_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginLeft="5dp" />
 
             <ImageButton
-                android:layout_width="210dp"
-                android:layout_height="210dp"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
                 android:id="@+id/skipBtn"
-                android:src="@drawable/next_states"
+                android:src="@drawable/neon_next_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="100dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginRight="3dp" />
 
         </RelativeLayout>
 
@@ -55,10 +53,12 @@
             android:layout_row="1"
             android:layout_height="wrap_content"
             android:layout_columnSpan="1"
-            android:layout_rowSpan="1">
+            android:layout_rowSpan="1"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp">
 
             <TextView
-                android:layout_width="640dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text kljoguyguiguytf dasdasdasdas"
@@ -84,35 +84,33 @@
             android:paddingBottom="10dp">
 
             <ImageButton
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/shuffleBtn"
-                android:src="@drawable/shuffle_states"
+                android:src="@drawable/neon_shuffle_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="160dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginLeft="20dp" />
 
             <ImageButton
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:id="@+id/playlistBtn"
-                android:src="@drawable/playlist_states"
+                android:src="@drawable/neon_playlist_states"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
                 android:layout_centerInParent="true" />
 
             <ImageButton
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:id="@+id/prevBtn"
-                android:src="@drawable/prev_states"
+                android:src="@drawable/neon_prev_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="135dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginRight="10dp" />
         </RelativeLayout>
 
     </GridLayout>
