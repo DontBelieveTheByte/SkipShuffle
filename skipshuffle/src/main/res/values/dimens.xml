@@ -2,4 +2,104 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="common_large_land_outmost_layout_padding_top"></dimen>
+    <dimen name="common_large_port_outmost_layout_padding_top"></dimen>
+    <dimen name="common_normal_land_outmost_layout_padding_top"></dimen>
+    <dimen name="common_normal_port_outmost_layout_padding_top"></dimen>
+    <dimen name="common_small_land_outmost_layout_padding_top"></dimen>
+    <dimen name="common_small_port_outmost_layout_padding_top"></dimen>
+    <dimen name="common_xlarge_land_outmost_layout_padding_top"></dimen>
+    <dimen name="common_xlarge_port_outmost_layout_padding_top"></dimen>
+
+    <dimen name="common_large_land_outmost_layout_padding_right"></dimen>
+    <dimen name="common_large_port_outmost_layout_padding_right"></dimen>
+    <dimen name="common_normal_land_outmost_layout_padding_right"></dimen>
+    <dimen name="common_normal_port_outmost_layout_padding_right"></dimen>
+    <dimen name="common_small_land_outmost_layout_padding_right"></dimen>
+    <dimen name="common_small_port_outmost_layout_padding_right"></dimen>
+    <dimen name="common_xlarge_land_outmost_layout_padding_right"></dimen>
+    <dimen name="common_xlarge_port_outmost_layout_padding_right"></dimen>
+
+    <dimen name="common_large_land_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_large_port_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_normal_land_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_normal_port_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_small_land_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_small_port_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_xlarge_land_outmost_layout_padding_bottom"></dimen>
+    <dimen name="common_xlarge_port_outmost_layout_padding_bottom"></dimen>
+
+    <dimen name="common_large_land_outmost_layout_padding_left"></dimen>
+    <dimen name="common_large_port_outmost_layout_padding_left"></dimen>
+    <dimen name="common_normal_land_outmost_layout_padding_left"></dimen>
+    <dimen name="common_normal_port_outmost_layout_padding_left"></dimen>
+    <dimen name="common_small_land_outmost_layout_padding_left"></dimen>
+    <dimen name="common_small_port_outmost_layout_padding_left"></dimen>
+    <dimen name="common_xlarge_land_outmost_layout_padding_left"></dimen>
+    <dimen name="common_xlarge_port_outmost_layout_padding_left"></dimen>
+
+    <dimen name="common_large_land_play"></dimen>
+    <dimen name="common_large_port_play"></dimen>
+    <dimen name="common_normal_land_play"></dimen>
+    <dimen name="common_normal_port_play"></dimen>
+    <dimen name="common_small_land_play"></dimen>
+    <dimen name="common_small_port_play"></dimen>
+    <dimen name="common_xlarge_land_play"></dimen>
+    <dimen name="common_xlarge_port_play"></dimen>
+
+    <dimen name="common_large_land_skip"></dimen>
+    <dimen name="common_large_port_skip"></dimen>
+    <dimen name="common_normal_land_skip"></dimen>
+    <dimen name="common_normal_port_skip"></dimen>
+    <dimen name="common_small_land_skip"></dimen>
+    <dimen name="common_small_port_skip"></dimen>
+    <dimen name="common_xlarge_land_skip"></dimen>
+    <dimen name="common_xlarge_port_skip"></dimen>
+
+    <dimen name="common_large_land_prev"></dimen>
+    <dimen name="common_large_port_prev"></dimen>
+    <dimen name="common_normal_land_prev"></dimen>
+    <dimen name="common_normal_port_prev"></dimen>
+    <dimen name="common_small_land_prev"></dimen>
+    <dimen name="common_small_port_prev"></dimen>
+    <dimen name="common_xlarge_land_prev"></dimen>
+    <dimen name="common_xlarge_port_prev"></dimen>
+
+    <dimen name="common_large_land_shuffle"></dimen>
+    <dimen name="common_large_port_shuffle"></dimen>
+    <dimen name="common_normal_land_shuffle"></dimen>
+    <dimen name="common_normal_port_shuffle"></dimen>
+    <dimen name="common_small_land_shuffle"></dimen>
+    <dimen name="common_small_port_shuffle"></dimen>
+    <dimen name="common_xlarge_land_shuffle"></dimen>
+    <dimen name="common_xlarge_port_shuffle"></dimen>
+
+    <dimen name="common_large_land_playlist"></dimen>
+    <dimen name="common_large_port_playlist"></dimen>
+    <dimen name="common_normal_land_playlist"></dimen>
+    <dimen name="common_normal_port_playlist"></dimen>
+    <dimen name="common_small_land_playlist"></dimen>
+    <dimen name="common_small_port_playlist"></dimen>
+    <dimen name="common_xlarge_land_playlist"></dimen>
+    <dimen name="common_xlarge_port_playlist"></dimen>
+
+    <dimen name="common_large_land"></dimen>
+    <dimen name="common_large_port"></dimen>
+    <dimen name="common_normal_land"></dimen>
+    <dimen name="common_normal_port"></dimen>
+    <dimen name="common_small_land"></dimen>
+    <dimen name="common_small_port"></dimen>
+    <dimen name="common_xlarge_land"></dimen>
+    <dimen name="common_xlarge_port"></dimen>
+
+    <dimen name="common_large_land_song_label"></dimen>
+    <dimen name="common_large_port_song_label"></dimen>
+    <dimen name="common_normal_land_song_label"></dimen>
+    <dimen name="common_normal_port_song_label"></dimen>
+    <dimen name="common_small_land_song_label"></dimen>
+    <dimen name="common_small_port_song_label"></dimen>
+    <dimen name="common_xlarge_land_song_label"></dimen>
+    <dimen name="common_xlarge_port_song_label"></dimen>
+
 </resources>

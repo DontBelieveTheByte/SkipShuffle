@@ -9,12 +9,12 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="20dp"
+        android:padding="10dp"
         android:background="@color/neon_ui_background"
         android:clickable="true">
 
         <GridLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:columnCount="3"
@@ -75,7 +75,9 @@
                     android:singleLine="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:ellipsize="marquee"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp" />
 
             </RelativeLayout>
 
@@ -87,17 +89,19 @@
                 android:layout_columnSpan="3"
                 android:layout_rowSpan="1"
                 android:paddingBottom="10dp"
-                android:layout_marginTop="80dp">
+                android:layout_marginTop="20dp">
 
                 <ImageButton
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:id="@+id/shuffleBtn"
                     android:src="@drawable/neon_shuffle_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="50dp" />
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginRight="15dp" />
 
                 <ImageButton
                     android:layout_width="120dp"
@@ -106,17 +110,19 @@
                     android:src="@drawable/neon_playlist_states"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
-                    android:layout_centerInParent="true" />
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
 
                 <ImageButton
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:id="@+id/prevBtn"
                     android:src="@drawable/neon_prev_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="45dp" />
+                    android:layout_marginRight="45dp"
+                    android:layout_marginTop="100dp" />
             </RelativeLayout>
 
         </GridLayout>
