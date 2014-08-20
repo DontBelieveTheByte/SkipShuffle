@@ -9,9 +9,11 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="10dp"
         android:background="@color/neon_ui_background"
-        android:clickable="true">
+        android:paddingTop="@dimen/common_large_port_outmost_layout_padding_top"
+        android:paddingRight="@dimen/common_large_port_outmost_layout_padding_right"
+        android:paddingBottom="@dimen/common_large_port_outmost_layout_padding_bottom"
+        android:paddingLeft="@dimen/common_large_port_outmost_layout_padding_left">
 
         <GridLayout
             android:layout_width="fill_parent"
