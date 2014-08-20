@@ -63,7 +63,7 @@
                 android:layout_rowSpan="1">
 
                 <TextView
-                    android:layout_width="600dp"
+                    android:layout_width="@dimen/common_xlarge_port_song_label_width"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/unknown_current_song_title"

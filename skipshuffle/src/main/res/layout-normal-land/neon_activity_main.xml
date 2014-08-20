@@ -64,7 +64,7 @@
                 android:layout_marginBottom="0dp">
 
                 <TextView
-                    android:layout_width="400dp"
+                    android:layout_width="@dimen/common_normal_land_song_label_width"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text kljoguyguiguytf dasdasdasdas"

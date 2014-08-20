@@ -63,7 +63,7 @@
             android:paddingBottom="5dp">
 
             <TextView
-                android:layout_width="640dp"
+                android:layout_width="@dimen/common_large_land_song_label_width"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/unknown_current_song_title"
