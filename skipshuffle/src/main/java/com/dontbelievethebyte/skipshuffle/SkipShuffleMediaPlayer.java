@@ -52,8 +52,9 @@ public class SkipShuffleMediaPlayer extends Service {
         broadcastCurrentState(
                 SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //Issue paused state on start.
                 playlist.getPlaylistId(),
-                playlist.getPosition()
-        );
+                playlist.getPosition(),
+                "blabsadjhadojasdjad92ue091ieiojqlahd90adjkashdkljagdhadaasdasda" //@TODO Fix this shit for when no playlists or empty. playlist.getCurrent().getTitle()
+                );
 
         playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
 
@@ -102,7 +103,8 @@ public class SkipShuffleMediaPlayer extends Service {
                                         SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
                                         SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //State from known/received command.
                                 playlist.getPlaylistId(),
-                                playlist.getPosition()
+                                playlist.getPosition(),
+                                playlist.getCurrent().getTitle()
                         );
                         setNotification();
 
@@ -119,7 +121,8 @@ public class SkipShuffleMediaPlayer extends Service {
                                             SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
                                             SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE,
                                     playlist.getPlaylistId(),
-                                    playlist.getPosition()
+                                    playlist.getPosition(),
+                                    playlist.getCurrent().getTitle()
                             );
                             setNotification();
                         }
@@ -198,10 +201,11 @@ public class SkipShuffleMediaPlayer extends Service {
         return pendingIntent;
     }
 
-    private void broadcastCurrentState(String state, long playlistID, int position){
+    private void broadcastCurrentState(String state, long playlistID, int position, String currentSongTitle){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE, state)
               .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, playlistID)
+              .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE, currentSongTitle)
               .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, position);
         sendStickyBroadcast(intent);
     }

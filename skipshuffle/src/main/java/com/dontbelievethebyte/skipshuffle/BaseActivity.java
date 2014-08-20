@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -287,13 +288,12 @@ public class BaseActivity extends Activity {
         drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer1);
-
-//        drawerList.setAdapter(new ArrayAdapter<String>(
-//                        this,
-//                        android.R.layout.simple_list_item_1,
-//                        drawerMenuTitles
-//                )
-//        );
-//        drawerList.setOnItemClickListener(new DrawerItemClickListener());
+        drawerList.setAdapter(new ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_list_item_1,
+                        drawerMenuTitles
+                )
+        );
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 }

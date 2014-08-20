@@ -11,6 +11,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     private int playlistID;
     private int playlistPosition;
     private String playerState;
+    private String currentSongTitle;
     private Context context;
     private ArrayList<MediaBroadcastReceiverCallback> mediaBroadcastReceiverCallbacks;
 
@@ -21,6 +22,13 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         return playlistPosition;
     }
     public String getPlayerState() {return playerState;}
+    public String getCurrentSongTitle(){
+        if(currentSongTitle == null){
+            return context.getString(R.string.pref_current_ui_type);
+        } else {
+            return currentSongTitle;
+        }
+    }
 
     MediaPlayerBroadcastReceiver(Context context) {
         this.context = context;
@@ -44,6 +52,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
             playerState = SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE;
         }
         playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, 0);
+        currentSongTitle = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE);
 
         for(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback : mediaBroadcastReceiverCallbacks) {
             mediaBroadcastReceiverCallback.mediaBroadcastReceiverCallback();

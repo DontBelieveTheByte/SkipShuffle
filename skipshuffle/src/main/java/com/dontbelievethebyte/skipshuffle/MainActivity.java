@@ -21,13 +21,15 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
         //Start the mediaPlayer service.
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
+        //Set up navigation drawer for selecting playlists.
+        setUpDrawer();
+
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.playlistBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
-
 
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +98,7 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
         } else {
             ui.doPause();
         }
-        ui.setSongTitle("derpderperpepasdad45645646546adadad dasd4a65d4 dad456a4d6a46asdasdadasda2222222222222222228d");
+        ui.setSongTitle(mediaPlayerBroadcastReceiver.getCurrentSongTitle());
     }
 
     @Override
