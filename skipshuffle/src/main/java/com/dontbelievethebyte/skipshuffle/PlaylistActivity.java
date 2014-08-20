@@ -1,24 +1,17 @@
 package com.dontbelievethebyte.skipshuffle;
 
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class PlaylistActivity extends BaseActivity implements MediaBroadcastReceiverCallback {
 
-    private ImageButton playlistPlayBtn;
-    private ImageButton playlistPrevBtn;
-    private ImageButton playlistSkipBtn;
-    private ImageButton playlistShuffleBtn;
-
     private ListView listView;
     private PlaylistAdapter playlistAdapter;
 
-    private static final String TAG = "SkipShufflePlaylist";
+    protected PlaylistUI ui;
 
     private PlaylistInterface playlist;
 
@@ -26,7 +19,11 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_playlist);
+        ui = UIFactory.createPlaylistUI(PlaylistActivity.this, preferencesHelper.getUIType());
+
+
+        //Register class specific callback from MediaBroadcastReceiverCallback interface.
+        mediaPlayerBroadcastReceiver.registerCallback(this);
 
         playlist = new RandomPlaylist(
                 preferencesHelper.getLastPlaylist(),
@@ -47,38 +44,30 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
         TextView emptyText = (TextView)findViewById(android.R.id.empty);
         listView.setEmptyView(emptyText);
 
-        playlistPlayBtn = (ImageButton) findViewById(R.id.playlist_layout_play);
-        playlistShuffleBtn = (ImageButton) findViewById(R.id.playlist_layout_shuffle);
-        playlistSkipBtn = (ImageButton) findViewById(R.id.playlist_layout_skip);
-        playlistPrevBtn = (ImageButton) findViewById(R.id.playlist_layout_prev);
-
-        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
 
 
-        playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, null);
             }
         });
 
-        playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, null);
             }
         });
 
-        playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, null);
             }
         });
 
-        playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, null);
@@ -86,19 +75,19 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
         });
 
         //Register haptic feedback for all buttons.
-        playlistPlayBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistPlayBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
 
     }
 
     @Override
     public void mediaBroadcastReceiverCallback(){
         if(mediaPlayerBroadcastReceiver.getPlayerState().intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
-            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_play_states));
+            ui.playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_play_states));
         } else {
-            playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_pause_states));
+            ui.playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_pause_states));
         }
         playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
         playlistAdapter.notifyDataSetChanged();

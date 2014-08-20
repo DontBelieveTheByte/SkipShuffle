@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +19,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,6 +29,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class BaseActivity extends Activity {
+
+    protected static final String TAG = "SkipShuffle";
 
     protected static int REQUEST_PICK_FILE = 777;
 
@@ -153,20 +155,13 @@ public class BaseActivity extends Activity {
         //Set up preferences
         preferencesHelper = new PreferencesHelper(getApplicationContext());
 
+        //Is mandatory to get the current state of the player.
+        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
+
+        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
+
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
-        drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer);
-
-        drawerList.setAdapter(new ArrayAdapter<String>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        drawerMenuTitles
-                )
-        );
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     @Override
@@ -212,6 +207,19 @@ public class BaseActivity extends Activity {
         }
         unregisterReceiver(mediaPlayerBroadcastReceiver);
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //Check if we're scanning media beforehand and.
+        if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
+            mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
+            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            Log.d(TAG, "media directories to scan wasn't NULL");
+        }
+    }
+
     @Override
     protected void onPause(){
         if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
@@ -220,6 +228,16 @@ public class BaseActivity extends Activity {
         }
         unregisterReceiver(mediaPlayerBroadcastReceiver);
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
+            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            mediaScannerDialog.show();
+        }
+        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE));
     }
 
     @Override
@@ -263,5 +281,19 @@ public class BaseActivity extends Activity {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
 
         }
+    }
+
+    protected void setUpDrawer(){
+        drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.left_drawer1);
+
+//        drawerList.setAdapter(new ArrayAdapter<String>(
+//                        this,
+//                        android.R.layout.simple_list_item_1,
+//                        drawerMenuTitles
+//                )
+//        );
+//        drawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 }

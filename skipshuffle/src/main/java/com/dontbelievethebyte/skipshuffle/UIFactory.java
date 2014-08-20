@@ -14,14 +14,14 @@ public class UIFactory {
                 return new MonoDarkMainUI(mainActivity);
             case 2 :
                 return new NeonMainUI(mainActivity);
-            case 4 :
+            case 3 :
                 return new MarioMainUI(mainActivity);
             default:
                 return new NeonMainUI(mainActivity);
         }
     }
 
-    public static UI createPlaylistUI(PlaylistActivity playlistActivity, Integer uiType){
+    public static PlaylistUI createPlaylistUI(PlaylistActivity playlistActivity, Integer uiType){
         switch (uiType){
 //            case 0 :
 //                return new MonoLightUI(playlistActivity);
@@ -29,10 +29,10 @@ public class UIFactory {
 //                return new MonoDarkUI(playlistActivity);
 //            case 2 :
 //                return new NeonUI(playlistActivity);
-//            case 4 :
+//            case 3 :
 //                return new MarioUI(playlistActivity);
             default:
-                return new NeonPlaylistUI();
+                return new NeonPlaylistUI(playlistActivity);
         }
     }
 //

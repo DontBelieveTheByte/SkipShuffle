@@ -1,32 +1,25 @@
 package com.dontbelievethebyte.skipshuffle;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends BaseActivity implements MediaBroadcastReceiverCallback {
 
-    private UI ui;
-
-    private static final String TAG = "SkipShuffleMain";
+    private MainUI ui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Register class specific callback from MediaBroadcastReceiverCallback interface.
+        mediaPlayerBroadcastReceiver.registerCallback(this);
+
         //Set up UI, this can be later instantiated user prefs to get an alternative UI.
-        ui = UI.createUI(MainActivity.this, preferencesHelper.getUIType());
+        ui = UIFactory.createMainUI(MainActivity.this, 2);
 
         //Start the mediaPlayer service.
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
-
-        //Is mandatory to get the current state of the player.
-        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
 
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -92,37 +85,23 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
     @Override
     protected void onResume() {
         super.onResume();
-        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia) {
-            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
-            mediaScannerDialog.show();
-        }
-        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE));
         ui.reboot();
     }
 
     @Override
     public void mediaBroadcastReceiverCallback() {
         String state = mediaPlayerBroadcastReceiver.getPlayerState();
-        if(state == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
+        if(state.intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
             ui.doPlay();
         } else {
             ui.doPause();
         }
-        ui.setSongTitle("derpderperpep");
+        ui.setSongTitle("derpderperpepasdad45645646546adadad dasd4a65d4 dad456a4d6a46asdasdadasda2222222222222222228d");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        //Check if we're scanning media beforehand and.
-        if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
-            mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(MainActivity.this));
-            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
-            Log.d(TAG, "media directories to scan wasn't NULL");
-        }
         ui.reboot();
     }
-
-
 }

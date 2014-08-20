@@ -6,7 +6,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MarioUI extends UI {
+public class MonoDarkMainUI extends MainUI {
 
     public Animation ltr = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_ltr);
     public Animation flipRightAnimation  = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_right);
@@ -14,7 +14,7 @@ public class MarioUI extends UI {
     public Animation flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_left);
     public Animation blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_blink);
 
-    public MarioUI(MainActivity mainActivity){
+    public MonoDarkMainUI(MainActivity mainActivity){
         super(mainActivity);
         mainActivity.setContentView(R.layout.neon_activity_main);
 
@@ -31,12 +31,12 @@ public class MarioUI extends UI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                skipBtn.setImageDrawable(MarioUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed));
+                skipBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                skipBtn.setImageDrawable(MarioUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
+                skipBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
                 doPlay();
             }
 
@@ -49,12 +49,12 @@ public class MarioUI extends UI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                prevBtn.setImageDrawable(MarioUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed));
+                prevBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                prevBtn.setImageDrawable(MarioUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states));
+                prevBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states));
                 doPlay();
             }
 
@@ -67,12 +67,12 @@ public class MarioUI extends UI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                shuffleBtn.setImageDrawable(MarioUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed));
+                shuffleBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                shuffleBtn.setImageDrawable(MarioUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states));
+                shuffleBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states));
                 doPlay();
             }
 

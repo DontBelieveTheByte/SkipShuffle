@@ -6,17 +6,28 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class NeonUI extends UI {
+public class NeonMainUI extends MainUI {
 
-    public Animation ltr = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_ltr);
-    public Animation flipRightAnimation  = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_right);
-    public Animation flipDownAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_down);
-    public Animation flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_left);
-    public Animation blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_blink);
+    private Animation ltr;
+    private Animation flipRightAnimation;
+    private Animation flipDownAnimation;
+    private Animation flipLeftAnimation;
+    private Animation blinkAnimation;
 
-    public NeonUI(MainActivity mainActivity){
+    private final String TYPEFACE = "fonts/UbuntuMono-B.ttf";
+
+    public NeonMainUI(MainActivity mainActivity){
+
         super(mainActivity);
+
         mainActivity.setContentView(R.layout.neon_activity_main);
+
+        ltr = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_ltr);
+        flipRightAnimation  = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_right);
+        flipDownAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_down);
+        flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_left);
+        blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_blink);
+
 
         playlistBtn = (ImageButton) mainActivity.findViewById(R.id.playlistBtn);
         prevBtn = (ImageButton) mainActivity.findViewById(R.id.prevBtn);
@@ -25,18 +36,20 @@ public class NeonUI extends UI {
         skipBtn = (ImageButton) mainActivity.findViewById(R.id.skipBtn);
         songTitle = (TextView) mainActivity.findViewById(R.id.song_label);
 
+//        typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
+
         songTitle.setTypeface(getTypeFace());
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                skipBtn.setImageDrawable(NeonUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed));
+                skipBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                skipBtn.setImageDrawable(NeonUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
+                skipBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
                 doPlay();
             }
 
@@ -49,12 +62,12 @@ public class NeonUI extends UI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                prevBtn.setImageDrawable(NeonUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed));
+                prevBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                prevBtn.setImageDrawable(NeonUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states));
+                prevBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states));
                 doPlay();
             }
 
@@ -67,12 +80,12 @@ public class NeonUI extends UI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                shuffleBtn.setImageDrawable(NeonUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed));
+                shuffleBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                shuffleBtn.setImageDrawable(NeonUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states));
+                shuffleBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states));
                 doPlay();
             }
 
@@ -133,14 +146,10 @@ public class NeonUI extends UI {
             doPause();
         }
     }
-    @Override
-    public void setSongTitle(String title){
-        songTitle.setText(title);
-    }
 
     public Typeface getTypeFace(){
         if(typeface == null){
-            typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
+            typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf" );
         }
         return typeface;
     }

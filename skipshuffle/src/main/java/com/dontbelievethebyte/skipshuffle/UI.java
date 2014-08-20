@@ -16,7 +16,7 @@ public interface UI {
 
     public void reboot();
 
-    public void setSongTitle();
+    public void setSongTitle(String title);
 
     public Typeface getTypeFace();
 }
