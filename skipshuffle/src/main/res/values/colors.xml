@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mini_ui_background">#1E2C56</color>
-    <color name="mini_ui_playlist_divider">#ffff00d1</color>
-    <color name="mini_ui_song_label">#ffff7f00</color>
+    <color name="neon_ui_background">#1E2C56</color>
+    <color name="neon_ui_playlist_divider">#ffff00d1</color>
+    <color name="neon_ui_song_label">#ffff7f00</color>
+
+    <color name="mono_light_ui_background">#ffc5c5c5</color>
+    <color name="mono_light_ui_playlist_divider">#ff1a1a1a</color>
+    <color name="mono_light_ui_song_label">#ff1a1a1a</color>
+
+    <color name="mono_dark_ui_background">#ff1a1a1a</color>
+    <color name="mono_dark_ui_playlist_divider">#ffc5c5c5</color>
+    <color name="mono_dark_ui_song_label">#ffc5c5c5</color>
 </resources>

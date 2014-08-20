@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="20dp"
-        android:background="@color/mini_ui_background"
+        android:background="@color/neon_ui_background"
         android:clickable="true">
 
         <GridLayout
@@ -65,9 +65,9 @@
                     android:layout_width="640dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Large Text kljoguyguiguytf dasdasdasdas"
+                    android:text="@string/unknown_current_song_title"
                     android:id="@+id/song_label"
-                    android:textColor="@color/mini_ui_song_label"
+                    android:textColor="@color/neon_ui_song_label"
                     android:typeface="monospace"
                     android:layout_centerInParent="true"
                     android:autoText="true"

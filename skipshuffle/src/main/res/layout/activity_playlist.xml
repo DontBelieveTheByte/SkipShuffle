@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/mini_ui_background">
+        android:background="@color/neon_ui_background">
 
         <ListView
             android:layout_width="fill_parent"
@@ -25,7 +25,7 @@
             android:paddingTop="12dp"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:divider="@color/mini_ui_playlist_divider"
+            android:divider="@color/neon_ui_playlist_divider"
             android:drawSelectorOnTop="false" />
 
         <LinearLayout
@@ -35,7 +35,7 @@
             android:baselineAligned="false"
             android:id="@+id/playlist_controls"
             android:gravity="center"
-            android:background="@color/mini_ui_background">
+            android:background="@color/neon_ui_background">
 
             <ImageButton
                 android:layout_width="48dp"
