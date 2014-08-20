@@ -102,13 +102,13 @@
     <dimen name="common_xlarge_land_song_label_width">640dp</dimen>
     <dimen name="common_xlarge_port_song_label_width">640dp</dimen>
 
-    <dimen name="common_large_land_song_label_txt"></dimen>
-    <dimen name="common_large_port_song_label_txt"></dimen>
-    <dimen name="common_normal_land_song_label_txt"></dimen>
-    <dimen name="common_normal_port_song_label_txt"></dimen>
-    <dimen name="common_small_land_song_label_txt"></dimen>
-    <dimen name="common_small_port_song_label_txt"></dimen>
-    <dimen name="common_xlarge_land_song_label_txt"></dimen>
-    <dimen name="common_xlarge_port_song_label_txt"></dimen>
+    <dimen name="common_large_land_song_label_txt">18sp</dimen>
+    <dimen name="common_large_port_song_label_txt">18sp</dimen>
+    <dimen name="common_normal_land_song_label_txt">18sp</dimen>
+    <dimen name="common_normal_port_song_label_txt">18sp</dimen>
+    <dimen name="common_small_land_song_label_txt">18sp</dimen>
+    <dimen name="common_small_port_song_label_txt">18sp</dimen>
+    <dimen name="common_xlarge_land_song_label_txt">18sp</dimen>
+    <dimen name="common_xlarge_port_song_label_txt">18sp</dimen>
 
 </resources>

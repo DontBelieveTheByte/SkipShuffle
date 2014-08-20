@@ -64,6 +64,7 @@
 
                 <TextView
                     android:layout_width="@dimen/common_xlarge_port_song_label_width"
+                    android:textSize="@dimen/common_xlarge_port_song_label_txt"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/unknown_current_song_title"
@@ -77,8 +78,7 @@
                     android:singleLine="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:ellipsize="marquee"
-                    android:textIsSelectable="false"
-                    android:textSize="40sp" />
+                    android:textIsSelectable="false"/>
 
             </RelativeLayout>
 

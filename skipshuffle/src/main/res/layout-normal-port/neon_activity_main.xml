@@ -62,6 +62,7 @@
 
                 <TextView
                     android:layout_width="@dimen/common_normal_port_song_label_width"
+                    android:textSize="@dimen/common_normal_port_song_label_txt"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/unknown_current_song_title"
