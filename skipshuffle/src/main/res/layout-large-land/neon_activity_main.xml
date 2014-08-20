@@ -5,20 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="10dp"
-    android:background="@color/neon_ui_background"
-    android:clickable="false">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="10dp"
+        android:background="@color/neon_ui_background"
+        android:clickable="false">
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:columnCount="3"
-        android:rowCount="3"
-        android:layout_centerInParent="true"
-        android:id="@+id/gridLayout">
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:layout_centerInParent="true"
+            android:id="@+id/gridLayout">
 
         <RelativeLayout
             android:layout_width="fill_parent"
