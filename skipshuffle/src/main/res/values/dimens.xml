@@ -139,13 +139,13 @@
     <dimen name="common_xlarge_port_prev_margin_right">95dp</dimen>
 
     <dimen name="common_large_land_song_label_width">600dp</dimen>
-    <dimen name="common_large_port_song_label_width">640dp</dimen>
+    <dimen name="common_large_port_song_label_width">460dp</dimen>
     <dimen name="common_normal_land_song_label_width">400dp</dimen>
-    <dimen name="common_normal_port_song_label_width">640dp</dimen>
-    <dimen name="common_small_land_song_label_width">180dp</dimen>
-    <dimen name="common_small_port_song_label_width">180dp</dimen>
-    <dimen name="common_xlarge_land_song_label_width">640dp</dimen>
-    <dimen name="common_xlarge_port_song_label_width">640dp</dimen>
+    <dimen name="common_normal_port_song_label_width">280dp</dimen>
+    <dimen name="common_small_land_song_label_width">320dp</dimen>
+    <dimen name="common_small_port_song_label_width">240dp</dimen>
+    <dimen name="common_xlarge_land_song_label_width">880dp</dimen>
+    <dimen name="common_xlarge_port_song_label_width">620dp</dimen>
 
     <dimen name="common_large_land_song_label_txt">24sp</dimen>
     <dimen name="common_large_port_song_label_txt">24sp</dimen>
@@ -176,7 +176,7 @@
 
     <dimen name="common_large_land_row2_top">20dp</dimen>
     <dimen name="common_large_port_row2_top">160dp</dimen>
-    <dimen name="common_normal_land_row2_top">10dp</dimen>
+    <dimen name="common_normal_land_row2_top">20dp</dimen>
     <dimen name="common_normal_port_row2_top">80dp</dimen>
     <dimen name="common_small_land_row2_top">20dp</dimen>
     <dimen name="common_small_port_row2_top">30dp</dimen>
