@@ -98,7 +98,7 @@ public class PreferencesHelper {
 
     public Integer getUIType(){
         if(null == currentUIType){
-            currentPlaylistPosition = sharedPreferences.getInt(context.getString(R.string.pref_current_ui_type), 0);
+            currentPlaylistPosition = sharedPreferences.getInt(context.getString(R.string.pref_current_ui_type), 2);
         }
         return currentPlaylistPosition;
     }

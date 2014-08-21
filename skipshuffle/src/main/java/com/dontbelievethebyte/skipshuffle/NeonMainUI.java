@@ -39,6 +39,7 @@ public class NeonMainUI extends MainUI {
 //        typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
 
         songTitle.setTypeface(getTypeFace());
+        songTitle.setSelected(true);
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override

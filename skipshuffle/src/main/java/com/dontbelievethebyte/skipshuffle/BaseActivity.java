@@ -1,9 +1,11 @@
 package com.dontbelievethebyte.skipshuffle;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
@@ -272,11 +274,53 @@ public class BaseActivity extends Activity {
             case R.id.haptic_feedback_toggle:
                 preferencesHelper.hapticFeedbackToggle();
                 return true;
+            case R.id.theme:
+                showThemeSelectionDialog();
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+    protected void showThemeSelectionDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.dialog_title));
+        builder.setSingleChoiceItems(
+                R.array.dialog_theme_items,
+                preferencesHelper.getUIType(),
+                new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int indexPosition) {
 
+                    }
+                }
+        );
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int indexPosition) {
+                switch (indexPosition){
+                    case UIFactory.MONO_LIGHT:
+                        preferencesHelper.setUIType(UIFactory.MONO_LIGHT);
+                        return;
+                    case UIFactory.MONO_DARK:
+                        preferencesHelper.setUIType(UIFactory.MONO_DARK);
+                        return;
+                    case UIFactory.NEON:
+                        preferencesHelper.setUIType(UIFactory.NEON);
+                        return;
+                }
+            }
+        } );
+
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialogInterface, int indexPosition) {
+
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
     protected class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
