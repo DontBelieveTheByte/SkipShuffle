@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/neon_ui_background"
+        android:background="@color/neon_background"
         android:paddingTop="@dimen/common_normal_land_outmost_layout_padding_top"
         android:paddingRight="@dimen/common_normal_land_outmost_layout_padding_right"
         android:paddingBottom="@dimen/common_normal_land_outmost_layout_padding_bottom"
@@ -31,24 +31,24 @@
                 android:layout_columnSpan="3">
 
                 <ImageButton
-                    android:layout_width="125dp"
-                    android:layout_height="125dp"
+                    android:layout_width="@dimen/common_normal_port_play_w_h"
+                    android:layout_height="@dimen/common_normal_port_play_w_h"
                     android:id="@+id/playBtn"
                     android:src="@drawable/neon_play_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="@dimen/common_normal_port_play_margin_left" />
 
                 <ImageButton
-                    android:layout_width="125dp"
-                    android:layout_height="125dp"
+                    android:layout_width="@dimen/common_normal_port_skip_w_h"
+                    android:layout_height="@dimen/common_normal_port_skip_w_h"
                     android:id="@+id/skipBtn"
                     android:src="@drawable/neon_next_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="3dp" />
+                    android:layout_marginRight="@dimen/common_normal_port_skip_margin_right" />
 
             </RelativeLayout>
 
@@ -58,9 +58,7 @@
                 android:layout_row="1"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="1"
-                android:layout_rowSpan="1"
-                android:layout_marginTop="45dp"
-                android:layout_marginBottom="15dp">
+                android:layout_rowSpan="1">
 
                 <TextView
                     android:layout_width="@dimen/common_normal_port_song_label_width"
@@ -69,7 +67,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/unknown_current_song_title"
                     android:id="@+id/song_label"
-                    android:textColor="@color/neon_ui_song_label"
+                    android:textColor="@color/neon_song_label"
                     android:typeface="monospace"
                     android:layout_centerInParent="true"
                     android:autoText="true"
@@ -77,7 +75,9 @@
                     android:singleLine="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:ellipsize="marquee"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/common_normal_port_row2_top"
+                    android:layout_marginBottom="@dimen/common_normal_port_row2_bottom"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -89,20 +89,19 @@
                 android:layout_rowSpan="1">
 
                 <ImageButton
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
+                    android:layout_width="@dimen/common_normal_port_shuffle_w_h"
+                    android:layout_height="@dimen/common_normal_port_shuffle_w_h"
                     android:id="@+id/shuffleBtn"
                     android:src="@drawable/neon_shuffle_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginTop="@dimen/common_normal_port_shuffle_margin_top"
+                    android:layout_marginLeft="@dimen/common_normal_port_shuffle_margin_left"/>
 
                 <ImageButton
-                    android:layout_width="95dp"
-                    android:layout_height="95dp"
+                    android:layout_width="@dimen/common_normal_port_playlist_w_h"
+                    android:layout_height="@dimen/common_normal_port_playlist_w_h"
                     android:id="@+id/playlistBtn"
                     android:src="@drawable/neon_playlist_states"
                     android:scaleType="fitCenter"
@@ -111,15 +110,15 @@
                     android:layout_centerHorizontal="true" />
 
                 <ImageButton
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
+                    android:layout_width="@dimen/common_normal_port_prev_w_h"
+                    android:layout_height="@dimen/common_normal_port_prev_w_h"
                     android:id="@+id/prevBtn"
                     android:src="@drawable/neon_prev_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="25dp"
-                    android:layout_marginTop="100dp" />
+                    android:layout_marginTop="@dimen/common_normal_port_prev_margin_top"
+                    android:layout_marginRight="@dimen/common_normal_port_prev_margin_right"/>
             </RelativeLayout>
 
         </GridLayout>
@@ -127,12 +126,12 @@
     </RelativeLayout>
     <ListView
         android:id="@+id/left_drawer1"
-        android:layout_width="240dp"
+        android:layout_width="@dimen/common_normal_port_nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
+        android:divider="@color/neon_nav_drawer_divider"
+        android:dividerHeight="@dimen/common_normal_port_nav_drawer_divider_height"
+        android:background="@color/neon_nav_drawer_background"/>
 
 </android.support.v4.widget.DrawerLayout>
