@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/neon_ui_background"
+        android:background="@color/neon_background"
         android:paddingTop="@dimen/common_large_land_outmost_layout_padding_top"
         android:paddingRight="@dimen/common_large_land_outmost_layout_padding_right"
         android:paddingBottom="@dimen/common_large_land_outmost_layout_padding_bottom"
@@ -31,26 +31,24 @@
             android:layout_columnSpan="3">
 
             <ImageButton
-                android:layout_width="210dp"
-                android:layout_height="210dp"
+                android:layout_width="@dimen/common_large_land_play_w_h"
+                android:layout_height="@dimen/common_large_land_play_w_h"
                 android:id="@+id/playBtn"
                 android:src="@drawable/neon_play_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginLeft="@dimen/common_large_land_play_margin_left"/>
 
             <ImageButton
-                android:layout_width="210dp"
-                android:layout_height="210dp"
+                android:layout_width="@dimen/common_large_land_skip_w_h"
+                android:layout_height="@dimen/common_large_land_skip_w_h"
                 android:id="@+id/skipBtn"
                 android:src="@drawable/neon_next_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="100dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginRight="@dimen/common_large_land_skip_margin_right" />
 
         </RelativeLayout>
 
@@ -61,8 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_columnSpan="1"
             android:layout_rowSpan="1"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:layout_marginTop="@dimen/common_large_land_row2_top"
+            android:layout_marginBottom="@dimen/common_large_land_row2_bottom">
 
             <TextView
                 android:layout_width="@dimen/common_large_land_song_label_width"
@@ -71,7 +69,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/unknown_current_song_title"
                 android:id="@+id/song_label"
-                android:textColor="@color/neon_ui_song_label"
+                android:textColor="@color/neon_song_label"
                 android:typeface="monospace"
                 android:layout_centerInParent="true"
                 android:autoText="true"
@@ -88,23 +86,22 @@
             android:layout_row="2"
             android:layout_height="wrap_content"
             android:layout_columnSpan="3"
-            android:layout_rowSpan="1"
-            android:paddingBottom="10dp">
+            android:layout_rowSpan="1">
 
             <ImageButton
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="@dimen/common_large_land_shuffle_w_h"
+                android:layout_height="@dimen/common_large_land_shuffle_w_h"
                 android:id="@+id/shuffleBtn"
                 android:src="@drawable/neon_shuffle_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="160dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="@dimen/common_large_land_shuffle_margin_top"
+                android:layout_marginLeft="@dimen/common_large_land_shuffle_margin_left"/>
 
             <ImageButton
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/common_large_land_playlist_w_h"
+                android:layout_height="@dimen/common_large_land_playlist_w_h"
                 android:id="@+id/playlistBtn"
                 android:src="@drawable/neon_playlist_states"
                 android:scaleType="fitCenter"
@@ -112,26 +109,26 @@
                 android:layout_centerInParent="true" />
 
             <ImageButton
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="@dimen/common_large_land_prev_w_h"
+                android:layout_height="@dimen/common_large_land_prev_w_h"
                 android:id="@+id/prevBtn"
                 android:src="@drawable/neon_prev_states"
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="135dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="@dimen/common_large_land_prev_margin_top"
+                android:layout_marginRight="@dimen/common_large_land_prev_margin_right"/>
         </RelativeLayout>
 
     </GridLayout>
 
     </RelativeLayout>    <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer1"
-    android:layout_width="240dp"
+    android:layout_width="@dimen/common_large_land_nav_drawer_width"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:choiceMode="singleChoice"
     android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
-    android:background="#111"/>
+    android:dividerHeight="@dimen/common_large_land_nav_drawer_divider_height"
+    android:background="@color/neon_nav_drawer_background"/>
 </android.support.v4.widget.DrawerLayout>
