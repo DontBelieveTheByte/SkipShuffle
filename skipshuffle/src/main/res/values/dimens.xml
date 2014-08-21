@@ -7,7 +7,7 @@
     <dimen name="common_large_port_outmost_layout_padding_top">5dp</dimen>
     <dimen name="common_normal_land_outmost_layout_padding_top">20dp</dimen>
     <dimen name="common_normal_port_outmost_layout_padding_top">5dp</dimen>
-    <dimen name="common_small_land_outmost_layout_padding_top">5dp</dimen>
+    <dimen name="common_small_land_outmost_layout_padding_top">10dp</dimen>
     <dimen name="common_small_port_outmost_layout_padding_top">5dp</dimen>
     <dimen name="common_xlarge_land_outmost_layout_padding_top">5dp</dimen>
     <dimen name="common_xlarge_port_outmost_layout_padding_top">5dp</dimen>
@@ -44,7 +44,7 @@
     <dimen name="common_normal_land_play_w_h">115dp</dimen>
     <dimen name="common_normal_port_play_w_h">125dp</dimen>
     <dimen name="common_small_land_play_w_h">100dp</dimen>
-    <dimen name="common_small_port_play_w_h">100dp</dimen>
+    <dimen name="common_small_port_play_w_h">110dp</dimen>
     <dimen name="common_xlarge_land_play_w_h">100dp</dimen>
     <dimen name="common_xlarge_port_play_w_h">100dp</dimen>
 
@@ -52,8 +52,8 @@
     <dimen name="common_large_port_play_margin_left">30dp</dimen>
     <dimen name="common_normal_land_play_margin_left">50dp</dimen>
     <dimen name="common_normal_port_play_margin_left">20dp</dimen>
-    <dimen name="common_small_land_play_margin_left">1dp</dimen>
-    <dimen name="common_small_port_play_margin_left">1dp</dimen>
+    <dimen name="common_small_land_play_margin_left">20dp</dimen>
+    <dimen name="common_small_port_play_margin_left">15dp</dimen>
     <dimen name="common_xlarge_land_play_margin_left">1dp</dimen>
     <dimen name="common_xlarge_port_play_margin_left">1dp</dimen>
 
@@ -62,7 +62,7 @@
     <dimen name="common_normal_land_skip_w_h">115dp</dimen>
     <dimen name="common_normal_port_skip_w_h">125dp</dimen>
     <dimen name="common_small_land_skip_w_h">100dp</dimen>
-    <dimen name="common_small_port_skip_w_h">100dp</dimen>
+    <dimen name="common_small_port_skip_w_h">110dp</dimen>
     <dimen name="common_xlarge_land_skip_w_h">100dp</dimen>
     <dimen name="common_xlarge_port_skip_w_h">100dp</dimen>
 
@@ -70,8 +70,8 @@
     <dimen name="common_large_port_skip_margin_right">30dp</dimen>
     <dimen name="common_normal_land_skip_margin_right">60dp</dimen>
     <dimen name="common_normal_port_skip_margin_right">20dp</dimen>
-    <dimen name="common_small_land_skip_margin_right">100dp</dimen>
-    <dimen name="common_small_port_skip_margin_right">100dp</dimen>
+    <dimen name="common_small_land_skip_margin_right">25dp</dimen>
+    <dimen name="common_small_port_skip_margin_right">15dp</dimen>
     <dimen name="common_xlarge_land_skip_margin_right">100dp</dimen>
     <dimen name="common_xlarge_port_skip_margin_right">100dp</dimen>
 
@@ -79,8 +79,8 @@
     <dimen name="common_large_port_shuffle_w_h">180dp</dimen>
     <dimen name="common_normal_land_shuffle_w_h">100dp</dimen>
     <dimen name="common_normal_port_shuffle_w_h">110dp</dimen>
-    <dimen name="common_small_land_shuffle_w_h">100dp</dimen>
-    <dimen name="common_small_port_shuffle_w_h">100dp</dimen>
+    <dimen name="common_small_land_shuffle_w_h">80dp</dimen>
+    <dimen name="common_small_port_shuffle_w_h">85dp</dimen>
     <dimen name="common_xlarge_land_shuffle_w_h">100dp</dimen>
     <dimen name="common_xlarge_port_shuffle_w_h">100dp</dimen>
 
@@ -88,17 +88,17 @@
     <dimen name="common_large_port_shuffle_margin_top">100dp</dimen>
     <dimen name="common_normal_land_shuffle_margin_top">40dp</dimen>
     <dimen name="common_normal_port_shuffle_margin_top">100dp</dimen>
-    <dimen name="common_small_land_shuffle_margin_top">100dp</dimen>
-    <dimen name="common_small_port_shuffle_margin_top">100dp</dimen>
-    <dimen name="common_xlarge_land_shuffle_margin_top">100dp</dimen>
+    <dimen name="common_small_land_shuffle_margin_top">40dp</dimen>
+    <dimen name="common_small_port_shuffle_margin_top">75dp</dimen>
+    <dimen name="common_xlarge_land_shuffle_margin_top">90dp</dimen>
     <dimen name="common_xlarge_port_shuffle_margin_top">100dp</dimen>
 
     <dimen name="common_large_land_shuffle_margin_left">120dp</dimen>
     <dimen name="common_large_port_shuffle_margin_left">40dp</dimen>
     <dimen name="common_normal_land_shuffle_margin_left">70dp</dimen>
     <dimen name="common_normal_port_shuffle_margin_left">30dp</dimen>
-    <dimen name="common_small_land_shuffle_margin_left">100dp</dimen>
-    <dimen name="common_small_port_shuffle_margin_left">100dp</dimen>
+    <dimen name="common_small_land_shuffle_margin_left">35dp</dimen>
+    <dimen name="common_small_port_shuffle_margin_left">30dp</dimen>
     <dimen name="common_xlarge_land_shuffle_margin_left">100dp</dimen>
     <dimen name="common_xlarge_port_shuffle_margin_left">100dp</dimen>
 
@@ -106,8 +106,8 @@
     <dimen name="common_large_port_playlist_w_h">120dp</dimen>
     <dimen name="common_normal_land_playlist_w_h">85dp</dimen>
     <dimen name="common_normal_port_playlist_w_h">95dp</dimen>
-    <dimen name="common_small_land_playlist_w_h">100dp</dimen>
-    <dimen name="common_small_port_playlist_w_h">100dp</dimen>
+    <dimen name="common_small_land_playlist_w_h">70dp</dimen>
+    <dimen name="common_small_port_playlist_w_h">75dp</dimen>
     <dimen name="common_xlarge_land_playlist_w_h">100dp</dimen>
     <dimen name="common_xlarge_port_playlist_w_h">100dp</dimen>
 
@@ -115,8 +115,8 @@
     <dimen name="common_large_port_prev_w_h">180dp</dimen>
     <dimen name="common_normal_land_prev_w_h">100dp</dimen>
     <dimen name="common_normal_port_prev_w_h">110dp</dimen>
-    <dimen name="common_small_land_prev_w_h">100dp</dimen>
-    <dimen name="common_small_port_prev_w_h">100dp</dimen>
+    <dimen name="common_small_land_prev_w_h">80dp</dimen>
+    <dimen name="common_small_port_prev_w_h">85dp</dimen>
     <dimen name="common_xlarge_land_prev_w_h">100dp</dimen>
     <dimen name="common_xlarge_port_prev_w_h">100dp</dimen>
 
@@ -124,8 +124,8 @@
     <dimen name="common_large_port_prev_margin_top">100dp</dimen>
     <dimen name="common_normal_land_prev_margin_top">40dp</dimen>
     <dimen name="common_normal_port_prev_margin_top">100dp</dimen>
-    <dimen name="common_small_land_prev_margin_top">100dp</dimen>
-    <dimen name="common_small_port_prev_margin_top">100dp</dimen>
+    <dimen name="common_small_land_prev_margin_top">30dp</dimen>
+    <dimen name="common_small_port_prev_margin_top">75dp</dimen>
     <dimen name="common_xlarge_land_prev_margin_top">100dp</dimen>
     <dimen name="common_xlarge_port_prev_margin_top">100dp</dimen>
 
@@ -133,8 +133,8 @@
     <dimen name="common_large_port_prev_margin_right">40dp</dimen>
     <dimen name="common_normal_land_prev_margin_right">70dp</dimen>
     <dimen name="common_normal_port_prev_margin_right">30dp</dimen>
-    <dimen name="common_small_land_prev_margin_right">100dp</dimen>
-    <dimen name="common_small_port_prev_margin_right">100dp</dimen>
+    <dimen name="common_small_land_prev_margin_right">35dp</dimen>
+    <dimen name="common_small_port_prev_margin_right">25dp</dimen>
     <dimen name="common_xlarge_land_prev_margin_right">100dp</dimen>
     <dimen name="common_xlarge_port_prev_margin_right">100dp</dimen>
 
@@ -142,8 +142,8 @@
     <dimen name="common_large_port_song_label_width">640dp</dimen>
     <dimen name="common_normal_land_song_label_width">400dp</dimen>
     <dimen name="common_normal_port_song_label_width">640dp</dimen>
-    <dimen name="common_small_land_song_label_width">640dp</dimen>
-    <dimen name="common_small_port_song_label_width">640dp</dimen>
+    <dimen name="common_small_land_song_label_width">180dp</dimen>
+    <dimen name="common_small_port_song_label_width">180dp</dimen>
     <dimen name="common_xlarge_land_song_label_width">640dp</dimen>
     <dimen name="common_xlarge_port_song_label_width">640dp</dimen>
 
@@ -178,8 +178,8 @@
     <dimen name="common_large_port_row2_top">160dp</dimen>
     <dimen name="common_normal_land_row2_top">10dp</dimen>
     <dimen name="common_normal_port_row2_top">80dp</dimen>
-    <dimen name="common_small_land_row2_top"></dimen>
-    <dimen name="common_small_port_row2_top"></dimen>
+    <dimen name="common_small_land_row2_top">20dp</dimen>
+    <dimen name="common_small_port_row2_top">30dp</dimen>
     <dimen name="common_xlarge_land_row2_top"></dimen>
     <dimen name="common_xlarge_port_row2_top"></dimen>
 
@@ -187,8 +187,8 @@
     <dimen name="common_large_port_row2_bottom">5dp</dimen>
     <dimen name="common_normal_land_row2_bottom">5dp</dimen>
     <dimen name="common_normal_port_row2_bottom">5dp</dimen>
-    <dimen name="common_small_land_row2_bottom"></dimen>
-    <dimen name="common_small_port_row2_bottom"></dimen>
+    <dimen name="common_small_land_row2_bottom">2dp</dimen>
+    <dimen name="common_small_port_row2_bottom">35dp</dimen>
     <dimen name="common_xlarge_land_row2_bottom"></dimen>
     <dimen name="common_xlarge_port_row2_bottom"></dimen>
 
