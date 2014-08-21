@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/mono_light_background"
+        android:paddingTop="@dimen/common_normal_land_outmost_layout_padding_top"
+        android:paddingRight="@dimen/common_normal_land_outmost_layout_padding_right"
+        android:paddingBottom="@dimen/common_normal_land_outmost_layout_padding_bottom"
+        android:paddingLeft="@dimen/common_normal_land_outmost_layout_padding_left">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:layout_centerInParent="true"
+            android:id="@+id/gridLayout">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:layout_height="wrap_content"
+                android:layout_rowSpan="1"
+                android:layout_columnSpan="3">
+
+                <ImageButton
+                    android:layout_width="@dimen/common_normal_land_play_w_h"
+                    android:layout_height="@dimen/common_normal_land_play_w_h"
+                    android:id="@+id/playBtn"
+                    android:src="@drawable/mono_light_play_states"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/common_normal_land_play_margin_left" />
+
+                <ImageButton
+                    android:layout_width="@dimen/common_normal_land_skip_w_h"
+                    android:layout_height="@dimen/common_normal_land_skip_w_h"
+                    android:id="@+id/skipBtn"
+                    android:src="@drawable/mono_light_next_states"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/common_normal_land_skip_margin_right" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="1"
+                android:layout_rowSpan="1">
+
+                <TextView
+                    android:layout_width="@dimen/common_normal_land_song_label_width"
+                    android:textSize="@dimen/common_normal_land_song_label_txt"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unknown_current_song_title"
+                    android:id="@+id/song_label"
+                    android:textColor="@color/mono_light_song_label"
+                    android:typeface="monospace"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:ellipsize="marquee"
+                    android:layout_marginTop="@dimen/common_normal_land_row2_top"
+                    android:layout_marginBottom="@dimen/common_normal_land_row2_bottom"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="3"
+                android:layout_rowSpan="1">
+
+                <ImageButton
+                    android:layout_width="@dimen/common_normal_land_shuffle_w_h"
+                    android:layout_height="@dimen/common_normal_land_shuffle_w_h"
+                    android:id="@+id/shuffleBtn"
+                    android:src="@drawable/mono_light_shuffle_states"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/common_normal_land_shuffle_margin_top"
+                    android:layout_marginLeft="@dimen/common_normal_land_shuffle_margin_left"/>
+
+                <ImageButton
+                    android:layout_width="@dimen/common_normal_land_playlist_w_h"
+                    android:layout_height="@dimen/common_normal_land_playlist_w_h"
+                    android:id="@+id/playlistBtn"
+                    android:src="@drawable/mono_light_playlist_states"
+                    android:scaleType="fitCenter"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
+
+                <ImageButton
+                    android:layout_width="@dimen/common_normal_land_prev_w_h"
+                    android:layout_height="@dimen/common_normal_land_prev_w_h"
+                    android:id="@+id/prevBtn"
+                    android:src="@drawable/mono_light_prev_states"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/common_normal_land_prev_margin_top"
+                    android:layout_marginRight="@dimen/common_normal_land_prev_margin_right" />
+            </RelativeLayout>
+
+        </GridLayout>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/left_drawer1"
+        android:layout_width="@dimen/common_normal_land_nav_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/mono_light_nav_drawer_divider"
+        android:dividerHeight="@dimen/common_normal_land_nav_drawer_width"
+        android:background="@color/mono_light_nav_drawer_background"/>
+
+</android.support.v4.widget.DrawerLayout>
