@@ -64,18 +64,15 @@
                     android:layout_width="@dimen/common_small_port_song_label_width"
                     android:textSize="@dimen/common_small_port_song_label_txt"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/unknown_current_song_title"
                     android:id="@+id/song_label"
                     android:textColor="@color/neon_song_label"
                     android:typeface="monospace"
                     android:layout_centerInParent="true"
-                    android:autoText="true"
                     android:gravity="center"
                     android:singleLine="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:ellipsize="marquee"
-                    android:textAlignment="center"
                     android:layout_marginTop="@dimen/common_small_port_row2_top"
                     android:layout_marginBottom="@dimen/common_small_port_row2_bottom"/>
 

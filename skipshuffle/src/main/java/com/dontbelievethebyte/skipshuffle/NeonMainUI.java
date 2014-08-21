@@ -36,10 +36,7 @@ public class NeonMainUI extends MainUI {
         skipBtn = (ImageButton) mainActivity.findViewById(R.id.skipBtn);
         songTitle = (TextView) mainActivity.findViewById(R.id.song_label);
 
-//        typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
-
         songTitle.setTypeface(getTypeFace());
-        songTitle.setSelected(true);
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override

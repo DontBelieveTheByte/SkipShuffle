@@ -54,6 +54,7 @@ public class MainUI implements UI {
     @Override
     public void setSongTitle(String title) {
         songTitle.setText(title);
+        songTitle.setSelected(true);
     }
 
     @Override
