@@ -16,13 +16,13 @@ public class MonoLightMainUI extends MainUI {
 
     public MonoLightMainUI(MainActivity mainActivity){
         super(mainActivity);
-        mainActivity.setContentView(R.layout.neon_activity_main);
+        mainActivity.setContentView(R.layout.mono_light_activity_main);
 
-        ltr = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_ltr);
-        flipRightAnimation  = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_right);
-        flipDownAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_down);
-        flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_left);
-        blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_blink);
+        ltr = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_light_ltr);
+        flipRightAnimation  = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_light_flip_right);
+        flipDownAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_light_flip_down);
+        flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_light_flip_left);
+        blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_light_blink);
 
         playlistBtn = (ImageButton) mainActivity.findViewById(R.id.playlistBtn);
         prevBtn = (ImageButton) mainActivity.findViewById(R.id.prevBtn);
@@ -37,12 +37,12 @@ public class MonoLightMainUI extends MainUI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                skipBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed));
+                skipBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_next_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                skipBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
+                skipBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_next_states));
                 doPlay();
             }
 
@@ -55,12 +55,12 @@ public class MonoLightMainUI extends MainUI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                prevBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed));
+                prevBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_prev_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                prevBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states));
+                prevBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_prev_states));
                 doPlay();
             }
 
@@ -73,12 +73,12 @@ public class MonoLightMainUI extends MainUI {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
-                shuffleBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed));
+                shuffleBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_shuffle_btn_pressed));
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                shuffleBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states));
+                shuffleBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_shuffle_states));
                 doPlay();
             }
 
@@ -91,43 +91,43 @@ public class MonoLightMainUI extends MainUI {
 
     @Override
     public void doPlay() {
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_play_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
         playBtn.startAnimation(ltr);
     }
 
     @Override
     public void doPause() {
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
         playBtn.startAnimation(blinkAnimation);
     }
 
     @Override
     public void doSkip() {
         playBtn.clearAnimation();
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
         playBtn.startAnimation(blinkAnimation);
         skipBtn.startAnimation(flipRightAnimation);
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_play_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
         playBtn.startAnimation(ltr);
     }
 
     @Override
     public void doPrev() {
         playBtn.clearAnimation();
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
         playBtn.startAnimation(blinkAnimation);
         prevBtn.startAnimation(flipLeftAnimation);
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_play_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
         playBtn.startAnimation(ltr);
     }
 
     @Override
     public void doShuffle() {
         playBtn.clearAnimation();
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
         playBtn.startAnimation(blinkAnimation);
         shuffleBtn.startAnimation(flipDownAnimation);
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_play_states));
+        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
         playBtn.startAnimation(ltr);
     }
 
