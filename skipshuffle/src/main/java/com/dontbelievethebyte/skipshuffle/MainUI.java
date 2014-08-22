@@ -4,7 +4,7 @@ import android.graphics.Typeface;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class MainUI implements UI {
+public abstract class MainUI implements UI {
 
     protected MainActivity mainActivity;
 
