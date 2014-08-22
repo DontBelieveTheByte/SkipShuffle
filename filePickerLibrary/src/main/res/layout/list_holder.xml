@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/mini_ui_background">
+    android:background="@color/neon_background">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/ok"
             android:layout_alignParentTop="true"
-            android:divider="@color/mini_ui_playlist_divider"
+            android:divider="@color/neon_playlist_divider"
             android:dividerHeight="0.2dp" />
     </RelativeLayout>
 </LinearLayout>

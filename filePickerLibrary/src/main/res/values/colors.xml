@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mini_ui_background">#1E2C56</color>
-    <color name="mini_ui_playlist_divider">#ffff00d1</color>
+    <color name="neon_background">#1E2C56</color>
+    <color name="neon_playlist_divider">#ffff00d1</color>
 </resources>

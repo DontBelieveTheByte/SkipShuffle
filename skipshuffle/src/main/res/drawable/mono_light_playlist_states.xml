@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/neon_playlist_btn"
+        android:drawable="@drawable/mono_light_playlist_btn"
         android:state_pressed="false"
     />
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/neon_playlist_btn_pressed"/>
+        android:drawable="@drawable/mono_light_playlist_btn_pressed"/>
 </selector>
