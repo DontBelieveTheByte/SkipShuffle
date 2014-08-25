@@ -14,4 +14,5 @@ public class SkipShuflleMediaPlayerCommandsContract {
     public static final String STATE_PLAYLIST_ID = "com.dontbelievethebyte.state.PLAY";
     public static final String STATE_PLAYLIST_POSITION = "com.dontbelievethebyte.state.PAUSE";
     public static final String STATE_CURRENT_SONG_TITLE = "com.dontbelievethebyte.state.SONG_TITLE";
+    public static final String STATE_NO_MEDIA = "com.dontbelievethebyte.state.NO_MEDIA";
 }
