@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PreferencesHelper {
@@ -27,6 +28,7 @@ public class PreferencesHelper {
     public PreferencesHelper(Context context){
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferenceChangeCallbacks = new ArrayList<PreferenceChangedCallback>();
     }
 
     public boolean isHapticFeedback() {
