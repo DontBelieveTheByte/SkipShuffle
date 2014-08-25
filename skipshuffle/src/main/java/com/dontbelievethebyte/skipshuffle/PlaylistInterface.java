@@ -30,7 +30,7 @@ public interface PlaylistInterface {
 
     public void save();
 
-    public Integer getPlaylistId();
+    public Long getPlaylistId();
 
-    public void setPlaylistId(Integer playlistId);
+    public void setPlaylistId(Long playlistId);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RandomPlaylist implements PlaylistInterface {
 
-    private Integer playlistId;
+    private Long playlistId;
 
     private DbHandler dbHandler;
 
@@ -22,7 +22,7 @@ public class RandomPlaylist implements PlaylistInterface {
         this.dbHandler = dbHandler;
     }
 
-    public RandomPlaylist(Integer playlistId, DbHandler dbHandler){
+    public RandomPlaylist(Long playlistId, DbHandler dbHandler){
         this.dbHandler = dbHandler;
         this.playlistId = playlistId;
         try {
@@ -33,11 +33,11 @@ public class RandomPlaylist implements PlaylistInterface {
         Log.d("PLAYLIST INFO", _tracksIds.toString());
     }
 
-    public Integer getPlaylistId() {
+    public Long getPlaylistId() {
         return playlistId;
     }
 
-    public void setPlaylistId(Integer playlistId) {
+    public void setPlaylistId(Long playlistId) {
         this.playlistId = playlistId;
     }
 

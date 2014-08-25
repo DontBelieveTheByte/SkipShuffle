@@ -4,7 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -42,7 +41,7 @@ public class MediaScannerService extends IntentService {
     private void recursiveMediaDirectoryScan(File dir) {
 
         if(null == playlist){
-            playlist = new RandomPlaylist(1, _DbHandler);
+            playlist = new RandomPlaylist(1L, _DbHandler);
         }
 
         File[] files = dir.listFiles();
