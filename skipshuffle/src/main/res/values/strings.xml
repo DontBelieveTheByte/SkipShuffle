@@ -5,8 +5,8 @@
     <string name="app_name">SkipShuffle</string>
     <string name="playlist">Playlist view</string>
     <string name="unknown_current_song_title">Nothing is playing.</string>
-    <string name="sel_target_directories">Select target directories</string>
-    <string name="no_directory">No directory selected</string>
+    <string name="sel_target_directories">Select media directories.</string>
+    <string name="no_directory">No directory selected.</string>
     <string name="scan_directory_valid">Scanning : %s</string>
     <string name="scan_directory_invalid">Invalid directory : %s</string>
     <string name="media_scan_dialog_title">Scanning media in : %s</string>

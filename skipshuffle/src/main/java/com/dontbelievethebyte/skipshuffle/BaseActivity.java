@@ -31,7 +31,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 
     protected static final String TAG = "SkipShuffle";
 
@@ -121,14 +121,7 @@ public class BaseActivity extends Activity {
             startService(mediaScannerIntent);
             isScanningMedia = true;
         }
-        protected void pickMediaDirectories() {
-            Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
-            intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
-            intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
-            intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
-            Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
-            BaseActivity.this.startActivityForResult(intent, REQUEST_PICK_FILE);
-        }
+
     };
 
     protected View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener() {
@@ -139,10 +132,7 @@ public class BaseActivity extends Activity {
                     view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
                 if(mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0) {
-                    if(null == mediaScannerDialog) {
-                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
-                    }
-                    mediaScannerDialog.pickMediaDirectories();
+                    pickMediaDirectories();
                     //Return true because we already handled the event and want to prevent bubbling.
                     return true;
                 }
@@ -151,12 +141,15 @@ public class BaseActivity extends Activity {
         }
     };
 
+    abstract protected void setUI(Integer type);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Set up preferences
         preferencesHelper = new PreferencesHelper(getApplicationContext());
+        preferencesHelper.registerPrefsChangedListener();
 
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
@@ -191,15 +184,12 @@ public class BaseActivity extends Activity {
                         mediaDirectoriesToScan[i] = directory.getAbsolutePath();
                         i++;
                     }
-                    if (null == mediaScannerDialog) {
-                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
-                    }
                     preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
-                    mediaScannerDialog.doScan();
                 }
             }
         }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -256,12 +246,12 @@ public class BaseActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.refresh_media:
-                if(null == mediaScannerDialog){
-                    mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
-                }
                 if(null == preferencesHelper.getMediaDirectories()){
-                    mediaScannerDialog.pickMediaDirectories();
+                    pickMediaDirectories();
                 } else {
+                    if(null == mediaScannerDialog){
+                        mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
+                    }
                     mediaScannerDialog.doScan();
                 }
                 return true;
@@ -269,7 +259,7 @@ public class BaseActivity extends Activity {
                 if(null == mediaScannerDialog){
                     mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
                 }
-                mediaScannerDialog.pickMediaDirectories();
+                pickMediaDirectories();
                 return true;
             case R.id.haptic_feedback_toggle:
                 preferencesHelper.hapticFeedbackToggle();
@@ -290,7 +280,20 @@ public class BaseActivity extends Activity {
                 new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialogInterface, int indexPosition) {
-
+                        switch (indexPosition){
+                            case UIFactory.MONO_LIGHT:
+                                preferencesHelper.setUIType(UIFactory.MONO_LIGHT);
+                                setUI(UIFactory.MONO_LIGHT);
+                                return;
+                            case UIFactory.MONO_DARK:
+                                setUI(UIFactory.MONO_LIGHT);
+                                preferencesHelper.setUIType(UIFactory.MONO_DARK);
+                                return;
+                            case UIFactory.NEON:
+                                setUI(UIFactory.MONO_LIGHT);
+                                preferencesHelper.setUIType(UIFactory.NEON);
+                                return;
+                        }
                     }
                 }
         );
@@ -300,11 +303,14 @@ public class BaseActivity extends Activity {
                 switch (indexPosition){
                     case UIFactory.MONO_LIGHT:
                         preferencesHelper.setUIType(UIFactory.MONO_LIGHT);
+                        setUI(UIFactory.MONO_LIGHT);
                         return;
                     case UIFactory.MONO_DARK:
+                        setUI(UIFactory.MONO_LIGHT);
                         preferencesHelper.setUIType(UIFactory.MONO_DARK);
                         return;
                     case UIFactory.NEON:
+                        setUI(UIFactory.MONO_LIGHT);
                         preferencesHelper.setUIType(UIFactory.NEON);
                         return;
                 }
@@ -339,5 +345,20 @@ public class BaseActivity extends Activity {
                 )
         );
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
+    }
+
+    protected void pickMediaDirectories() {
+        Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
+        intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
+        intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
+        intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
+        BaseActivity.this.startActivityForResult(intent, REQUEST_PICK_FILE);
+        Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
+    }
+
+    public void preferenceChangedCallback(String prefsKey) {
+        if(prefsKey == getString(R.string.pref_media_directories)){
+            new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
+        }
     }
 }
