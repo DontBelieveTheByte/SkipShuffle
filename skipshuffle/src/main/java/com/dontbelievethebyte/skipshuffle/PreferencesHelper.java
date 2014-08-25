@@ -7,6 +7,8 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class PreferencesHelper {
 
     private static final String TAG = "SkipShufflePrefsHelper";
@@ -18,13 +20,15 @@ public class PreferencesHelper {
     private String[] directories;
     private SharedPreferences sharedPreferences;
     private Context context;
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+    private List<PreferenceChangedCallback> preferenceChangeCallbacks;
 
 
     public PreferencesHelper(Context context){
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
     }
+
     public boolean isHapticFeedback() {
         return hapticFeedback;
     }
@@ -81,7 +85,7 @@ public class PreferencesHelper {
 
     public Integer getLastPlaylist(){
         if(null == currentPlaylist){
-            currentPlaylist = sharedPreferences.getInt(context.getString(R.string.pref_current_playlist_id), 1);
+            currentPlaylist = sharedPreferences.getInt(context.getString(R.string.pref_current_playlist_id), 0);
         }
         return currentPlaylist;
     }
@@ -105,5 +109,33 @@ public class PreferencesHelper {
     public void setUIType(int type){
         currentUIType = type;
         sharedPreferences.edit().putInt(context.getString(R.string.pref_current_ui_type), currentUIType).apply();
+    }
+
+    public void registerPrefsChangedListener(){
+        if(null == preferenceChangeListener){
+            preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefsKey) {
+                    onPrefsChangedCallback(prefsKey);
+                }
+            };
+            sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        }
+    }
+
+    public void unRegisterPrefsChangedListener(){
+        if(null != preferenceChangeListener){
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+        }
+    }
+
+    public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback){
+        preferenceChangeCallbacks.add(preferenceChangeCallback);
+    }
+
+    public void onPrefsChangedCallback(String prefsKey){
+        for(PreferenceChangedCallback preferenceChangeCallback : preferenceChangeCallbacks) {
+            preferenceChangeCallback.preferenceChangedCallback(prefsKey);
+        }
     }
 }
