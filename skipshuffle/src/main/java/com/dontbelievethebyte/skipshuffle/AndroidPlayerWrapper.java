@@ -10,11 +10,11 @@ public class AndroidPlayerWrapper {
 
     private static final String TAG = "SkipShuffleAndroidPlayerWrapper";
 
-    private boolean isPaused = true;
-
     private MediaPlayer mp;
 
     private PlaylistInterface playlist;
+
+    int seekPosition = 0;
 
     Context context;
 
@@ -44,26 +44,30 @@ public class AndroidPlayerWrapper {
                 loadAudioFile(playlist.getFirst());
             }
             if(!mp.isPlaying()){
+                if(seekPosition > 0){
+                    mp.seekTo(seekPosition);
+                }
                 mp.start();
             }
-            isPaused = false;
         }
     }
 
     public void doPause() {
         if(mp.isPlaying()){
             mp.pause();
+            seekPosition = mp.getCurrentPosition();
         }
-        isPaused = true;
     }
 
     public void doSkip() {
         loadAudioFile(playlist.getNext());
+        seekPosition = 0;
         doPlay();
     }
 
     public void doPrev() {
         loadAudioFile(playlist.getPrev());
+        seekPosition = 0;
         doPlay();
     }
 
@@ -81,9 +85,6 @@ public class AndroidPlayerWrapper {
     public void setPlaylistCursorPosition(int position){
         playlist.setPosition(position);
         doPlay();
-    }
-    public boolean isPaused() {
-        return isPaused;
     }
 
     private void loadAudioFile(Track track) {

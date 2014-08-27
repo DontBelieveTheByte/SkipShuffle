@@ -10,11 +10,14 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 
-public class SkipShuffleMediaPlayer extends Service {
+public class SkipShuffleMediaPlayer extends Service implements PreferenceChangedCallback {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
+
+    private static final int NOTIFICATION_ID = 9001;
 
     private PlaylistInterface playlist;
 
@@ -23,6 +26,8 @@ public class SkipShuffleMediaPlayer extends Service {
     private AndroidPlayerWrapper playerWrapper;
 
     private PreferencesHelper preferencesHelper;
+
+    private DbHandler dbHandler;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -41,25 +46,30 @@ public class SkipShuffleMediaPlayer extends Service {
 
         preferencesHelper = new PreferencesHelper(getApplicationContext());
 
-        playlist = new RandomPlaylist(
-                preferencesHelper.getLastPlaylist(),
-                new DbHandler(getApplicationContext())
-        );
+        dbHandler = new DbHandler(getApplicationContext());
 
-        //@TODO initialize playlist position from prefs helper.
-        playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
+        if(preferencesHelper.getLastPlaylist() > 0){
+            playlist = new RandomPlaylist(
+                    preferencesHelper.getLastPlaylist(),
+                    dbHandler
+            );
 
-        broadcastCurrentState(
-                SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //Issue paused state on start.
-                playlist.getPlaylistId(),
-                playlist.getPosition(),
-                "blabsadjhadojasdjad92ue091ieiojqlahd90adjkashdkljagdhadaasdasda" //@TODO Fix this shit for when no playlists or empty. playlist.getCurrent().getTitle()
-                );
+            //@TODO initialize playlist position from prefs helper.
+            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
-        playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
+            broadcastCurrentState(
+                    SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //Issue paused state on start.
+                    playlist.getPlaylistId(),
+                    playlist.getPosition(),
+                    (playlist.getSize() > 0) ?
+                            playlist.getCurrent().getTitle() :
+                            getApplicationContext().getString(R.string.unknown_current_song_title)
+            );
 
-        playerWrapper.setPlaylist(playlist);
+            playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
 
+            playerWrapper.setPlaylist(playlist);
+        }
     }
 
     @Override
@@ -68,6 +78,7 @@ public class SkipShuffleMediaPlayer extends Service {
         playerWrapper.doPause();
         preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
         preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+        removeNotification();
     }
 
     public void registerMediaPlayerBroadcastReceiver() {
@@ -114,7 +125,7 @@ public class SkipShuffleMediaPlayer extends Service {
                                 (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
                                 && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
 
-                        if(!playerWrapper.isPaused() && isHeadphonesPlugged) {
+                        if(!playerWrapper.isPlaying() && isHeadphonesPlugged) {
                             playerWrapper.doPause();
                             broadcastCurrentState(
                                     playerWrapper.isPlaying() ?
@@ -159,7 +170,7 @@ public class SkipShuffleMediaPlayer extends Service {
                 buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, 3)
         );
 
-        if(playerWrapper.isPaused()){
+        if(playerWrapper.isPlaying()){
             remoteViews.setImageViewResource(
                     R.id.notif_play,
                     R.drawable.neon_pause_states
@@ -186,7 +197,12 @@ public class SkipShuffleMediaPlayer extends Service {
                            .setContent(remoteViews);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(9001, notificationBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
+    }
+
+    private void removeNotification(){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 
     private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode){
@@ -208,5 +224,26 @@ public class SkipShuffleMediaPlayer extends Service {
               .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE, currentSongTitle)
               .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, position);
         sendStickyBroadcast(intent);
+        Log.d("STATE : ", state);
+//        Log.d("TITLE : ", currentSongTitle);
+    }
+
+
+    @Override
+    public void preferenceChangedCallback(String prefsKey) {
+        if(prefsKey == getString(R.string.pref_current_playlist_id)){
+            playlist = new RandomPlaylist(
+                preferencesHelper.getLastPlaylist(),
+                dbHandler
+            );
+            playlist.setPosition(0);
+            broadcastCurrentState(
+               SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE,
+               preferencesHelper.getLastPlaylist(),
+               preferencesHelper.getLastPlaylistPosition(),
+               playlist.getCurrent().getTitle()
+            );
+            playerWrapper.setPlaylist(playlist);
+        }
     }
 }

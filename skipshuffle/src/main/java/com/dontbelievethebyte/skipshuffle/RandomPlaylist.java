@@ -68,7 +68,7 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public Track getCurrent() {
-        return dbHandler.getTrack(_tracksIds.get(playlistPosition));
+        return dbHandler.getTrack(_tracksIds.get(playlistPosition+1));
     }
 
     @Override
