@@ -5,6 +5,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
 
 public class PlaylistActivity extends BaseActivity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
 
@@ -28,28 +31,9 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
 
         dbHandler = new DbHandler(getApplicationContext());
 
-        if(preferencesHelper.getLastPlaylist() != 0){
-            playlist = new RandomPlaylist(
-                    preferencesHelper.getLastPlaylist(),
-                    dbHandler
-            );
-            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-            playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
-
-            listView = (ListView) findViewById(R.id.current_playlist);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
-                }
-            });
-            listView.setAdapter(playlistAdapter);
-            TextView emptyText = (TextView)findViewById(android.R.id.empty);
-            listView.setEmptyView(emptyText);
-        } else {
-
-        }
         preferencesHelper.registerCallBack(this);
+
+        loadPlaylist(preferencesHelper.getLastPlaylist());
     }
 
     @Override
@@ -75,6 +59,37 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
         }
         playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
         playlistAdapter.notifyDataSetChanged();
+    }
+
+    protected void loadPlaylist(long playlistId){
+        try {
+            playlist = new RandomPlaylist(
+                    playlistId,
+                    dbHandler
+            );
+            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
+            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
+            playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
+
+            listView = (ListView) findViewById(R.id.current_playlist);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
+                }
+            });
+            listView.setAdapter(playlistAdapter);
+            TextView emptyText = (TextView)findViewById(android.R.id.empty);
+            listView.setEmptyView(emptyText);
+        } catch (JSONException jsonException){
+            Toast.makeText(
+                    getApplicationContext(),
+                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
+                    Toast.LENGTH_LONG
+            ).show();
+            preferencesHelper.setLastPlaylist(1);
+            preferencesHelper.setLastPlaylistPosition(0);
+        }
     }
 
     @Override
@@ -118,12 +133,7 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
     public void preferenceChangedCallback(String prefsKey) {
         super.preferenceChangedCallback(prefsKey);
         if (prefsKey == getString(R.string.pref_current_playlist_id)){
-            playlist = new RandomPlaylist(
-                    preferencesHelper.getLastPlaylist(),
-                    dbHandler);
-
-        } else if(prefsKey == getString(R.string.pref_current_ui_type)){
-            setUI(preferencesHelper.getUIType());
+            loadPlaylist(preferencesHelper.getLastPlaylist());
         }
     }
 }

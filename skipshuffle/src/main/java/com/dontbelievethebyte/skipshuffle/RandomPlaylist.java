@@ -1,7 +1,5 @@
 package com.dontbelievethebyte.skipshuffle;
 
-import android.util.Log;
-
 import org.json.JSONException;
 
 import java.util.ArrayList;
@@ -16,21 +14,16 @@ public class RandomPlaylist implements PlaylistInterface {
 
     private int playlistPosition = 0;
 
-    private List<Long> _tracksIds = new ArrayList<Long>();
+    private List<Long> tracksIds = new ArrayList<Long>();
 
     public RandomPlaylist(DbHandler dbHandler){
         this.dbHandler = dbHandler;
     }
 
-    public RandomPlaylist(Long playlistId, DbHandler dbHandler){
+    public RandomPlaylist(Long playlistId, DbHandler dbHandler) throws JSONException {
         this.dbHandler = dbHandler;
         this.playlistId = playlistId;
-        try {
-            _tracksIds = dbHandler.loadPlaylist((long)playlistId);
-        } catch (JSONException e) {
-            Log.d("TAGGG", e.toString());
-        }
-        Log.d("PLAYLIST INFO", _tracksIds.toString());
+        tracksIds = dbHandler.loadPlaylist((long)playlistId);
     }
 
     public Long getPlaylistId() {
@@ -43,52 +36,49 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public List<Long> getList(){
-        return _tracksIds;
+        return tracksIds;
     };
 
     @Override
     public void addTrack(Track track) {
-        if(!_tracksIds.contains(track.getId())){
-            _tracksIds.add(track.getId());
+        if(!tracksIds.contains(track.getId())){
+            tracksIds.add(track.getId());
         }
     }
 
     @Override
     public void removeTrack(Track track) {
-        if(_tracksIds.contains(track.getId())){
-            _tracksIds.remove(track.getId());
+        if(tracksIds.contains(track.getId())){
+            tracksIds.remove(track.getId());
         }
     }
 
     @Override
     public Track getFirst() {
-
-        return dbHandler.getTrack(_tracksIds.get(0));
+        return dbHandler.getTrack(tracksIds.get(0));
     }
 
     @Override
     public Track getCurrent() {
-        return dbHandler.getTrack(_tracksIds.get(playlistPosition+1));
+        return dbHandler.getTrack(tracksIds.get(playlistPosition + 1));
     }
 
     @Override
     public Track getAtPosition(int position) {
-        if(position > _tracksIds.size()){
-            position = _tracksIds.size();
+        if(position > tracksIds.size()){
+            position = tracksIds.size();
         }
-        return dbHandler.getTrack(_tracksIds.get(position));
+        return dbHandler.getTrack(tracksIds.get(position));
     }
 
     @Override
     public Track getNext() {
-        if(playlistPosition >= _tracksIds.size()){
+        if(playlistPosition >= tracksIds.size()){
             playlistPosition = 0;
         } else {
             playlistPosition++;
         }
-        Track track;
-        track = dbHandler.getTrack((long)playlistPosition);
-        return track;
+        return dbHandler.getTrack((long)playlistPosition);
     }
 
     @Override
@@ -98,9 +88,7 @@ public class RandomPlaylist implements PlaylistInterface {
         } else {
             playlistPosition--;
         }
-        Track track;
-        track = dbHandler.getTrack((long)playlistPosition);
-        return track;
+        return dbHandler.getTrack((long)playlistPosition);
     }
 
     @Override
@@ -115,8 +103,8 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public void setPosition(int position) {
-        if(position > _tracksIds.size()){
-            playlistPosition = _tracksIds.size();
+        if(position > tracksIds.size()){
+            playlistPosition = tracksIds.size();
         } else if(position < 0){
             playlistPosition = 0;
         } else {
@@ -126,25 +114,25 @@ public class RandomPlaylist implements PlaylistInterface {
 
     @Override
     public void shuffle(){
-        Collections.shuffle(_tracksIds);
+        Collections.shuffle(tracksIds);
         playlistPosition = 0;
     }
 
     @Override
     public void save(){
         if(playlistId != null) {
-            dbHandler.savePlaylist((long)playlistId, _tracksIds);
+            dbHandler.savePlaylist((long)playlistId, tracksIds);
         } else {
-            dbHandler.savePlaylist(null, _tracksIds);
+            dbHandler.savePlaylist(null, tracksIds);
         }
     }
 
     @Override
     public int getSize(){
-        return _tracksIds.size();
+        return tracksIds.size();
     }
 
     public List<Track> getAllTracks(){
-        return dbHandler.getAllPlaylistTracks(_tracksIds);
+        return dbHandler.getAllPlaylistTracks(tracksIds);
     }
 }

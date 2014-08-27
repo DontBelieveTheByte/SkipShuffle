@@ -6,6 +6,8 @@ import android.media.MediaMetadataRetriever;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +44,18 @@ public class MediaScannerService extends IntentService {
 
     private void recursiveMediaDirectoryScan(File dir) {
 
-        if(null == playlist){
-            playlist = new RandomPlaylist(1L, dbHandler);
+        try {
+            playlist = new RandomPlaylist(
+                    preferencesHelper.getLastPlaylist(),
+                    dbHandler
+            );
+            playlist.setPosition(0);
+        } catch (JSONException jsonException){
+            Toast.makeText(
+                    getApplicationContext(),
+                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
+                    Toast.LENGTH_LONG
+            ).show();
         }
 
         File[] files = dir.listFiles();

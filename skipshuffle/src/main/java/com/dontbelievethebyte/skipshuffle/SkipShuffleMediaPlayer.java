@@ -10,6 +10,9 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
+import android.widget.Toast;
+
+import org.json.JSONException;
 
 public class SkipShuffleMediaPlayer extends Service implements PreferenceChangedCallback {
 
@@ -86,12 +89,11 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
         dbHandler = new DbHandler(getApplicationContext());
 
-        if(preferencesHelper.getLastPlaylist() > 0){
+        try {
             playlist = new RandomPlaylist(
                     preferencesHelper.getLastPlaylist(),
                     dbHandler
             );
-
             //@TODO initialize playlist position from prefs helper.
             playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
@@ -100,6 +102,14 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
             playerWrapper.setPlaylist(playlist);
 
             broadcastCurrentState();
+        } catch (JSONException jsonException){
+            Toast.makeText(
+                    getApplicationContext(),
+                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
+                    Toast.LENGTH_LONG
+            ).show();
+            preferencesHelper.setLastPlaylist(1);
+            preferencesHelper.setLastPlaylistPosition(0);
         }
     }
 
@@ -219,13 +229,23 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     @Override
     public void preferenceChangedCallback(String prefsKey) {
         if(prefsKey == getString(R.string.pref_current_playlist_id)){
-            playlist = new RandomPlaylist(
-                preferencesHelper.getLastPlaylist(),
-                dbHandler
-            );
-            playlist.setPosition(0);
-            broadcastCurrentState();
-            playerWrapper.setPlaylist(playlist);
+            try {
+                playlist = new RandomPlaylist(
+                        preferencesHelper.getLastPlaylist(),
+                        dbHandler
+                );
+                playlist.setPosition(0);
+                broadcastCurrentState();
+                playerWrapper.setPlaylist(playlist);
+            } catch (JSONException jsonException){
+                Toast.makeText(
+                    getApplicationContext(),
+                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
+                        Toast.LENGTH_LONG
+                ).show();
+                preferencesHelper.setLastPlaylist(1);
+                preferencesHelper.setLastPlaylistPosition(0);
+            }
         }
     }
 
