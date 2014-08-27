@@ -60,14 +60,21 @@ public class AndroidPlayerWrapper {
     }
 
     public void doSkip() {
+        if(playlist.getPosition() == 0){
+            playlist.setPosition(1);
+        }
+        if(seekPosition > 0){
+            seekPosition = 0;
+        }
         loadAudioFile(playlist.getNext());
-        seekPosition = 0;
         doPlay();
     }
 
     public void doPrev() {
+        if(seekPosition > 0){
+            seekPosition = 0;
+        }
         loadAudioFile(playlist.getPrev());
-        seekPosition = 0;
         doPlay();
     }
 
