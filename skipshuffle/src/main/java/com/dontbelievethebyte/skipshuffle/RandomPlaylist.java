@@ -104,6 +104,11 @@ public class RandomPlaylist implements PlaylistInterface {
     }
 
     @Override
+    public long getId() {
+        return playlistId;
+    }
+
+    @Override
     public int getPosition() {
         return playlistPosition;
     }
