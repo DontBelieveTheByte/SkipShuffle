@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -150,8 +149,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     }
     public void unregisterMediaPlayerBroadcastReceiver() {
         if(mediaPlayerCommandReceiver != null){
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(mediaPlayerCommandReceiver);
-            mediaPlayerCommandReceiver = null;
+            unregisterReceiver(mediaPlayerCommandReceiver);
         }
     }
 
@@ -227,7 +225,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         Log.d("STATE : ", state);
 //        Log.d("TITLE : ", currentSongTitle);
     }
-
 
     @Override
     public void preferenceChangedCallback(String prefsKey) {
