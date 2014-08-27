@@ -27,7 +27,7 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
         //Register class specific callback from MediaBroadcastReceiverCallback interface.
         mediaPlayerBroadcastReceiver.registerCallback(this);
 
-        setUI(2);
+        setUI(preferencesHelper.getUIType());
 
         dbHandler = new DbHandler(getApplicationContext());
 
@@ -37,11 +37,9 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
     }
 
     @Override
-    public void onPause(){
+    public void onStop(){
         preferencesHelper.unRegisterPrefsChangedListener();
-        super.onPause();
     }
-
 
     @Override
     public void onResume(){
@@ -94,6 +92,7 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
 
     @Override
     protected void setUI(Integer type) {
+        ui = UIFactory.createPlaylistUI(this, type);
         ui.playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
