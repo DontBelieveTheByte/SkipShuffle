@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -25,11 +24,11 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     }
     public String getPlayerState() {return playerState;}
     public String getCurrentSongTitle(){
-//        if(currentSongTitle == null){
-//            return context.getString(R.string.pref_current_ui_type);
-//        } else {
+        if(currentSongTitle == null){
+            return context.getString(R.string.unknown_current_song_title);
+        } else {
             return currentSongTitle;
-//        }
+        }
     }
 
     MediaPlayerBroadcastReceiver(Context context) {
@@ -59,7 +58,6 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         for(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback : mediaBroadcastReceiverCallbacks) {
             mediaBroadcastReceiverCallback.mediaBroadcastReceiverCallback();
         }
-        Log.d("STATE RECEIVED : ", playerState);
     }
 
     public void registerCallback(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback){

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends BaseActivity implements MediaBroadcastReceiverCallback {
+public class MainActivity extends BaseActivity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
 
     private MainUI ui;
 
@@ -15,15 +15,53 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
         //Register class specific callback from MediaBroadcastReceiverCallback interface.
         mediaPlayerBroadcastReceiver.registerCallback(this);
 
-        //Set up UI, this can be later instantiated user prefs to get an alternative UI.
-        ui = UIFactory.createMainUI(MainActivity.this, 2);
+        setUI(preferencesHelper.getUIType());
 
         //Start the mediaPlayer service.
         startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
+        preferencesHelper.registerCallBack(this);
+
         //Set up navigation drawer for selecting playlists.
         setUpDrawer();
+    }
 
+    @Override
+    protected void onPause(){
+        //Give a break to GPU when hidden
+        ui.playBtn.clearAnimation();
+//        preferencesHelper.unRegisterPrefsChangedListener();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ui.reboot();
+//        preferencesHelper.registerPrefsChangedListener();
+//        preferencesHelper.registerCallBack(this);
+    }
+
+    @Override
+    public void mediaBroadcastReceiverCallback() {
+        String state = mediaPlayerBroadcastReceiver.getPlayerState();
+        if(state.intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
+            ui.doPlay();
+        } else {
+            ui.doPause();
+        }
+        ui.setSongTitle(mediaPlayerBroadcastReceiver.getCurrentSongTitle());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        ui.reboot();
+    }
+
+    @Override
+    protected void setUI(Integer type) {
+        ui = UIFactory.createMainUI(this, type);
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -74,36 +112,13 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
                 startActivity(playlistActivity);
             }
         });
-
     }
 
     @Override
-    protected void onPause(){
-        //Give a break to GPU when hidden
-        ui.playBtn.clearAnimation();
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ui.reboot();
-    }
-
-    @Override
-    public void mediaBroadcastReceiverCallback() {
-        String state = mediaPlayerBroadcastReceiver.getPlayerState();
-        if(state.intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
-            ui.doPlay();
-        } else {
-            ui.doPause();
+    public void preferenceChangedCallback(String prefsKey) {
+        super.preferenceChangedCallback(prefsKey);
+        if(prefsKey == getString(R.string.pref_current_ui_type)){
+            setUI(preferencesHelper.getUIType());
         }
-        ui.setSongTitle(mediaPlayerBroadcastReceiver.getCurrentSongTitle());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        ui.reboot();
     }
 }

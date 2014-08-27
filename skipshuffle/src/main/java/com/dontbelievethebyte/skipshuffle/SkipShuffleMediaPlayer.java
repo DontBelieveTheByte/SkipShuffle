@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 public class SkipShuffleMediaPlayer extends Service implements PreferenceChangedCallback {
@@ -20,13 +19,53 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
     private PlaylistInterface playlist;
 
-    private BroadcastReceiver mediaPlayerCommandReceiver;
+    private ClientCommandsBroadcastReceiver clientCommandsBroadcastReceiver;
 
     private AndroidPlayerWrapper playerWrapper;
 
     private PreferencesHelper preferencesHelper;
 
     private DbHandler dbHandler;
+
+    private class ClientCommandsBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String actionStringId = intent.getAction();
+            if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
+                String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
+
+                if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE == command.intern()){
+                    if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)){
+                        playlist.setPosition(intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, 0));
+                        playerWrapper.doPlay();
+                    } else {
+                        if(playerWrapper.isPlaying()){
+                            playerWrapper.doPause();
+                        } else {
+                            playerWrapper.doPlay();
+                        }
+                    }
+                } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command.intern()){
+                    playerWrapper.doSkip();
+                } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command.intern()){
+                    playerWrapper.doPrev();
+                } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST){
+                    playerWrapper.doShuffle();
+                }
+            } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
+
+                boolean isHeadphonesPlugged =
+                        (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
+                                && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
+                if(!playerWrapper.isPlaying() && isHeadphonesPlugged) {
+                    playerWrapper.doPause();
+                }
+            }
+            broadcastCurrentState();
+            setNotification();
+            preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+        }
+    };
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -56,100 +95,39 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
             //@TODO initialize playlist position from prefs helper.
             playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
-            broadcastCurrentState(
-                    SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //Issue paused state on start.
-                    playlist.getPlaylistId(),
-                    playlist.getPosition(),
-                    (playlist.getSize() > 0) ?
-                            playlist.getCurrent().getTitle() :
-                            getApplicationContext().getString(R.string.unknown_current_song_title)
-            );
-
             playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
 
             playerWrapper.setPlaylist(playlist);
+
+            broadcastCurrentState();
         }
     }
 
     @Override
     public void onDestroy(){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID);
+        removeNotification();
         unregisterMediaPlayerBroadcastReceiver();
         playerWrapper.doPause();
         preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
         preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
-        removeNotification();
     }
 
     public void registerMediaPlayerBroadcastReceiver() {
-        if (null == mediaPlayerCommandReceiver) {
-            mediaPlayerCommandReceiver =  new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    String actionStringId = intent.getAction();
-                    if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
-                        String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-
-                        if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE == command.intern()){
-                            if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)){
-                                playlist.setPosition(intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, 0));
-                                playerWrapper.doPlay();
-                            } else {
-                                if(playerWrapper.isPlaying()){
-                                    playerWrapper.doPause();
-                                } else {
-                                    playerWrapper.doPlay();
-                                }
-                            }
-                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command.intern()){
-                            playerWrapper.doSkip();
-                        } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command.intern()){
-                            playerWrapper.doPrev();
-                        } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST){
-                            playerWrapper.doShuffle();
-                        }
-
-                        broadcastCurrentState(
-                                playerWrapper.isPlaying() ?
-                                        SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
-                                        SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE, //State from known/received command.
-                                playlist.getPlaylistId(),
-                                playlist.getPosition(),
-                                playlist.getCurrent().getTitle()
-                        );
-                        setNotification();
-
-                    } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
-
-                        boolean isHeadphonesPlugged =
-                                (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
-                                && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
-
-                        if(!playerWrapper.isPlaying() && isHeadphonesPlugged) {
-                            playerWrapper.doPause();
-                            broadcastCurrentState(
-                                    playerWrapper.isPlaying() ?
-                                            SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
-                                            SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE,
-                                    playlist.getPlaylistId(),
-                                    playlist.getPosition(),
-                                    playlist.getCurrent().getTitle()
-                            );
-                            setNotification();
-                        }
-                    }
-                }
-            };
+        if (null == clientCommandsBroadcastReceiver) {
+            clientCommandsBroadcastReceiver = new ClientCommandsBroadcastReceiver();
         }
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
         intentFilter.addAction(Intent.ACTION_MEDIA_BUTTON);
-        registerReceiver(mediaPlayerCommandReceiver, intentFilter);
+        registerReceiver(clientCommandsBroadcastReceiver, intentFilter);
     }
     public void unregisterMediaPlayerBroadcastReceiver() {
-        if(mediaPlayerCommandReceiver != null){
-            unregisterReceiver(mediaPlayerCommandReceiver);
+        if(clientCommandsBroadcastReceiver != null){
+            unregisterReceiver(clientCommandsBroadcastReceiver);
         }
     }
 
@@ -215,15 +193,27 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         return pendingIntent;
     }
 
-    private void broadcastCurrentState(String state, long playlistID, int position, String currentSongTitle){
+    private void broadcastCurrentState(){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE, state)
-              .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, playlistID)
-              .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE, currentSongTitle)
-              .putExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, position);
+        intent.putExtra(
+                            SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE,
+                            playerWrapper.isPlaying() ?
+                                    SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
+                                    SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE
+                        )
+              .putExtra(
+                            SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID,
+                            playlist.getId()
+                        )
+              .putExtra(
+                            SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE,
+                            buildFormattedTitle(playlist.getCurrent())
+                       )
+              .putExtra(
+                      SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION,
+                      playlist.getPosition()
+              );
         sendStickyBroadcast(intent);
-        Log.d("STATE : ", state);
-//        Log.d("TITLE : ", currentSongTitle);
     }
 
     @Override
@@ -234,13 +224,21 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 dbHandler
             );
             playlist.setPosition(0);
-            broadcastCurrentState(
-               SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE,
-               preferencesHelper.getLastPlaylist(),
-               preferencesHelper.getLastPlaylistPosition(),
-               playlist.getCurrent().getTitle()
-            );
+            broadcastCurrentState();
             playerWrapper.setPlaylist(playlist);
+        }
+    }
+
+    private String buildFormattedTitle(Track track){
+        if (null == track.getArtist() || null == track.getTitle()){
+            if(null == track.getPath()){
+                return getApplicationContext().getString(R.string.unknown_current_song_title);
+            } else {
+                //Just the filename separated from path.
+                return track.getPath().substring(track.getPath().lastIndexOf("/") + 1);
+            }
+        } else {
+            return track.getArtist() + " - " + track.getTitle();
         }
     }
 }

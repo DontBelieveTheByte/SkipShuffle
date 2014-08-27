@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class PreferencesHelper {
     private String[] directories;
     private SharedPreferences sharedPreferences;
     private Context context;
-    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+    public SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
     private List<PreferenceChangedCallback> preferenceChangeCallbacks;
 
 
@@ -116,27 +115,21 @@ public class PreferencesHelper {
 
     public void registerPrefsChangedListener(){
         if(null == preferenceChangeListener){
-            Log.d("HEYYY", "REGISTERING CALLLLLLB#SDAD");
             preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefsKey) {
                     onPrefsChangedCallback(prefsKey);
                 }
             };
-            sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         }
         if(null == preferenceChangeCallbacks){
             preferenceChangeCallbacks = new ArrayList<PreferenceChangedCallback>();
         }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     public void unRegisterPrefsChangedListener(){
-        if(null != preferenceChangeListener){
-            sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
-        }
-        if(null != preferenceChangeCallbacks){
-            preferenceChangeCallbacks = null;
-        }
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
     public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback){

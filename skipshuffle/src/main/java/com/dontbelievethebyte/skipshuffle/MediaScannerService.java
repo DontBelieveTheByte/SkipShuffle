@@ -14,13 +14,15 @@ public class MediaScannerService extends IntentService {
 
     private static final String TAG = "SkipShuffleMediaScan";
 
-    private AudioFileTypeValidator _audioFileTypeValidator = new AudioFileTypeValidator();
+    private AudioFileTypeValidator audioFileTypeValidator = new AudioFileTypeValidator();
 
-    private DbHandler _DbHandler;
+    private DbHandler dbHandler;
 
     private RandomPlaylist playlist;
 
     private MediaMetadataRetriever mediaMetadataRetriever;
+
+    private PreferencesHelper preferencesHelper;
 
     public MediaScannerService(){
         super("SkipShuffleMediaScanner");
@@ -28,9 +30,9 @@ public class MediaScannerService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
         String[] directoryPaths = preferencesHelper.getMediaDirectories();
-        _DbHandler = new DbHandler(getApplicationContext());
+        dbHandler = new DbHandler(getApplicationContext());
         mediaMetadataRetriever = new MediaMetadataRetriever();
         for (String directory : directoryPaths) {
             File dir = new File(directory.toString());
@@ -41,7 +43,7 @@ public class MediaScannerService extends IntentService {
     private void recursiveMediaDirectoryScan(File dir) {
 
         if(null == playlist){
-            playlist = new RandomPlaylist(1L, _DbHandler);
+            playlist = new RandomPlaylist(1L, dbHandler);
         }
 
         File[] files = dir.listFiles();
@@ -54,25 +56,31 @@ public class MediaScannerService extends IntentService {
                 recursiveMediaDirectoryScan(files[i]);
             else {
                 //Fill an array list with valid files since when can't trust the last file position index to be a valid audio file.
-                if (_audioFileTypeValidator.VALID == _audioFileTypeValidator.validate(files[i].getAbsolutePath())) {
+                if (audioFileTypeValidator.VALID == audioFileTypeValidator.validate(files[i].getAbsolutePath())) {
                     validFiles.add(files[i].getAbsolutePath());
                 }
             }
         }
-        for (int j = 0; j < validFiles.size();j++){
-            broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
-            Track track = new Track();
-            track.setPath(validFiles.get(j));
-            mediaMetadataRetriever.setDataSource(track.getPath());
-            track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-            track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-            track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
-            track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
-            _DbHandler.addTrack(track);
-            playlist.addTrack(track);
+        if (validFiles.size() == 0){
+            Toast.makeText(getApplicationContext(), R.string.media_scan_directory_empty, Toast.LENGTH_LONG);
+            broadcastIntentStatus(null, null, true);
+        } else {
+            for (int j = 0; j < validFiles.size();j++){
+                broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1) ? true : false);
+                Track track = new Track();
+                track.setPath(validFiles.get(j));
+                mediaMetadataRetriever.setDataSource(track.getPath());
+                track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+                track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
+                dbHandler.addTrack(track);
+                playlist.addTrack(track);
+            }
+            playlist.save();
+            preferencesHelper.setLastPlaylist(1L);
+            preferencesHelper.setLastPlaylistPosition(0);
         }
-        playlist.save();
-        Toast.makeText(getApplicationContext(), R.string.media_scan_done, Toast.LENGTH_SHORT);
     }
 
     private void broadcastIntentStatus(String directory, String status, boolean isLast){

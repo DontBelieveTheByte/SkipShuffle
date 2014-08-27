@@ -172,9 +172,7 @@ public abstract class BaseActivity extends Activity {
             if (data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
                 // Get the file path
                 List<File> filePickerActivityResult = (List<File>) data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                if (filePickerActivityResult.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), R.string.no_directory, Toast.LENGTH_LONG).show();
-                } else {
+                if (!filePickerActivityResult.isEmpty()) {
                     //Check this shit.
                     String[] mediaDirectoriesToScan = new String[filePickerActivityResult.size()];
                     int i = 0;
@@ -194,11 +192,6 @@ public abstract class BaseActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
-        if(mediaScannerDialog != null){
-            mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
-            mediaScannerDialog.dismiss();
-        }
-        unregisterReceiver(mediaPlayerBroadcastReceiver);
     }
 
     @Override
@@ -219,8 +212,21 @@ public abstract class BaseActivity extends Activity {
             mediaScannerDialog.dismiss();
             mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
         }
-        unregisterReceiver(mediaPlayerBroadcastReceiver);
         super.onPause();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        //There's no 1:1 ratio of onCreate/onDestroy, correct place unregister receivers is here.
+        preferencesHelper.unRegisterPrefsChangedListener();
+        unregisterReceiver(mediaPlayerBroadcastReceiver);
+
+        if(mediaScannerDialog != null){
+            mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
+            mediaScannerDialog.dismiss();
+        }
     }
 
     @Override
@@ -231,6 +237,7 @@ public abstract class BaseActivity extends Activity {
             mediaScannerDialog.show();
         }
         registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE));
+        preferencesHelper.registerPrefsChangedListener();
     }
 
     @Override
@@ -353,12 +360,13 @@ public abstract class BaseActivity extends Activity {
         intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
         intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
         BaseActivity.this.startActivityForResult(intent, REQUEST_PICK_FILE);
-        Toast.makeText(getApplicationContext(), R.string.sel_target_directories, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), R.string.media_scan_sel_target_directories, Toast.LENGTH_LONG).show();
     }
 
     public void preferenceChangedCallback(String prefsKey) {
         if(prefsKey == getString(R.string.pref_media_directories)){
-            new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
+            mediaScannerDialog = new MediaScannerDialog(new ProgressDialog(BaseActivity.this));
+            mediaScannerDialog.doScan();
         }
     }
 }
