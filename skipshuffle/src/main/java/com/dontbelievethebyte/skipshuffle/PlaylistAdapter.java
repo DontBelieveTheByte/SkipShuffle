@@ -16,10 +16,12 @@ public class PlaylistAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private View currentPlayView;
+    private PreferencesHelper preferencesHelper;
 
-    public PlaylistAdapter(Context context, PlaylistInterface playlist){
+    public PlaylistAdapter(Context context, PreferencesHelper preferencesHelper, PlaylistInterface playlist){
         this.context = context;
         this.playlist = playlist;
+        this.preferencesHelper = preferencesHelper;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -48,7 +50,10 @@ public class PlaylistAdapter extends BaseAdapter {
 
         if(convertView == null){
             viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.playlist_item, null);
+            convertView = layoutInflater.inflate(
+                    UIFactory.getSinglePlaylistItemLayout(preferencesHelper.getUIType()),
+                    null)
+            ;
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -71,7 +76,13 @@ public class PlaylistAdapter extends BaseAdapter {
         LayoutParams params = iv.getLayoutParams();
         if(track.getId() == playlist.getCurrent().getId()){
             params.width = params.height;
-            iv.setImageDrawable(context.getResources().getDrawable(R.drawable.neon_play_btn));
+            iv.setImageDrawable(
+                    context.getResources().getDrawable(
+                            UIFactory.getPlayDrawable(
+                                    preferencesHelper.getUIType()
+                            )
+                    )
+            );
         } else {
             iv.setImageDrawable(null);
             params.width = 0;
@@ -95,7 +106,7 @@ public class PlaylistAdapter extends BaseAdapter {
         String artist = track.getArtist();
         TextView tv = (TextView) view.findViewById(resourceId);
         if(artist == null){
-            artist = context.getString(R.string.metadata_unknown_artist);
+            artist = context.getString(R.string.meta_data_unknown_artist);
         }
         tv.setText(artist);
         return tv;
