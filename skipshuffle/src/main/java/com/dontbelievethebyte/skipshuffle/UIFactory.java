@@ -43,16 +43,29 @@ public class UIFactory {
         }
     }
 
-    public static int getSinglePlaylistItemPlayDrawable(Integer uiType){
+    public static int getPlayDrawable(Integer uiType){
         switch (uiType) {
             case MONO_LIGHT :
-                return R.drawable.mono_light_play_btn;
+                return R.drawable.mono_light_play_states;
             case MONO_DARK :
-                return R.drawable.mono_dark_play_btn;
+                return R.drawable.mono_dark_play_states;
             case NEON :
-                return R.drawable.neon_play_btn;
+                return R.drawable.neon_play_states;
             default:
-                return R.drawable.neon_play_btn;
+                return R.drawable.neon_play_states;
+        }
+    }
+
+    public static int getPauseDrawable(Integer uiType){
+        switch (uiType) {
+            case MONO_LIGHT :
+                return R.drawable.mono_light_pause_states;
+            case MONO_DARK :
+                return R.drawable.mono_dark_pause_states;
+            case NEON :
+                return R.drawable.neon_pause_states;
+            default:
+                return R.drawable.neon_pause_states;
         }
     }
 
