@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Default meta data-->
+    <string name="meta_data_unknown_current_song_title">Nothing is playing.</string>
+    <string name="meta_data_unknown_artist">Unknown artist</string>
 
     <string name="app_name">SkipShuffle</string>
     <string name="playlist">Playlist view</string>
-    <string name="unknown_current_song_title">Nothing is playing.</string>
     <string name="menu_refresh">Refresh</string>
     <string name="title_activity_playlist">Playlist</string>
     <string name="action_settings">Settings</string>
@@ -47,9 +49,9 @@
 
     <!--State info-->
     <string name="media_player_unkown_command">Unknown command.</string>
-    <string name="metadata_unknown_artist">Unknown artist</string>
     <string name="empty_playlist">There are no items yet, you may scan for media by selecting a target location from the menu.</string>
     <string name="shuffle">Re-suffling</string>
+    <string name="playlist_load_error">Playlist Error, playlist ID : %</string>
 
     <!--Themes-->
     <string-array name="drawer_menu">

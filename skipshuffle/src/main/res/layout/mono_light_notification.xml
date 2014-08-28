@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/common_notification_height"
+    android:padding="@dimen/common_notification_padding"
+    android:id="@+id/notif_all"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="@dimen/common_notification_icon_holder_width"
+        android:layout_height="fill_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/common_notification_icon_w_h"
+            android:layout_height="@dimen/common_notification_icon_w_h"
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_neon_notif"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="center|center_horizontal">
+
+        <ImageButton
+            android:layout_width="@dimen/common_notification_buttons_w_h"
+            android:layout_height="@dimen/common_notification_buttons_w_h"
+            android:id="@+id/notif_prev"
+            android:src="@drawable/mono_light_prev_states"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="@dimen/common_notification_buttons_separator"
+            android:layout_marginEnd="@dimen/null_size"/>
+
+        <ImageButton
+            android:layout_width="@dimen/common_notification_buttons_w_h"
+            android:layout_height="@dimen/common_notification_buttons_w_h"
+            android:id="@+id/notif_shuffle"
+            android:longClickable="false"
+            android:src="@drawable/mono_light_shuffle_states"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/common_notification_buttons_separator"
+            android:layout_marginRight="@dimen/common_notification_buttons_separator" />
+
+        <ImageButton
+            android:layout_width="@dimen/common_notification_buttons_w_h"
+            android:layout_height="@dimen/common_notification_buttons_w_h"
+            android:id="@+id/notif_play"
+            android:src="@drawable/mono_light_play_states"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="@dimen/common_notification_buttons_separator"
+            android:layout_marginRight="@dimen/common_notification_buttons_separator" />
+
+        <ImageButton
+            android:layout_width="@dimen/common_notification_buttons_w_h"
+            android:layout_height="@dimen/common_notification_buttons_w_h"
+            android:id="@+id/notif_skip"
+            android:src="@drawable/mono_light_next_states"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="@dimen/null_size"
+            android:cropToPadding="false" />
+    </LinearLayout>
+
+</LinearLayout>

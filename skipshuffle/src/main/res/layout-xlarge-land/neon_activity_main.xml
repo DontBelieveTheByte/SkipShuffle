@@ -64,7 +64,7 @@
                 android:layout_width="@dimen/common_xlarge_land_song_label_width"
                 android:textSize="@dimen/common_xlarge_land_song_label_txt"
                 android:layout_height="wrap_content"
-                android:text="@string/unknown_current_song_title"
+                android:text="@string/meta_data_unknown_current_song_title"
                 android:id="@+id/song_label"
                 android:textColor="@color/neon_song_label"
                 android:typeface="monospace"

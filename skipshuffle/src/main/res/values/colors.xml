@@ -5,16 +5,24 @@
     <color name="neon_nav_drawer_divider">#ffff7f00</color>
     <color name="neon_playlist_divider">#ffff00d1</color>
     <color name="neon_song_label">#ffff7f00</color>
+    <color name="neon_single_playlist_item_track_title">#ff6aff09</color>
+    <color name="neon_single_playlist_item_artist_title">#ffffb100</color>
 
     <color name="mono_light_background">#ffc5c5c5</color>
     <color name="mono_light_nav_drawer_background">#ffff7f00</color>
     <color name="mono_light_nav_drawer_divider">#ffff7f00</color>
     <color name="mono_light_playlist_divider">#ff1a1a1a</color>
     <color name="mono_light_song_label">#ff1a1a1a</color>
+    <color name="mono_light_playlist_item_track_title">#ff1a1a1a</color>
+    <color name="mono_light_playlist_item_artist_title">#ff2f2f2f</color>
+
 
     <color name="mono_dark_background">#ff1a1a1a</color>
     <color name="mono_dark_nav_drawer_background">#ffff7f00</color>
     <color name="mono_dark_nav_drawer_divider">#ffff7f00</color>
     <color name="mono_dark_playlist_divider">#ffc5c5c5</color>
     <color name="mono_dark_song_label">#ffc5c5c5</color>
+    <color name="mono_dark_playlist_item_track_title">#ffc5c5c5</color>
+    <color name="mono_dark_playlist_item_artist_title">#ffaeaeae</color>
+
 </resources>
