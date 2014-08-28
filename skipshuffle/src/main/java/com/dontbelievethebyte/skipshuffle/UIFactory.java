@@ -4,18 +4,15 @@ public class UIFactory {
     public static final int MONO_LIGHT = 0;
     public static final int MONO_DARK = 1;
     public static final int NEON = 3;
-    public static final int MARIO = 4;
 
     public static MainUI createMainUI(MainActivity mainActivity, Integer uiType){
         switch (uiType){
-            case 0 :
+            case MONO_LIGHT :
                 return new MonoLightMainUI(mainActivity);
-            case 1 :
+            case MONO_DARK :
                 return new MonoDarkMainUI(mainActivity);
-            case 2 :
+            case NEON :
                 return new NeonMainUI(mainActivity);
-            case 3 :
-                return new MarioMainUI(mainActivity);
             default:
                 return new NeonMainUI(mainActivity);
         }
@@ -23,31 +20,52 @@ public class UIFactory {
 
     public static PlaylistUI createPlaylistUI(PlaylistActivity playlistActivity, Integer uiType){
         switch (uiType){
-//            case 0 :
-//                return new MonoLightUI(playlistActivity);
-//            case 1 :
-//                return new MonoDarkUI(playlistActivity);
-//            case 2 :
-//                return new NeonUI(playlistActivity);
-//            case 3 :
-//                return new MarioUI(playlistActivity);
+            case MONO_LIGHT :
+                return new MonoLightPlaylistUI(playlistActivity);
+            case MONO_DARK :
+                return new MonoDarkPlaylistUI(playlistActivity);
+            case NEON :
+                return new NeonPlaylistUI(playlistActivity);
             default:
                 return new NeonPlaylistUI(playlistActivity);
         }
     }
-//
-//    public static UI createNotificationUI(Context context, Integer uiType){
-//        switch (uiType){
-//            case 0 :
-//                return new MonoLightUI(mainActivity);
-//            case 1 :
-//                return new MonoDarkUI(mainActivity);
-//            case 2 :
-//                return new NeonUI(mainActivity);
-//            case 4 :
-//                return new MarioUI(mainActivity);
-//            default:
-//                return new NeonUI(mainActivity);
-//        }
-//    }
+    public static int getSinglePlaylistItemLayout(Integer uiType){
+        switch (uiType) {
+            case MONO_LIGHT :
+                return R.layout.mono_light_playlist_item;
+            case MONO_DARK :
+                return R.layout.mono_dark_playlist_item;
+            case NEON :
+                return R.layout.neon_playlist_item;
+            default:
+                return R.layout.neon_playlist_item;
+        }
+    }
+
+    public static int getSinglePlaylistItemPlayDrawable(Integer uiType){
+        switch (uiType) {
+            case MONO_LIGHT :
+                return R.drawable.mono_light_play_btn;
+            case MONO_DARK :
+                return R.drawable.mono_dark_play_btn;
+            case NEON :
+                return R.drawable.neon_play_btn;
+            default:
+                return R.drawable.neon_play_btn;
+        }
+    }
+
+    public static int getNotificationLayout(Integer uiType){
+        switch (uiType){
+            case MONO_LIGHT :
+                return R.layout.mono_light_notification;
+            case MONO_DARK :
+                return R.layout.mono_dark_notification;
+            case NEON :
+                return R.layout.neon_notification;
+            default:
+                return R.layout.neon_notification;
+        }
+    }
 }
