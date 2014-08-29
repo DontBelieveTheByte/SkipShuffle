@@ -16,7 +16,7 @@
             android:layout_width="@dimen/common_notification_icon_w_h"
             android:layout_height="@dimen/common_notification_icon_w_h"
             android:id="@+id/imageView"
-            android:src="@drawable/ic_neon_notif"
+            android:src="@drawable/ic_notif"
             android:layout_gravity="center" />
     </LinearLayout>
 
