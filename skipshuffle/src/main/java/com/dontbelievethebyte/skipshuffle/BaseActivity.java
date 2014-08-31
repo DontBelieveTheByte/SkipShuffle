@@ -25,8 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.coderplus.filepicker.FilePickerActivity;
-
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;

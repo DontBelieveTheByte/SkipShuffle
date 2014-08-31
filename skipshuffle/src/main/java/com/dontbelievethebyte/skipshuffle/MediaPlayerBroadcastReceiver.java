@@ -25,7 +25,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     public String getPlayerState() {return playerState;}
     public String getCurrentSongTitle(){
         if(currentSongTitle == null){
-            return context.getString(R.string.unknown_current_song_title);
+            return context.getString(R.string.meta_data_unknown_current_song_title);
         } else {
             return currentSongTitle;
         }

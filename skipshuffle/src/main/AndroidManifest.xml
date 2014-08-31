@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.coderplus.filepicker.FilePickerActivity" >
+            android:name=".FilePickerActivity" >
         </activity>
         <activity
             android:name=".PlaylistActivity"

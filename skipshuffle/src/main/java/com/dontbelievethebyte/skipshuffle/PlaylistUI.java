@@ -14,6 +14,7 @@ public class PlaylistUI implements UI {
 
     public PlaylistUI(PlaylistActivity playlistActivity){
         this.playlistActivity = playlistActivity;
+
     }
 
     @Override

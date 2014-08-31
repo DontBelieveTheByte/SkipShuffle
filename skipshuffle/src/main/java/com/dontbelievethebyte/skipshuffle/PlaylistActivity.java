@@ -51,9 +51,17 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
     @Override
     public void mediaBroadcastReceiverCallback(){
         if(mediaPlayerBroadcastReceiver.getPlayerState().intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY){
-            ui.playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_play_states));
+            ui.playlistPlayBtn.setImageDrawable(
+                getResources().getDrawable(
+                    UIFactory.getPlayDrawable(preferencesHelper.getUIType())
+                )
+            );
         } else {
-            ui.playlistPlayBtn.setImageDrawable(getResources().getDrawable(R.drawable.neon_pause_states));
+            ui.playlistPlayBtn.setImageDrawable(
+                getResources().getDrawable(
+                    UIFactory.getPlayDrawable(preferencesHelper.getUIType())
+                )
+            );
         }
         playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
         playlistAdapter.notifyDataSetChanged();
@@ -66,14 +74,18 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
                     dbHandler
             );
             playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-            playlistAdapter = new PlaylistAdapter(getApplicationContext(), playlist);
+            playlistAdapter = new PlaylistAdapter(
+                    getApplicationContext(),
+                    preferencesHelper,
+                    playlist
+            );
 
             listView = (ListView) findViewById(R.id.current_playlist);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
+                    mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                            SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, position);
                 }
             });
             listView.setAdapter(playlistAdapter);
@@ -96,28 +108,40 @@ public class PlaylistActivity extends BaseActivity implements MediaBroadcastRece
         ui.playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                        null
+                );
             }
         });
 
         ui.playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
+                        null
+                );
             }
         });
 
         ui.playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
+                        null
+                );
             }
         });
 
         ui.playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
+                        null
+                );
             }
         });
 

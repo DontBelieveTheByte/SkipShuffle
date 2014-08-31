@@ -94,7 +94,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                     preferencesHelper.getLastPlaylist(),
                     dbHandler
             );
-            //@TODO initialize playlist position from prefs helper.
+
             playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
             playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
@@ -142,7 +142,10 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     }
 
     private void setNotification(){
-        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_notification);
+        RemoteViews remoteViews = new RemoteViews(
+                getPackageName(),
+                UIFactory.getNotificationLayout(2)
+        );
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_prev,
                 buildNotificationButtonsPendingIntent(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, 0)
@@ -159,7 +162,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         if(playerWrapper.isPlaying()){
             remoteViews.setImageViewResource(
                     R.id.notif_play,
-                    R.drawable.neon_pause_states
+                    UIFactory.getPauseDrawable(preferencesHelper.getUIType())
             );
         }
 
@@ -179,7 +182,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         remoteViews.setOnClickPendingIntent(R.id.notif_all, mainActivityPendingIntent);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ic_neon_notif)
+        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
                            .setContent(remoteViews);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -194,13 +197,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+        return PendingIntent.getBroadcast(
                 this,
                 requestCode,
                 intent,
                 PendingIntent.FLAG_CANCEL_CURRENT
         );
-        return pendingIntent;
     }
 
     private void broadcastCurrentState(){
@@ -252,7 +254,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     private String buildFormattedTitle(Track track){
         if (null == track.getArtist() || null == track.getTitle()){
             if(null == track.getPath()){
-                return getApplicationContext().getString(R.string.unknown_current_song_title);
+                return getApplicationContext().getString(R.string.meta_data_unknown_current_song_title);
             } else {
                 //Just the filename separated from path.
                 return track.getPath().substring(track.getPath().lastIndexOf("/") + 1);

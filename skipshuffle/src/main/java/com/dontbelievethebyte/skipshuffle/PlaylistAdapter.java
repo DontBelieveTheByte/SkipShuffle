@@ -5,10 +5,10 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.view.ViewGroup.LayoutParams;
 
 public class PlaylistAdapter extends BaseAdapter {
 
@@ -32,8 +32,8 @@ public class PlaylistAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        new TrackFetchTask().execute(playlist);
-        
+//        new TrackFetchTask().execute(playlist);
+
         return playlist.getAtPosition(position);
     }
 
@@ -61,6 +61,7 @@ public class PlaylistAdapter extends BaseAdapter {
         viewHolder.title = setTitle(convertView, R.id.track_title, track);
         viewHolder.artist = setArtist(convertView, R.id.track_artist, track);
         viewHolder.image = setImage(convertView, R.id.track_image, track);
+        viewHolder.playlistPosisiton = position;
         return convertView;
     }
 
@@ -116,5 +117,6 @@ public class PlaylistAdapter extends BaseAdapter {
         public TextView title;
         public TextView artist;
         public ImageView image;
+        public int playlistPosisiton;
     }
 }
