@@ -3,7 +3,7 @@ package com.dontbelievethebyte.skipshuffle;
 public class UIFactory {
     public static final int MONO_LIGHT = 0;
     public static final int MONO_DARK = 1;
-    public static final int NEON = 3;
+    public static final int NEON = 2;
 
     public static MainUI createMainUI(MainActivity mainActivity, Integer uiType){
         switch (uiType){
