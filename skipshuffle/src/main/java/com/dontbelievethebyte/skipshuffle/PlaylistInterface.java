@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface PlaylistInterface {
 
-    public Track getFirst();
+    public Track getFirst () throws PlaylistEmptyException;
 
-    public Track getCurrent();
+    public Track getCurrent() throws PlaylistEmptyException;
 
-    public Track getAtPosition(int position);
+    public Track getAtPosition(int position) throws IndexOutOfBoundsException;
 
     public Track getNext();
 
