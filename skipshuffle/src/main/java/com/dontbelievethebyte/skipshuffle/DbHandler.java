@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
@@ -28,12 +30,14 @@ public class DbHandler extends SQLiteOpenHelper {
     public static final String COLUMN_METADATA_GENRE = "genre";
 
 
-    public DbHandler(Context context) {
+    public DbHandler(Context context)
+    {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase)
+    {
         String CREATE_TRACKS_TABLE = "CREATE TABLE " +
                 TABLE_TRACKS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -55,14 +59,16 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2)
+    {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYLIST);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TRACKS);
         onCreate(sqLiteDatabase);
     }
 
     //int return is newly added id of the row or -1 on error
-    public void addTrack(Track track) {
+    public void addTrack(Track track)
+    {
 
         long trackId;
 
@@ -115,7 +121,8 @@ public class DbHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public long addPlaylist(PlaylistInterface playlistInterface){
+    public long addPlaylist(PlaylistInterface playlistInterface)
+    {
         ContentValues contentValues = new ContentValues();
         contentValues.put(
                 COLUMN_PATH,
@@ -136,7 +143,8 @@ public class DbHandler extends SQLiteOpenHelper {
         return playlistId;
     };
 
-    public Track getTrack(Long id){
+    public Track getTrack(Long id)
+    {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query(
                 TABLE_TRACKS,
@@ -157,7 +165,8 @@ public class DbHandler extends SQLiteOpenHelper {
         return track;
     }
 
-    public List<Track> getAllPlaylistTracks(List<Long> tracksIds){
+    public List<Track> getAllPlaylistTracks(List<Long> tracksIds)
+    {
         List<Track> tracks = new ArrayList<Track>();
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         for(Long trackId : tracksIds){
@@ -182,7 +191,8 @@ public class DbHandler extends SQLiteOpenHelper {
         return tracks;
     }
 
-    public List<Long> loadPlaylist(Long playlistId) throws JSONException {
+    public List<Long> loadPlaylist(Long playlistId) throws JSONException
+    {
         List<Long> playlistTracks = new ArrayList<Long>();
         if(playlistId != null){
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
@@ -201,13 +211,17 @@ public class DbHandler extends SQLiteOpenHelper {
                     playlistTracks.add(jsonArray.getLong(i));
                 }
             }
+            Log.d("PLAYLS", "WUILL NOT NOT NOT RETURN NULL : " + playlistTracks.size());
+
             return playlistTracks;
         } else {
+            Log.d("PLAYLS", "WUILL RETURN NULL");
             return null;
         }
     }
 
-    public void deletePlaylist(long id){
+    public void deletePlaylist(long id)
+    {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         sqLiteDatabase.delete(
                 TABLE_PLAYLIST,
@@ -217,7 +231,8 @@ public class DbHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    public void savePlaylist(Long playlistId, List<Long> trackIndexes){
+    public void savePlaylist(Long playlistId, List<Long> trackIndexes)
+    {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
         //@TODO not error safe.
         JSONArray jsonArray = new JSONArray(trackIndexes);

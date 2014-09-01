@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity implements MediaBroadcastReceiver
         setUI(preferencesHelper.getUIType());
 
         //Start the mediaPlayer service.
-        //startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
+        startService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
 
         preferencesHelper.registerCallBack(this);
 

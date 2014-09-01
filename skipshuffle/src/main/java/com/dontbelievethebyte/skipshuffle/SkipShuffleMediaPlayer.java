@@ -207,6 +207,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
     private void broadcastCurrentState(){
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
+        String formattedTitle;
+        try {
+            formattedTitle = buildFormattedTitle(playlist.getCurrent());
+        } catch (PlaylistEmptyException e){
+            formattedTitle = buildFormattedTitle(null);
+        }
         intent.putExtra(
                             SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE,
                             playerWrapper.isPlaying() ?
@@ -219,7 +225,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                         )
               .putExtra(
                             SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE,
-                            buildFormattedTitle(playlist.getCurrent())
+                            formattedTitle
                        )
               .putExtra(
                       SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION,
@@ -252,7 +258,10 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     }
 
     private String buildFormattedTitle(Track track){
-        if (null == track.getArtist() || null == track.getTitle()){
+        if (null == track){
+            return getApplicationContext().getString(R.string.meta_data_unknown_current_song_title);
+        }
+        else if (null == track.getArtist() || null == track.getTitle()){
             if(null == track.getPath()){
                 return getApplicationContext().getString(R.string.meta_data_unknown_current_song_title);
             } else {

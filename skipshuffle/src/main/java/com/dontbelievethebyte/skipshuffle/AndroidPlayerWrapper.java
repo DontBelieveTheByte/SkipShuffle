@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -41,7 +42,11 @@ public class AndroidPlayerWrapper {
         if(null != playlist) {
             //If we're at the start of the playlist.
             if (0 == playlist.getPosition()) {
-                loadAudioFile(playlist.getFirst());
+                try {
+                    loadAudioFile(playlist.getFirst());
+                } catch (PlaylistEmptyException e){
+                    Log.d(TAG, "CANNOT PLAY FIRST");//@TODO handle this correctly.
+                }
             }
             if(!mp.isPlaying()){
                 if(seekPosition > 0){
@@ -81,7 +86,11 @@ public class AndroidPlayerWrapper {
     public void doShuffle() {
         playlist.shuffle();
         playlist.setPosition(0);
-        loadAudioFile(playlist.getFirst());
+        try {
+            loadAudioFile(playlist.getFirst());
+        } catch (PlaylistEmptyException e){
+            Log.d(TAG, "PLAYLIST EMPTY");//@TODO handle this correctly.
+        }
         doPlay();
     }
 
@@ -100,12 +109,10 @@ public class AndroidPlayerWrapper {
             mp.setDataSource(track.getPath());
             mp.prepare();
         } catch (IOException e) {
-            Track song = playlist.getCurrent();
-            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + song.getPath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + track.getPath(), Toast.LENGTH_SHORT).show();
             doSkip();
         } catch (IllegalArgumentException e) {
-            Track song = playlist.getCurrent();
-            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + song.getPath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + track.getPath(), Toast.LENGTH_SHORT).show();
             doSkip();
         }
     }

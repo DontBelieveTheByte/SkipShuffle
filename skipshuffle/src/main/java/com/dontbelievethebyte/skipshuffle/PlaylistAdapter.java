@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,25 +69,34 @@ public class PlaylistAdapter extends BaseAdapter {
     private class TrackFetchTask extends AsyncTask<PlaylistInterface, Integer, Track> {
         @Override
         protected Track doInBackground(PlaylistInterface... playlistInterfaces) {
-                Track track = playlist.getCurrent();
-                return track;
+            try {
+                return playlist.getCurrent();
+            } catch (PlaylistEmptyException e){
+                Log.d("TAG", e.getMessage());
+                return null;
+            }
         }
     }
+
     private ImageView setImage(View view, int resourceId, Track track){
         ImageView iv = (ImageView) view.findViewById(resourceId);
         LayoutParams params = iv.getLayoutParams();
-        if(track.getId() == playlist.getCurrent().getId()){
-            params.width = params.height;
-            iv.setImageDrawable(
-                    context.getResources().getDrawable(
-                            UIFactory.getPlayDrawable(
-                                    preferencesHelper.getUIType()
-                            )
-                    )
-            );
-        } else {
-            iv.setImageDrawable(null);
-            params.width = 0;
+        try {
+            if(track.getId() == playlist.getCurrent().getId()){
+                params.width = params.height;
+                iv.setImageDrawable(
+                        context.getResources().getDrawable(
+                                UIFactory.getPlayDrawable(
+                                        preferencesHelper.getUIType()
+                                )
+                        )
+                );
+            } else {
+                iv.setImageDrawable(null);
+                params.width = 0;
+            }
+        } catch (PlaylistEmptyException e){
+            Log.d("TAG", e.getMessage());
         }
         iv.setLayoutParams(params);
         return iv;
