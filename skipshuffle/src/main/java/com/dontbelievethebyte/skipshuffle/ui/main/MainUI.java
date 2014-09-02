@@ -9,49 +9,19 @@ import com.dontbelievethebyte.skipshuffle.ui.UI;
 
 public abstract class MainUI implements UI {
 
-    protected MainActivity mainActivity;
-
     public ImageButton playlistBtn;
     public ImageButton prevBtn;
     public ImageButton playBtn;
     public ImageButton shuffleBtn;
     public ImageButton skipBtn;
 
+    protected MainActivity mainActivity;
     protected TextView songTitle;
     protected Typeface typeface;
 
-    public MainUI(MainActivity mainActivity){
+    public MainUI(MainActivity mainActivity)
+    {
         this.mainActivity = mainActivity;
-    }
-
-    @Override
-    public void doPlay() {
-
-    }
-
-    @Override
-    public void doPause() {
-
-    }
-
-    @Override
-    public void doSkip() {
-
-    }
-
-    @Override
-    public void doPrev() {
-
-    }
-
-    @Override
-    public void doShuffle() {
-
-    }
-
-    @Override
-    public void reboot() {
-
     }
 
     @Override
@@ -61,8 +31,8 @@ public abstract class MainUI implements UI {
     }
 
     @Override
-    public Typeface getTypeFace() {
-        return null;
+    public Typeface getTypeFace()
+    {
+       return null;
     }
-
 }
