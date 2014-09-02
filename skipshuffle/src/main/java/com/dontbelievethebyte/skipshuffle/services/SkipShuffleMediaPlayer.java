@@ -45,33 +45,32 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         @Override
         public void onReceive(Context context, Intent intent) {
             String actionStringId = intent.getAction();
-            if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
+            if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
                 String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-
-                if(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE == command.intern()){
-                    if(intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)){
+                if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE)){
+                    if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)) {
                         playlist.setPosition(intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, 0));
                         playerWrapper.doPlay();
                     } else {
-                        if(playerWrapper.isPlaying()){
+                        if(playerWrapper.isPlaying()) {
                             playerWrapper.doPause();
                         } else {
                             playerWrapper.doPlay();
                         }
                     }
-                } else if(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP == command.intern()){
+                } else if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP)) {
                     playerWrapper.doSkip();
-                } else if(SkipShuflleMediaPlayerCommandsContract.CMD_PREV == command.intern()){
+                } else if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_PREV )) {
                     playerWrapper.doPrev();
-                } else if(command.intern() == SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST){
+                } else if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST)){
                     playerWrapper.doShuffle();
                 }
-            } else if (Intent.ACTION_HEADSET_PLUG == actionStringId) {
+            } else if (actionStringId.equals(Intent.ACTION_HEADSET_PLUG)) {
 
                 boolean isHeadphonesPlugged =
                         (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
                                 && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
-                if(!playerWrapper.isPlaying() && isHeadphonesPlugged) {
+                if (!playerWrapper.isPlaying() && isHeadphonesPlugged) {
                     playerWrapper.doPause();
                 }
             }
@@ -79,7 +78,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
             setNotification();
             preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
         }
-    };
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -155,7 +154,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     private void setNotification(){
         RemoteViews remoteViews = new RemoteViews(
                 getPackageName(),
-                UIFactory.getNotificationLayout(2)
+                UIFactory.getNotificationLayout(preferencesHelper.getUIType())
         );
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_prev,
@@ -247,7 +246,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
     @Override
     public void preferenceChangedCallback(String prefsKey) {
-        if(prefsKey == getString(R.string.pref_current_playlist_id)){
+        if(prefsKey.equals(getString(R.string.pref_current_playlist_id))){
             try {
                 playlist = new RandomPlaylist(
                         preferencesHelper.getLastPlaylist(),
