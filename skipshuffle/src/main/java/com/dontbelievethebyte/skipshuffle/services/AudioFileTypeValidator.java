@@ -11,14 +11,14 @@ public class AudioFileTypeValidator {
 
     private static final String FILE_TYPES_PATTERN = ".*\\.(?:m(p(3|4)|4a|id|kv)|aac|flac|xmf|3gp|r(tttl|tx)|ota|imy|ogg|wav)$";
 
-    public AudioFileTypeValidator(){
+    public AudioFileTypeValidator()
+    {
         pattern = Pattern.compile(FILE_TYPES_PATTERN);
     }
 
-    public boolean validate(final String filename){
-
+    public boolean validate(final String filename)
+    {
         matcher = pattern.matcher(filename);
         return matcher.matches();
-
     }
 }
