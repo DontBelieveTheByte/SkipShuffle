@@ -18,7 +18,8 @@ public class MonoLightMainUI extends MainUI {
     private Animation flipLeftAnimation;
     private Animation blinkAnimation;
 
-    public MonoLightMainUI(MainActivity mainActivity){
+    public MonoLightMainUI(MainActivity mainActivity)
+    {
         super(mainActivity);
         mainActivity.setContentView(R.layout.mono_light_activity_main);
 
@@ -39,117 +40,167 @@ public class MonoLightMainUI extends MainUI {
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
-                skipBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_next_btn_pressed));
+                skipBtn.setImageDrawable(
+                        MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_next_btn_pressed)
+                );
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                skipBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_next_states));
+            public void onAnimationEnd(Animation animation)
+            {
+                skipBtn.setImageDrawable(
+                        MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_next_states)
+                );
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
+
         flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
-                prevBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_prev_btn_pressed));
+                prevBtn.setImageDrawable(
+                        MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_prev_btn_pressed)
+                );
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                prevBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_prev_states));
+            public void onAnimationEnd(Animation animation)
+            {
+                prevBtn.setImageDrawable(
+                        MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_prev_states)
+                );
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
         flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
-                shuffleBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_shuffle_btn_pressed));
+                shuffleBtn.setImageDrawable(
+                        MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_shuffle_btn_pressed)
+                );
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                shuffleBtn.setImageDrawable(MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_shuffle_states));
+            public void onAnimationEnd(Animation animation)
+            {
+                shuffleBtn.setImageDrawable(
+                        MonoLightMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_light_shuffle_states)
+                );
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
     }
 
     @Override
-    public void doPlay() {
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
+    public void doPlay()
+    {
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states)
+        );
         playBtn.startAnimation(ltr);
     }
 
     @Override
-    public void doPause() {
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
+    public void doPause()
+    {
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states)
+        );
         playBtn.startAnimation(blinkAnimation);
     }
 
     @Override
-    public void doSkip() {
+    public void doSkip()
+    {
         playBtn.clearAnimation();
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states)
+        );
         playBtn.startAnimation(blinkAnimation);
         skipBtn.startAnimation(flipRightAnimation);
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states)
+        );
         playBtn.startAnimation(ltr);
     }
 
     @Override
-    public void doPrev() {
+    public void doPrev()
+    {
         playBtn.clearAnimation();
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states)
+        );
         playBtn.startAnimation(blinkAnimation);
         prevBtn.startAnimation(flipLeftAnimation);
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states)
+        );
         playBtn.startAnimation(ltr);
     }
 
     @Override
-    public void doShuffle() {
+    public void doShuffle()
+    {
         playBtn.clearAnimation();
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states));
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_pause_states)
+        );
         playBtn.startAnimation(blinkAnimation);
         shuffleBtn.startAnimation(flipDownAnimation);
-        playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states));
+        playBtn.setImageDrawable(
+                mainActivity.getResources().getDrawable(R.drawable.mono_light_play_states)
+        );
         playBtn.startAnimation(ltr);
     }
 
     @Override
-    public void reboot(){
-        if(mainActivity.getMediaPlayerBroadcastReceiver().getPlayerState() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
+    public void reboot()
+    {
+        if (mainActivity.getMediaPlayerBroadcastReceiver()
+                        .getPlayerState()
+                        .equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+        ) {
             doPlay();
         } else {
             doPause();
         }
     }
+
     @Override
-    public void setSongTitle(String title){
+    public void setSongTitle(String title)
+    {
         songTitle.setText(title);
     }
 
-    public Typeface getTypeFace(){
-        if(typeface == null){
+    public Typeface getTypeFace()
+    {
+        if (null == typeface) {
             typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
         }
         return typeface;
