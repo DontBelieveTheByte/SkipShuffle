@@ -64,18 +64,21 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
         //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
+    public IBinder onBind(Intent intent)
+    {
         return null;
     }
 
     @Override
-    public void onCreate(){
+    public void onCreate()
+    {
         registerMediaPlayerBroadcastReceiver();
 
         preferencesHelper = new PreferencesHelper(getApplicationContext());
@@ -107,7 +110,8 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy()
+    {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ID);
         removeNotification();
@@ -117,7 +121,8 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
     }
 
-    public void registerMediaPlayerBroadcastReceiver() {
+    public void registerMediaPlayerBroadcastReceiver()
+    {
         if (null == clientCommandsBroadcastReceiver) {
             clientCommandsBroadcastReceiver = new ClientCommandsBroadcastReceiver();
         }
@@ -128,13 +133,15 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         intentFilter.addAction(Intent.ACTION_MEDIA_BUTTON);
         registerReceiver(clientCommandsBroadcastReceiver, intentFilter);
     }
-    public void unregisterMediaPlayerBroadcastReceiver() {
+    public void unregisterMediaPlayerBroadcastReceiver()
+    {
         if(clientCommandsBroadcastReceiver != null){
             unregisterReceiver(clientCommandsBroadcastReceiver);
         }
     }
 
-    private void setNotification(){
+    private void setNotification()
+    {
         RemoteViews remoteViews = new RemoteViews(
                 getPackageName(),
                 UIFactory.getNotificationLayout(preferencesHelper.getUIType())
@@ -184,7 +191,10 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 PendingIntent.FLAG_CANCEL_CURRENT
         );
 
-        remoteViews.setOnClickPendingIntent(R.id.notif_all, mainActivityPendingIntent);
+        remoteViews.setOnClickPendingIntent(
+                R.id.notif_all,
+                mainActivityPendingIntent
+        );
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder.setSmallIcon(R.drawable.ic_notification)
@@ -283,7 +293,8 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         }
     }
 
-    private void handleCommand(String command, Intent intent){
+    private void handleCommand(String command, Intent intent)
+    {
         if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)){
             if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)) {
                 playlist.setPosition(
