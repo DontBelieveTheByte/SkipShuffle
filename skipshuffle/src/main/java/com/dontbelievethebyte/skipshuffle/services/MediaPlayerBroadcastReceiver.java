@@ -19,40 +19,53 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     private Context context;
     private ArrayList<MediaBroadcastReceiverCallback> mediaBroadcastReceiverCallbacks;
 
-    public long getPlaylistID() {
+    public MediaPlayerBroadcastReceiver(Context context)
+    {
+        this.context = context;
+        mediaBroadcastReceiverCallbacks = new ArrayList<MediaBroadcastReceiverCallback>();
+    }
+
+    public long getPlaylistID()
+    {
         return playlistID;
     }
-    public int getPlaylistPosition(){
+
+    public int getPlaylistPosition()
+    {
         return playlistPosition;
     }
-    public String getPlayerState() {return playerState;}
-    public String getCurrentSongTitle(){
-        if(currentSongTitle == null){
+
+    public String getPlayerState()
+    {
+        return playerState;
+    }
+
+    public String getCurrentSongTitle()
+    {
+        if (currentSongTitle == null) {
             return context.getString(R.string.meta_data_unknown_current_song_title);
         } else {
             return currentSongTitle;
         }
     }
 
-    public MediaPlayerBroadcastReceiver(Context context) {
-        this.context = context;
-        mediaBroadcastReceiverCallbacks = new ArrayList<MediaBroadcastReceiverCallback>();
-    }
-
-    public void broadcastToMediaPlayer(String command, Integer playlistPosition){
+    public void broadcastToMediaPlayer(String command, Integer playlistPosition)
+    {
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        if(command == SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE && playlistPosition != null){
-            intent.putExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, playlistPosition);
+        if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE)
+            && playlistPosition != null){
+                intent.putExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, playlistPosition);
         }
         context.sendBroadcast(intent);
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
         playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, 0);
         playerState = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
-        if(null == playerState){
+        if (null == playerState) {
             playerState = SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE;
         }
         playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, 0);
@@ -63,7 +76,8 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         }
     }
 
-    public void registerCallback(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback){
+    public void registerCallback(MediaBroadcastReceiverCallback mediaBroadcastReceiverCallback)
+    {
         mediaBroadcastReceiverCallbacks.add(mediaBroadcastReceiverCallback);
     }
 }
