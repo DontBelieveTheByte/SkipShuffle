@@ -9,7 +9,6 @@ import android.support.v4.content.LocalBroadcastManager;
 
 public class MediaScannerDialog {
 
-
     private boolean isScanningMedia = false;
     private boolean isDialogShowing = false;
     private ProgressDialog progressDialog;
@@ -26,18 +25,28 @@ public class MediaScannerDialog {
         this.progressDialog.setIndeterminate(true);
     }
 
+    public void dismiss()
+    {
+        if (isDialogShowing) {
+            progressDialog.dismiss();
+        }
+        isDialogShowing = false;
+    }
+
+    public void doScan()
+    {
+        registerMediaScannerBroadcastReceiver();
+        Intent mediaScannerIntent = new Intent(
+                baseActivity,
+                MediaScannerService.class
+        );
+        baseActivity.startService(mediaScannerIntent);
+        isScanningMedia = true;
+    }
 
     public boolean isScanningMedia()
     {
         return isScanningMedia;
-    }
-
-    public void show()
-    {
-        if (!isDialogShowing) {
-            progressDialog.show();
-        }
-        isDialogShowing = true;
     }
 
     public void setMessage(String message)
@@ -52,14 +61,6 @@ public class MediaScannerDialog {
                         title
                 )
         );
-    }
-
-    public void dismiss()
-    {
-        if (isDialogShowing) {
-            progressDialog.dismiss();
-        }
-        isDialogShowing = false;
     }
 
     public void registerMediaScannerBroadcastReceiver()
@@ -91,30 +92,29 @@ public class MediaScannerDialog {
             };
         }
         LocalBroadcastManager.getInstance(baseActivity)
-                             .registerReceiver(
-                                    baseActivity.mediaScannerReceiver,
-                                    new IntentFilter(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING)
-                             );
+                .registerReceiver(
+                        baseActivity.mediaScannerReceiver,
+                        new IntentFilter(
+                                MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING
+                        )
+                );
+    }
+
+    public void show()
+    {
+        if (!isDialogShowing) {
+            progressDialog.show();
+        }
+        isDialogShowing = true;
     }
 
     public void unregisterMediaScannerBroadcastReceiver()
     {
         if (baseActivity.mediaScannerReceiver != null) {
-            LocalBroadcastManager.getInstance(baseActivity).unregisterReceiver(baseActivity.mediaScannerReceiver);
+            LocalBroadcastManager.getInstance(baseActivity)
+                                 .unregisterReceiver(baseActivity.mediaScannerReceiver);
         }
         dismiss();
         isScanningMedia = false;
     }
-
-    public void doScan()
-    {
-        registerMediaScannerBroadcastReceiver();
-        Intent mediaScannerIntent = new Intent(
-                baseActivity,
-                MediaScannerService.class
-        );
-        baseActivity.startService(mediaScannerIntent);
-        isScanningMedia = true;
-    }
-
 }
