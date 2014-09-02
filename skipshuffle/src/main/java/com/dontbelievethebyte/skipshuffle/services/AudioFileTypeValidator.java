@@ -4,8 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AudioFileTypeValidator {
-    public static final boolean VALID = true;
-
     private Pattern pattern;
     private Matcher matcher;
 
