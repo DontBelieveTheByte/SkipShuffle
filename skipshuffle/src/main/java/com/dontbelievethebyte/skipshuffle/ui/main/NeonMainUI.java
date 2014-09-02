@@ -197,7 +197,7 @@ public class NeonMainUI extends MainUI {
 
     public Typeface getTypeFace()
     {
-        if(null == typeface) {
+        if (null == typeface) {
             typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf" );
         }
         return typeface;

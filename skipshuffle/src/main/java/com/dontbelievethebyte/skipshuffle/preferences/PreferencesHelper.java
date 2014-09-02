@@ -191,7 +191,7 @@ public class PreferencesHelper {
 
     public void registerPrefsChangedListener()
     {
-        if(null == preferenceChangeListener){
+        if (null == preferenceChangeListener) {
             preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefsKey) {

@@ -156,7 +156,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
     public void unregisterMediaPlayerBroadcastReceiver()
     {
-        if(clientCommandsBroadcastReceiver != null){
+        if (clientCommandsBroadcastReceiver != null) {
             unregisterReceiver(clientCommandsBroadcastReceiver);
         }
     }
@@ -304,10 +304,15 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 R.id.notif_all,
                 mainActivityPendingIntent
         );
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_notification)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
-                .setContent(remoteViews);
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+//        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
+//                           .setContent(remoteViews);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(

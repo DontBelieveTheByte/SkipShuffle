@@ -72,10 +72,10 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             if (MotionEvent.ACTION_DOWN == event.getAction()){
-                if(preferencesHelper.isHapticFeedback()){
+                if (preferencesHelper.isHapticFeedback()) {
                     view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
-                if(mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0) {
+                if (mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0) {
                     pickMediaDirectories();
                     //Return true because we already handled the event and want to prevent bubbling.
                     return true;
@@ -110,7 +110,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         MenuInflater menuInflater = getMenuInflater();
-        if(vibrator.hasVibrator()){
+        if (vibrator.hasVibrator()) {
             menuInflater.inflate(R.menu.main, menu);
         } else {
             menuInflater.inflate(R.menu.main_no_vibrator, menu);
@@ -155,7 +155,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         super.onRestoreInstanceState(savedInstanceState);
 
         //Check if we're scanning media beforehand and.
-        if(savedInstanceState.getBoolean(IS_SCANNING_MEDIA)){
+        if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
 //            mediaScannerDialog = new MediaScannerDialog(
 //                    this,
 //                    new ProgressDialog(BaseActivity.this)
@@ -168,7 +168,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     @Override
     protected void onPause()
     {
-        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
+        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.dismiss();
             mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
         }
@@ -184,7 +184,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         preferencesHelper.unRegisterPrefsChangedListener();
         unregisterReceiver(mediaPlayerBroadcastReceiver);
 
-        if(mediaScannerDialog != null){
+        if (mediaScannerDialog != null) {
             mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
             mediaScannerDialog.dismiss();
         }
@@ -194,7 +194,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected void onResume()
     {
         super.onResume();
-        if(mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
+        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
         }

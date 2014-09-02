@@ -109,7 +109,7 @@ public class DbHandler extends SQLiteOpenHelper {
                 null
         );
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             trackId = cursor.getLong(0);
         } else {
             trackId = sqLiteDatabase.insert(
@@ -159,7 +159,7 @@ public class DbHandler extends SQLiteOpenHelper {
                 null
         );
         Track track = new Track();
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             cursor.moveToFirst();
             track.setId(cursor.getInt(0));
             track.setPath(cursor.getString(1));
@@ -183,7 +183,7 @@ public class DbHandler extends SQLiteOpenHelper {
                     null,
                     null
             );
-            if(cursor.moveToFirst()){
+            if (cursor.moveToFirst()) {
                 cursor.moveToFirst();
                 track.setId(cursor.getInt(0));
                 track.setPath(cursor.getString(1));
@@ -197,7 +197,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public List<Long> loadPlaylist(Long playlistId) throws JSONException
     {
         List<Long> playlistTracks = new ArrayList<Long>();
-        if(playlistId != null){
+        if (playlistId != null) {
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
             Cursor cursor = sqLiteDatabase.query(
                     TABLE_PLAYLIST,
@@ -208,7 +208,7 @@ public class DbHandler extends SQLiteOpenHelper {
                     null,
                     null
             );
-            if(cursor.moveToFirst()){
+            if (cursor.moveToFirst()) {
                 JSONArray jsonArray = new JSONArray(cursor.getString(0));
                 for(int i=0; i<jsonArray.length(); i++){
                     playlistTracks.add(jsonArray.getLong(i));
@@ -243,7 +243,7 @@ public class DbHandler extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_TRACKS, jsonArray.toString());
 
-        if(playlistId != null){
+        if (playlistId != null) {
             contentValues.put(COLUMN_ID, playlistId);
         }
         int insert = (int) sqLiteDatabase.insertWithOnConflict(
@@ -252,7 +252,7 @@ public class DbHandler extends SQLiteOpenHelper {
                 contentValues,
                 SQLiteDatabase.CONFLICT_IGNORE
         );
-        if(insert == -1){
+        if (insert == -1) {
             sqLiteDatabase.update(
                     TABLE_PLAYLIST,
                     contentValues,

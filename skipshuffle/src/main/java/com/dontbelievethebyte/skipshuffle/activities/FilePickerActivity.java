@@ -82,7 +82,8 @@ public class FilePickerActivity extends ListActivity {
     protected PreferencesHelper preferencesHelper;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+    {
 		super.onCreate(savedInstanceState);
         preferencesHelper = new PreferencesHelper(this);
 		setContentView(
@@ -112,12 +113,12 @@ public class FilePickerActivity extends ListActivity {
 		acceptedFileExtensions = new String[] {};
 
 		// Get intent extras
-		if(getIntent().hasExtra(EXTRA_FILE_PATH)) {
+		if (getIntent().hasExtra(EXTRA_FILE_PATH)) {
 			mDirectory = new File(getIntent().getStringExtra(EXTRA_FILE_PATH));
 		}
 		mShowHiddenFiles = getIntent().getBooleanExtra(EXTRA_SHOW_HIDDEN_FILES, false);
 
-		if(getIntent().hasExtra(EXTRA_ACCEPTED_FILE_EXTENSIONS)) {
+		if (getIntent().hasExtra(EXTRA_ACCEPTED_FILE_EXTENSIONS)) {
 			ArrayList<String> collection = getIntent().getStringArrayListExtra(EXTRA_ACCEPTED_FILE_EXTENSIONS);
 			acceptedFileExtensions = (String[]) collection.toArray(new String[collection.size()]);
 		}
@@ -125,11 +126,11 @@ public class FilePickerActivity extends ListActivity {
 
 		singleMode = !getIntent().getBooleanExtra(EXTRA_SELECT_MULTIPLE, false);
 
-		if(getIntent().getBooleanExtra(EXTRA_SELECT_FILES_ONLY, false))
+		if (getIntent().getBooleanExtra(EXTRA_SELECT_FILES_ONLY, false))
 			pickType=1;
 
 
-		if(getIntent().getBooleanExtra(EXTRA_SELECT_DIRECTORIES_ONLY, false))
+		if (getIntent().getBooleanExtra(EXTRA_SELECT_DIRECTORIES_ONLY, false))
 			pickType=2;
 
 		Button ok = (Button)findViewById(R.id.ok);
@@ -138,34 +139,33 @@ public class FilePickerActivity extends ListActivity {
 				returnResults();
 			}
 		});
-		if(singleMode)
-			ok.setVisibility(View.GONE);
-
+		if (singleMode) {
+            ok.setVisibility(View.GONE);
+        }
 		this.getListView().setLongClickable(true);
 		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
 				File newFile = (File)parent.getItemAtPosition(position);
 
-				if((pickType==0 || (pickType==1 && newFile.isFile()) || (pickType==2 && newFile.isDirectory()))){
+				if (pickType==0 || (pickType==1 && newFile.isFile()) || (pickType==2 && newFile.isDirectory())) {
 					mAdapter.toggleCheckBox(newFile);
-					if(singleMode){
+					if (singleMode) {
 						returnResults();
-					}
-					else
-						mAdapter.notifyDataSetChanged();
-				} else if(pickType==1 && newFile.isDirectory())
-				{
+					} else {
+                        mAdapter.notifyDataSetChanged();
+                    }
+				} else if (pickType==1 && newFile.isDirectory()) {
 					mDirectory = newFile;
 					refreshFilesList();
 				}
-
 				return true;
 			}
 		});
 	}
 
-	private void returnResults(){
-		if(mAdapter.getFiles().size()<1){
+	private void returnResults()
+    {
+		if (mAdapter.getFiles().size()<1) {
 			Toast.makeText(this, "Nothing Selected",Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -174,8 +174,10 @@ public class FilePickerActivity extends ListActivity {
 		setResult(RESULT_OK, extra);
 		finish();
 	}
+
 	@Override
-	protected void onResume() {
+	protected void onResume()
+    {
 		refreshFilesList();
 		super.onResume();
 	}
@@ -183,26 +185,25 @@ public class FilePickerActivity extends ListActivity {
 	/**
 	 * Updates the list view to the current directory
 	 */
-	protected void refreshFilesList() {
+	protected void refreshFilesList()
+    {
 		// Clear the files ArrayList
 		mFiles.clear();
 		//clear the checked item list
 		mAdapter.clearBoxes();
 		// Set the extension file filter
 		File[] files;
-		if(acceptedFileExtensions!=null && acceptedFileExtensions.length>0)
-		{
+		if (acceptedFileExtensions!=null && acceptedFileExtensions.length>0) {
 			ExtensionFilenameFilter filter = new ExtensionFilenameFilter(acceptedFileExtensions);
 			files =mDirectory.listFiles(filter);
-		}
-		else{
+		} else {
 			files =mDirectory.listFiles();
 		}
 		// Get the files in the directory
 
-		if(files != null && files.length > 0) {
+		if (files != null && files.length > 0) {
 			for(File f : files) {
-				if((f.isHidden() && !mShowHiddenFiles)||(f.isFile() && pickType==2)) {
+				if (f.isHidden() && !mShowHiddenFiles|| f.isFile() && pickType==2) {
 					// Don't add the file
 					continue;
 				}
@@ -216,8 +217,9 @@ public class FilePickerActivity extends ListActivity {
 	}
 
 	@Override
-	public void onBackPressed() {
-		if(mDirectory.getParentFile() != null) {
+	public void onBackPressed()
+    {
+		if (mDirectory.getParentFile() != null) {
 			// Go to parent directory
 			mDirectory = mDirectory.getParentFile();
 			refreshFilesList();
@@ -229,18 +231,18 @@ public class FilePickerActivity extends ListActivity {
 
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
+	protected void onListItemClick(ListView l, View v, int position, long id)
+    {
 		File newFile = (File)l.getItemAtPosition(position);
 
-		if(newFile.isFile()) {
+		if (newFile.isFile()) {
 
-			if((pickType==0 || pickType==1)){
+			if (pickType==0 || pickType==1) {
 				mAdapter.toggleCheckBox(newFile);
-				if(singleMode){
+				if (singleMode) {
 					returnResults();
 				}
 			}
-
 		} else {
 			mDirectory = newFile;
 			// Update the files list
@@ -250,7 +252,8 @@ public class FilePickerActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 	}
 
-	private class FilePickerListAdapter extends ArrayAdapter<File> {
+	private class FilePickerListAdapter extends ArrayAdapter<File>
+    {
 
 		private List<File> mObjects;
 		private ArrayList<File> checkedObjects = new ArrayList<File>();
@@ -262,7 +265,8 @@ public class FilePickerActivity extends ListActivity {
 			mObjects = objects;
 		}
 
-		public void clearBoxes() {
+		public void clearBoxes()
+        {
 			checkedObjects = new ArrayList<File>();
 		}
 
@@ -271,18 +275,21 @@ public class FilePickerActivity extends ListActivity {
 			return checkedObjects;
 		}
 
-		public void toggleCheckBox(File file){
-			if(checkedObjects.contains(file))
-				checkedObjects.remove(file);
-			else
-				checkedObjects.add(file);
+		public void toggleCheckBox(File file)
+        {
+			if (checkedObjects.contains(file)) {
+                checkedObjects.remove(file);
+            } else {
+                checkedObjects.add(file);
+            }
 		}
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
 
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+        {
 			View row;
 			CheckBox checkBox;
-			if(convertView == null) {
+			if (convertView == null) {
 				LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				row = inflater.inflate(
                         UIFactory.getFilePickerSingleItemLayout(preferencesHelper.getUIType()),
@@ -303,7 +310,7 @@ public class FilePickerActivity extends ListActivity {
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 				{
 					if ( isChecked ){
-						if(!checkedObjects.contains(object))
+						if (!checkedObjects.contains(object))
 							checkedObjects.add(object);
 					}
 					else {
@@ -312,24 +319,27 @@ public class FilePickerActivity extends ListActivity {
 
 				}
 			});
-			if(singleMode){
+			if (singleMode){
 				checkBox.setVisibility(View.GONE);
 			}
 
 			else {
-				if((object.isFile() && pickType==2)||(object.isDirectory() && pickType==1))
-					checkBox.setVisibility(View.GONE);
-				else
-					checkBox.setVisibility(View.VISIBLE);
+				if ((object.isFile() && pickType==2)||(object.isDirectory() && pickType==1)) {
+                    checkBox.setVisibility(View.GONE);
+                } else {
+                    checkBox.setVisibility(View.VISIBLE);
+                }
 			}
 			// Set single line
 			textView.setSingleLine(true);
-			if(checkedObjects.contains(object))
-				checkBox.setChecked(true);
-			else
-				checkBox.setChecked(false);
-			textView.setText(object.getName());
-			if(object.isFile()) {
+			if (checkedObjects.contains(object)) {
+                checkBox.setChecked(true);
+            } else {
+                checkBox.setChecked(false);
+            }
+			textView.setText(object.getName()); //@TODO Check ambiguous condition
+
+			if (object.isFile()) {
 				// Show the file icon
 				imageView.setImageResource(getFileIcon(object.getName()));
 			} else {
@@ -340,7 +350,8 @@ public class FilePickerActivity extends ListActivity {
 			return row;
 		}
 
-		private int getFileIcon(String filename) {
+		private int getFileIcon(String filename)
+        {
 			if (filename.matches(MimeTypes._RegexFileTypeAudios))
                 return R.drawable.file_audio;
             if (filename.matches(MimeTypes._RegexFileTypeVideos))
@@ -353,19 +364,18 @@ public class FilePickerActivity extends ListActivity {
                 return R.drawable.file_plain_text;
             return R.drawable.file;
 		}
-
 	}
 
 	private class FileComparator implements Comparator<File> {
 		public int compare(File f1, File f2) {
-			if(f1 == f2) {
+			if (f1 == f2) {
 				return 0;
 			}
-			if(f1.isDirectory() && f2.isFile()) {
+			if (f1.isDirectory() && f2.isFile()) {
 				// Show directories above files
 				return -1;
 			}
-			if(f1.isFile() && f2.isDirectory()) {
+			if (f1.isFile() && f2.isDirectory()) {
 				// Show files below directories
 				return 1;
 			}
@@ -377,20 +387,22 @@ public class FilePickerActivity extends ListActivity {
 	private class ExtensionFilenameFilter implements FilenameFilter {
 		private String[] mExtensions;
 
-		public ExtensionFilenameFilter(String[] extensions) {
+		public ExtensionFilenameFilter(String[] extensions)
+        {
 			super();
 			mExtensions = extensions;
 		}
 
-		public boolean accept(File dir, String filename) {
-			if(new File(dir, filename).isDirectory()) {
+		public boolean accept(File dir, String filename)
+        {
+			if (new File(dir, filename).isDirectory()) {
 				// Accept all directory names
 				return true;
 			}
 
-			if(mExtensions != null && mExtensions.length > 0) {
+			if (mExtensions != null && mExtensions.length > 0) {
 				for(int i = 0; i < mExtensions.length; i++) {
-					if(filename.toLowerCase().endsWith(mExtensions[i].toLowerCase())) {
+					if (filename.toLowerCase().endsWith(mExtensions[i].toLowerCase())) {
 						// The filename ends with the extension
 						return true;
 					}

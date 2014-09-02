@@ -47,8 +47,10 @@ public class AndroidPlayerWrapper {
             if (!mp.isPlaying()) {
                 if (seekPosition > 0) {
                     mp.seekTo(seekPosition);
+                    mp.start();
+                } else {
+                    mp.start();
                 }
-                mp.start();
             }
         }
     }

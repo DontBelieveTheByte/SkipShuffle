@@ -31,29 +31,30 @@ public class PlaylistAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return playlist.getSize();
     }
 
     @Override
-    public Object getItem(int position) {
+    public Object getItem(int position)
+    {
 //        new TrackFetchTask().execute(playlist);
-
         return playlist.getAtPosition(position);
     }
 
     @Override
-    public long getItemId(int i) {
+    public long getItemId(int i)
+    {
         return 0;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup viewGroup) {
-
+    public View getView(final int position, View convertView, ViewGroup viewGroup)
+    {
         ViewHolder viewHolder;
         Track track = playlist.getAtPosition(position);
-
-        if(convertView == null){
+        if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
                     UIFactory.getSinglePlaylistItemLayout(preferencesHelper.getUIType()),
@@ -82,11 +83,12 @@ public class PlaylistAdapter extends BaseAdapter {
         }
     }
 
-    private ImageView setImage(View view, int resourceId, Track track){
+    private ImageView setImage(View view, int resourceId, Track track)
+    {
         ImageView iv = (ImageView) view.findViewById(resourceId);
         LayoutParams params = iv.getLayoutParams();
         try {
-            if(track.getId() == playlist.getCurrent().getId()){
+            if (track.getId() == playlist.getCurrent().getId()) {
                 params.width = params.height;
                 iv.setImageDrawable(
                         context.getResources().getDrawable(
@@ -106,10 +108,11 @@ public class PlaylistAdapter extends BaseAdapter {
         return iv;
     }
 
-    private TextView setTitle(View view, int resourceId, Track track){
+    private TextView setTitle(View view, int resourceId, Track track)
+    {
         TextView tv = (TextView) view.findViewById(resourceId);
         String title = track.getTitle();
-        if(title == null){
+        if (title == null) {
             title = track.getPath();
             title = title.substring(title.lastIndexOf("/") + 1);
         }
@@ -117,17 +120,18 @@ public class PlaylistAdapter extends BaseAdapter {
         return tv;
     }
 
-    private TextView setArtist(View view, int resourceId, Track track) {
+    private TextView setArtist(View view, int resourceId, Track track)
+    {
         String artist = track.getArtist();
         TextView tv = (TextView) view.findViewById(resourceId);
-        if(artist == null){
+        if (artist == null) {
             artist = context.getString(R.string.meta_data_unknown_artist);
         }
         tv.setText(artist);
         return tv;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         public TextView title;
         public TextView artist;
         public ImageView image;
