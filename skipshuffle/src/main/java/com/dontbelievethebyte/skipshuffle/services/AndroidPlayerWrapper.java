@@ -15,16 +15,13 @@ import java.io.IOException;
 public class AndroidPlayerWrapper {
 
     private static final String TAG = "SkipShuffleAndroidPlayerWrapper";
-
+    private int seekPosition = 0;
     private MediaPlayer mp;
-
     private PlaylistInterface playlist;
+    private Context context;
 
-    int seekPosition = 0;
-
-    Context context;
-
-    public AndroidPlayerWrapper(Context context){
+    public AndroidPlayerWrapper(Context context)
+    {
         this.context = context;
         mp = new MediaPlayer();
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -35,16 +32,10 @@ public class AndroidPlayerWrapper {
             }
         });
     }
-    public void setPlaylist(PlaylistInterface playlist) {
-        this.playlist = playlist;
-    }
 
-    public boolean isPlaying(){
-        return mp.isPlaying();
-    }
-
-    public void doPlay() {
-        if(null != playlist) {
+    public void doPlay()
+    {
+        if (null != playlist) {
             //If we're at the start of the playlist.
             if (0 == playlist.getPosition()) {
                 try {
@@ -53,8 +44,8 @@ public class AndroidPlayerWrapper {
                     Log.d(TAG, "CANNOT PLAY FIRST");//@TODO handle this correctly.
                 }
             }
-            if(!mp.isPlaying()){
-                if(seekPosition > 0){
+            if (!mp.isPlaying()) {
+                if (seekPosition > 0) {
                     mp.seekTo(seekPosition);
                 }
                 mp.start();
@@ -62,62 +53,80 @@ public class AndroidPlayerWrapper {
         }
     }
 
-    public void doPause() {
-        if(mp.isPlaying()){
+    public void doPause()
+    {
+        if (mp.isPlaying()) {
             mp.pause();
             seekPosition = mp.getCurrentPosition();
         }
     }
 
-    public void doSkip() {
-        if(playlist.getPosition() == 0){
+    public void doSkip()
+    {
+        if (playlist.getPosition() == 0) {
             playlist.setPosition(1);
         }
-        if(seekPosition > 0){
+        if (seekPosition > 0) {
             seekPosition = 0;
         }
         loadAudioFile(playlist.getNext());
         doPlay();
     }
 
-    public void doPrev() {
-        if(seekPosition > 0){
+    public void doPrev()
+    {
+        if (seekPosition > 0) {
             seekPosition = 0;
         }
         loadAudioFile(playlist.getPrev());
         doPlay();
     }
 
-    public void doShuffle() {
-        playlist.shuffle();
-        playlist.setPosition(0);
+    public void doShuffle()
+    {
         try {
+            playlist.shuffle();
+            playlist.setPosition(0);
             loadAudioFile(playlist.getFirst());
         } catch (PlaylistEmptyException e){
-            Log.d(TAG, "PLAYLIST EMPTY");//@TODO handle this correctly.
+            Toast.makeText(
+                    context,
+                    context.getResources().getString(R.string.shuffle_empty_playlist),
+                    Toast.LENGTH_SHORT
+            ).show();
         }
         doPlay();
     }
 
-    public long getPlaylistCursorPosition(){
-        return playlist.getPosition();
+    public boolean isPlaying()
+    {
+        return mp.isPlaying();
     }
 
-    public void setPlaylistCursorPosition(int position){
-        playlist.setPosition(position);
-        doPlay();
+    public void setPlaylist(PlaylistInterface playlist)
+    {
+        this.playlist = playlist;
     }
 
-    private void loadAudioFile(Track track) {
+    private void loadAudioFile(Track track)
+    {
         try {
             mp.reset();
             mp.setDataSource(track.getPath());
             mp.prepare();
         } catch (IOException e) {
-            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + track.getPath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    context,
+                    context.getResources().getString(R.string.player_wrapper_song_error) + track.getPath(),
+                    Toast.LENGTH_SHORT
+            ).show();
             doSkip();
         } catch (IllegalArgumentException e) {
-            Toast.makeText(context, context.getResources().getString(R.string.player_wrapper_song_error) + track.getPath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    context,
+                    context.getResources().getString(R.string.player_wrapper_song_error) + track.getPath(),
+                    Toast.LENGTH_SHORT
+            ).show();
             doSkip();
         }
     }
