@@ -53,8 +53,9 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     {
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE)
-            && playlistPosition != null){
+        if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)
+            && playlistPosition != null
+        ) {
                 intent.putExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, playlistPosition);
         }
         context.sendBroadcast(intent);

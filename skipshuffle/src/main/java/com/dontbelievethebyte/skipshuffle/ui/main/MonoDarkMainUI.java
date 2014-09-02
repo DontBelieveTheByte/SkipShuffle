@@ -147,9 +147,9 @@ public class MonoDarkMainUI extends MainUI {
     @Override
     public void reboot()
     {
-        if (mainActivity.getMediaPlayerBroadcastReceiver()
-                       .getPlayerState()
-                       .equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
+                mainActivity.getMediaPlayerBroadcastReceiver()
+                        .getPlayerState())
         ) {
             doPlay();
         } else {

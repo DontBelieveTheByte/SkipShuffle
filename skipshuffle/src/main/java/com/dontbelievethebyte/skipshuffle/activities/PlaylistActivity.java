@@ -59,7 +59,9 @@ public class PlaylistActivity extends BaseActivity {
 
     @Override
     public void mediaBroadcastReceiverCallback(){
-        if (mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)) {
+        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
+                mediaPlayerBroadcastReceiver.getPlayerState())
+        ) {
             ui.playlistPlayBtn.setImageDrawable(
                 getResources().getDrawable(
                     UIFactory.getPlayDrawable(preferencesHelper.getUIType())
@@ -164,7 +166,7 @@ public class PlaylistActivity extends BaseActivity {
     @Override
     public void preferenceChangedCallback(String prefsKey) {
         super.preferenceChangedCallback(prefsKey);
-        if (prefsKey.equals(getString(R.string.pref_current_playlist_id))) {
+        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
             loadPlaylist(preferencesHelper.getLastPlaylist());
         }
     }

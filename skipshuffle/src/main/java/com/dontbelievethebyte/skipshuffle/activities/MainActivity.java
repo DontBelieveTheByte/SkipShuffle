@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void mediaBroadcastReceiverCallback() {
         String state = mediaPlayerBroadcastReceiver.getPlayerState();
-        if (state.equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)) {
+        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(state)) {
             ui.doPlay();
         } else {
             ui.doPause();
@@ -87,19 +87,25 @@ public class MainActivity extends BaseActivity {
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)) {
+                if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(mediaPlayerBroadcastReceiver.getPlayerState())) {
                     ui.doPause();
                 } else {
                     ui.doPlay();
                 }
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                        null
+                );
             }
         });
 
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
+                        null
+                );
                 ui.doSkip();
             }
         });
@@ -107,7 +113,10 @@ public class MainActivity extends BaseActivity {
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_PREV, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
+                        null
+                );
                 ui.doPrev();
             }
         });
@@ -115,7 +124,10 @@ public class MainActivity extends BaseActivity {
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST, null);
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
+                        null
+                );
                 ui.doShuffle();
             }
         });
@@ -132,7 +144,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void preferenceChangedCallback(String prefsKey) {
         super.preferenceChangedCallback(prefsKey);
-        if (prefsKey.equals(getString(R.string.pref_current_ui_type))) {
+        if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             Log.d(TAG, "UI CHANGE CALLBACK LAUCHED");
             setUI(preferencesHelper.getUIType());
         }

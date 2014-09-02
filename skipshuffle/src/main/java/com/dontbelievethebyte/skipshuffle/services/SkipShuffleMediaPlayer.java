@@ -47,9 +47,13 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
             String actionStringId = intent.getAction();
             if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
                 String command = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-                if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE)){
+                if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)){
                     if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)) {
-                        playlist.setPosition(intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION, 0));
+                        playlist.setPosition(
+                                intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION,
+                                        0
+                                )
+                        );
                         playerWrapper.doPlay();
                     } else {
                         if(playerWrapper.isPlaying()) {
@@ -58,14 +62,14 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                             playerWrapper.doPlay();
                         }
                     }
-                } else if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_SKIP)) {
+                } else if (SkipShuflleMediaPlayerCommandsContract.CMD_SKIP.equals(command)) {
                     playerWrapper.doSkip();
-                } else if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_PREV )) {
+                } else if (SkipShuflleMediaPlayerCommandsContract.CMD_PREV.equals(command)) {
                     playerWrapper.doPrev();
-                } else if (command.equals(SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST)){
+                } else if (SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST.equals(command)){
                     playerWrapper.doShuffle();
                 }
-            } else if (actionStringId.equals(Intent.ACTION_HEADSET_PLUG)) {
+            } else if (Intent.ACTION_HEADSET_PLUG.equals(actionStringId)) {
 
                 boolean isHeadphonesPlugged =
                         (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
@@ -246,7 +250,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
     @Override
     public void preferenceChangedCallback(String prefsKey) {
-        if(prefsKey.equals(getString(R.string.pref_current_playlist_id))){
+        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
             try {
                 playlist = new RandomPlaylist(
                         preferencesHelper.getLastPlaylist(),
