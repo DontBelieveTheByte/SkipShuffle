@@ -93,4 +93,30 @@ public class UIFactory {
                 return R.layout.neon_notification;
         }
     }
+
+    public static int getFilePickerLayout(Integer uiType){
+        switch (uiType){
+            case MONO_LIGHT :
+                return R.layout.mono_light_file_picker;
+            case MONO_DARK :
+                return R.layout.mono_dark_file_picker;
+            case NEON :
+                return R.layout.neon_file_picker;
+            default:
+                return R.layout.neon_file_picker;
+        }
+    }
+
+    public static int getFilePickerSingleItemLayout(Integer uiType){
+        switch (uiType){
+            case MONO_LIGHT :
+                return R.layout.mono_light_file_picker_list_item;
+            case MONO_DARK :
+                return R.layout.mono_dark_file_picker_list_item;
+            case NEON :
+                return R.layout.neon_file_picker_list_item;
+            default:
+                return R.layout.neon_file_picker_list_item;
+        }
+    }
 }

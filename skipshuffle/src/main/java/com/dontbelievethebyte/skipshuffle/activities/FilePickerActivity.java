@@ -21,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.util.MimeTypes;
+import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -76,11 +79,17 @@ public class FilePickerActivity extends ListActivity {
 	protected FilePickerListAdapter mAdapter;
 	protected boolean mShowHiddenFiles = false;
 	protected String[] acceptedFileExtensions;
+    protected PreferencesHelper preferencesHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_holder);
+        preferencesHelper = new PreferencesHelper(this);
+		setContentView(
+                UIFactory.getFilePickerLayout(preferencesHelper.getUIType()
+                )
+        );
+
 		// Set the view to be shown if the list is empty
 		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		LayoutInflater inflator = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -246,7 +255,10 @@ public class FilePickerActivity extends ListActivity {
 		private List<File> mObjects;
 		private ArrayList<File> checkedObjects = new ArrayList<File>();
 		public FilePickerListAdapter(Context context, List<File> objects) {
-			super(context, R.layout.file_picker_list_item, android.R.id.text1, objects);
+			super(
+                    context,
+                    UIFactory.getFilePickerSingleItemLayout(preferencesHelper.getUIType()),
+                    android.R.id.text1, objects);
 			mObjects = objects;
 		}
 
@@ -272,7 +284,11 @@ public class FilePickerActivity extends ListActivity {
 			CheckBox checkBox;
 			if(convertView == null) {
 				LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				row = inflater.inflate(R.layout.file_picker_list_item, parent, false);
+				row = inflater.inflate(
+                        UIFactory.getFilePickerSingleItemLayout(preferencesHelper.getUIType()),
+                        parent,
+                        false
+                );
 			} else {
 				row = convertView;
 			}
@@ -386,37 +402,4 @@ public class FilePickerActivity extends ListActivity {
 			return true;
 		}
 	}
-	class MimeTypes {
-
-	    public static final String _RegexFileTypePlainTexts = "(?si).+\\.(txt|html?|json|csv|java|pas|php.+|c|cpp|"
-	            + "bas|python|js|javascript|scala|xml|kml|css|ps|xslt?|tpl|tsv|bash|cmd|pl|pm|ps1|ps1xml|psc1|psd1|psm1|"
-	            + "py|pyc|pyo|r|rb|sdl|sh|tcl|vbs|xpl|ada|adb|ads|clj|cls|cob|cbl|cxx|cs|csproj|d|e|el|go|h|hpp|hxx|l|"
-	            + "m)";
-
-	    /**
-	     * @see http://en.wikipedia.org/wiki/Image_file_formats
-	     */
-	    public static final String _RegexFileTypeImages = "(?si).+\\.(gif|jpe?g|png|tiff?|wmf|emf|jfif|exif|"
-	            + "raw|bmp|ppm|pgm|pbm|pnm|webp|riff|tga|ilbm|img|pcx|ecw|sid|cd5|fits|pgf|xcf|svg|pns|jps|icon?|"
-	            + "jp2|mng|xpm|djvu)";
-
-	    /**
-	     * @see http://en.wikipedia.org/wiki/Audio_file_format
-	     * @see http://en.wikipedia.org/wiki/List_of_file_formats
-	     */
-	    public static final String _RegexFileTypeAudios = "(?si).+\\.(mp[2-3]+|wav|aiff|au|m4a|ogg|raw|flac|"
-	            + "mid|amr|aac|alac|atrac|awb|m4p|mmf|mpc|ra|rm|tta|vox|wma)";
-
-	    /**
-	     * @see http://en.wikipedia.org/wiki/Video_file_formats
-	     */
-	    public static final String _RegexFileTypeVideos = "(?si).+\\.(mp[4]+|flv|wmv|webm|m4v|3gp|mkv|mov|mpe?g|rmv?|ogv)";
-
-	    /**
-	     * @see http://en.wikipedia.org/wiki/List_of_file_formats
-	     */
-	    public static final String _RegexFileTypeCompressed = "(?si).+\\.(zip|7z|lz?|[jrt]ar|gz|gzip|bzip|xz|cab|sfx|"
-	            + "z|iso|bz?|rz|s7z|apk|dmg)";
-	}
-
 }

@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.dontbelievethebyte.skipshuffle.MainActivity" >
+    tools:context="com.dontbelievethebyte.skipshuffle.activities.MainActivity" >
     <item
         android:title="@string/menu_refresh"
         android:id="@+id/refresh_media"
