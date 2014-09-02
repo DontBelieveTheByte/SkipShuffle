@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,15 +43,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected static int REQUEST_PICK_FILE = 777;
     protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
     protected MediaScannerDialog mediaScannerDialog;
-
-    public BroadcastReceiver getMediaScannerReceiver() {
-        return mediaScannerReceiver;
-    }
-
-    public void setMediaScannerReceiver(BroadcastReceiver mediaScannerReceiver) {
-        this.mediaScannerReceiver = mediaScannerReceiver;
-    }
-
     protected BroadcastReceiver mediaScannerReceiver;
     protected PreferencesHelper preferencesHelper;
     protected String[] drawerMenuTitles;
@@ -65,9 +57,14 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         return mediaPlayerBroadcastReceiver;
     }
 
-    public void setMediaPlayerBroadcastReceiver(MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver)
+    public BroadcastReceiver getMediaScannerReceiver()
     {
-        this.mediaPlayerBroadcastReceiver = mediaPlayerBroadcastReceiver;
+        return mediaScannerReceiver;
+    }
+
+    public void setMediaScannerReceiver(BroadcastReceiver mediaScannerReceiver)
+    {
+        this.mediaScannerReceiver = mediaScannerReceiver;
     }
 
     protected View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener()
@@ -96,6 +93,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         //Set up preferences
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         preferencesHelper.registerPrefsChangedListener();
+
         Log.d(TAG, "FIRST CALLED.");
 
         //Is mandatory to get the current state of the player.
@@ -243,6 +241,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                 return super.onOptionsItemSelected(item);
         }
     }
+
     protected void showThemeSelectionDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -272,7 +271,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         alertDialog.show();
     }
 
-
     protected void setUpDrawer()
     {
         drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
@@ -299,13 +297,13 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
 
     public void preferenceChangedCallback(String prefsKey)
     {
-        if(prefsKey == getString(R.string.pref_media_directories)){
+        if (prefsKey.equals(getString(R.string.pref_media_directories))) {
             Log.d(TAG, "PREF DIRECTORY CHANGED!!@!#!!#%%%$$$");
-//            mediaScannerDialog = new MediaScannerDialog(
-//                    this,
-//                    new ProgressDialog(BaseActivity.this)
-//            );
-//            mediaScannerDialog.doScan();
+            mediaScannerDialog = new MediaScannerDialog(
+                    this,
+                    new ProgressDialog(BaseActivity.this)
+            );
+            mediaScannerDialog.doScan();
         }
     }
 }
