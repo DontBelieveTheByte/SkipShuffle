@@ -280,7 +280,7 @@ public class FilePickerActivity extends ListActivity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 
-			View row = null;
+			View row;
 			CheckBox checkBox;
 			if(convertView == null) {
 				LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
