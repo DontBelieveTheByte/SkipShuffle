@@ -3,13 +3,13 @@ package com.dontbelievethebyte.skipshuffle.ui.playlist;
 import android.graphics.Typeface;
 import android.widget.ImageButton;
 
-import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.playlist.PlaylistUI;
+import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 
 public class NeonPlaylistUI extends PlaylistUI {
 
-    public NeonPlaylistUI(PlaylistActivity playlistActivity) {
+    public NeonPlaylistUI(PlaylistActivity playlistActivity)
+    {
         super(playlistActivity);
         playlistActivity.setContentView(R.layout.neon_activity_playlist);
         playlistPlayBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_play);
@@ -19,42 +19,50 @@ public class NeonPlaylistUI extends PlaylistUI {
     }
 
     @Override
-    public void doPlay() {
+    public void doPlay()
+    {
 
     }
 
     @Override
-    public void doPause() {
+    public void doPause()
+    {
 
     }
 
     @Override
-    public void doSkip() {
+    public void doSkip()
+    {
 
     }
 
     @Override
-    public void doPrev() {
+    public void doPrev()
+    {
 
     }
 
     @Override
-    public void doShuffle() {
+    public void doShuffle()
+    {
 
     }
 
     @Override
-    public void reboot() {
+    public void reboot()
+    {
 
     }
 
     @Override
-    public void setSongTitle(String title) {
+    public void setSongTitle(String title)
+    {
 
     }
 
     @Override
-    public Typeface getTypeFace() {
-        return null;
+    public Typeface getTypeFace()
+    {
+       return null;
     }
 }
