@@ -144,7 +144,7 @@ public class DbHandler extends SQLiteOpenHelper {
         );
         sqLiteDatabase.close();
         return playlistId;
-    };
+    }
 
     public Track getTrack(Long id)
     {
