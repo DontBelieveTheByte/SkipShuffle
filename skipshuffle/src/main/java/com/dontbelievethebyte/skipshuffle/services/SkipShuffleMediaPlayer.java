@@ -28,22 +28,18 @@ import org.json.JSONException;
 public class SkipShuffleMediaPlayer extends Service implements PreferenceChangedCallback {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
-
     private static final int NOTIFICATION_ID = 9001;
 
     private PlaylistInterface playlist;
-
     private ClientCommandsBroadcastReceiver clientCommandsBroadcastReceiver;
-
     private AndroidPlayerWrapper playerWrapper;
-
     private PreferencesHelper preferencesHelper;
-
     private DbHandler dbHandler;
 
     private class ClientCommandsBroadcastReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context context, Intent intent)
+        {
             if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
                 handleCommand(
                         intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND),
@@ -304,7 +300,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 );
                 playerWrapper.doPlay();
             } else {
-                if(playerWrapper.isPlaying()) {
+                if (playerWrapper.isPlaying()) {
                     playerWrapper.doPause();
                 } else {
                     playerWrapper.doPlay();
