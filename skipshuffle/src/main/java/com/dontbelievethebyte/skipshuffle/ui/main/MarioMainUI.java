@@ -18,7 +18,8 @@ public class MarioMainUI extends MainUI {
     public Animation flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_left);
     public Animation blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_blink);
 
-    public MarioMainUI(MainActivity mainActivity){
+    public MarioMainUI(MainActivity mainActivity)
+    {
         super(mainActivity);
         mainActivity.setContentView(R.layout.neon_activity_main);
 
@@ -33,41 +34,48 @@ public class MarioMainUI extends MainUI {
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
                 skipBtn.setImageDrawable(MarioMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed));
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animation animation)
+            {
                 skipBtn.setImageDrawable(MarioMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
         flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
                 prevBtn.setImageDrawable(MarioMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed));
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animation animation)
+            {
                 prevBtn.setImageDrawable(MarioMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states));
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
-        flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
+        flipDownAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
             @Override
             public void onAnimationStart(Animation animation) {
                 doPause();
@@ -88,19 +96,22 @@ public class MarioMainUI extends MainUI {
     }
 
     @Override
-    public void doPlay() {
+    public void doPlay()
+    {
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_play_states));
         playBtn.startAnimation(ltr);
     }
 
     @Override
-    public void doPause() {
+    public void doPause()
+    {
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
         playBtn.startAnimation(blinkAnimation);
     }
 
     @Override
-    public void doSkip() {
+    public void doSkip()
+    {
         playBtn.clearAnimation();
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
         playBtn.startAnimation(blinkAnimation);
@@ -110,7 +121,8 @@ public class MarioMainUI extends MainUI {
     }
 
     @Override
-    public void doPrev() {
+    public void doPrev()
+    {
         playBtn.clearAnimation();
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
         playBtn.startAnimation(blinkAnimation);
@@ -120,7 +132,8 @@ public class MarioMainUI extends MainUI {
     }
 
     @Override
-    public void doShuffle() {
+    public void doShuffle()
+    {
         playBtn.clearAnimation();
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.neon_pause_states));
         playBtn.startAnimation(blinkAnimation);
@@ -130,20 +143,27 @@ public class MarioMainUI extends MainUI {
     }
 
     @Override
-    public void reboot(){
-        if(mainActivity.getMediaPlayerBroadcastReceiver().getPlayerState() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
+    public void reboot()
+    {
+        if (mainActivity.getMediaPlayerBroadcastReceiver()
+                        .getPlayerState()
+                        .equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+           ) {
             doPlay();
         } else {
             doPause();
         }
     }
+
     @Override
-    public void setSongTitle(String title){
+    public void setSongTitle(String title)
+    {
         songTitle.setText(title);
     }
 
-    public Typeface getTypeFace(){
-        if(typeface == null){
+    public Typeface getTypeFace()
+    {
+        if (null == typeface) {
             typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
         }
         return typeface;
