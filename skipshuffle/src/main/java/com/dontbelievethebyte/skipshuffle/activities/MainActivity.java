@@ -53,14 +53,13 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         ui.reboot();
-//        preferencesHelper.registerPrefsChangedListener();
-//        preferencesHelper.registerCallBack(this);
+        preferencesHelper.registerCallBack(this);
     }
 
     @Override
     public void mediaBroadcastReceiverCallback() {
         String state = mediaPlayerBroadcastReceiver.getPlayerState();
-        if (state.intern() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
+        if (state.equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)) {
             ui.doPlay();
         } else {
             ui.doPause();
@@ -88,7 +87,7 @@ public class MainActivity extends BaseActivity {
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayerBroadcastReceiver.getPlayerState() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
+                if (mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)) {
                     ui.doPause();
                 } else {
                     ui.doPlay();
@@ -133,7 +132,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void preferenceChangedCallback(String prefsKey) {
         super.preferenceChangedCallback(prefsKey);
-        if (prefsKey == getString(R.string.pref_current_ui_type)) {
+        if (prefsKey.equals(getString(R.string.pref_current_ui_type))) {
             Log.d(TAG, "UI CHANGE CALLBACK LAUCHED");
             setUI(preferencesHelper.getUIType());
         }
