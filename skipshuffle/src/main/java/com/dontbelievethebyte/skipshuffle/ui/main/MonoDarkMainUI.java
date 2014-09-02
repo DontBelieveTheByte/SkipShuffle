@@ -18,7 +18,8 @@ public class MonoDarkMainUI extends MainUI {
     public Animation flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_dark_flip_left);
     public Animation blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.mono_dark_blink);
 
-    public MonoDarkMainUI(MainActivity mainActivity){
+    public MonoDarkMainUI(MainActivity mainActivity)
+    {
         super(mainActivity);
         mainActivity.setContentView(R.layout.mono_dark_activity_main);
 
@@ -33,74 +34,86 @@ public class MonoDarkMainUI extends MainUI {
 
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
                 skipBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_dark_next_btn_pressed));
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animation animation)
+            {
                 skipBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_dark_next_states));
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
         flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
                 prevBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_dark_prev_btn_pressed));
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animation animation)
+            {
                 prevBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_dark_prev_states));
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
         flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animation animation)
+            {
                 doPause();
                 shuffleBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_dark_shuffle_btn_pressed));
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animation animation)
+            {
                 shuffleBtn.setImageDrawable(MonoDarkMainUI.this.mainActivity.getResources().getDrawable(R.drawable.mono_dark_shuffle_states));
                 doPlay();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationRepeat(Animation animation)
+            {
 
             }
         });
     }
 
     @Override
-    public void doPlay() {
+    public void doPlay()
+    {
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_dark_play_states));
         playBtn.startAnimation(ltr);
     }
 
     @Override
-    public void doPause() {
+    public void doPause()
+    {
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_dark_pause_states));
         playBtn.startAnimation(blinkAnimation);
     }
 
     @Override
-    public void doSkip() {
+    public void doSkip()
+    {
         playBtn.clearAnimation();
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_dark_pause_states));
         playBtn.startAnimation(blinkAnimation);
@@ -110,7 +123,8 @@ public class MonoDarkMainUI extends MainUI {
     }
 
     @Override
-    public void doPrev() {
+    public void doPrev()
+    {
         playBtn.clearAnimation();
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_dark_pause_states));
         playBtn.startAnimation(blinkAnimation);
@@ -120,7 +134,8 @@ public class MonoDarkMainUI extends MainUI {
     }
 
     @Override
-    public void doShuffle() {
+    public void doShuffle()
+    {
         playBtn.clearAnimation();
         playBtn.setImageDrawable(mainActivity.getResources().getDrawable(R.drawable.mono_dark_pause_states));
         playBtn.startAnimation(blinkAnimation);
@@ -130,20 +145,26 @@ public class MonoDarkMainUI extends MainUI {
     }
 
     @Override
-    public void reboot(){
-        if(mainActivity.getMediaPlayerBroadcastReceiver().getPlayerState() == SkipShuflleMediaPlayerCommandsContract.STATE_PLAY) {
+    public void reboot()
+    {
+        if (mainActivity.getMediaPlayerBroadcastReceiver()
+                       .getPlayerState()
+                       .equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+        ) {
             doPlay();
         } else {
             doPause();
         }
     }
     @Override
-    public void setSongTitle(String title){
+    public void setSongTitle(String title)
+    {
         songTitle.setText(title);
     }
 
-    public Typeface getTypeFace(){
-        if(typeface == null){
+    public Typeface getTypeFace()
+    {
+        if (null == typeface) {
             typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf");
         }
         return typeface;
