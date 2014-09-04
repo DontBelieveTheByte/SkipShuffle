@@ -12,15 +12,15 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
+import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import org.json.JSONException;
@@ -251,10 +251,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
     private void setNotification()
     {
+
         RemoteViews remoteViews = new RemoteViews(
                 getPackageName(),
                 UIFactory.getNotificationLayout(preferencesHelper.getUIType())
         );
+
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_prev,
                 buildNotificationButtonsPendingIntent(
@@ -277,10 +279,15 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 )
         );
 
-        if (playerWrapper.isPlaying()) {
+        if (!playerWrapper.isPlaying()) {
             remoteViews.setImageViewResource(
                     R.id.notif_play,
                     UIFactory.getPauseDrawable(preferencesHelper.getUIType())
+            );
+        } else {
+            remoteViews.setImageViewResource(
+                    R.id.notif_play,
+                    UIFactory.getPlayDrawable(preferencesHelper.getUIType())
             );
         }
 
@@ -293,6 +300,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         );
 
         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
+
         PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
                 this,
                 4,
@@ -300,21 +308,13 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 PendingIntent.FLAG_CANCEL_CURRENT
         );
 
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_all,
-                mainActivityPendingIntent
-        );
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_notification)
-                        .setContentTitle("My notification")
-                        .setContentText("Hello World!");
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
 
-//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-//        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
-//                           .setContent(remoteViews);
+        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
+                           .setContent(remoteViews);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         notificationManager.notify(
                 NOTIFICATION_ID,
                 notificationBuilder.build()
