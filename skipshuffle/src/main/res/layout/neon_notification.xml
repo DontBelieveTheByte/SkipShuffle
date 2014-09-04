@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/common_notification_height"
+    android:layout_height="wrap_content"
     android:padding="@dimen/common_notification_padding"
     android:id="@+id/notif_all"
     android:orientation="horizontal">
@@ -13,6 +13,7 @@
         android:gravity="center">
 
         <ImageView
+            android:contentDescription="@string/accessibility_skipshuffle"
             android:layout_width="@dimen/common_notification_icon_w_h"
             android:layout_height="@dimen/common_notification_icon_w_h"
             android:id="@+id/imageView"
@@ -27,6 +28,7 @@
         android:gravity="center|center_horizontal">
 
         <ImageButton
+            android:contentDescription="@string/accessibility_prev"
             android:layout_width="@dimen/common_notification_buttons_w_h"
             android:layout_height="@dimen/common_notification_buttons_w_h"
             android:id="@+id/notif_prev"
@@ -37,6 +39,7 @@
             android:layout_marginEnd="@dimen/null_size"/>
 
         <ImageButton
+            android:contentDescription="@string/accessibility_shuffle"
             android:layout_width="@dimen/common_notification_buttons_w_h"
             android:layout_height="@dimen/common_notification_buttons_w_h"
             android:id="@+id/notif_shuffle"
@@ -48,6 +51,7 @@
             android:layout_marginRight="@dimen/common_notification_buttons_separator" />
 
         <ImageButton
+            android:contentDescription="@string/accessibility_play_pause"
             android:layout_width="@dimen/common_notification_buttons_w_h"
             android:layout_height="@dimen/common_notification_buttons_w_h"
             android:id="@+id/notif_play"
@@ -58,6 +62,7 @@
             android:layout_marginRight="@dimen/common_notification_buttons_separator" />
 
         <ImageButton
+            android:contentDescription="@string/accessibility_skip"
             android:layout_width="@dimen/common_notification_buttons_w_h"
             android:layout_height="@dimen/common_notification_buttons_w_h"
             android:id="@+id/notif_skip"

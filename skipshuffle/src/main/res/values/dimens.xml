@@ -216,9 +216,7 @@
     <dimen name="common_single_playlist_item_track_artist_text_size">20sp</dimen>
 
     <!--Notification stuff-->
-    <dimen name="common_notification_height">48dp</dimen>
     <dimen name="common_notification_padding">4dp</dimen>
-
     <dimen name="common_notification_icon_holder_width">48dp</dimen>
     <dimen name="common_notification_icon_w_h">24dp</dimen>
     <dimen name="common_notification_buttons_w_h">48dp</dimen>
