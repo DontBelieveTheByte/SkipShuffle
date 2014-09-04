@@ -65,4 +65,11 @@
 
     <string name="player_wrapper_song_error">Error playing file : </string>
 
+    <!--Content description for accessibility-->
+    <string name="accessibility_play_pause">Play/Pause</string>
+    <string name="accessibility_skip">Skip</string>
+    <string name="accessibility_prev">Previous</string>
+    <string name="accessibility_shuffle">Shuffle</string>
+    <string name="accessibility_skipshuffle">SkipShuffle</string>
+
 </resources>
