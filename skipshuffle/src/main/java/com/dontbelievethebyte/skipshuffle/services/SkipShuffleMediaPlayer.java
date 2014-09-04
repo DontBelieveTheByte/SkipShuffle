@@ -301,11 +301,17 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
         Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
 
+
         PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
                 this,
                 4,
                 mainActivityIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT
+        );
+
+        remoteViews.setOnClickPendingIntent(
+                R.id.notif_all,
+                mainActivityPendingIntent
         );
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
