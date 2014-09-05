@@ -95,14 +95,16 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     {
         super.onCreate(savedInstanceState);
 
-        //Set up preferences
+        //Set up preferences and listener but callback are implemented by child classes.
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         preferencesHelper.registerPrefsChangedListener();
 
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
-
-        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE));
+        registerReceiver(
+                mediaPlayerBroadcastReceiver,
+                new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE)
+        );
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -128,9 +130,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
             if (data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
                 // Get the file path
                 List<File> filePickerActivityResult = (List<File>) data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                if(filePickerActivityResult instanceof List){
-
-                }
                 if (!filePickerActivityResult.isEmpty()) {
                     //Check this shit.
                     String[] mediaDirectoriesToScan = new String[filePickerActivityResult.size()];
@@ -306,8 +305,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                     new ProgressDialog(BaseActivity.this)
             );
             mediaScannerDialog.doScan();
-        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            setUI(preferencesHelper.getUIType());
         }
     }
 }

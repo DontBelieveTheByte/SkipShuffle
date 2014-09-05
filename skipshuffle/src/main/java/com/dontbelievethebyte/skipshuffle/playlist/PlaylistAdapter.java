@@ -11,22 +11,47 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 public class PlaylistAdapter extends BaseAdapter {
 
+    private static class ViewHolder {
+        public TextView title;
+        public TextView artist;
+        public ImageView image;
+    }
+
     private PlaylistInterface playlist;
     private LayoutInflater layoutInflater;
     private Context context;
-    private View currentPlayView;
     private PreferencesHelper preferencesHelper;
+    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
-    public PlaylistAdapter(Context context, PreferencesHelper preferencesHelper, PlaylistInterface playlist){
+    private class TrackFetchTask extends AsyncTask<PlaylistInterface, Integer, Track> {
+        @Override
+        protected Track doInBackground(PlaylistInterface... playlistInterfaces) {
+            try {
+                return playlist.getCurrent();
+            } catch (PlaylistEmptyException e){
+                Log.d("TAG", e.getMessage());
+                return null;
+            }
+        }
+    }
+
+    public PlaylistAdapter(Context context,
+                           PreferencesHelper preferencesHelper,
+                           MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
+                           PlaylistInterface playlist)
+    {
         this.context = context;
         this.playlist = playlist;
         this.preferencesHelper = preferencesHelper;
+        this.mediaPlayerBroadcastReceiver = mediaPlayerBroadcastReceiver;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -64,27 +89,29 @@ public class PlaylistAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.title = setTitle(convertView, R.id.track_title, track);
-        viewHolder.artist = setArtist(convertView, R.id.track_artist, track);
-        viewHolder.image = setImage(convertView, R.id.track_image, track);
-        viewHolder.playlistPosisiton = position;
+        viewHolder.title = setTitle(
+                convertView,
+                R.id.track_title,
+                track
+        );
+        viewHolder.artist = setArtist(
+                convertView,
+                R.id.track_artist,
+                track
+        );
+        viewHolder.image = setImage(
+                convertView,
+                R.id.track_image,
+                track,
+                position == playlist.getPosition() &&
+                            mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+        );
         return convertView;
     }
 
-    private class TrackFetchTask extends AsyncTask<PlaylistInterface, Integer, Track> {
-        @Override
-        protected Track doInBackground(PlaylistInterface... playlistInterfaces) {
-            try {
-                return playlist.getCurrent();
-            } catch (PlaylistEmptyException e){
-                Log.d("TAG", e.getMessage());
-                return null;
-            }
-        }
-    }
-
-    private ImageView setImage(View view, int resourceId, Track track)
+    private ImageView setImage(View view, int resourceId, Track track, boolean isPlay)
     {
+        Log.d("DRAWABLE STATE", "PLAY DRAWABLE IS : "+ isPlay);
         ImageView iv = (ImageView) view.findViewById(resourceId);
         LayoutParams params = iv.getLayoutParams();
         try {
@@ -92,14 +119,13 @@ public class PlaylistAdapter extends BaseAdapter {
                 params.width = params.height;
                 iv.setImageDrawable(
                         context.getResources().getDrawable(
-                                UIFactory.getPlayDrawable(
-                                        preferencesHelper.getUIType()
-                                )
+                                isPlay ? UIFactory.getPlayDrawable(preferencesHelper.getUIType())
+                                       : UIFactory.getPauseDrawable(preferencesHelper.getUIType())
                         )
                 );
             } else {
                 iv.setImageDrawable(null);
-                params.width = 0;
+                params.width = params.height / 2;
             }
         } catch (PlaylistEmptyException e){
             Log.d("TAG", e.getMessage());
@@ -129,12 +155,5 @@ public class PlaylistAdapter extends BaseAdapter {
         }
         tv.setText(artist);
         return tv;
-    }
-
-    private static class ViewHolder {
-        public TextView title;
-        public TextView artist;
-        public ImageView image;
-        public int playlistPosisiton;
     }
 }
