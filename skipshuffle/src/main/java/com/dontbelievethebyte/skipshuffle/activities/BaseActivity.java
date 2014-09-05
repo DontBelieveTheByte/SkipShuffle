@@ -94,8 +94,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         preferencesHelper.registerPrefsChangedListener();
 
-        Log.d(TAG, "FIRST CALLED.");
-
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
 
@@ -125,6 +123,9 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
             if (data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
                 // Get the file path
                 List<File> filePickerActivityResult = (List<File>) data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
+                if(filePickerActivityResult instanceof List){
+
+                }
                 if (!filePickerActivityResult.isEmpty()) {
                     //Check this shit.
                     String[] mediaDirectoriesToScan = new String[filePickerActivityResult.size()];
@@ -156,11 +157,11 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
 
         //Check if we're scanning media beforehand and.
         if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
-//            mediaScannerDialog = new MediaScannerDialog(
-//                    this,
-//                    new ProgressDialog(BaseActivity.this)
-//            );
-//            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            mediaScannerDialog = new MediaScannerDialog(
+                    this,
+                    new ProgressDialog(BaseActivity.this)
+            );
+            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             Log.d(TAG, "media directories to scan wasn't NULL");
         }
     }
@@ -172,6 +173,8 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
             mediaScannerDialog.dismiss();
             mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
         }
+        unregisterReceiver(mediaPlayerBroadcastReceiver);
+        preferencesHelper.unRegisterPrefsChangedListener();
         super.onPause();
     }
 
@@ -179,15 +182,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected void onStop()
     {
         super.onStop();
-
-        //There's no 1:1 ratio of onCreate/onDestroy, correct place unregister receivers is here.
-        preferencesHelper.unRegisterPrefsChangedListener();
-        unregisterReceiver(mediaPlayerBroadcastReceiver);
-
-        if (mediaScannerDialog != null) {
-            mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
-            mediaScannerDialog.dismiss();
-        }
     }
 
     @Override
@@ -198,7 +192,10 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
         }
-        registerReceiver(mediaPlayerBroadcastReceiver, new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE));
+        registerReceiver(
+                mediaPlayerBroadcastReceiver,
+                new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE)
+        );
         preferencesHelper.registerPrefsChangedListener();
     }
 
@@ -221,10 +218,10 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                     pickMediaDirectories();
                 } else {
                     if (null == mediaScannerDialog) {
-//                        mediaScannerDialog = new MediaScannerDialog(
-//                                this,
-//                                new ProgressDialog(this)
-//                        );
+                        mediaScannerDialog = new MediaScannerDialog(
+                                this,
+                                new ProgressDialog(this)
+                        );
                     }
                     mediaScannerDialog.doScan();
                 }

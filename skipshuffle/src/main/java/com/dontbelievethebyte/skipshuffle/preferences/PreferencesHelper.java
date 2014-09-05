@@ -171,12 +171,12 @@ public class PreferencesHelper {
     public Integer getUIType()
     {
         if (null == currentUIType) {
-            currentPlaylistPosition = sharedPreferences.getInt(
+            currentUIType = sharedPreferences.getInt(
                     context.getString(R.string.pref_current_ui_type),
                     UIFactory.NEON //Default UI in case anything goes wrong.
             );
         }
-        return currentPlaylistPosition;
+        return currentUIType;
     }
 
     public void setUIType(int UIType)

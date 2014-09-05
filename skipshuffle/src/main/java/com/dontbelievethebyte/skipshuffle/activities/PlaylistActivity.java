@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,6 +60,7 @@ public class PlaylistActivity extends BaseActivity {
 
     @Override
     public void mediaBroadcastReceiverCallback(){
+        Log.d(TAG, "STATE IS : " + mediaPlayerBroadcastReceiver.getPlayerState());
         if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
                 mediaPlayerBroadcastReceiver.getPlayerState())
         ) {

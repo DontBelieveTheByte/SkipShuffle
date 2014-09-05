@@ -2,14 +2,13 @@ package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.dontbelievethebyte.skipshuffle.ui.main.MainUI;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
+import com.dontbelievethebyte.skipshuffle.ui.main.MainUI;
 
 public class MainActivity extends BaseActivity {
 
@@ -20,10 +19,11 @@ public class MainActivity extends BaseActivity {
     {
         super.onCreate(savedInstanceState);
 
-        //Register class specific callback from MediaBroadcastReceiverCallback interface.
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-
         setUI(preferencesHelper.getUIType());
+
+        //Register class specific callbacks.
+        mediaPlayerBroadcastReceiver.registerCallback(this);
+        preferencesHelper.registerCallBack(this);
 
         //Start the mediaPlayer service.
         startService(
@@ -33,10 +33,6 @@ public class MainActivity extends BaseActivity {
                 )
         );
 
-        Log.d(TAG, "RAN SECONDDDDD.");
-
-        preferencesHelper.registerCallBack(this);
-
         //Set up navigation drawer for selecting playlist.
         setUpDrawer();
     }
@@ -45,7 +41,6 @@ public class MainActivity extends BaseActivity {
     protected void onPause(){
         //Give a break to GPU when hidden
         ui.playBtn.clearAnimation();
-//        preferencesHelper.unRegisterPrefsChangedListener();
         super.onPause();
     }
 
@@ -54,6 +49,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         ui.reboot();
         preferencesHelper.registerCallBack(this);
+        mediaPlayerBroadcastReceiver.registerCallback(this);
     }
 
     @Override
@@ -75,7 +71,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void setUI(Integer type) {
-        ui = null;
         ui = UIFactory.createMainUI(this, type);
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -139,13 +134,13 @@ public class MainActivity extends BaseActivity {
                 startActivity(playlistActivity);
             }
         });
+        ui.reboot();
     }
 
     @Override
     public void preferenceChangedCallback(String prefsKey) {
         super.preferenceChangedCallback(prefsKey);
         if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            Log.d(TAG, "UI CHANGE CALLBACK LAUCHED");
             setUI(preferencesHelper.getUIType());
         }
     }
