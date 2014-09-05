@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
@@ -25,6 +26,8 @@ import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import org.json.JSONException;
 
+import java.io.IOException;
+
 public class SkipShuffleMediaPlayer extends Service implements PreferenceChangedCallback {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
@@ -35,6 +38,153 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     private AndroidPlayerWrapper playerWrapper;
     private PreferencesHelper preferencesHelper;
     private DbHandler dbHandler;
+
+    private class AndroidPlayerWrapper implements MediaPlayer.OnPreparedListener,
+                                                  MediaPlayer.OnCompletionListener,
+                                                  MediaPlayer.OnSeekCompleteListener {
+        private int seekPosition = 0;
+        private MediaPlayer mp;
+        private PlaylistInterface playlist;
+
+        private AndroidPlayerWrapper()
+        {
+            mp = new MediaPlayer();
+            mp.setOnCompletionListener(this);
+            mp.setOnPreparedListener(this);
+            mp.setOnSeekCompleteListener(this);
+        }
+
+        @Override
+        public void onPrepared(MediaPlayer mediaPlayer)
+        {
+            if (seekPosition > 0) {
+                mp.seekTo(seekPosition);
+            } else {
+                mp.start();
+            }
+        }
+
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer)
+        {
+            doSkip();
+        }
+
+        @Override
+        public void onSeekComplete(MediaPlayer mediaPlayer)
+        {
+            mp.start();
+            broadcastCurrentState();
+        }
+
+        public void doJump(Integer playlistPosition)
+        {
+            if (null != playlistPosition) {
+                playlist.setPosition(playlistPosition);
+                seekPosition = 0;
+                doPlay();
+            }
+        }
+
+        public void doPlay()
+        {
+            try {
+                if (!mp.isPlaying() && seekPosition > 0) {
+                    loadAudioFile(playlist.getCurrent());
+                    mp.seekTo(seekPosition);
+
+                } else {
+                    loadAudioFile(playlist.getCurrent());
+                }
+            } catch (PlaylistEmptyException e){
+                //Reload the first playlist in case of error.
+                preferencesHelper.setLastPlaylist(1);
+                preferencesHelper.setLastPlaylistPosition(0);
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.playlist_error,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+            broadcastCurrentState();
+        }
+
+        public void doPause()
+        {
+            if (mp.isPlaying()) {
+                mp.pause();
+                seekPosition = mp.getCurrentPosition();
+            }
+            broadcastCurrentState();
+        }
+
+        public void doSkip()
+        {
+            if (seekPosition > 0) {
+                seekPosition = 0;
+            }
+            loadAudioFile(playlist.getNext());
+        }
+
+        public void doPrev()
+        {
+            if (seekPosition > 0) {
+                seekPosition = 0;
+            }
+            loadAudioFile(playlist.getPrev());
+        }
+
+        public void doShuffle()
+        {
+            try {
+                playlist.shuffle();
+                playlist.setPosition(0);
+                seekPosition = 0;
+                loadAudioFile(playlist.getFirst());
+            } catch (PlaylistEmptyException e){
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.shuffle_empty_playlist,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+            doPlay();
+        }
+
+        public boolean isPlaying()
+        {
+            return mp.isPlaying();
+        }
+
+        public void setPlaylist(PlaylistInterface playlist)
+        {
+            this.playlist = playlist;
+            broadcastCurrentState();
+        }
+
+        private void loadAudioFile(Track track)
+        {
+            try {
+                mp.reset();
+                mp.setDataSource(track.getPath());
+                mp.prepare();
+            } catch (IOException e) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        getApplicationContext().getResources().getString(R.string.player_wrapper_song_error) + track.getPath(),
+                        Toast.LENGTH_SHORT
+                ).show();
+                doSkip();
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(
+                        getApplicationContext(),
+                        getApplicationContext().getResources().getString(R.string.player_wrapper_song_error) + track.getPath(),
+                        Toast.LENGTH_SHORT
+                ).show();
+                doSkip();
+            }
+        }
+    }
 
     private class ClientCommandsBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -53,7 +203,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                     playerWrapper.doPause();
                 }
             }
-            broadcastCurrentState();
             setNotification();
             preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
         }
@@ -82,11 +231,10 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
             playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
 
-            playerWrapper = new AndroidPlayerWrapper(getApplicationContext());
+            playerWrapper = new AndroidPlayerWrapper();
 
             playerWrapper.setPlaylist(playlist);
 
-            broadcastCurrentState();
         } catch (JSONException jsonException){
             Toast.makeText(
                     getApplicationContext(),
@@ -113,7 +261,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        //return super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
 
@@ -221,12 +368,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     {
         if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)){
             if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)) {
-                playlist.setPosition(
-                        intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION,
+                playerWrapper.doJump(
+                        intent.getIntExtra(
+                                SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION,
                                 0
                         )
                 );
-                playerWrapper.doPlay();
             } else {
                 if (playerWrapper.isPlaying()) {
                     playerWrapper.doPause();
