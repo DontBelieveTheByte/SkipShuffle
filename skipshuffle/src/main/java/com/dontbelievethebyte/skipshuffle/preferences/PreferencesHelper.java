@@ -35,9 +35,54 @@ public class PreferencesHelper {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public boolean isHapticFeedback()
+    public Long getLastPlaylist()
     {
-        return isHapticFeedback;
+        if (null == currentPlaylist) {
+            currentPlaylist = sharedPreferences.getLong(
+                    context.getString(R.string.pref_current_playlist_id),
+                    0
+            );
+        }
+        return currentPlaylist;
+    }
+
+    public Integer getLastPlaylistPosition()
+    {
+        if (null == currentPlaylistPosition) {
+            currentPlaylistPosition = sharedPreferences.getInt(
+                    context.getString(R.string.pref_current_playlist_position),
+                    0
+            );
+        }
+        return currentPlaylistPosition;
+    }
+
+    public String[] getMediaDirectories()
+    {
+        if (null == directories) {
+            String directoriesString = sharedPreferences.getString(
+                    context.getString(R.string.pref_media_directories),
+                    Environment.getExternalStorageDirectory().getAbsolutePath()
+            );
+            directories = directoriesString.split(context.getString(R.string.pref_media_directories_separator));
+            //Cleanup the last path because it won't split.
+            directories[directories.length-1] = directories[directories.length-1].replace(
+                    context.getString(R.string.pref_media_directories_separator),
+                    ""
+            );
+        }
+        return directories;
+    }
+
+    public Integer getUIType()
+    {
+        if (null == currentUIType) {
+            currentUIType = sharedPreferences.getInt(
+                    context.getString(R.string.pref_current_ui_type),
+                    UIFactory.NEON //Default UI in case anything goes wrong.
+            );
+        }
+        return currentUIType;
     }
 
     public void hapticFeedbackToggle()
@@ -85,108 +130,23 @@ public class PreferencesHelper {
         }
     }
 
-    public void setHapticFeedback(boolean isHapticFeedback)
+    public boolean isHapticFeedback()
     {
-        sharedPreferences.edit()
-                         .putBoolean(
-                                 context.getString(
-                                         R.string.pref_haptic_feedback),
-                                         true
-                         ).apply();
-        this.isHapticFeedback = isHapticFeedback;
+        return isHapticFeedback;
     }
 
-    public String[] getMediaDirectories()
+    public void onPrefsChangedCallback(String prefsKey)
     {
-        if (null == directories) {
-            String directoriesString = sharedPreferences.getString(
-                    context.getString(R.string.pref_media_directories),
-                    Environment.getExternalStorageDirectory().getAbsolutePath()
-            );
-            directories = directoriesString.split(context.getString(R.string.pref_media_directories_separator));
-            //Cleanup the last path because it won't split.
-            directories[directories.length-1] = directories[directories.length-1].replace(
-                    context.getString(R.string.pref_media_directories_separator),
-                    ""
-            );
+        Log.d("REG", "CALLBACK LAUNCHED-------+++++++++++00");
+        for(PreferenceChangedCallback preferenceChangeCallback : preferenceChangeCallbacks) {
+            preferenceChangeCallback.preferenceChangedCallback(prefsKey);
         }
-        return directories;
     }
 
-    public void setMediaDirectories(String[] newDirectories)
+    public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback)
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(String directory : newDirectories){
-            stringBuilder.append(directory).append(context.getString(R.string.pref_media_directories_separator));
-        }
-        sharedPreferences.edit()
-                         .putString(
-                                 context.getString(R.string.pref_media_directories),
-                                 stringBuilder.toString()
-                         ).apply();
-        directories = newDirectories;
-        Log.d(TAG, "NEW DIRS SAVED");
-    }
-
-    public void setLastPlaylist(long lastPlaylistId)
-    {
-        currentPlaylist = lastPlaylistId;
-        sharedPreferences.edit()
-                         .putLong(
-                                 context.getString(R.string.pref_current_playlist_id),
-                                 currentPlaylist
-                         ).apply();
-    }
-
-    public Long getLastPlaylist()
-    {
-        if (null == currentPlaylist) {
-            currentPlaylist = sharedPreferences.getLong(
-                    context.getString(R.string.pref_current_playlist_id),
-                    0
-            );
-        }
-        return currentPlaylist;
-    }
-    public Integer getLastPlaylistPosition()
-    {
-        if (null == currentPlaylistPosition) {
-            currentPlaylistPosition = sharedPreferences.getInt(
-                    context.getString(R.string.pref_current_playlist_position),
-                    0
-            );
-        }
-        return currentPlaylistPosition;
-    }
-    public void setLastPlaylistPosition(int lastPlaylistPosition)
-    {
-        currentPlaylistPosition = lastPlaylistPosition;
-        sharedPreferences.edit()
-                         .putInt(
-                                 context.getString(R.string.pref_current_playlist_position),
-                                 currentPlaylistPosition
-                         ).apply();
-    }
-
-    public Integer getUIType()
-    {
-        if (null == currentUIType) {
-            currentUIType = sharedPreferences.getInt(
-                    context.getString(R.string.pref_current_ui_type),
-                    UIFactory.NEON //Default UI in case anything goes wrong.
-            );
-        }
-        return currentUIType;
-    }
-
-    public void setUIType(int UIType)
-    {
-        currentUIType = UIType;
-        sharedPreferences.edit()
-                         .putInt(
-                                 context.getString(R.string.pref_current_ui_type),
-                                 currentUIType
-                         ).apply();
+        preferenceChangeCallbacks.add(preferenceChangeCallback);
+        Log.d("REG", "CALLBACK PREFS CHANGED REGISTERED+++++++++++");
     }
 
     public void registerPrefsChangedListener()
@@ -204,22 +164,64 @@ public class PreferencesHelper {
         Log.d("REG", "PREFS CHANGED REGISTERED!!!!!!!!!!!!");
     }
 
+    public void setHapticFeedback(boolean isHapticFeedback)
+    {
+        sharedPreferences.edit()
+                .putBoolean(
+                        context.getString(
+                                R.string.pref_haptic_feedback),
+                        true
+                ).apply();
+        this.isHapticFeedback = isHapticFeedback;
+    }
+
+    public void setLastPlaylist(long lastPlaylistId)
+    {
+        currentPlaylist = lastPlaylistId;
+        sharedPreferences.edit()
+                .putLong(
+                        context.getString(R.string.pref_current_playlist_id),
+                        currentPlaylist
+                ).apply();
+    }
+
+    public void setLastPlaylistPosition(int lastPlaylistPosition)
+    {
+        currentPlaylistPosition = lastPlaylistPosition;
+        sharedPreferences.edit()
+                .putInt(
+                        context.getString(R.string.pref_current_playlist_position),
+                        currentPlaylistPosition
+                ).apply();
+    }
+
+    public void setMediaDirectories(String[] newDirectories)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String directory : newDirectories){
+            stringBuilder.append(directory).append(context.getString(R.string.pref_media_directories_separator));
+        }
+        sharedPreferences.edit()
+                .putString(
+                        context.getString(R.string.pref_media_directories),
+                        stringBuilder.toString()
+                ).apply();
+        directories = newDirectories;
+        Log.d(TAG, "NEW DIRS SAVED");
+    }
+
+    public void setUIType(int UIType)
+    {
+        currentUIType = UIType;
+        sharedPreferences.edit()
+                         .putInt(
+                                 context.getString(R.string.pref_current_ui_type),
+                                 currentUIType
+                         ).apply();
+    }
+
     public void unRegisterPrefsChangedListener()
     {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
-    }
-
-    public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback)
-    {
-        preferenceChangeCallbacks.add(preferenceChangeCallback);
-        Log.d("REG", "CALLBACK PREFS CHANGED REGISTERED+++++++++++");
-    }
-
-    public void onPrefsChangedCallback(String prefsKey)
-    {
-        Log.d("REG", "CALLBACK LAUNCHED-------+++++++++++00");
-        for(PreferenceChangedCallback preferenceChangeCallback : preferenceChangeCallbacks) {
-            preferenceChangeCallback.preferenceChangedCallback(prefsKey);
-        }
     }
 }
