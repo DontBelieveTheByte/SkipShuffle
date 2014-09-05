@@ -111,7 +111,6 @@ public class PlaylistAdapter extends BaseAdapter {
 
     private ImageView setImage(View view, int resourceId, Track track, boolean isPlay)
     {
-        Log.d("DRAWABLE STATE", "PLAY DRAWABLE IS : "+ isPlay);
         ImageView iv = (ImageView) view.findViewById(resourceId);
         LayoutParams params = iv.getLayoutParams();
         try {
