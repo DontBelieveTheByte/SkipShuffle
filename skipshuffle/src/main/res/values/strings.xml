@@ -24,7 +24,7 @@
     <string name="haptic_feedback_not_available">Your device doesn\'t support haptic feedback.</string>
     <string name="haptic_feedback_off">Haptic feedback turned off.</string>
     <string name="shuffle_empty_playlist">Cannot shuffle empty playlist.</string>
-
+    <string name="playlist_error">Playlist error.</string>
 
     <!--Main menu-->
     <string name="menu_theme">Theme</string>
