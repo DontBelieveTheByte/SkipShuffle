@@ -137,7 +137,6 @@ public class PreferencesHelper {
 
     public void onPrefsChangedCallback(String prefsKey)
     {
-        Log.d("REG", "CALLBACK LAUNCHED-------+++++++++++00");
         for(PreferenceChangedCallback preferenceChangeCallback : preferenceChangeCallbacks) {
             preferenceChangeCallback.preferenceChangedCallback(prefsKey);
         }
