@@ -85,6 +85,11 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         }
     };
 
+    public PreferencesHelper getPreferencesHelper()
+    {
+        return preferencesHelper;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
