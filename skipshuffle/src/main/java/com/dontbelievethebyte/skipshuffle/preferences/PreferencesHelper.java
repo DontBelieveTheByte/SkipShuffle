@@ -146,7 +146,6 @@ public class PreferencesHelper {
     public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback)
     {
         preferenceChangeCallbacks.add(preferenceChangeCallback);
-        Log.d("REG", "CALLBACK PREFS CHANGED REGISTERED+++++++++++");
     }
 
     public void registerPrefsChangedListener()
@@ -161,7 +160,6 @@ public class PreferencesHelper {
             preferenceChangeCallbacks = new ArrayList<PreferenceChangedCallback>();
         }
         sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-        Log.d("REG", "PREFS CHANGED REGISTERED!!!!!!!!!!!!");
     }
 
     public void setHapticFeedback(boolean isHapticFeedback)
