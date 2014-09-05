@@ -61,6 +61,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 mp.seekTo(seekPosition);
             } else {
                 mp.start();
+                broadcastCurrentState();
             }
         }
 
@@ -106,7 +107,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                         Toast.LENGTH_SHORT
                 ).show();
             }
-            broadcastCurrentState();
         }
 
         public void doPause()
@@ -318,22 +318,19 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
             formattedTitle = buildFormattedTitle(null);
         }
         intent.putExtra(
-                            SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE,
-                            playerWrapper.isPlaying() ?
-                                    SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
-                                    SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE
-                        )
-              .putExtra(
-                            SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID,
-                            playlist.getId()
-                        )
-              .putExtra(
-                            SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE,
-                            formattedTitle
-                       )
-              .putExtra(
-                      SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION,
-                      playlist.getPosition()
+                    SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE,
+                    playerWrapper.isPlaying() ?
+                        SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
+                        SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE
+              ).putExtra(
+                    SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID,
+                    playlist.getId()
+              ).putExtra(
+                    SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE,
+                    formattedTitle
+              ).putExtra(
+                    SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION,
+                    playlist.getPosition()
               );
         sendStickyBroadcast(intent);
     }
