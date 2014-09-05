@@ -306,6 +306,8 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                     new ProgressDialog(BaseActivity.this)
             );
             mediaScannerDialog.doScan();
+        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+            setUI(preferencesHelper.getUIType());
         }
     }
 }
