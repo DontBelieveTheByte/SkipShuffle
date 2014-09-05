@@ -5,6 +5,7 @@ import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 import com.dontbelievethebyte.skipshuffle.ui.UI;
+import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 public abstract class PlaylistUI implements UI {
 
@@ -14,14 +15,63 @@ public abstract class PlaylistUI implements UI {
     public ImageButton playlistShuffleBtn;
 
     protected PlaylistActivity playlistActivity;
+    protected int uiType;
 
-    public PlaylistUI(PlaylistActivity playlistActivity)
+    public PlaylistUI(PlaylistActivity playlistActivity, int uiType)
     {
         this.playlistActivity = playlistActivity;
+        this.uiType = uiType;
     }
 
     @Override
-    public void setSongTitle(String title) {}
+    public void doPlay()
+    {
+        playlistPlayBtn.setImageDrawable(
+                playlistActivity.getResources().getDrawable(
+                        UIFactory.getPlayDrawable(playlistActivity.getPreferencesHelper().getUIType())
+                )
+        );
+    }
+
+    @Override
+    public void doPause()
+    {
+        playlistPlayBtn.setImageDrawable(
+                playlistActivity.getResources().getDrawable(
+                        UIFactory.getPauseDrawable(playlistActivity.getPreferencesHelper().getUIType())
+                )
+        );
+    }
+
+    @Override
+    public void doSkip()
+    {
+
+    }
+
+    @Override
+    public void doPrev()
+    {
+
+    }
+
+    @Override
+    public void doShuffle()
+    {
+
+    }
+
+    @Override
+    public void reboot()
+    {
+
+    }
+
+    @Override
+    public void setSongTitle(String title)
+    {
+
+    }
 
     @Override
     public Typeface getTypeFace()
