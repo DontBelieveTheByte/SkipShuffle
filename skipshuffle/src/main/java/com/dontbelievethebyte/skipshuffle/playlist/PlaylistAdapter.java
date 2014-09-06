@@ -79,7 +79,7 @@ public class PlaylistAdapter extends BaseAdapter {
     {
         ViewHolder viewHolder;
         Track track = playlist.getAtPosition(position);
-        if (convertView == null) {
+        if (null == convertView) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
                     UIFactory.getSinglePlaylistItemLayout(preferencesHelper.getUIType()),
