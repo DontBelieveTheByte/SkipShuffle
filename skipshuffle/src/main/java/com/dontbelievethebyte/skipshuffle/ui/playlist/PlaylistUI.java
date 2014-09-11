@@ -4,10 +4,10 @@ import android.graphics.Typeface;
 import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
-import com.dontbelievethebyte.skipshuffle.ui.UI;
+import com.dontbelievethebyte.skipshuffle.ui.UIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
-public abstract class PlaylistUI implements UI {
+public abstract class PlaylistUI implements UIInterface {
 
     public ImageButton playlistPlayBtn;
     public ImageButton playlistPrevBtn;

@@ -7,7 +7,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
 
 public class NeonMainUI extends MainUI {
@@ -180,19 +179,6 @@ public class NeonMainUI extends MainUI {
                 mainActivity.getResources().getDrawable(R.drawable.neon_play_states)
         );
         playBtn.startAnimation(ltr);
-    }
-
-    @Override
-    public void reboot()
-    {
-        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
-                mainActivity.getMediaPlayerBroadcastReceiver()
-                            .getPlayerState())
-        ) {
-            doPlay();
-        } else {
-            doPause();
-        }
     }
 
     public Typeface getTypeFace()

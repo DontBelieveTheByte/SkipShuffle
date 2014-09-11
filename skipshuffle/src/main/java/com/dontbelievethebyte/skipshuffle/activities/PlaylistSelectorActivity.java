@@ -46,7 +46,8 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
 
         dbHandler = new DbHandler(getApplicationContext());
 
-        loadPlaylist(preferencesHelper.getLastPlaylist());
+        loadType(preferencesHelper.getLastPlaylist());
+        setUpDrawer();
     }
 
     @Override
@@ -72,7 +73,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
         listView.smoothScrollToPositionFromTop(playlist.getPosition(), 0);
     }
 
-    protected void loadPlaylist(long playlistId)
+    protected void loadType(long playlistId)
     {
         try {
             playlist = new RandomPlaylist(
@@ -159,10 +160,10 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     {
         super.preferenceChangedCallback(prefsKey);
         if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
+            loadType(preferencesHelper.getLastPlaylist());
         } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             setUI(preferencesHelper.getUIType());
-            loadPlaylist(preferencesHelper.getLastPlaylist());
+            loadType(preferencesHelper.getLastPlaylist());
         }
     }
 

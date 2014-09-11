@@ -2,7 +2,7 @@ package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.Typeface;
 
-public interface UI {
+public interface UIInterface {
 
     public void doPlay();
 

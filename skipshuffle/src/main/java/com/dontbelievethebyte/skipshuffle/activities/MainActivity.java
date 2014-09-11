@@ -47,23 +47,20 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ui.reboot();
         preferencesHelper.registerCallBack(this);
         mediaPlayerBroadcastReceiver.registerCallback(this);
+        ui.reboot();
     }
 
     @Override
     public void mediaBroadcastReceiverCallback() {
         String state = mediaPlayerBroadcastReceiver.getPlayerState();
+        ui.reboot();
         if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(state)) {
             ui.doPlay();
         } else {
             ui.doPause();
-            if (mediaPlayerBroadcastReceiver.getCurrentSongTitle().equals(getResources().getString(R.string.meta_data_unknown_current_song_title))) {
-                ui.playBtn.clearAnimation();
-            }
         }
-        ui.setSongTitle(mediaPlayerBroadcastReceiver.getCurrentSongTitle());
     }
 
     @Override
