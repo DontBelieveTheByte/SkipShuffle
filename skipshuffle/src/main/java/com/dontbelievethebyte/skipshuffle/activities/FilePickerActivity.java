@@ -2,8 +2,8 @@ package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,12 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.util.MimeTypes;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,52 +32,13 @@ import java.util.List;
 
 public class FilePickerActivity extends ListActivity {
 
-	/**
-	 * The file path
-	 */
-	public final static String EXTRA_FILE_PATH = "file_path";
-
-	/**
-	 * Sets whether hidden files should be visible in the list or not
-	 */
-	public final static String EXTRA_SHOW_HIDDEN_FILES = "show_hidden_files";
-	/**
-	 * Sets whether only files are to be picked.
-	 */
-	public final static String EXTRA_SELECT_FILES_ONLY = "only_files";
-	/**
-	 * Sets whether multiple items can be selected
-	 */
-	public final static String EXTRA_SELECT_MULTIPLE = "select_multiple";
-	/**
-	 * Sets whether only directories are to be picked
-	 */
-	public final static String EXTRA_SELECT_DIRECTORIES_ONLY = "only_directories";
-
-
-	/**
-	 * The allowed file extensions in an ArrayList of Strings
-	 */
-	public final static String EXTRA_ACCEPTED_FILE_EXTENSIONS = "accepted_file_extensions";
-
-	/**
-	 * The initial directory which will be used if no directory has been sent with the intent
-	 */
-	private final static String DEFAULT_INITIAL_DIRECTORY = "/";
-
 	protected File mDirectory;
 	protected ArrayList<File> mFiles;
-	protected boolean singleMode=true;
-	/**
-	 * pickType=0 - Picks files and directories
-	 * 		   =1 - Picks only files
-	 * 		   =2 - Pick only directories
-	 */
-	protected int pickType  = 0;
+	protected boolean singleMode= false;
+
 	protected FilePickerListAdapter mAdapter;
 	protected boolean mShowHiddenFiles = false;
-	protected String[] acceptedFileExtensions;
-    protected PreferencesHelper preferencesHelper;
+    private PreferencesHelper preferencesHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -99,8 +58,8 @@ public class FilePickerActivity extends ListActivity {
 		getListView().setEmptyView(emptyView);
 
 
-		// Set initial directory
-		mDirectory = new File(DEFAULT_INITIAL_DIRECTORY);
+		// Point to external storage as root.
+        mDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 
 		// Initialize the ArrayList
 		mFiles = new ArrayList<File>();
@@ -108,30 +67,6 @@ public class FilePickerActivity extends ListActivity {
 		// Set the ListAdapter
 		mAdapter = new FilePickerListAdapter(this, mFiles);
 		setListAdapter(mAdapter);
-
-		// Initialize the extensions array to allow any file extensions
-		acceptedFileExtensions = new String[] {};
-
-		// Get intent extras
-		if (getIntent().hasExtra(EXTRA_FILE_PATH)) {
-			mDirectory = new File(getIntent().getStringExtra(EXTRA_FILE_PATH));
-		}
-		mShowHiddenFiles = getIntent().getBooleanExtra(EXTRA_SHOW_HIDDEN_FILES, false);
-
-		if (getIntent().hasExtra(EXTRA_ACCEPTED_FILE_EXTENSIONS)) {
-			ArrayList<String> collection = getIntent().getStringArrayListExtra(EXTRA_ACCEPTED_FILE_EXTENSIONS);
-			acceptedFileExtensions = (String[]) collection.toArray(new String[collection.size()]);
-		}
-
-
-		singleMode = !getIntent().getBooleanExtra(EXTRA_SELECT_MULTIPLE, false);
-
-		if (getIntent().getBooleanExtra(EXTRA_SELECT_FILES_ONLY, false))
-			pickType=1;
-
-
-		if (getIntent().getBooleanExtra(EXTRA_SELECT_DIRECTORIES_ONLY, false))
-			pickType=2;
 
 		Button ok = (Button)findViewById(R.id.ok);
 		ok.setOnClickListener( new OnClickListener() {
@@ -146,33 +81,32 @@ public class FilePickerActivity extends ListActivity {
 		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
 				File newFile = (File)parent.getItemAtPosition(position);
-
-				if (pickType==0 || (pickType==1 && newFile.isFile()) || (pickType==2 && newFile.isDirectory())) {
+				if (newFile.isDirectory()) {
 					mAdapter.toggleCheckBox(newFile);
 					if (singleMode) {
 						returnResults();
 					} else {
                         mAdapter.notifyDataSetChanged();
                     }
-				} else if (pickType==1 && newFile.isDirectory()) {
-					mDirectory = newFile;
-					refreshFilesList();
 				}
 				return true;
 			}
 		});
-	}
+        Toast.makeText(getApplicationContext(), R.string.media_scan_sel_target_directories, Toast.LENGTH_LONG).show();
+    }
 
 	private void returnResults()
     {
-		if (mAdapter.getFiles().size()<1) {
-			Toast.makeText(this, "Nothing Selected",Toast.LENGTH_SHORT).show();
-			return;
-		}
-		Intent extra = new Intent();
-		extra.putExtra(EXTRA_FILE_PATH, mAdapter.getFiles());
-		setResult(RESULT_OK, extra);
-		finish();
+		if (mAdapter.getFiles().length < 1) {
+			Toast.makeText(
+                    this,
+                    R.string.pick_media_nothing_selected,
+                    Toast.LENGTH_SHORT
+            ).show();
+		} else {
+            preferencesHelper.setMediaDirectories(mAdapter.getFiles());
+            finish();
+        }
 	}
 
 	@Override
@@ -193,17 +127,13 @@ public class FilePickerActivity extends ListActivity {
 		mAdapter.clearBoxes();
 		// Set the extension file filter
 		File[] files;
-		if (acceptedFileExtensions!=null && acceptedFileExtensions.length>0) {
-			ExtensionFilenameFilter filter = new ExtensionFilenameFilter(acceptedFileExtensions);
-			files =mDirectory.listFiles(filter);
-		} else {
-			files =mDirectory.listFiles();
-		}
+
 		// Get the files in the directory
+        files = mDirectory.listFiles();
 
 		if (files != null && files.length > 0) {
 			for(File f : files) {
-				if (f.isHidden() && !mShowHiddenFiles|| f.isFile() && pickType==2) {
+				if (f.isHidden() && !mShowHiddenFiles|| f.isFile()) {
 					// Don't add the file
 					continue;
 				}
@@ -229,26 +159,11 @@ public class FilePickerActivity extends ListActivity {
 		finish();
 	}
 
-
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id)
     {
-		File newFile = (File)l.getItemAtPosition(position);
-
-		if (newFile.isFile()) {
-
-			if (pickType==0 || pickType==1) {
-				mAdapter.toggleCheckBox(newFile);
-				if (singleMode) {
-					returnResults();
-				}
-			}
-		} else {
-			mDirectory = newFile;
-			// Update the files list
-			refreshFilesList();
-		}
-
+        mDirectory = (File)l.getItemAtPosition(position);
+        refreshFilesList();
 		super.onListItemClick(l, v, position, id);
 	}
 
@@ -270,9 +185,16 @@ public class FilePickerActivity extends ListActivity {
 			checkedObjects = new ArrayList<File>();
 		}
 
-		public ArrayList<File> getFiles()
+		public String[] getFiles()
 		{
-			return checkedObjects;
+            String[] mediaDirectoriesToScan = new String[checkedObjects.size()];
+            int i = 0;
+            //Save to a class instance array in case the activity needs to restart.
+            for (File directory : checkedObjects){
+                mediaDirectoriesToScan[i] = directory.getAbsolutePath();
+                i++;
+            }
+            return mediaDirectoriesToScan;
 		}
 
 		public void toggleCheckBox(File file)
@@ -324,7 +246,7 @@ public class FilePickerActivity extends ListActivity {
 			}
 
 			else {
-				if ((object.isFile() && pickType==2)||(object.isDirectory() && pickType==1)) {
+				if (object.isFile()) {
                     checkBox.setVisibility(View.GONE);
                 } else {
                     checkBox.setVisibility(View.VISIBLE);
@@ -337,33 +259,17 @@ public class FilePickerActivity extends ListActivity {
             } else {
                 checkBox.setChecked(false);
             }
-			textView.setText(object.getName()); //@TODO Check ambiguous condition
+			textView.setText(object.getName());
 
-			if (object.isFile()) {
-				// Show the file icon
-				imageView.setImageResource(getFileIcon(object.getName()));
-			} else {
-				// Show the folder icon
-				imageView.setImageResource(R.drawable.folder);
-			}
-
+    		// Show the folder icon
+			imageView.setImageResource(
+                    UIFactory.getFolderDrawable(preferencesHelper.getUIType()
+                    )
+            );
 			return row;
 		}
 
-		private int getFileIcon(String filename)
-        {
-			if (filename.matches(MimeTypes._RegexFileTypeAudios))
-                return R.drawable.file_audio;
-            if (filename.matches(MimeTypes._RegexFileTypeVideos))
-                return R.drawable.file_video;
-            if (filename.matches(MimeTypes._RegexFileTypeImages))
-                return R.drawable.file_image;
-            if (filename.matches(MimeTypes._RegexFileTypeCompressed))
-                return R.drawable.file_compressed;
-            if (filename.matches(MimeTypes._RegexFileTypePlainTexts))
-                return R.drawable.file_plain_text;
-            return R.drawable.file;
-		}
+
 	}
 
 	private class FileComparator implements Comparator<File> {
@@ -384,34 +290,4 @@ public class FilePickerActivity extends ListActivity {
 		}
 	}
 
-	private class ExtensionFilenameFilter implements FilenameFilter {
-		private String[] mExtensions;
-
-		public ExtensionFilenameFilter(String[] extensions)
-        {
-			super();
-			mExtensions = extensions;
-		}
-
-		public boolean accept(File dir, String filename)
-        {
-			if (new File(dir, filename).isDirectory()) {
-				// Accept all directory names
-				return true;
-			}
-
-			if (mExtensions != null && mExtensions.length > 0) {
-				for(int i = 0; i < mExtensions.length; i++) {
-					if (filename.toLowerCase().endsWith(mExtensions[i].toLowerCase())) {
-						// The filename ends with the extension
-						return true;
-					}
-				}
-				// The filename did not match any of the extensions
-				return false;
-			}
-			// No extensions has been set. Accept all file extensions.
-			return true;
-		}
-	}
 }
