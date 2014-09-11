@@ -1,8 +1,8 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
+import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistSelectorActivity;
 import com.dontbelievethebyte.skipshuffle.ui.main.MainUI;
 import com.dontbelievethebyte.skipshuffle.ui.main.MonoDarkMainUI;
@@ -145,6 +145,20 @@ public class UIFactory {
                 return R.layout.neon_file_picker_list_item;
             default:
                 return R.layout.neon_file_picker_list_item;
+        }
+    }
+
+    public static int getFolderDrawable(Integer uiType)
+    {
+        switch (uiType){
+            case MONO_LIGHT :
+                return R.drawable.neon_folder;
+            case MONO_DARK :
+                return R.drawable.neon_folder;
+            case NEON :
+                return R.drawable.neon_folder;
+            default:
+                return R.drawable.neon_folder;
         }
     }
 }
