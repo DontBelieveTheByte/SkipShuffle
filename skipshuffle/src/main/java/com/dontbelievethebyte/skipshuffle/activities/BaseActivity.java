@@ -283,6 +283,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                         drawerMenuTitles
                 )
         );
+        drawerList.setOnTouchListener(onTouchDownHapticFeedback);
         drawerList.setOnItemClickListener(
                 new NavDrawerClickListener(
                         this,
