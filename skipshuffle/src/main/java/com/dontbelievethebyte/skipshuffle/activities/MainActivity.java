@@ -54,13 +54,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void mediaBroadcastReceiverCallback() {
-        String state = mediaPlayerBroadcastReceiver.getPlayerState();
         ui.reboot();
-        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(state)) {
-            ui.doPlay();
-        } else {
-            ui.doPause();
-        }
     }
 
     @Override
