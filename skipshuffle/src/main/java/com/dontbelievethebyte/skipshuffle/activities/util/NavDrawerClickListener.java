@@ -7,7 +7,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistSelectorActivity;
 
@@ -61,7 +60,6 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
                 );
         }
         drawer.closeDrawer(Gravity.START);
-        Toast.makeText(context, "CLICKED DRAWER ITEM : " + position, Toast.LENGTH_SHORT).show();
         context.startActivity(intent);
     }
 }
