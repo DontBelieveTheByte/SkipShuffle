@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
@@ -20,10 +19,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setUI(preferencesHelper.getUIType());
-
-        //Register class specific callbacks.
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-        preferencesHelper.registerCallBack(this);
 
         //Start the mediaPlayer service.
         startService(
@@ -47,6 +42,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        //Register class specific callbacks.
         preferencesHelper.registerCallBack(this);
         mediaPlayerBroadcastReceiver.registerCallback(this);
         ui.reboot();
@@ -125,11 +122,4 @@ public class MainActivity extends BaseActivity {
         ui.reboot();
     }
 
-    @Override
-    public void preferenceChangedCallback(String prefsKey) {
-        super.preferenceChangedCallback(prefsKey);
-        if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            setUI(preferencesHelper.getUIType());
-        }
-    }
 }

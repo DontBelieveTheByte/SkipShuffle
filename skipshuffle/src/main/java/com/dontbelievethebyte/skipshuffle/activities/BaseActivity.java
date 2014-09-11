@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -22,7 +21,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.util.MediaScannerDialog;
@@ -34,13 +32,9 @@ import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
-import java.io.File;
-import java.util.List;
-
 public abstract class BaseActivity extends Activity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
 
     protected static final String TAG = "SkipShuffle";
-    protected static int REQUEST_PICK_FILE = 777;
     protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
     protected MediaScannerDialog mediaScannerDialog;
     protected BroadcastReceiver mediaScannerReceiver;
@@ -101,10 +95,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
 
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
-        registerReceiver(
-                mediaPlayerBroadcastReceiver,
-                new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE)
-        );
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -121,29 +111,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
             menuInflater.inflate(R.menu.main_no_vibrator, menu);
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (resultCode == RESULT_OK && requestCode == REQUEST_PICK_FILE) {
-            if (data.hasExtra(FilePickerActivity.EXTRA_FILE_PATH)) {
-                // Get the file path
-                List<File> filePickerActivityResult = (List<File>) data.getSerializableExtra(FilePickerActivity.EXTRA_FILE_PATH);
-                if (!filePickerActivityResult.isEmpty()) {
-                    //Check this shit.
-                    String[] mediaDirectoriesToScan = new String[filePickerActivityResult.size()];
-                    int i = 0;
-                    //Save to a class instance array in case the activity needs to restart.
-                    for (File directory : filePickerActivityResult){
-                        mediaDirectoriesToScan[i] = directory.getAbsolutePath();
-                        i++;
-                    }
-                    Log.d(TAG, "DIR : " + mediaDirectoriesToScan[0]);
-                    preferencesHelper.setMediaDirectories(mediaDirectoriesToScan);
-                }
-            }
-        }
     }
 
     @Override
@@ -281,15 +248,13 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected void pickMediaDirectories()
     {
         Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
-        intent.putExtra(FilePickerActivity.EXTRA_SELECT_MULTIPLE, true);
-        intent.putExtra(FilePickerActivity.EXTRA_SELECT_DIRECTORIES_ONLY, true);
-        intent.putExtra(FilePickerActivity.EXTRA_FILE_PATH, Environment.getExternalStorageDirectory().getAbsolutePath());
-        BaseActivity.this.startActivityForResult(intent, REQUEST_PICK_FILE);
-        Toast.makeText(getApplicationContext(), R.string.media_scan_sel_target_directories, Toast.LENGTH_LONG).show();
+        BaseActivity.this.startActivity(intent);
     }
 
     public void preferenceChangedCallback(String prefsKey)
     {
+        Log.d(TAG, "KEY CHANGED : " + prefsKey);
+
         if (prefsKey.equals(getString(R.string.pref_media_directories))) {
             Log.d(TAG, "PREF DIRECTORY CHANGED!!@!#!!#%%%$$$");
             mediaScannerDialog = new MediaScannerDialog(
@@ -297,6 +262,8 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                     new ProgressDialog(BaseActivity.this)
             );
             mediaScannerDialog.doScan();
+        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+            setUI(preferencesHelper.getUIType());
         }
     }
 }

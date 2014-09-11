@@ -154,8 +154,8 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
         super.preferenceChangedCallback(prefsKey);
         if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
             loadPlaylist(preferencesHelper.getLastPlaylist());
-        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            setUI(preferencesHelper.getUIType());
+        }
+        else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             loadPlaylist(preferencesHelper.getLastPlaylist());
         }
     }
