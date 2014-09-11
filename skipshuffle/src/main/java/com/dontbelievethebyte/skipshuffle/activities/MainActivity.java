@@ -58,12 +58,6 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        ui.reboot();
-    }
-
-    @Override
     protected void setUI(Integer type) {
         ui = UIFactory.createMainUI(this, type);
         //Register haptic feedback for all buttons.
