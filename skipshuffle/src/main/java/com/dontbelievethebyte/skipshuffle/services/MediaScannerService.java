@@ -23,13 +23,9 @@ public class MediaScannerService extends IntentService {
     private static final String TAG = "SkipShuffleMediaScan";
 
     private AudioFileTypeValidator audioFileTypeValidator = new AudioFileTypeValidator();
-
     private DbHandler dbHandler;
-
     private RandomPlaylist playlist;
-
     private MediaMetadataRetriever mediaMetadataRetriever;
-
     private PreferencesHelper preferencesHelper;
 
     public MediaScannerService()

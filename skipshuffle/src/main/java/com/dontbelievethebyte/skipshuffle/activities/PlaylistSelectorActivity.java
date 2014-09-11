@@ -10,18 +10,24 @@ import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.activities.adapters.PlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
-import com.dontbelievethebyte.skipshuffle.ui.playlist.PlaylistUI;
+import com.dontbelievethebyte.skipshuffle.ui.playlistselector.PlaylistSelectorUI;
 
 import org.json.JSONException;
 
 public class PlaylistSelectorActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-    protected PlaylistUI ui;
 
+    public static String TYPE = "type";
+    public static final int SONGS = 0;
+    public static final int ARTISTS = 1;
+    public static final int ALBUMS = 2;
+    public static final int GENRES = 3;
+
+    private PlaylistSelectorUI ui;
     private PlaylistAdapter playlistAdapter;
     private PlaylistInterface playlist;
     private DbHandler dbHandler;
@@ -100,52 +106,52 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     @Override
     protected void setUI(Integer type)
     {
-//        ui = UIFactory.createPlaylistUI(this, type);
-//        ui.playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-//                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-//                        null
-//                );
-//            }
-//        });
-//
-//        ui.playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-//                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
-//                        null
-//                );
-//            }
-//        });
-//
-//        ui.playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-//                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
-//                        null
-//                );
-//            }
-//        });
-//
-//        ui.playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-//                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
-//                        null
-//                );
-//            }
-//        });
-//
-//        //Register haptic feedback for all buttons.
-//        ui.playlistPlayBtn.setOnTouchListener(onTouchDownHapticFeedback);
-//        ui.playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
-//        ui.playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
-//        ui.playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui = UIFactory.createPlaylistSelectorUI(this, type);
+        ui.playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                        null
+                );
+            }
+        });
+
+        ui.playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
+                        null
+                );
+            }
+        });
+
+        ui.playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
+                        null
+                );
+            }
+        });
+
+        ui.playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
+                        null
+                );
+            }
+        });
+
+        //Register haptic feedback for all buttons.
+        ui.playlistPlayBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
     }
 
     @Override

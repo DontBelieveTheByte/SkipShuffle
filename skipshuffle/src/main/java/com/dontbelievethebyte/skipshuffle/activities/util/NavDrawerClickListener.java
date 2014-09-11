@@ -1,32 +1,67 @@
 package com.dontbelievethebyte.skipshuffle.activities.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.dontbelievethebyte.skipshuffle.activities.PlaylistSelectorActivity;
+
 public class NavDrawerClickListener implements ListView.OnItemClickListener {
 
-    private static final int DRAWER_SONGS = 0;
-    private static final int DRAWER_ARTISTS = 1;
-    private static final int DRAWER_ALBUMS = 2;
-    private static final int DRAWER_GENRES = 3;
     private Context context;
+    private DrawerLayout drawer;
 
-    public NavDrawerClickListener(Context context){
+    public NavDrawerClickListener(Context context, DrawerLayout drawer)
+    {
         this.context = context;
+        this.drawer = drawer;
     }
 
     @Override
-    public void onItemClick(AdapterView parent, View view, int position, long id) {
+    public void onItemClick(AdapterView parent, View view, int position, long id)
+    {
+        Intent intent = new Intent(
+                context,
+                PlaylistSelectorActivity.class
+        );
         switch (position) {
-            case DRAWER_SONGS:
-            case DRAWER_ARTISTS:
-            case DRAWER_ALBUMS:
-            case DRAWER_GENRES:
+            case PlaylistSelectorActivity.SONGS:
+                intent.putExtra(
+                        PlaylistSelectorActivity.TYPE,
+                        PlaylistSelectorActivity.SONGS
+                );
+                break;
+            case PlaylistSelectorActivity.ARTISTS:
+                intent.putExtra(
+                        PlaylistSelectorActivity.TYPE,
+                        PlaylistSelectorActivity.ARTISTS
+                );
+                break;
+            case PlaylistSelectorActivity.ALBUMS:
+                intent.putExtra(
+                        PlaylistSelectorActivity.TYPE,
+                        PlaylistSelectorActivity.ALBUMS
+                );
+                break;
+            case PlaylistSelectorActivity.GENRES:
+                intent.putExtra(
+                        PlaylistSelectorActivity.TYPE,
+                        PlaylistSelectorActivity.GENRES
+                );
+                break;
             default:
-            Toast.makeText(context, "CLICKED DRAWER ITEM : " + position, Toast.LENGTH_SHORT).show();
+                intent.putExtra(
+                        PlaylistSelectorActivity.TYPE,
+                        PlaylistSelectorActivity.SONGS
+                );
         }
+        drawer.closeDrawer(Gravity.START);
+        Toast.makeText(context, "CLICKED DRAWER ITEM : " + position, Toast.LENGTH_SHORT).show();
+        context.startActivity(intent);
     }
 }

@@ -283,7 +283,12 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                         drawerMenuTitles
                 )
         );
-        drawerList.setOnItemClickListener(new NavDrawerClickListener(this));
+        drawerList.setOnItemClickListener(
+                new NavDrawerClickListener(
+                        this,
+                        drawerLayout
+                )
+        );
     }
 
     protected void pickMediaDirectories()

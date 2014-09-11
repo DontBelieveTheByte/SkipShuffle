@@ -12,8 +12,10 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class DbHandler extends SQLiteOpenHelper {
 
@@ -25,7 +27,7 @@ public class DbHandler extends SQLiteOpenHelper {
     private static final String TABLE_PLAYLIST = "playlist";
     private static final String TABLE_ARTISTS = "artists";
     private static final String TABLE_ALBUMS = "album";
-    private static final String TABLE_GENRE = "genre";
+    private static final String TABLE_GENRES = "genre";
 
 
     public static final String COLUMN_ID = "_id";
@@ -37,7 +39,8 @@ public class DbHandler extends SQLiteOpenHelper {
     public static final String COLUMN_METADATA_ARTIST_ID = "artist_id";
     public static final String COLUMN_METADATA_TITLE = "title";
     public static final String COLUMN_METADATA_GENRE = "genre";
-    public static final String COLUMN_METADATA_GENRE_ID = "genre";
+    public static final String COLUMN_METADATA_GENRE_ID = "genre_id";
+    public static final String COLUMN_PLAYLIST_ID = "playlist_id";
 
 
     public DbHandler(Context context)
@@ -73,7 +76,7 @@ public class DbHandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
 
         String CREATE_GENRES_TABLE = "CREATE TABLE " +
-                TABLE_GENRE + "(" +
+                TABLE_GENRES + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_PATH + " TEXT," +
                 COLUMN_METADATA_TITLE + " TEXT," +
@@ -105,7 +108,7 @@ public class DbHandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_TRACKS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ARTISTS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ALBUMS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_GENRE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_GENRES);
         onCreate(sqLiteDatabase);
     }
 
@@ -137,6 +140,8 @@ public class DbHandler extends SQLiteOpenHelper {
                 track.getGenre()
         );
 
+
+
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
 
         Cursor cursor = sqLiteDatabase.query(
@@ -162,6 +167,9 @@ public class DbHandler extends SQLiteOpenHelper {
                               // instance Track object if it's a newly inserted track in order to
                               // build a playlist.
         sqLiteDatabase.close();
+        addArtist(track.getArtist());
+        addGenre(track.getGenre());
+        addAlbum(track.getAlbum());
     }
 
     public long addPlaylist(PlaylistInterface playlistInterface)
@@ -272,6 +280,133 @@ public class DbHandler extends SQLiteOpenHelper {
                 null
         );
         sqLiteDatabase.close();
+    }
+
+    protected void addGenre(String genre)
+    {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_METADATA_GENRE, genre);
+
+        sqLiteDatabase.insertWithOnConflict(
+                TABLE_GENRES,
+                null,
+                contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE
+        );
+        sqLiteDatabase.close();
+    }
+
+    protected void addArtist(String artist)
+    {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_METADATA_ARTIST, artist);
+
+        sqLiteDatabase.insertWithOnConflict(
+                TABLE_GENRES,
+                null,
+                contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE
+        );
+        sqLiteDatabase.close();
+    }
+
+    protected void addAlbum(String album)
+    {
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_METADATA_ALBUM, album);
+
+        sqLiteDatabase.insertWithOnConflict(
+                TABLE_GENRES,
+                null,
+                contentValues,
+                SQLiteDatabase.CONFLICT_IGNORE
+        );
+        sqLiteDatabase.close();
+    }
+
+    public TreeMap<String, Long> getGenres()
+    {
+        TreeMap<String, Long> genres= new TreeMap<String, Long>();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                TABLE_GENRES,
+                new String[]{COLUMN_METADATA_GENRE, COLUMN_PLAYLIST_ID},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            genres.put(
+                    cursor.getString(0),
+                    cursor.getLong(1)
+            );
+        }
+        sqLiteDatabase.close();
+        return genres;
+    }
+
+    public TreeMap<String, Long> getAlbums()
+    {
+        TreeMap<String, Long> albums = new TreeMap<String, Long>();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                TABLE_ALBUMS,
+                new String[]{COLUMN_METADATA_ALBUM, COLUMN_PLAYLIST_ID},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            albums.put(
+                    cursor.getString(0),
+                    cursor.getLong(1)
+            );
+        }
+        sqLiteDatabase.close();
+        return albums;
+    }
+
+    public TreeMap<String, Long> getArtists()
+    {
+        TreeMap<String, Long> genres= new TreeMap<String, Long>();
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(
+                TABLE_GENRES,
+                new String[]{COLUMN_METADATA_GENRE, COLUMN_PLAYLIST_ID},
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            genres.put(
+                    cursor.getString(0),
+                    cursor.getLong(1)
+            );
+        }
+        sqLiteDatabase.close();
+        return genres;
+    }
+
+    public void currate()
+    {
+        //Clean artists.
+        //Clean genres.
+        //Clean albums.
     }
 
     public void savePlaylist(Long playlistId, List<Long> trackIndexes)

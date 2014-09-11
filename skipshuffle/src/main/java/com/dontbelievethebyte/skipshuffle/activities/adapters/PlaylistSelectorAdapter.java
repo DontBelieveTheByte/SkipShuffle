@@ -1,7 +1,6 @@
-package com.dontbelievethebyte.skipshuffle.playlist;
+package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.playlist.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
-public class PlaylistAdapter extends BaseAdapter {
+public class PlaylistSelectorAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         public TextView title;
@@ -31,22 +33,10 @@ public class PlaylistAdapter extends BaseAdapter {
     private PreferencesHelper preferencesHelper;
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
-    private class TrackFetchTask extends AsyncTask<PlaylistInterface, Integer, Track> {
-        @Override
-        protected Track doInBackground(PlaylistInterface... playlistInterfaces) {
-            try {
-                return playlist.getCurrent();
-            } catch (PlaylistEmptyException e){
-                Log.d("TAG", e.getMessage());
-                return null;
-            }
-        }
-    }
-
-    public PlaylistAdapter(Context context,
-                           PreferencesHelper preferencesHelper,
-                           MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
-                           PlaylistInterface playlist)
+    public PlaylistSelectorAdapter(Context context,
+                                   PreferencesHelper preferencesHelper,
+                                   MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
+                                   PlaylistInterface playlist)
     {
         this.context = context;
         this.playlist = playlist;
@@ -64,7 +54,6 @@ public class PlaylistAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position)
     {
-//        new TrackFetchTask().execute(playlist);
         return playlist.getAtPosition(position);
     }
 
