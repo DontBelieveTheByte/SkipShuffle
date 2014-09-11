@@ -59,6 +59,9 @@ public class MainActivity extends BaseActivity {
             ui.doPlay();
         } else {
             ui.doPause();
+            if (mediaPlayerBroadcastReceiver.getCurrentSongTitle().equals(getResources().getString(R.string.meta_data_unknown_current_song_title))) {
+                ui.playBtn.clearAnimation();
+            }
         }
         ui.setSongTitle(mediaPlayerBroadcastReceiver.getCurrentSongTitle());
     }
