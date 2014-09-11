@@ -147,14 +147,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     }
 
     @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        //@TODO CHECK FROM SERVICE IF UI STILL EXISTS.
-        //stopService(new Intent(getApplicationContext(), SkipShuffleMediaPlayer.class));
-    }
-
-    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
