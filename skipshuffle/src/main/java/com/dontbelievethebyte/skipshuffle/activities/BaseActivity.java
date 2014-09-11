@@ -175,12 +175,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     }
 
     @Override
-    protected void onStop()
-    {
-        super.onStop();
-    }
-
-    @Override
     protected void onResume()
     {
         super.onResume();
