@@ -20,8 +20,10 @@
             android:name=".activities.FilePickerActivity" >
         </activity>
         <activity
-            android:name=".activities.PlaylistActivity"
-            android:label="@string/title_activity_playlist" >
+            android:name=".activities.PlaylistActivity">
+        </activity>
+        <activity
+            android:name=".activities.PlaylistSelectorActivity">
         </activity>
 
         <service android:name=".services.SkipShuffleMediaPlayer" />
