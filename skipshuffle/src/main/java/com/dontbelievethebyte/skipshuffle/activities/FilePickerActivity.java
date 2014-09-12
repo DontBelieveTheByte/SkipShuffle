@@ -1,11 +1,9 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,8 +16,6 @@ import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
-import com.dontbelievethebyte.skipshuffle.activities.util.MediaScannerDialog;
-import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 
@@ -28,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FilePickerActivity extends ListActivity implements PreferenceChangedCallback{
+public class FilePickerActivity extends ListActivity {
 
 	protected File mDirectory;
 	protected ArrayList<File> mFiles;
@@ -40,7 +36,6 @@ public class FilePickerActivity extends ListActivity implements PreferenceChange
     private static final String TAG = "SkipShuffleFilePicker";
     private FilePickerUI filePickerUI;
     private PreferencesHelper preferencesHelper;
-    private MediaScannerDialog mediaScannerDialog;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -164,18 +159,6 @@ public class FilePickerActivity extends ListActivity implements PreferenceChange
 		super.onListItemClick(l, v, position, id);
 	}
 
-    public void preferenceChangedCallback(String prefsKey)
-    {
-        if (prefsKey.equals(getString(R.string.pref_media_directories))) {
-            Log.d(TAG, "PREF DIRECTORY CHANGED!!@!#!!#%%%$$$");
-            mediaScannerDialog = new MediaScannerDialog(
-                    this,
-                    new ProgressDialog(FilePickerActivity.this)
-            );
-            mediaScannerDialog.doScan();
-        }
-    }
-
 	private class FileComparator implements Comparator<File> {
 		public int compare(File f1, File f2) {
 			if (f1 == f2) {
@@ -202,9 +185,10 @@ public class FilePickerActivity extends ListActivity implements PreferenceChange
                     R.string.pick_media_nothing_selected,
                     Toast.LENGTH_SHORT
             ).show();
+            setResult(RESULT_CANCELED);
         } else {
-            preferencesHelper.setMediaDirectories(mAdapter.getFiles());
-            finish();
+            setResult(RESULT_OK);
         }
+        finish();
     }
 }

@@ -6,11 +6,10 @@ import android.media.MediaMetadataRetriever;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
-import com.dontbelievethebyte.skipshuffle.database.DbHandler;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 
 import org.json.JSONException;
 
@@ -83,19 +82,19 @@ public class MediaScannerService extends IntentService {
         } else {
             for (int j = 0; j < validFiles.size();j++){
                 broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1));
-                Track track = new Track();
-                track.setPath(validFiles.get(j));
-                mediaMetadataRetriever.setDataSource(track.getPath());
-                track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-                track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
-                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
-                dbHandler.addTrack(track);
-                playlist.addTrack(track);
+//                Track track = new Track();
+//                track.setPath(validFiles.get(j));
+//                mediaMetadataRetriever.setDataSource(track.getPath());
+//                track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+//                track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+//                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+//                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
+//                dbHandler.addTrack(track);
+//                playlist.addTrack(track);
             }
-            playlist.save();
-            preferencesHelper.setLastPlaylist(1L);
-            preferencesHelper.setLastPlaylistPosition(0);
+//            playlist.save();
+//            preferencesHelper.setLastPlaylist(1L);
+//            preferencesHelper.setLastPlaylistPosition(0);
         }
     }
 

@@ -43,6 +43,8 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected ListView drawerList;
     protected MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
+    private static final int FILE_PICKER_REQUEST_CODE = 9002;
+
     abstract protected void setUI(Integer type);
 
     public MediaPlayerBroadcastReceiver getMediaPlayerBroadcastReceiver()
@@ -71,6 +73,18 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     public PreferencesHelper getPreferencesHelper()
     {
         return preferencesHelper;
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+            mediaScannerDialog = new MediaScannerDialog(
+                    this,
+                    new ProgressDialog(BaseActivity.this)
+            );
+            mediaScannerDialog.doScan();
+        }
     }
 
     @Override
@@ -237,19 +251,12 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected void pickMediaDirectories()
     {
         Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
-        BaseActivity.this.startActivity(intent);
+        BaseActivity.this.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
     }
 
     public void preferenceChangedCallback(String prefsKey)
     {
-        if (prefsKey.equals(getString(R.string.pref_media_directories))) {
-            Log.d(TAG, "PREF DIRECTORY CHANGED!!@!#!!#%%%$$$");
-            mediaScannerDialog = new MediaScannerDialog(
-                    this,
-                    new ProgressDialog(BaseActivity.this)
-            );
-            mediaScannerDialog.doScan();
-        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+        if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             setUI(preferencesHelper.getUIType());
         }
     }
