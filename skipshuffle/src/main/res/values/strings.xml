@@ -12,6 +12,8 @@
     <string name="action_settings">Settings</string>
 
     <!--Media scanner related stuff-->
+    <string name="media_scan_start_title">"Scanning audio files..."</string>
+    <string name="media_scan_start_message">"Please wait."</string>
     <string name="media_scan_sel_target_directories">Select media directories.</string>
     <string name="media_scan_no_directory">No directory selected.</string>
     <string name="media_scan_directory_valid">Scanning : %s</string>
