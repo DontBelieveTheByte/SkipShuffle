@@ -7,7 +7,7 @@ import android.view.View;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
-import com.dontbelievethebyte.skipshuffle.ui.main.MainUI;
+import com.dontbelievethebyte.skipshuffle.ui.MainUI;
 
 public class MainActivity extends BaseActivity {
 

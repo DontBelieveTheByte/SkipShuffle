@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
+import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,10 +45,7 @@ public class FilePickerActivity extends ListActivity {
     {
 		super.onCreate(savedInstanceState);
         preferencesHelper = new PreferencesHelper(this);
-		setContentView(
-                UIFactory.getFilePickerLayout(preferencesHelper.getUIType()
-                )
-        );
+		setContentView(R.layout.common_file_picker);
 
 		// Set the view to be shown if the list is empty
 		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -175,7 +172,7 @@ public class FilePickerActivity extends ListActivity {
 		public FilePickerListAdapter(Context context, List<File> objects) {
 			super(
                     context,
-                    UIFactory.getFilePickerSingleItemLayout(preferencesHelper.getUIType()),
+                    R.layout.common_file_picker_list_item,
                     android.R.id.text1, objects);
 			mObjects = objects;
 		}
@@ -214,7 +211,7 @@ public class FilePickerActivity extends ListActivity {
 			if (convertView == null) {
 				LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				row = inflater.inflate(
-                        UIFactory.getFilePickerSingleItemLayout(preferencesHelper.getUIType()),
+                        R.layout.common_file_picker_list_item,
                         parent,
                         false
                 );
@@ -263,8 +260,7 @@ public class FilePickerActivity extends ListActivity {
 
     		// Show the folder icon
 			imageView.setImageResource(
-                    UIFactory.getFolderDrawable(preferencesHelper.getUIType()
-                    )
+                    DrawableMapper.getFolderDrawable(preferencesHelper.getUIType())
             );
 			return row;
 		}

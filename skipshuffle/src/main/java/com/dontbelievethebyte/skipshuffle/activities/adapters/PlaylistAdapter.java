@@ -18,7 +18,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
+import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 public class PlaylistAdapter extends BaseAdapter {
 
@@ -85,7 +85,7 @@ public class PlaylistAdapter extends BaseAdapter {
         if (null == convertView) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
-                    UIFactory.getSinglePlaylistItemLayout(preferencesHelper.getUIType()),
+                    R.layout.common_playlist_item,
                     null)
             ;
             convertView.setTag(viewHolder);
@@ -121,8 +121,8 @@ public class PlaylistAdapter extends BaseAdapter {
                 params.width = params.height;
                 iv.setImageDrawable(
                         context.getResources().getDrawable(
-                                isPlay ? UIFactory.getPlayDrawable(preferencesHelper.getUIType())
-                                       : UIFactory.getPauseDrawable(preferencesHelper.getUIType())
+                                isPlay ? DrawableMapper.getPlayDrawable(preferencesHelper.getUIType())
+                                        : DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
                         )
                 );
             } else {

@@ -30,7 +30,7 @@ import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
+import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 public abstract class BaseActivity extends Activity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
 
@@ -207,14 +207,14 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
                     @Override
                     public void onClick(DialogInterface dialogInterface, int indexPosition) {
                         switch (indexPosition){
-                            case UIFactory.MONO_LIGHT:
-                                preferencesHelper.setUIType(UIFactory.MONO_LIGHT);
+                            case UITypes.MONO_LIGHT:
+                                preferencesHelper.setUIType(UITypes.MONO_LIGHT);
                                 break;
-                            case UIFactory.MONO_DARK:
-                                preferencesHelper.setUIType(UIFactory.MONO_DARK);
+                            case UITypes.MONO_DARK:
+                                preferencesHelper.setUIType(UITypes.MONO_DARK);
                                 break;
                             default: //Equivalent to UIFactory.NEON
-                                preferencesHelper.setUIType(UIFactory.NEON);
+                                preferencesHelper.setUIType(UITypes.NEON);
                                 break;
                         }
                         dialogInterface.dismiss();

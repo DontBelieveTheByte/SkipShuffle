@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
+import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +79,7 @@ public class PreferencesHelper {
         if (null == currentUIType) {
             currentUIType = sharedPreferences.getInt(
                     context.getString(R.string.pref_current_ui_type),
-                    UIFactory.NEON //Default UI in case anything goes wrong.
+                    UITypes.NEON //Default UI in case anything goes wrong.
             );
         }
         return currentUIType;

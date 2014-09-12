@@ -1,13 +1,11 @@
-package com.dontbelievethebyte.skipshuffle.ui.playlistselector;
+package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.Typeface;
 import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistSelectorActivity;
-import com.dontbelievethebyte.skipshuffle.ui.UIInterface;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
-public abstract class PlaylistSelectorUI implements UIInterface {
+public class PlaylistSelectorUI implements UIInterface {
 
     public ImageButton playlistPlayBtn;
     public ImageButton playlistPrevBtn;
@@ -17,10 +15,9 @@ public abstract class PlaylistSelectorUI implements UIInterface {
     protected PlaylistSelectorActivity playlistSelectorActivity;
     protected int uiType;
 
-    public PlaylistSelectorUI(PlaylistSelectorActivity playlistActivity, int uiType)
+    public PlaylistSelectorUI(PlaylistSelectorActivity playlistActivity)
     {
         this.playlistSelectorActivity = playlistActivity;
-        this.uiType = uiType;
     }
 
     @Override
@@ -28,7 +25,7 @@ public abstract class PlaylistSelectorUI implements UIInterface {
     {
         playlistPlayBtn.setImageDrawable(
                 playlistSelectorActivity.getResources().getDrawable(
-                        UIFactory.getPlayDrawable(uiType)
+                        DrawableMapper.getPlayDrawable(uiType)
                 )
         );
     }
@@ -38,7 +35,7 @@ public abstract class PlaylistSelectorUI implements UIInterface {
     {
         playlistPlayBtn.setImageDrawable(
                 playlistSelectorActivity.getResources().getDrawable(
-                        UIFactory.getPauseDrawable(uiType)
+                        DrawableMapper.getPauseDrawable(uiType)
                 )
         );
     }

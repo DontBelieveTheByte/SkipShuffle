@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui.main;
+package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -11,9 +11,8 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.UIInterface;
 
-public abstract class MainUI implements UIInterface {
+public class MainUI implements UIInterface {
 
     public ImageButton playlistBtn;
     public ImageButton prevBtn;
@@ -45,18 +44,61 @@ public abstract class MainUI implements UIInterface {
     protected Typeface typeface;
     protected RelativeLayout bottom;
 
+    protected int uiType;
+
     public MainUI(MainActivity mainActivity)
     {
         this.mainActivity = mainActivity;
 
+        uiType = mainActivity.getPreferencesHelper().getUIType();
+
         mainActivity.setContentView(R.layout.common_activity_main);
 
+        bottom = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
         playlistBtn = (ImageButton) mainActivity.findViewById(R.id.playlistBtn);
         prevBtn = (ImageButton) mainActivity.findViewById(R.id.prevBtn);
         playBtn = (ImageButton) mainActivity.findViewById(R.id.playBtn);
         shuffleBtn = (ImageButton) mainActivity.findViewById(R.id.shuffleBtn);
         skipBtn = (ImageButton) mainActivity.findViewById(R.id.skipBtn);
         songTitle = (TextView) mainActivity.findViewById(R.id.song_label);
+
+        playDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPlayDrawable(uiType)
+        );
+        pauseDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPauseDrawable(uiType)
+        );
+        prevDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPrevDrawable(uiType)
+        );
+        skipDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getSkipDrawable(uiType)
+        );
+        shuffleDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getShuffleDrawable(uiType)
+        );
+        playlistDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPlaylistDrawable(uiType)
+        );
+
+        playPressedDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPlayPressedDrawable(uiType)
+        );
+        pausePressedDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPausePressedDrawable(uiType)
+        );
+        prevPressedDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getPrevPressedDrawable(uiType)
+        );
+        skipPressedDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getSkipPressedDrawable(uiType)
+        );
+        shufflePressedDrawable = mainActivity.getResources().getDrawable(
+                DrawableMapper.getShufflePressedDrawable(uiType)
+        );
+
+        setUpDrawables();
+        setUpColors();
 
         songTitle.setTypeface(getTypeFace());
 
@@ -81,7 +123,6 @@ public abstract class MainUI implements UIInterface {
                 R.anim.common_blink
         );
 
-        bottom = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
 
     }
     @Override
@@ -157,9 +198,9 @@ public abstract class MainUI implements UIInterface {
             doPause();
             if (mainActivity.getMediaPlayerBroadcastReceiver().getCurrentSongTitle().equals(
                     mainActivity.getResources().getString(
-                            R.string.meta_data_unknown_current_song_title)
-            )
-                    ) {
+                            R.string.meta_data_unknown_current_song_title
+                    )
+            )) {
                 playBtn.clearAnimation();
             }
         }
@@ -173,7 +214,17 @@ public abstract class MainUI implements UIInterface {
         skipBtn.setImageDrawable(skipDrawable);
     }
 
-    protected abstract void setUpColors();
+    protected void setUpColors()
+    {
+        bottom.setBackgroundResource(
+                ColorMapper.getBackgroundColor(uiType)
+        );
+        songTitle.setTextColor(
+                mainActivity.getResources().getColor(
+                    ColorMapper.getSonglabelColor(uiType)
+                )
+        );
+    }
 
     protected void setUpAnimations()
     {

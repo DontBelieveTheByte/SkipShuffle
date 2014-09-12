@@ -72,7 +72,7 @@
                 android:layout_width="@dimen/common_playlist_buttons_w_h"
                 android:layout_height="@dimen/common_playlist_buttons_w_h"
                 android:id="@+id/playlist_layout_skip"
-                android:src="@drawable/neon_next_states"
+                android:src="@drawable/neon_skip_states"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
                 android:layout_marginLeft="@dimen/common_playlist_buttons_separator"

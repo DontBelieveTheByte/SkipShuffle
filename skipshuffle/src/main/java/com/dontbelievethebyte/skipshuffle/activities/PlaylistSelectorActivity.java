@@ -14,8 +14,9 @@ import com.dontbelievethebyte.skipshuffle.activities.adapters.PlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
-import com.dontbelievethebyte.skipshuffle.ui.playlistselector.PlaylistSelectorUI;
+import com.dontbelievethebyte.skipshuffle.ui.PlaylistSelectorUI;
 
 import org.json.JSONException;
 
@@ -180,7 +181,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
             imageView.setImageDrawable(
                     getResources().getDrawable(
-                            UIFactory.getPauseDrawable(preferencesHelper.getUIType())
+                            DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
                     )
             );
         } else {

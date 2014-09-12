@@ -66,7 +66,7 @@
             android:layout_width="@dimen/common_notification_buttons_w_h"
             android:layout_height="@dimen/common_notification_buttons_w_h"
             android:id="@+id/notif_skip"
-            android:src="@drawable/neon_next_states"
+            android:src="@drawable/neon_skip_states"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
             android:layout_marginLeft="4dp"

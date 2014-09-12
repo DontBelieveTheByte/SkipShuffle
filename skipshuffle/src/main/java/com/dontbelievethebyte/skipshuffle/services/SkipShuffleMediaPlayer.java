@@ -22,7 +22,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
+import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import org.json.JSONException;
 
@@ -398,7 +398,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
         RemoteViews remoteViews = new RemoteViews(
                 getPackageName(),
-                UIFactory.getNotificationLayout(preferencesHelper.getUIType())
+                R.layout.common_notification
         );
 
         remoteViews.setOnClickPendingIntent(
@@ -426,12 +426,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         if (!playerWrapper.isPlaying()) {
             remoteViews.setImageViewResource(
                     R.id.notif_play,
-                    UIFactory.getPauseDrawable(preferencesHelper.getUIType())
+                    DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
             );
         } else {
             remoteViews.setImageViewResource(
                     R.id.notif_play,
-                    UIFactory.getPlayDrawable(preferencesHelper.getUIType())
+                    DrawableMapper.getPlayDrawable(preferencesHelper.getUIType())
             );
         }
 

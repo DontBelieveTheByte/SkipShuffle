@@ -46,7 +46,7 @@
                     android:layout_width="@dimen/common_large_port_skip_w_h"
                     android:layout_height="@dimen/common_large_port_skip_w_h"
                     android:id="@+id/skipBtn"
-                    android:src="@drawable/neon_next_states"
+                    android:src="@drawable/neon_skip_states"
                     android:scaleType="fitXY"
                     android:background="@android:color/transparent"
                     android:layout_alignParentRight="true"
