@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,7 +36,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected static final String TAG = "SkipShuffle";
     protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
     protected MediaScannerDialog mediaScannerDialog;
-    protected BroadcastReceiver mediaScannerReceiver;
+
     protected PreferencesHelper preferencesHelper;
     protected String[] drawerMenuTitles;
     protected DrawerLayout drawerLayout;
@@ -49,16 +48,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     public MediaPlayerBroadcastReceiver getMediaPlayerBroadcastReceiver()
     {
         return mediaPlayerBroadcastReceiver;
-    }
-
-    public BroadcastReceiver getMediaScannerReceiver()
-    {
-        return mediaScannerReceiver;
-    }
-
-    public void setMediaScannerReceiver(BroadcastReceiver mediaScannerReceiver)
-    {
-        this.mediaScannerReceiver = mediaScannerReceiver;
     }
 
     protected View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener()

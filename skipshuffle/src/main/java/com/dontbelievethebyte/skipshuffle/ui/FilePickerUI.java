@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-
 import android.graphics.drawable.ColorDrawable;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
