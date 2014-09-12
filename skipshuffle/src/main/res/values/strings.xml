@@ -26,7 +26,7 @@
     <string name="shuffle_empty_playlist">Cannot shuffle empty playlist.</string>
     <string name="playlist_error">Playlist error.</string>
     <string name="pick_media_nothing_selected">Nothing Selected.</string>
-
+    <string name="player_wrapper_song_error">Error playing file : </string>
 
     <!--Main menu-->
     <string name="menu_theme">Theme</string>
@@ -65,7 +65,8 @@
         <item>Genre</item>
     </string-array>
 
-    <string name="player_wrapper_song_error">Error playing file : </string>
+    <!--File picker-->
+    <string name="file_picker_done">Done</string>
 
     <!--Content description for accessibility-->
     <string name="accessibility_play_pause">Play/Pause</string>

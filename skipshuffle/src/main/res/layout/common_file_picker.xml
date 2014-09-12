@@ -19,15 +19,15 @@
             android:paddingRight="30dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="Done" />
+            android:text="@string/file_picker_done" />
 
         <ListView
-            android:id="@android:id/list"
+            android:id="@+id/file_list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/ok"
             android:layout_alignParentTop="true"
-            android:divider="@color/neon_playlist_divider"
+            android:divider="@color/neon_list_divider"
             android:dividerHeight="0.2dp" />
     </RelativeLayout>
 </LinearLayout>

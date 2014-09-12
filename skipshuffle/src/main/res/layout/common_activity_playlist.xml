@@ -9,7 +9,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/neon_background">
+        android:background="@color/neon_background"
+        android:id="@+id/playlist_background_layout">
 
         <ListView
             android:layout_width="fill_parent"
@@ -25,7 +26,7 @@
             android:paddingTop="@dimen/common_playlist_padding_top"
             android:paddingLeft="@dimen/common_playlist_padding_left_right"
             android:paddingRight="@dimen/common_playlist_padding_left_right"
-            android:divider="@color/neon_playlist_divider"
+            android:divider="@color/neon_list_divider"
             android:drawSelectorOnTop="false" />
 
         <LinearLayout
