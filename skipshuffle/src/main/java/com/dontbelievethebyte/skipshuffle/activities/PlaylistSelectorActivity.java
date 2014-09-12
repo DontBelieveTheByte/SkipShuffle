@@ -109,7 +109,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     protected void setUI(Integer type)
     {
         ui = UIFactory.createPlaylistSelectorUI(this, type);
-        ui.playlistPlayBtn.setOnClickListener(new View.OnClickListener() {
+        ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
@@ -119,7 +119,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             }
         });
 
-        ui.playlistPrevBtn.setOnClickListener(new View.OnClickListener() {
+        ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
@@ -129,7 +129,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             }
         });
 
-        ui.playlistSkipBtn.setOnClickListener(new View.OnClickListener() {
+        ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
@@ -139,7 +139,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             }
         });
 
-        ui.playlistShuffleBtn.setOnClickListener(new View.OnClickListener() {
+        ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
@@ -150,10 +150,10 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
         });
 
         //Register haptic feedback for all buttons.
-        ui.playlistPlayBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.playlistPrevBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.playlistSkipBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.playlistShuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        ui.shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
     }
 
     @Override

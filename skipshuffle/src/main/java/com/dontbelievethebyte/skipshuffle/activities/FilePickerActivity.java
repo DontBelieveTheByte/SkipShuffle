@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public class FilePickerActivity extends ListActivity {
 
 	protected FilePickerListAdapter mAdapter;
 	protected boolean mShowHiddenFiles = false;
+
+    private FilePickerUI filePickerUI;
     private PreferencesHelper preferencesHelper;
 
 	@Override
@@ -45,14 +48,17 @@ public class FilePickerActivity extends ListActivity {
     {
 		super.onCreate(savedInstanceState);
         preferencesHelper = new PreferencesHelper(this);
-		setContentView(R.layout.common_file_picker);
-
+        filePickerUI = new FilePickerUI(this);
 		// Set the view to be shown if the list is empty
 		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		LayoutInflater inflator = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View emptyView = inflator.inflate(R.layout.file_picker_empty_view, null);
+		View emptyView = inflator.inflate(
+                R.layout.file_picker_empty_view,
+                null
+        );
 		((ViewGroup)getListView().getParent()).addView(emptyView);
-		getListView().setEmptyView(emptyView);
+
+        getListView().setEmptyView(emptyView);
 
 
 		// Point to external storage as root.
@@ -71,11 +77,10 @@ public class FilePickerActivity extends ListActivity {
 				returnResults();
 			}
 		});
-		if (singleMode) {
-            ok.setVisibility(View.GONE);
-        }
+
 		this.getListView().setLongClickable(true);
-		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+
+        this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
 				File newFile = (File)parent.getItemAtPosition(position);
 				if (newFile.isDirectory()) {
@@ -92,19 +97,9 @@ public class FilePickerActivity extends ListActivity {
         Toast.makeText(getApplicationContext(), R.string.media_scan_sel_target_directories, Toast.LENGTH_LONG).show();
     }
 
-	private void returnResults()
-    {
-		if (mAdapter.getFiles().length < 1) {
-			Toast.makeText(
-                    this,
-                    R.string.pick_media_nothing_selected,
-                    Toast.LENGTH_SHORT
-            ).show();
-		} else {
-            preferencesHelper.setMediaDirectories(mAdapter.getFiles());
-            finish();
-        }
-	}
+    public PreferencesHelper getPreferencesHelper() {
+        return preferencesHelper;
+    }
 
 	@Override
 	protected void onResume()
@@ -286,4 +281,17 @@ public class FilePickerActivity extends ListActivity {
 		}
 	}
 
+    private void returnResults()
+    {
+        if (mAdapter.getFiles().length < 1) {
+            Toast.makeText(
+                    this,
+                    R.string.pick_media_nothing_selected,
+                    Toast.LENGTH_SHORT
+            ).show();
+        } else {
+            preferencesHelper.setMediaDirectories(mAdapter.getFiles());
+            finish();
+        }
+    }
 }

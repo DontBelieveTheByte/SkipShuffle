@@ -30,4 +30,18 @@ public class ColorMapper {
                 return R.color.neon_song_label;
         }
     }
+
+    public static int getListDividerColor(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.mono_light_list_divider;
+            case UITypes.MONO_DARK :
+                return R.color.mono_dark_list_divider;
+            case UITypes.NEON :
+                return R.color.neon_list_divider;
+            default:
+                return R.color.neon_list_divider;
+        }
+    }
 }

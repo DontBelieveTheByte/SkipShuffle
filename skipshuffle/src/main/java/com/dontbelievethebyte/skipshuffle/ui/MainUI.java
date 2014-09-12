@@ -12,7 +12,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 
-public class MainUI implements UIInterface {
+public class MainUI implements PlayerUIInterface {
 
     public ImageButton playlistBtn;
     public ImageButton prevBtn;
@@ -99,32 +99,11 @@ public class MainUI implements UIInterface {
 
         setUpDrawables();
         setUpColors();
+        setUpAnimations();
 
         songTitle.setTypeface(getTypeFace());
-
-        ltr = AnimationUtils.loadAnimation(
-                mainActivity.getApplicationContext(),
-                R.anim.common_ltr
-        );
-        flipRightAnimation  = AnimationUtils.loadAnimation(
-                mainActivity.getApplicationContext(),
-                R.anim.common_flip_right
-        );
-        flipDownAnimation = AnimationUtils.loadAnimation(
-                mainActivity.getApplicationContext(),
-                R.anim.common_flip_down
-        );
-        flipLeftAnimation = AnimationUtils.loadAnimation(
-                mainActivity.getApplicationContext(),
-                R.anim.common_flip_left
-        );
-        blinkAnimation = AnimationUtils.loadAnimation(
-                mainActivity.getApplicationContext(),
-                R.anim.common_blink
-        );
-
-
     }
+
     @Override
     public void doPlay()
     {
@@ -228,6 +207,26 @@ public class MainUI implements UIInterface {
 
     protected void setUpAnimations()
     {
+        ltr = AnimationUtils.loadAnimation(
+                mainActivity.getApplicationContext(),
+                R.anim.common_ltr
+        );
+        flipRightAnimation  = AnimationUtils.loadAnimation(
+                mainActivity.getApplicationContext(),
+                R.anim.common_flip_right
+        );
+        flipDownAnimation = AnimationUtils.loadAnimation(
+                mainActivity.getApplicationContext(),
+                R.anim.common_flip_down
+        );
+        flipLeftAnimation = AnimationUtils.loadAnimation(
+                mainActivity.getApplicationContext(),
+                R.anim.common_flip_left
+        );
+        blinkAnimation = AnimationUtils.loadAnimation(
+                mainActivity.getApplicationContext(),
+                R.anim.common_blink
+        );
         flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation)

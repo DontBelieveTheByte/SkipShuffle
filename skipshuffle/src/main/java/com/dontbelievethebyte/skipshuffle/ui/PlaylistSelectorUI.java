@@ -1,29 +1,40 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistSelectorActivity;
 
-public class PlaylistSelectorUI implements UIInterface {
+public class PlaylistSelectorUI implements PlayerUIInterface {
 
-    public ImageButton playlistPlayBtn;
-    public ImageButton playlistPrevBtn;
-    public ImageButton playlistSkipBtn;
-    public ImageButton playlistShuffleBtn;
+    public ImageButton playBtn;
+    public ImageButton prevBtn;
+    public ImageButton skipBtn;
+    public ImageButton shuffleBtn;
 
-    protected PlaylistSelectorActivity playlistSelectorActivity;
-    protected int uiType;
+    private Drawable playDrawable;
+    private Drawable pauseDrawable;
+    private Drawable prevDrawable;
+    private Drawable skipDrawable;
+    private Drawable shuffleDrawable;
+
+    private Typeface typeface;
+    private PlaylistSelectorActivity playlistSelectorActivity;
+    private int uiType;
 
     public PlaylistSelectorUI(PlaylistSelectorActivity playlistActivity)
     {
         this.playlistSelectorActivity = playlistActivity;
+        uiType = this.playlistSelectorActivity.getPreferencesHelper().getUIType();
+        setDrawables();
+        setColors();
     }
 
     @Override
     public void doPlay()
     {
-        playlistPlayBtn.setImageDrawable(
+        playBtn.setImageDrawable(
                 playlistSelectorActivity.getResources().getDrawable(
                         DrawableMapper.getPlayDrawable(uiType)
                 )
@@ -33,7 +44,7 @@ public class PlaylistSelectorUI implements UIInterface {
     @Override
     public void doPause()
     {
-        playlistPlayBtn.setImageDrawable(
+        playBtn.setImageDrawable(
                 playlistSelectorActivity.getResources().getDrawable(
                         DrawableMapper.getPauseDrawable(uiType)
                 )
@@ -73,6 +84,22 @@ public class PlaylistSelectorUI implements UIInterface {
     @Override
     public Typeface getTypeFace()
     {
-        return null;
+        if (null == typeface) {
+            typeface = Typeface.createFromAsset(
+                    playlistSelectorActivity.getAssets(),
+                    "fonts/UbuntuMono-B.ttf"
+            );
+        }
+        return typeface;
+    }
+
+    private void setDrawables()
+    {
+
+    }
+
+    private void setColors()
+    {
+
     }
 }
