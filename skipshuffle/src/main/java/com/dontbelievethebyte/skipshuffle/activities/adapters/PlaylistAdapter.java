@@ -1,7 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,18 +33,6 @@ public class PlaylistAdapter extends BaseAdapter {
     private PreferencesHelper preferencesHelper;
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
-    private class TrackFetchTask extends AsyncTask<PlaylistInterface, Integer, Track> {
-        @Override
-        protected Track doInBackground(PlaylistInterface... playlistInterfaces) {
-            try {
-                return playlist.getCurrent();
-            } catch (PlaylistEmptyException e){
-                Log.d("TAG", e.getMessage());
-                return null;
-            }
-        }
-    }
-
     public PlaylistAdapter(Context context,
                            PreferencesHelper preferencesHelper,
                            MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
@@ -67,7 +54,6 @@ public class PlaylistAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position)
     {
-//        new TrackFetchTask().execute(playlist);
         return playlist.getAtPosition(position);
     }
 

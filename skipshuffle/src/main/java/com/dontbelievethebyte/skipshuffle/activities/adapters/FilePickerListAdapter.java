@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import java.io.File;
@@ -20,30 +22,50 @@ import java.util.List;
 
 public class FilePickerListAdapter extends ArrayAdapter<File>
 {
-    private List<File> mObjects;
-    private ArrayList<File> checkedObjects = new ArrayList<File>();
-    private PreferencesHelper preferencesHelper;
+    private static class ViewHolder {
+        public ImageView image;
+        public TextView fileName;
+        public CheckBox checkBox;
+    }
 
-    public FilePickerListAdapter(Context context, List<File> objects, PreferencesHelper preferencesHelper) {
+    private List<File> files;
+    private ArrayList<File> checkedFiles = new ArrayList<File>();
+    private PreferencesHelper preferencesHelper;
+    private Drawable folderDrawable;
+    private int fileNameColor;
+
+    public FilePickerListAdapter(Context context, List<File> files, PreferencesHelper preferencesHelper)
+    {
         super(
                 context,
                 R.layout.common_file_picker_list_item,
-                android.R.id.text1, objects);
-        mObjects = objects;
+                android.R.id.text1, files
+        );
+
+        this.files = files;
         this.preferencesHelper = preferencesHelper;
+
+        folderDrawable = context.getResources().getDrawable(
+                    DrawableMapper.getFolderDrawable(preferencesHelper.getUIType()
+                )
+        );
+
+        fileNameColor = context.getResources().getColor(
+                ColorMapper.getListDividerColor(preferencesHelper.getUIType())
+        );
     }
 
     public void clearBoxes()
     {
-        checkedObjects = new ArrayList<File>();
+        checkedFiles = new ArrayList<File>();
     }
 
     public String[] getFiles()
     {
-        String[] mediaDirectoriesToScan = new String[checkedObjects.size()];
+        String[] mediaDirectoriesToScan = new String[checkedFiles.size()];
         int i = 0;
         //Save to a class instance array in case the activity needs to restart.
-        for (File directory : checkedObjects){
+        for (File directory : checkedFiles){
             mediaDirectoriesToScan[i] = directory.getAbsolutePath();
             i++;
         }
@@ -52,72 +74,98 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 
     public void toggleCheckBox(File file)
     {
-        if (checkedObjects.contains(file)) {
-            checkedObjects.remove(file);
+        if (checkedFiles.contains(file)) {
+            checkedFiles.remove(file);
         } else {
-            checkedObjects.add(file);
+            checkedFiles.add(file);
         }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        View row;
-        CheckBox checkBox;
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(
+        LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        ViewHolder viewHolder;
+
+        if (null == convertView) {
+            viewHolder = new ViewHolder();
+            convertView = layoutInflater.inflate(
                     R.layout.common_file_picker_list_item,
                     parent,
                     false
             );
+            convertView.setTag(viewHolder);
         } else {
-            row = convertView;
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final File object = mObjects.get(position);
+        File file = files.get(position);
 
-        ImageView imageView = (ImageView)row.findViewById(R.id.file_picker_image);
-        TextView textView = (TextView)row.findViewById(R.id.file_picker_text);
-        checkBox = (CheckBox)row.findViewById(R.id.file_picker_checkbox);
+        viewHolder.image = setFolderImage(
+                convertView,
+                R.id.file_picker_image
+        );
+
+        viewHolder.fileName = setFileName(
+                convertView,
+                R.id.file_picker_text,
+                file
+        );
+
+        viewHolder.checkBox = setCheckbox(
+                convertView,
+                R.id.file_picker_checkbox,
+                file
+        );
+
+        return convertView;
+    }
+
+    private ImageView setFolderImage(View view, int resourceId)
+    {
+        ImageView folderImage = (ImageView) view.findViewById(resourceId);
+        folderImage.setImageDrawable(folderDrawable);
+        return folderImage;
+    }
+
+    private TextView setFileName(View view, int resourceId, File file)
+    {
+        TextView fileName = (TextView) view.findViewById(resourceId);
+        fileName.setText(file.getName());
+        fileName.setTextColor(fileNameColor);
+        return fileName;
+    }
+
+    private CheckBox setCheckbox(View view, int resourceId, final File file)
+    {
+        CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
+
+        checkBox.setVisibility(
+                file.isFile()?
+                        View.GONE:
+                        View.VISIBLE
+        );
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ){
-                    if (!checkedObjects.contains(object))
-                        checkedObjects.add(object);
+                    if (!checkedFiles.contains(file))
+                        checkedFiles.add(file);
                 }
                 else {
-                    checkedObjects.remove(object);
+                    checkedFiles.remove(file);
                 }
 
             }
         });
 
-        if (object.isFile()) {
-            checkBox.setVisibility(View.GONE);
-        } else {
-            checkBox.setVisibility(View.VISIBLE);
-        }
-
-        // Set single line
-        textView.setSingleLine(true);
-
-        if (checkedObjects.contains(object)) {
-            checkBox.setChecked(true);
-        } else {
-            checkBox.setChecked(false);
-        }
-
-        textView.setText(object.getName());
-
-        // Show the folder icon
-        imageView.setImageResource(
-                DrawableMapper.getFolderDrawable(preferencesHelper.getUIType())
+        checkBox.setChecked(
+                checkedFiles.contains(file)
         );
-        return row;
+        return checkBox;
     }
-
 
 }

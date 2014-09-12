@@ -15,8 +15,6 @@
 	  android:src="@drawable/file"
 	  android:scaleType="fitXY"/>
 
-
-
   <TextView
   	  android:id="@+id/file_picker_text"
   	  android:layout_width="fill_parent"

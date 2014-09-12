@@ -41,7 +41,6 @@ public class FilePickerActivity extends ListActivity implements PreferenceChange
     private FilePickerUI filePickerUI;
     private PreferencesHelper preferencesHelper;
     private MediaScannerDialog mediaScannerDialog;
-//    private FilePickerListAdapter filePickerListAdapter;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)

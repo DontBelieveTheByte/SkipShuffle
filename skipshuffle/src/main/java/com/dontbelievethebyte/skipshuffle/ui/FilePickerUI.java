@@ -20,13 +20,7 @@ public class FilePickerUI {
 
         listView = (ListView) filePickerActivity.findViewById(android.R.id.list);
 
-        setDrawables();
         setColors();
-    }
-
-    private void setDrawables()
-    {
-
     }
 
     private void setColors()
