@@ -11,7 +11,7 @@ public class NeonPlaylistSelectorUI extends PlaylistSelectorUI {
     public NeonPlaylistSelectorUI(PlaylistSelectorActivity playlistSelectorActivity)
     {
         super(playlistSelectorActivity, UIFactory.NEON);
-        playlistSelectorActivity.setContentView(R.layout.neon_activity_playlist);
+        playlistSelectorActivity.setContentView(R.layout.common_activity_playlist);
         playlistPlayBtn = (ImageButton) playlistSelectorActivity.findViewById(R.id.playlist_layout_play);
         playlistShuffleBtn = (ImageButton) playlistSelectorActivity.findViewById(R.id.playlist_layout_shuffle);
         playlistSkipBtn = (ImageButton) playlistSelectorActivity.findViewById(R.id.playlist_layout_skip);

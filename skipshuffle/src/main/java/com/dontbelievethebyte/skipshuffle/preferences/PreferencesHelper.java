@@ -144,6 +144,7 @@ public class PreferencesHelper {
 
     public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback)
     {
+        Log.d(TAG, "CALLBACK REGISTERED. " + preferenceChangeCallback.getClass().getSimpleName());
         preferenceChangeCallbacks.add(preferenceChangeCallback);
     }
 
@@ -204,7 +205,7 @@ public class PreferencesHelper {
                         stringBuilder.toString()
                 ).apply();
         directories = newDirectories;
-        Log.d(TAG, "NEW DIRS SAVED");
+        Log.d(TAG, "NEW DIRS SAVED :  cibt : " + context.getClass().getSimpleName() );
     }
 
     public void setUIType(int UIType)

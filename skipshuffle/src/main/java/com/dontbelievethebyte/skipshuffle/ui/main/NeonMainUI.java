@@ -1,191 +1,37 @@
 package com.dontbelievethebyte.skipshuffle.ui.main;
 
-import android.graphics.Typeface;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
 
 public class NeonMainUI extends MainUI {
 
-    private Animation ltr;
-    private Animation flipRightAnimation;
-    private Animation flipDownAnimation;
-    private Animation flipLeftAnimation;
-    private Animation blinkAnimation;
-
-    private final String TYPEFACE = "fonts/UbuntuMono-B.ttf";
-
     public NeonMainUI(MainActivity mainActivity)
     {
-
         super(mainActivity);
 
-        mainActivity.setContentView(R.layout.neon_activity_main);
+        playDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_play_states);
+        pauseDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_pause_states);
+        prevDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_prev_states);
+        skipDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_next_states);
+        shuffleDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states);
+        playlistDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_playlist_states);
 
-        ltr = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_ltr);
-        flipRightAnimation  = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_right);
-        flipDownAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_down);
-        flipLeftAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_flip_left);
-        blinkAnimation = AnimationUtils.loadAnimation(mainActivity.getApplicationContext(), R.anim.neon_blink);
 
+        playPressedDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_play_btn_pressed);
+        pausePressedDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_pause_btn_pressed);
+        prevPressedDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed);
+        skipPressedDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed);
+        shufflePressedDrawable = mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed);
 
-        playlistBtn = (ImageButton) mainActivity.findViewById(R.id.playlistBtn);
-        prevBtn = (ImageButton) mainActivity.findViewById(R.id.prevBtn);
-        playBtn = (ImageButton) mainActivity.findViewById(R.id.playBtn);
-        shuffleBtn = (ImageButton) mainActivity.findViewById(R.id.shuffleBtn);
-        skipBtn = (ImageButton) mainActivity.findViewById(R.id.skipBtn);
-        songTitle = (TextView) mainActivity.findViewById(R.id.song_label);
-
-        songTitle.setTypeface(getTypeFace());
-
-        flipRightAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-                doPause();
-                skipBtn.setImageDrawable(
-                        NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_btn_pressed)
-                );
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                skipBtn.setImageDrawable(NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_next_states));
-                doPlay();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
-
-        flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-                doPause();
-                prevBtn.setImageDrawable(
-                        NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_btn_pressed)
-                );
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                prevBtn.setImageDrawable(
-                        NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_prev_states)
-                );
-                doPlay();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
-        flipDownAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-                doPause();
-                shuffleBtn.setImageDrawable(
-                        NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_btn_pressed)
-                );
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                shuffleBtn.setImageDrawable(
-                        NeonMainUI.this.mainActivity.getResources().getDrawable(R.drawable.neon_shuffle_states)
-                );
-                doPlay();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
+        setUpDrawables();
+        setUpColors();
+        setUpAnimations();
     }
 
     @Override
-    public void doPlay()
+    protected void setUpColors()
     {
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_play_states)
-        );
-        playBtn.startAnimation(ltr);
-    }
-
-    @Override
-    public void doPause()
-    {
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_pause_states)
-        );
-        playBtn.startAnimation(blinkAnimation);
-    }
-
-    @Override
-    public void doSkip()
-    {
-        playBtn.clearAnimation();
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_pause_states)
-        );
-        playBtn.startAnimation(blinkAnimation);
-        skipBtn.startAnimation(flipRightAnimation);
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_play_states)
-        );
-        playBtn.startAnimation(ltr);
-    }
-
-    @Override
-    public void doPrev()
-    {
-        playBtn.clearAnimation();
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_pause_states)
-        );
-        playBtn.startAnimation(blinkAnimation);
-        prevBtn.startAnimation(flipLeftAnimation);
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_play_states)
-        );
-        playBtn.startAnimation(ltr);
-    }
-
-    @Override
-    public void doShuffle()
-    {
-        playBtn.clearAnimation();
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_pause_states)
-        );
-        playBtn.startAnimation(blinkAnimation);
-        shuffleBtn.startAnimation(flipDownAnimation);
-        playBtn.setImageDrawable(
-                mainActivity.getResources().getDrawable(R.drawable.neon_play_states)
-        );
-        playBtn.startAnimation(ltr);
-    }
-
-    public Typeface getTypeFace()
-    {
-        if (null == typeface) {
-            typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf" );
-        }
-        return typeface;
+        bottom.setBackgroundResource(R.color.neon_background);
+        songTitle.setTextColor(mainActivity.getResources().getColor(R.color.neon_song_label));
     }
 }

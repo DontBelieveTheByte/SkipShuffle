@@ -28,7 +28,7 @@ public abstract class PlaylistSelectorUI implements UIInterface {
     {
         playlistPlayBtn.setImageDrawable(
                 playlistSelectorActivity.getResources().getDrawable(
-                        UIFactory.getPlayDrawable(playlistSelectorActivity.getPreferencesHelper().getUIType())
+                        UIFactory.getPlayDrawable(uiType)
                 )
         );
     }
@@ -38,7 +38,7 @@ public abstract class PlaylistSelectorUI implements UIInterface {
     {
         playlistPlayBtn.setImageDrawable(
                 playlistSelectorActivity.getResources().getDrawable(
-                        UIFactory.getPauseDrawable(playlistSelectorActivity.getPreferencesHelper().getUIType())
+                        UIFactory.getPauseDrawable(uiType)
                 )
         );
     }

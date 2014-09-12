@@ -68,13 +68,13 @@ public class UIFactory {
     {
         switch (uiType) {
             case MONO_LIGHT :
-                return R.layout.mono_light_playlist_item;
+//                return R.layout.mono_light_playlist_item;
             case MONO_DARK :
-                return R.layout.mono_dark_playlist_item;
+//                return R.layout.mono_dark_playlist_item;
             case NEON :
-                return R.layout.neon_playlist_item;
+                return R.layout.common_playlist_item;
             default:
-                return R.layout.neon_playlist_item;
+                return R.layout.common_playlist_item;
         }
     }
 
@@ -110,13 +110,13 @@ public class UIFactory {
     {
         switch (uiType){
             case MONO_LIGHT :
-                return R.layout.mono_light_notification;
+//                return R.layout.mono_light_notification;
             case MONO_DARK :
-                return R.layout.mono_dark_notification;
+//                return R.layout.mono_dark_notification;
             case NEON :
-                return R.layout.neon_notification;
+                return R.layout.common_notification;
             default:
-                return R.layout.neon_notification;
+                return R.layout.common_notification;
         }
     }
 
@@ -124,13 +124,13 @@ public class UIFactory {
     {
         switch (uiType){
             case MONO_LIGHT :
-                return R.layout.mono_light_file_picker;
+//                return R.layout.mono_light_file_picker;
             case MONO_DARK :
-                return R.layout.mono_dark_file_picker;
+//                return R.layout.mono_dark_file_picker;
             case NEON :
-                return R.layout.neon_file_picker;
+                return R.layout.common_file_picker;
             default:
-                return R.layout.neon_file_picker;
+                return R.layout.common_file_picker;
         }
     }
 
@@ -138,13 +138,13 @@ public class UIFactory {
     {
         switch (uiType){
             case MONO_LIGHT :
-                return R.layout.mono_light_file_picker_list_item;
+//                return R.layout.mono_light_file_picker_list_item;
             case MONO_DARK :
-                return R.layout.mono_dark_file_picker_list_item;
+//                return R.layout.mono_dark_file_picker_list_item;
             case NEON :
-                return R.layout.neon_file_picker_list_item;
+                return R.layout.common_file_picker_list_item;
             default:
-                return R.layout.neon_file_picker_list_item;
+                return R.layout.common_file_picker_list_item;
         }
     }
 

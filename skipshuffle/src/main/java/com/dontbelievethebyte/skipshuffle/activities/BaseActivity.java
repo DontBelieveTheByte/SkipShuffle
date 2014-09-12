@@ -253,8 +253,6 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
 
     public void preferenceChangedCallback(String prefsKey)
     {
-        Log.d(TAG, "KEY CHANGED : " + prefsKey);
-
         if (prefsKey.equals(getString(R.string.pref_media_directories))) {
             Log.d(TAG, "PREF DIRECTORY CHANGED!!@!#!!#%%%$$$");
             mediaScannerDialog = new MediaScannerDialog(

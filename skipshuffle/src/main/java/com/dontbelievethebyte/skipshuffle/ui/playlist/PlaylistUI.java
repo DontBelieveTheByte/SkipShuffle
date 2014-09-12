@@ -3,30 +3,36 @@ package com.dontbelievethebyte.skipshuffle.ui.playlist;
 import android.graphics.Typeface;
 import android.widget.ImageButton;
 
+import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 import com.dontbelievethebyte.skipshuffle.ui.UIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 public abstract class PlaylistUI implements UIInterface {
 
-    public ImageButton playlistPlayBtn;
-    public ImageButton playlistPrevBtn;
-    public ImageButton playlistSkipBtn;
-    public ImageButton playlistShuffleBtn;
+    public ImageButton playBtn;
+    public ImageButton prevBtn;
+    public ImageButton skipBtn;
+    public ImageButton shuffleBtn;
 
     protected PlaylistActivity playlistActivity;
-    protected int uiType;
 
-    public PlaylistUI(PlaylistActivity playlistActivity, int uiType)
+    public PlaylistUI(PlaylistActivity playlistActivity)
     {
         this.playlistActivity = playlistActivity;
-        this.uiType = uiType;
+
+        playlistActivity.setContentView(R.layout.common_activity_playlist);
+
+        playBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_play);
+        shuffleBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_shuffle);
+        skipBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_skip);
+        prevBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_prev);
     }
 
     @Override
     public void doPlay()
     {
-        playlistPlayBtn.setImageDrawable(
+        playBtn.setImageDrawable(
                 playlistActivity.getResources().getDrawable(
                         UIFactory.getPlayDrawable(playlistActivity.getPreferencesHelper().getUIType())
                 )
@@ -36,7 +42,7 @@ public abstract class PlaylistUI implements UIInterface {
     @Override
     public void doPause()
     {
-        playlistPlayBtn.setImageDrawable(
+        playBtn.setImageDrawable(
                 playlistActivity.getResources().getDrawable(
                         UIFactory.getPauseDrawable(playlistActivity.getPreferencesHelper().getUIType())
                 )
