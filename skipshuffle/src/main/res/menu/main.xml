@@ -5,25 +5,25 @@
     <item
         android:title="@string/menu_refresh"
         android:id="@+id/refresh_media"
-        android:icon="@drawable/neon_refresh"
+        android:icon="@drawable/ic_refresh"
         skipshuffle:showAsAction="ifRoom">
     </item>
     <item
         android:title="@string/menu_theme"
         android:id="@+id/theme"
-        android:icon="@drawable/neon_folder"
+        android:icon="@drawable/ic_folder"
         skipshuffle:showAsAction="ifRoom">
     </item>
     <item
         android:title="@string/menu_set_music_dir"
         android:id="@+id/set_target_directories"
-        android:icon="@drawable/neon_folder"
+        android:icon="@drawable/ic_folder"
         skipshuffle:showAsAction="ifRoom">
     </item>
     <item
         android:title="@string/menu_haptic_feedback"
         android:id="@+id/haptic_feedback_toggle"
-        android:icon="@drawable/neon_vibration"
+        android:icon="@drawable/ic_vibration"
         skipshuffle:showAsAction="ifRoom">
     </item>
 </menu>
