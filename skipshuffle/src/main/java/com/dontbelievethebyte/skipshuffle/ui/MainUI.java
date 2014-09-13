@@ -210,14 +210,8 @@ public class MainUI implements PlayerUIInterface {
                 ColorMapper.getBackgroundColor(uiType)
         );
 
-        ColorDrawable actionBarColorDrawable = new ColorDrawable(
-                mainActivity.getResources().getColor(
-                        ColorMapper.getActionBarColor(uiType)
-                )
-        );
         ActionBar actionBar = mainActivity.getSupportActionBar();
         if (null != actionBar) {
-            actionBar.setBackgroundDrawable(actionBarColorDrawable);
             if (ViewConfiguration.get(mainActivity).hasPermanentMenuKey()) {
                 actionBar.hide();
             }
