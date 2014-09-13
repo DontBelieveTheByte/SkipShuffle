@@ -17,23 +17,19 @@ public class MediaScannerDialog {
     private boolean isScanningMedia = false;
     private boolean isDialogShowing = false;
     private ProgressDialog progressDialog;
-
-
-
     private BroadcastReceiver mediaScannerReceiver;
-
     private Activity activity;
 
     public MediaScannerDialog(Activity activity, ProgressDialog progressDialog)
     {
-        this.activity = activity;
         this.progressDialog = progressDialog;
-        this.progressDialog.setTitle(
-                activity.getString(R.string.media_scan_start_title)
-        );
-        this.progressDialog.setMessage(
-                activity.getString(R.string.media_scan_start_message)
-        );
+        this.activity = activity;
+//        this.progressDialog.setTitle(
+//                activity.getString(R.string.media_scan_start_title)
+//        );
+//        this.progressDialog.setMessage(
+//                activity.getString(R.string.media_scan_start_message)
+//        );
         this.progressDialog.setCancelable(false);
         this.progressDialog.setIndeterminate(true);
     }
@@ -52,10 +48,6 @@ public class MediaScannerDialog {
     public boolean isScanningMedia()
     {
         return isScanningMedia;
-    }
-
-    public BroadcastReceiver getMediaScannerReceiver() {
-        return mediaScannerReceiver;
     }
 
     public void registerMediaScannerBroadcastReceiver()

@@ -78,7 +78,11 @@ public class MediaScannerService extends IntentService {
         }
         if (validFiles.size() == 0) {
             Toast.makeText(getApplicationContext(), R.string.media_scan_directory_empty, Toast.LENGTH_LONG).show();
-            broadcastIntentStatus(null, null, true);
+            broadcastIntentStatus(
+                    null,
+                    null,
+                    true
+            );
         } else {
             for (int j = 0; j < validFiles.size();j++){
                 broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1));
@@ -92,7 +96,9 @@ public class MediaScannerService extends IntentService {
 //                dbHandler.addTrack(track);
 //                playlist.addTrack(track);
             }
+
 //            playlist.save();
+              dbHandler.currate();
 //            preferencesHelper.setLastPlaylist(1L);
 //            preferencesHelper.setLastPlaylistPosition(0);
         }

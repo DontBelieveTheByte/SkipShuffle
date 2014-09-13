@@ -107,6 +107,16 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     }
 
     @Override
+    protected void onDestroy()
+    {
+        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
+            mediaScannerDialog.dismiss();
+            mediaScannerDialog = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
@@ -139,7 +149,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onPause()
     {
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-            mediaScannerDialog.dismiss();
             mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
         }
         unregisterReceiver(mediaPlayerBroadcastReceiver);

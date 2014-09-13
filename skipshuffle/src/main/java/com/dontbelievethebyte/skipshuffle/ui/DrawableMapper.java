@@ -162,9 +162,9 @@ public class DrawableMapper {
     {
         switch (uiType){
             case UITypes.MONO_LIGHT :
-                return R.drawable.neon_folder;
+                return R.drawable.mono_light_folder;
             case UITypes.MONO_DARK :
-                return R.drawable.neon_folder;
+                return R.drawable.mono_dark_folder;
             case UITypes.NEON :
                 return R.drawable.neon_folder;
             default:
