@@ -67,7 +67,8 @@ public class FilePickerActivity extends ListActivity {
 		mAdapter = new FilePickerListAdapter(
                 this,
                 mFiles,
-                preferencesHelper
+                preferencesHelper,
+                filePickerUI.getTypeFace()
         );
 
         setListAdapter(mAdapter);

@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +33,9 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private ArrayList<File> checkedFiles = new ArrayList<File>();
     private Drawable folderDrawable;
     private int fileNameColor;
+    private Typeface typeface;
 
-    public FilePickerListAdapter(Context context, List<File> files, PreferencesHelper preferencesHelper)
+    public FilePickerListAdapter(Context context, List<File> files, PreferencesHelper preferencesHelper, Typeface typeface)
     {
         super(
                 context,
@@ -41,6 +43,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 android.R.id.text1, files
         );
 
+        this.typeface = typeface;
         this.files = files;
 
         folderDrawable = context.getResources().getDrawable(
@@ -132,6 +135,9 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         TextView fileName = (TextView) view.findViewById(resourceId);
         fileName.setText(file.getName());
         fileName.setTextColor(fileNameColor);
+        if (null != typeface) {
+            fileName.setTypeface(typeface);
+        }
         return fileName;
     }
 
