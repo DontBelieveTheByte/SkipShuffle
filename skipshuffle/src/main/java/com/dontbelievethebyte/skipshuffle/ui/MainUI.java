@@ -228,7 +228,6 @@ public class MainUI implements PlayerUIInterface {
                 ColorMapper.getBackgroundColor(uiType)
         );
 
-
         drawerList.setDivider(navDrawerColorDrawable);
         drawerList.setDividerHeight(1);
 

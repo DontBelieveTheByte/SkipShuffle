@@ -39,6 +39,4 @@
         <service android:name=".services.MediaScannerService" />
     </application>
 
-
-
 </manifest>

@@ -1,5 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -11,6 +12,7 @@ public class FilePickerUI {
     private FilePickerActivity filePickerActivity;
     private ListView listView;
     private int uiType;
+    private Typeface typeface;
 
     public FilePickerUI(FilePickerActivity filePickerActivity)
     {
@@ -21,6 +23,14 @@ public class FilePickerUI {
         listView = (ListView) filePickerActivity.findViewById(android.R.id.list);
 
         setColors();
+    }
+
+    public Typeface getTypeFace()
+    {
+        if (null == typeface) {
+            typeface = Typeface.createFromAsset(filePickerActivity.getAssets(), "fonts/UbuntuMono-B.ttf" );
+        }
+        return typeface;
     }
 
     private void setColors()

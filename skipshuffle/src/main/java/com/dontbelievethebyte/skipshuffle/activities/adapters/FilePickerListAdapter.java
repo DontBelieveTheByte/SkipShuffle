@@ -32,6 +32,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private List<File> files;
     private ArrayList<File> checkedFiles = new ArrayList<File>();
     private Drawable folderDrawable;
+    private int checkBoxDrawable;
     private int fileNameColor;
     private Typeface typeface;
 
@@ -50,6 +51,8 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                     DrawableMapper.getFolderDrawable(preferencesHelper.getUIType()
                 )
         );
+
+        checkBoxDrawable = DrawableMapper.getCheckboxDrawable(preferencesHelper.getUIType());
 
         fileNameColor = context.getResources().getColor(
                 ColorMapper.getListDividerColor(preferencesHelper.getUIType())
@@ -144,6 +147,8 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private CheckBox setCheckbox(View view, int resourceId, final File file)
     {
         CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
+
+        checkBox.setBackgroundResource(checkBoxDrawable);
 
         checkBox.setVisibility(
                 file.isFile()?
