@@ -11,7 +11,7 @@
     <item
         android:title="@string/menu_theme"
         android:id="@+id/theme"
-        android:icon="@drawable/ic_folder"
+        android:icon="@drawable/ic_theme"
         skipshuffle:showAsAction="ifRoom">
     </item>
     <item
