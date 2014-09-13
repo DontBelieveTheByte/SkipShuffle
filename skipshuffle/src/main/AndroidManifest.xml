@@ -10,9 +10,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_skipshuffle_launcher"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
+        android:theme="@android:style/Theme.Black.NoTitleBar">
         <activity
             android:name=".activities.MainActivity"
+            android:theme="@style/CustomActionBarTheme"
             android:launchMode="singleTop"
             android:label="@string/app_name" >
             <intent-filter>
@@ -25,10 +26,12 @@
         </activity>
         <activity
             android:name=".activities.PlaylistActivity"
+            android:theme="@style/CustomActionBarTheme"
             android:label="@string/activity_playlist" >
         </activity>
         <activity
             android:name=".activities.PlaylistSelectorActivity"
+            android:theme="@style/CustomActionBarTheme"
             android:label="@string/activity_playlist_selector" >
         </activity>
 
