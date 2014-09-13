@@ -1,10 +1,14 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
+import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.DrawerLayout;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,7 +46,8 @@ public class MainUI implements PlayerUIInterface {
     protected MainActivity mainActivity;
     protected TextView songTitle;
     protected Typeface typeface;
-    protected RelativeLayout bottom;
+    protected ListView drawerList;
+
 
     protected int uiType;
 
@@ -54,7 +59,8 @@ public class MainUI implements PlayerUIInterface {
 
         mainActivity.setContentView(R.layout.common_activity_main);
 
-        bottom = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
+        drawerList = (ListView) mainActivity.findViewById(R.id.left_drawer1);
+
         playlistBtn = (ImageButton) mainActivity.findViewById(R.id.playlistBtn);
         prevBtn = (ImageButton) mainActivity.findViewById(R.id.prevBtn);
         playBtn = (ImageButton) mainActivity.findViewById(R.id.playBtn);
@@ -97,7 +103,9 @@ public class MainUI implements PlayerUIInterface {
                 DrawableMapper.getShufflePressedDrawable(uiType)
         );
 
+
         setUpDrawables();
+        setDrawerDimension();
         setUpColors();
         setUpAnimations();
 
@@ -185,7 +193,8 @@ public class MainUI implements PlayerUIInterface {
         }
     }
 
-    protected void setUpDrawables(){
+    protected void setUpDrawables()
+    {
         playlistBtn.setImageDrawable(playlistDrawable);
         prevBtn.setImageDrawable(prevDrawable);
         playBtn.setImageDrawable(playDrawable);
@@ -195,14 +204,40 @@ public class MainUI implements PlayerUIInterface {
 
     protected void setUpColors()
     {
-        bottom.setBackgroundResource(
+        RelativeLayout bottomLayout = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
+
+        bottomLayout.setBackgroundResource(
                 ColorMapper.getBackgroundColor(uiType)
         );
+
+        drawerList.setBackgroundResource(
+                ColorMapper.getBackgroundColor(uiType)
+        );
+        ColorDrawable colorDrawable = new ColorDrawable(
+                mainActivity.getResources().getColor(
+                        ColorMapper.getListDividerColor(uiType)
+                )
+        );
+
+        drawerList.setDivider(colorDrawable);
+        drawerList.setDividerHeight(1);
+
         songTitle.setTextColor(
                 mainActivity.getResources().getColor(
                     ColorMapper.getSonglabelColor(uiType)
                 )
         );
+    }
+
+    protected void setDrawerDimension()
+    {
+        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == mainActivity.getResources().getConfiguration().orientation) ?
+                mainActivity.getResources().getDisplayMetrics().widthPixels/4 :
+                mainActivity.getResources().getDisplayMetrics().widthPixels/4;
+
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
+        params.width = drawerWidth;
+        drawerList.setLayoutParams(params);
     }
 
     protected void setUpAnimations()
