@@ -5,8 +5,11 @@
     <string name="meta_data_unknown_current_song_title">Nothing is playing.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
 
+    <!--Activities-->
     <string name="app_name">SkipShuffle</string>
-    <string name="playlist">Playlist view</string>
+    <string name="activity_playlist">Current Playlist</string>
+    <string name="activity_playlist_selector">Select Music</string>
+
     <string name="menu_refresh">Refresh</string>
     <string name="title_activity_playlist">Playlist</string>
     <string name="action_settings">Settings</string>

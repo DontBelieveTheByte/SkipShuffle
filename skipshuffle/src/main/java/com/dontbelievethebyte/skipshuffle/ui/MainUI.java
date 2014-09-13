@@ -5,12 +5,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ViewConfiguration;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.support.v7.app.ActionBar;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
@@ -102,7 +104,6 @@ public class MainUI implements PlayerUIInterface {
         shufflePressedDrawable = mainActivity.getResources().getDrawable(
                 DrawableMapper.getShufflePressedDrawable(uiType)
         );
-
 
         setUpDrawables();
         setDrawerDimension();
@@ -205,21 +206,36 @@ public class MainUI implements PlayerUIInterface {
     protected void setUpColors()
     {
         RelativeLayout bottomLayout = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
-
         bottomLayout.setBackgroundResource(
                 ColorMapper.getBackgroundColor(uiType)
         );
 
-        drawerList.setBackgroundResource(
-                ColorMapper.getBackgroundColor(uiType)
+        ColorDrawable actionBarColorDrawable = new ColorDrawable(
+                mainActivity.getResources().getColor(
+                        ColorMapper.getActionBarColor(uiType)
+                )
         );
-        ColorDrawable colorDrawable = new ColorDrawable(
+        ActionBar actionBar = mainActivity.getSupportActionBar();
+        if (null != actionBar) {
+            actionBar.setBackgroundDrawable(actionBarColorDrawable);
+            if (ViewConfiguration.get(mainActivity).hasPermanentMenuKey()) {
+                actionBar.hide();
+            }
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        ColorDrawable navDrawerColorDrawable = new ColorDrawable(
                 mainActivity.getResources().getColor(
                         ColorMapper.getListDividerColor(uiType)
                 )
         );
 
-        drawerList.setDivider(colorDrawable);
+        drawerList.setBackgroundResource(
+                ColorMapper.getBackgroundColor(uiType)
+        );
+
+
+        drawerList.setDivider(navDrawerColorDrawable);
         drawerList.setDividerHeight(1);
 
         songTitle.setTextColor(

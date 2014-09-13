@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,13 +10,16 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -31,7 +33,7 @@ import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
-public abstract class BaseActivity extends Activity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
+public abstract class BaseActivity extends ActionBarActivity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
 
     protected static final String TAG = "SkipShuffle";
     protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
     protected MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     private static final int FILE_PICKER_REQUEST_CODE = 9002;
+    private boolean isOptionsMenuOpen = false;
 
     abstract protected void setUI(Integer type);
 
@@ -113,7 +116,7 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
         } else {
             menuInflater.inflate(R.menu.main_no_vibrator, menu);
         }
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -197,6 +200,27 @@ public abstract class BaseActivity extends Activity implements MediaBroadcastRec
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU && ViewConfiguration.get(this).hasPermanentMenuKey()) {
+            android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+            if (actionBar.isShowing()) {
+                if (isOptionsMenuOpen) {
+                    closeOptionsMenu();
+                    isOptionsMenuOpen = false;
+                    actionBar.hide();
+                } else {
+                    openOptionsMenu();
+                    isOptionsMenuOpen = true;
+                }
+            } else {
+                actionBar.show();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     protected void showThemeSelectionDialog()

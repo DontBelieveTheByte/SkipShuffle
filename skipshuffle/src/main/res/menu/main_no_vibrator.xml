@@ -1,19 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:skipshuffle="http://schemas.android.com/apk/res-auto"
     tools:context="com.dontbelievethebyte.skipshuffle.activities.MainActivity" >
     <item
         android:title="@string/menu_refresh"
         android:id="@+id/refresh_media"
-        android:icon="@drawable/neon_refresh">
+        android:icon="@drawable/neon_refresh"
+        skipshuffle:showAsAction="ifRoom">
     </item>
     <item
         android:title="@string/menu_theme"
         android:id="@+id/theme"
-        android:icon="@drawable/neon_folder">
+        android:icon="@drawable/neon_folder"
+        skipshuffle:showAsAction="ifRoom">
     </item>
     <item
         android:title="@string/menu_set_music_dir"
         android:id="@+id/set_target_directories"
-        android:icon="@drawable/neon_folder">
+        android:icon="@drawable/neon_folder"
+        skipshuffle:showAsAction="ifRoom">
     </item>
 </menu>
