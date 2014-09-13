@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -73,14 +73,25 @@ public class FilePickerActivity extends ListActivity {
 
         setListAdapter(mAdapter);
 
-		Button ok = (Button)findViewById(R.id.ok);
+		ImageButton ok = (ImageButton)findViewById(R.id.ok);
+
 		ok.setOnClickListener( new OnClickListener() {
 			public void onClick(View v) {
 				returnResults();
 			}
 		});
 
-		this.getListView().setLongClickable(true);
+        ImageButton cancel = (ImageButton)findViewById(R.id.cancel);
+
+        cancel.setOnClickListener( new OnClickListener() {
+            public void onClick(View v) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+
+
+        this.getListView().setLongClickable(true);
 
         this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {

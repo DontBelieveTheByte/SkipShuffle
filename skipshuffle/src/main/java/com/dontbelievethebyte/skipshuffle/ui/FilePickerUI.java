@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -10,7 +11,6 @@ import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
 
 public class FilePickerUI {
     private FilePickerActivity filePickerActivity;
-    private ListView listView;
     private int uiType;
     private Typeface typeface;
 
@@ -20,9 +20,10 @@ public class FilePickerUI {
         uiType = this.filePickerActivity.getPreferencesHelper().getUIType();
         filePickerActivity.setContentView(R.layout.common_file_picker);
 
-        listView = (ListView) filePickerActivity.findViewById(android.R.id.list);
+        ListView listView = (ListView) filePickerActivity.findViewById(android.R.id.list);
 
-        setColors();
+        setDrawables();
+        setColors(listView);
     }
 
     public Typeface getTypeFace()
@@ -33,7 +34,7 @@ public class FilePickerUI {
         return typeface;
     }
 
-    private void setColors()
+    private void setColors(ListView listView)
     {
         RelativeLayout backgroundLayout = (RelativeLayout) filePickerActivity.findViewById(R.id.file_picker_background_layout);
 
@@ -47,4 +48,20 @@ public class FilePickerUI {
         listView.setDivider(colorDrawable);
         listView.setDividerHeight(1);
     }
+    private void setDrawables()
+    {
+        ImageButton okButton = (ImageButton) filePickerActivity.findViewById(R.id.ok);
+        okButton.setImageDrawable(
+                filePickerActivity.getResources().getDrawable(
+                    DrawableMapper.getOkDrawable(uiType)
+                )
+        );
+        ImageButton cancelButton = (ImageButton) filePickerActivity.findViewById(R.id.cancel);
+        cancelButton.setImageDrawable(
+                filePickerActivity.getResources().getDrawable(
+                        DrawableMapper.getCancelDrawable(uiType)
+                )
+        );
+    }
+
 }

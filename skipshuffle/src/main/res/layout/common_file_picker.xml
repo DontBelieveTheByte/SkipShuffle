@@ -11,15 +11,32 @@
         android:orientation="vertical"
         android:id="@+id/file_picker_background_layout">
 
-        <Button
+        <ImageButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/file_picker_done"
+            android:src="@drawable/neon_cancel_states"
+            android:background="@android:color/transparent"
+            android:layout_below="@android:id/list"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="47dp" />
+
+        <ImageButton
             android:id="@+id/ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
+            android:text="@string/file_picker_done"
+            android:src="@drawable/neon_ok_states"
+            android:background="@android:color/transparent"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/file_picker_done" />
+            android:layout_toRightOf="@+id/cancel"
+            android:layout_toEndOf="@+id/cancel" />
 
         <ListView
             android:id="@android:id/list"
