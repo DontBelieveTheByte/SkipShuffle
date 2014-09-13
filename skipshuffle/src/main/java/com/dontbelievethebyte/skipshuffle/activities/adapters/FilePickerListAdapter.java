@@ -30,7 +30,6 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 
     private List<File> files;
     private ArrayList<File> checkedFiles = new ArrayList<File>();
-    private PreferencesHelper preferencesHelper;
     private Drawable folderDrawable;
     private int fileNameColor;
 
@@ -43,7 +42,6 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         );
 
         this.files = files;
-        this.preferencesHelper = preferencesHelper;
 
         folderDrawable = context.getResources().getDrawable(
                     DrawableMapper.getFolderDrawable(preferencesHelper.getUIType()
@@ -151,14 +149,13 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                if ( isChecked ){
-                    if (!checkedFiles.contains(file))
+                if (isChecked){
+                    if (!checkedFiles.contains(file)) {
                         checkedFiles.add(file);
-                }
-                else {
+                    }
+                } else {
                     checkedFiles.remove(file);
                 }
-
             }
         });
 
