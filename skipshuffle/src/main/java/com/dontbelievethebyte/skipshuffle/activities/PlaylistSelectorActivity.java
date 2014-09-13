@@ -154,6 +154,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
         ui.prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
+        setUpDrawer();
     }
 
     @Override

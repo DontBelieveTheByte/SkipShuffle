@@ -120,6 +120,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         ui.reboot();
+        setUpDrawer();
     }
 
 }
