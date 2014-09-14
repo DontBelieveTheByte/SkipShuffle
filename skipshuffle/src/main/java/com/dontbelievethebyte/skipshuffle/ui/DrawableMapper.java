@@ -8,13 +8,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_cancel_states;
+                return R.drawable.cancel_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_cancel_states;
+                return R.drawable.cancel_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_cancel_states;
+                return R.drawable.cancel_states_neon;
             default:
-                return R.drawable.neon_cancel_states;
+                return R.drawable.cancel_states_neon;
         }
     }
 
@@ -22,13 +22,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_checkbox_states;
+                return R.drawable.checkbox_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_checkbox_states;
+                return R.drawable.checkbox_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_checkbox_states;
+                return R.drawable.checkbox_states_neon;
             default:
-                return R.drawable.neon_checkbox_states;
+                return R.drawable.checkbox_states_neon;
         }
     }
 
@@ -36,13 +36,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_ok_states;
+                return R.drawable.ok_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_ok_states;
+                return R.drawable.ok_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_ok_states;
+                return R.drawable.ok_states_neon;
             default:
-                return R.drawable.neon_ok_states;
+                return R.drawable.ok_states_neon;
         }
     }
 
@@ -50,13 +50,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_play_states;
+                return R.drawable.play_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_play_states;
+                return R.drawable.play_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_play_states;
+                return R.drawable.play_states_neon;
             default:
-                return R.drawable.neon_play_states;
+                return R.drawable.play_states_neon;
         }
     }
 
@@ -64,13 +64,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_play_btn_pressed;
+                return R.drawable.play_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_play_btn_pressed;
+                return R.drawable.play_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_play_btn_pressed;
+                return R.drawable.play_btn_pressed_neon;
             default:
-                return R.drawable.neon_play_btn_pressed;
+                return R.drawable.play_btn_pressed_neon;
         }
     }
 
@@ -78,13 +78,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_pause_states;
+                return R.drawable.pause_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_pause_states;
+                return R.drawable.pause_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_pause_states;
+                return R.drawable.pause_states_neon;
             default:
-                return R.drawable.neon_pause_states;
+                return R.drawable.pause_states_neon;
         }
     }
 
@@ -92,13 +92,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_pause_btn_pressed;
+                return R.drawable.pause_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_pause_btn_pressed;
+                return R.drawable.pause_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_pause_btn_pressed;
+                return R.drawable.pause_btn_pressed_neon;
             default:
-                return R.drawable.neon_pause_btn_pressed;
+                return R.drawable.pause_btn_pressed_neon;
         }
     }
 
@@ -106,13 +106,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_prev_states;
+                return R.drawable.prev_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_prev_states;
+                return R.drawable.prev_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_prev_states;
+                return R.drawable.prev_states_neon;
             default:
-                return R.drawable.neon_prev_states;
+                return R.drawable.prev_states_neon;
         }
     }
 
@@ -120,13 +120,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_prev_btn_pressed;
+                return R.drawable.prev_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_prev_btn_pressed;
+                return R.drawable.prev_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_prev_btn_pressed;
+                return R.drawable.prev_btn_pressed_neon;
             default:
-                return R.drawable.neon_prev_btn_pressed;
+                return R.drawable.prev_btn_pressed_neon;
         }
     }
 
@@ -134,13 +134,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_skip_states;
+                return R.drawable.skip_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_skip_states;
+                return R.drawable.skip_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_skip_states;
+                return R.drawable.skip_states_neon;
             default:
-                return R.drawable.neon_skip_states;
+                return R.drawable.skip_states_neon;
         }
     }
 
@@ -148,13 +148,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_next_btn_pressed;
+                return R.drawable.next_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_next_btn_pressed;
+                return R.drawable.next_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_next_btn_pressed;
+                return R.drawable.next_btn_pressed_neon;
             default:
-                return R.drawable.neon_next_btn_pressed;
+                return R.drawable.next_btn_pressed_neon;
         }
     }
 
@@ -162,13 +162,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_shuffle_states;
+                return R.drawable.shuffle_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_shuffle_states;
+                return R.drawable.shuffle_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_shuffle_states;
+                return R.drawable.shuffle_states_neon;
             default:
-                return R.drawable.neon_shuffle_states;
+                return R.drawable.shuffle_states_neon;
         }
     }
 
@@ -176,13 +176,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_shuffle_btn_pressed;
+                return R.drawable.shuffle_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_shuffle_btn_pressed;
+                return R.drawable.shuffle_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_shuffle_btn_pressed;
+                return R.drawable.shuffle_btn_pressed_neon;
             default:
-                return R.drawable.neon_shuffle_btn_pressed;
+                return R.drawable.shuffle_btn_pressed_neon;
         }
     }
 
@@ -190,13 +190,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_playlist_states;
+                return R.drawable.playlist_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_playlist_states;
+                return R.drawable.playlist_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_playlist_states;
+                return R.drawable.playlist_states_neon;
             default:
-                return R.drawable.neon_playlist_states;
+                return R.drawable.playlist_states_neon;
         }
     }
 
@@ -204,13 +204,13 @@ public class DrawableMapper {
     {
         switch (uiType){
             case UITypes.MONO_LIGHT :
-                return R.drawable.mono_light_folder;
+                return R.drawable.folder_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.mono_dark_folder;
+                return R.drawable.folder_mono_dark;
             case UITypes.NEON :
-                return R.drawable.neon_folder;
+                return R.drawable.folder_neon;
             default:
-                return R.drawable.neon_folder;
+                return R.drawable.folder_neon;
         }
     }
 }

@@ -27,9 +27,6 @@ public class MainActivity extends BaseActivity {
                         SkipShuffleMediaPlayer.class
                 )
         );
-
-        //Set up navigation drawer for selecting playlist.
-        setUpDrawer();
     }
 
     @Override
@@ -57,6 +54,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setUI(Integer type) {
         ui = UIFactory.createMainUI(this, type);
+
+        //Useful for parent class.
+        playerUIInterface = ui;
+
         //Register haptic feedback for all buttons.
         ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
         ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
@@ -120,6 +121,8 @@ public class MainActivity extends BaseActivity {
             }
         });
         ui.reboot();
+
+        //Set up navigation drawer for selecting playlist.
         setUpDrawer();
     }
 

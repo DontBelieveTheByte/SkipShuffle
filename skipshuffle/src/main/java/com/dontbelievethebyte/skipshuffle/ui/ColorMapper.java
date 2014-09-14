@@ -7,13 +7,13 @@ public class ColorMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.color.mono_light_background;
+                return R.color.background_mono_light;
             case UITypes.MONO_DARK :
-                return R.color.mono_dark_background;
+                return R.color.background_mono_dark;
             case UITypes.NEON :
-                return R.color.neon_background;
+                return R.color.background_neon;
             default:
-                return R.color.neon_background;
+                return R.color.background_neon;
         }
     }
 
@@ -21,13 +21,13 @@ public class ColorMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.color.mono_light_song_label;
+                return R.color.song_label_mono_light;
             case UITypes.MONO_DARK :
-                return R.color.mono_dark_song_label;
+                return R.color.song_label_mono_dark;
             case UITypes.NEON :
-                return R.color.neon_song_label;
+                return R.color.song_label_neon;
             default:
-                return R.color.neon_song_label;
+                return R.color.song_label_neon;
         }
     }
 
@@ -35,13 +35,27 @@ public class ColorMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.color.mono_light_list_divider;
+                return R.color.list_divider_mono_light;
             case UITypes.MONO_DARK :
-                return R.color.mono_dark_list_divider;
+                return R.color.list_divider_mono_dark;
             case UITypes.NEON :
-                return R.color.neon_list_divider;
+                return R.color.list_divider_neon;
             default:
-                return R.color.neon_list_divider;
+                return R.color.list_divider_neon;
+        }
+    }
+
+    public static int getNavDrawerTextColor(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.list_divider_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.list_divider_mono_dark;
+            case UITypes.NEON :
+                return R.color.list_divider_neon;
+            default:
+                return R.color.list_divider_neon;
         }
     }
 }

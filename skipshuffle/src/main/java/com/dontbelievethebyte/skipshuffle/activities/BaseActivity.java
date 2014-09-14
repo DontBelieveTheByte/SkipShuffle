@@ -20,10 +20,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.util.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.activities.util.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.callback.MediaBroadcastReceiverCallback;
@@ -31,6 +31,7 @@ import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 public abstract class BaseActivity extends ActionBarActivity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
@@ -40,10 +41,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected MediaScannerDialog mediaScannerDialog;
 
     protected PreferencesHelper preferencesHelper;
-    protected String[] drawerMenuTitles;
-    protected DrawerLayout drawerLayout;
-    protected ListView drawerList;
     protected MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
+    protected PlayerUIInterface playerUIInterface;
 
     private static final int FILE_PICKER_REQUEST_CODE = 9002;
     private boolean isOptionsMenuOpen = false;
@@ -263,20 +262,22 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
     protected void setUpDrawer()
     {
-        drawerMenuTitles = getResources().getStringArray(R.array.drawer_menu);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerList = (ListView) findViewById(R.id.left_drawer1);
-        drawerList.setAdapter(new ArrayAdapter<String>(
-                        this,
-                        android.R.layout.simple_list_item_1,
-                        drawerMenuTitles
-                )
+        ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
+
+        drawerList.setAdapter(
+            new NavigationDrawerAdapter(
+                    this,
+                    R.layout.common_drawer_list_item,
+                    getResources().getStringArray(R.array.drawer_menu),
+                    preferencesHelper,
+                    playerUIInterface.getTypeFace()
+            )
         );
         drawerList.setOnTouchListener(onTouchDownHapticFeedback);
         drawerList.setOnItemClickListener(
                 new NavDrawerClickListener(
                         this,
-                        drawerLayout
+                        (DrawerLayout) findViewById(R.id.drawer_layout)
                 )
         );
     }

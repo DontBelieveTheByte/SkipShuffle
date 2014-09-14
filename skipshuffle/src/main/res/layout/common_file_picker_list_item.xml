@@ -3,7 +3,7 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
-  android:layout_height="@dimen/common_single_playlist_item_w_h"
+  android:layout_height="@dimen/common_single_list_item_w_h"
   android:orientation="horizontal">
   <ImageView
   	  android:id="@+id/file_picker_image"
@@ -24,7 +24,7 @@
 	  android:textSize="28sp"
 	  android:layout_marginLeft="10dip"
       android:layout_marginStart="@dimen/null_size"
-      android:textColor="@color/neon_song_label"
+      android:textColor="@color/song_label_neon"
 	  android:singleLine="true"
 	  android:text="@string/file_picker_done"/>
   
@@ -34,7 +34,7 @@
       android:layout_height="40dp"
       android:focusable="false"
       android:button="@android:color/transparent"
-      android:background="@drawable/neon_checkbox_states"
+      android:background="@drawable/checkbox_states_neon"
       android:layout_marginRight="25dp"
       android:layout_marginEnd="@dimen/null_size"
       android:layout_gravity="end|center_vertical"

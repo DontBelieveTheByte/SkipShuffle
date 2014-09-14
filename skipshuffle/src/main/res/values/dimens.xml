@@ -193,17 +193,25 @@
     <dimen name="common_xlarge_land_row2_bottom">10dp</dimen>
     <dimen name="common_xlarge_port_row2_bottom">30dp</dimen>
 
-    <!--Playlist stuff-->
-    <dimen name="common_playlist_divider_height">1dp</dimen>
-    <dimen name="common_playlist_padding_top">12dp</dimen>
-    <dimen name="common_playlist_padding_left_right">4dp</dimen>
-    <dimen name="common_playlist_buttons_row_h">64dp</dimen>
-    <dimen name="common_playlist_buttons_w_h">48dp</dimen>
-    <dimen name="common_playlist_buttons_separator">8dp</dimen>
+    <!--Navigation drawer stuff-->
+    <dimen name="common_navdrawer_padding_top">12dp</dimen>
+    <dimen name="common_navdrawer_item_text_size">48sp</dimen>
+    <dimen name="common_navdrawer_item_text_padding_left">15dp</dimen>
+    <dimen name="common_navdrawer_item_text_padding_top">8dp</dimen>
+    <dimen name="common_navdrawer_item_text_padding_bottom">8dp</dimen>
 
-    <!--Single playlist item layout-->
+    <!--List stuff-->
+    <dimen name="common_list_divider_height">1dp</dimen>
+    <dimen name="common_list_padding_top">12dp</dimen>
+    <dimen name="common_list_padding_left_right">4dp</dimen>
+    <dimen name="common_list_buttons_row_h">64dp</dimen>
+    <dimen name="common_list_buttons_w_h">48dp</dimen>
+    <dimen name="common_list_buttons_separator">8dp</dimen>
 
-    <dimen name="common_single_playlist_item_w_h">72dp</dimen>
+    <!--Single list items layout-->
+
+    <dimen name="common_single_list_item_w_h">72dp</dimen>
+
     <dimen name="common_single_playlist_item_image_padding">12dp</dimen>
     <dimen name="common_single_playlist_item_image_margin_right">2dp</dimen>
     <dimen name="common_single_playlist_item_track_title_height">38dp</dimen>

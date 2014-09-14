@@ -1,13 +1,13 @@
 <RelativeLayout
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/common_single_playlist_item_w_h"
+    android:layout_height="@dimen/common_single_list_item_w_h"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@android:color/transparent"
     android:clickable="false">
 
     <ImageView
-        android:layout_width="@dimen/common_single_playlist_item_w_h"
-        android:layout_height="@dimen/common_single_playlist_item_w_h"
+        android:layout_width="@dimen/common_single_list_item_w_h"
+        android:layout_height="@dimen/common_single_list_item_w_h"
         android:id="@+id/track_image"
         android:layout_marginRight="@dimen/common_single_playlist_item_image_margin_right"
         android:layout_marginEnd="@dimen/null_size"
@@ -26,7 +26,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:textSize="@dimen/common_single_playlist_item_track_title_text_size"
-        android:textColor="@color/neon_single_playlist_item_track_title"
+        android:textColor="@color/playlist_item_track_title_neon"
         android:paddingTop="@dimen/common_single_playlist_item_track_title_padding_top"
         android:paddingRight="@dimen/common_single_playlist_item_track_title_padding_right"
         android:paddingEnd="@dimen/null_size"
@@ -45,7 +45,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:textStyle="italic"
-        android:textColor="@color/neon_single_playlist_item_artist_title"
+        android:textColor="@color/single_playlist_item_artist_title_neon"
         android:paddingRight="@dimen/common_single_playlist_item_track_artist_padding_right"
         android:paddingEnd="@dimen/null_size"
         android:paddingLeft="@dimen/null_size"

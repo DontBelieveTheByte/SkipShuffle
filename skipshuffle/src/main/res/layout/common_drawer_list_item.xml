@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:orientation="horizontal">
+    <TextView
+  	    android:id="@+id/drawer_item_text"
+  	    android:layout_width="@dimen/null_size"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1"
+        android:paddingTop="@dimen/common_navdrawer_item_text_padding_top"
+        android:paddingBottom="@dimen/common_navdrawer_item_text_padding_bottom"
+        android:paddingLeft="@dimen/common_navdrawer_item_text_padding_left"
+        android:paddingRight="@dimen/null_size"
+        android:paddingStart="@dimen/null_size"
+        android:layout_gravity="start|center_vertical"
+        android:textSize="@dimen/common_navdrawer_item_text_size"
+        android:textColor="@color/song_label_neon"
+	    android:singleLine="true"
+	    android:text="@string/file_picker_done"/>
+</LinearLayout>

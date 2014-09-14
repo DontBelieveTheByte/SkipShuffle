@@ -19,34 +19,48 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
     }
 
     private LayoutInflater layoutInflater;
-    private int mSelectedItem;
-    private int selectedTextBackgroundColor;
     private Typeface typeface;
+    private int layoutRessource;
+    private int selectedItem;
+    private int selectedTextBackgroundColor;
+    private int uiType;
 
-    public NavigationDrawerAdapter(Context context, int resource, String[] objects, PreferencesHelper preferencesHelper, Typeface typeface) {
-        super(context, resource, objects);
+    public NavigationDrawerAdapter(Context context, int resource, String[] strings, PreferencesHelper preferencesHelper, Typeface typeface)
+    {
+        super(context, resource, strings);
         layoutInflater = LayoutInflater.from(context);
         this.typeface = typeface;
-
-
+        layoutRessource = resource;
+        this.uiType = preferencesHelper.getUIType();
         selectedTextBackgroundColor = ColorMapper.getListDividerColor(preferencesHelper.getUIType());
     }
-    public int getSelectedItem() {
-        return mSelectedItem;
+    public int getSelectedItem()
+    {
+        return selectedItem;
     }
-    public void setSelectedItem(int selectedItem) {
-        mSelectedItem = selectedItem;
+    public void setSelectedItem(int selectedItem)
+    {
+        this.selectedItem = selectedItem;
+        notifyDataSetChanged();
+        //Trigger from activity.
+        //private NavigationDrawerAdapter mAdapter;
+        //...
+        //private void selectItem(int position) {
+        //        mAdapter.setSelectedItem(position);
+        //        ...
+        //}
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         //Get item TextView
         ViewHolder viewHolder;
 
         if (null == convertView) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
-                    R.layout.common_playlist_item,
+                    layoutRessource,
                     null)
             ;
             convertView.setTag(viewHolder);
@@ -56,33 +70,23 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
 
         viewHolder.title = setTitle(
                 convertView,
-                R.id.track_title,
-                position == mSelectedItem
+                getItem(position),
+                R.id.drawer_item_text
         );
+        if (position == selectedItem) {
+            convertView.setBackgroundColor(selectedTextBackgroundColor);
+        }
         return convertView;
     }
 
-    private TextView setTitle(View view, int resourceId, boolean selected)
+    private TextView setTitle(View view, String text, int resourceId)
     {
         TextView tv = (TextView) view.findViewById(resourceId);
-
-        if (selected) {
-            tv.setBackgroundColor(selectedTextBackgroundColor);
-        }
-
         if (null != typeface) {
             tv.setTypeface(typeface);
         }
-
-//        tv.setText(title);
+        tv.setText(text);
+        tv.setTextColor(ColorMapper.getSonglabelColor(uiType));
         return tv;
     }
 }
-
-//Trigger from activity.
-//private NavigationDrawerAdapter mAdapter;
-//...
-//private void selectItem(int position) {
-//        mAdapter.setSelectedItem(position);
-//        ...
-//}

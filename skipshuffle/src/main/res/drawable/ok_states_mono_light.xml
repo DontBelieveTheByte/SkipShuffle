@@ -2,14 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/neon_cancel"
+        android:drawable="@drawable/ok_mono_light_"
         android:state_pressed="false"
     />
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/neon_cancel_pressed"/>
+        android:drawable="@drawable/ok_pressed_mono_light"/>
     <item android:state_focused="true"
-        android:drawable="@drawable/neon_cancel_pressed" />
+        android:drawable="@drawable/ok_pressed_mono_light" />
     <item android:state_hovered="true"
-        android:drawable="@drawable/neon_cancel_pressed" />
+        android:drawable="@drawable/ok_pressed_mono_light" />
 </selector>

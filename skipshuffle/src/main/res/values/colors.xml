@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="neon_background">#1E2C56</color>
-    <color name="neon_nav_drawer_background">#ffff7f00</color>
-    <color name="neon_nav_drawer_divider">#ffff7f00</color>
-    <color name="neon_list_divider">#ffff00d1</color>
-    <color name="neon_song_label">#ffff7f00</color>
-    <color name="neon_single_playlist_item_track_title">#ff6aff09</color>
-    <color name="neon_single_playlist_item_artist_title">#ffffb100</color>
+    <color name="background_neon">#1E2C56</color>
+    <color name="background_mono_light">#ffc5c5c5</color>
+    <color name="background_mono_dark">#ff1a1a1a</color>
 
-    <color name="mono_light_background">#ffc5c5c5</color>
-    <color name="mono_light_nav_drawer_background">#ffff7f00</color>
-    <color name="mono_light_nav_drawer_divider">#ffff7f00</color>
-    <color name="mono_light_list_divider">#ff1a1a1a</color>
-    <color name="mono_light_song_label">#ff1a1a1a</color>
-    <color name="mono_light_playlist_item_track_title">#ff1a1a1a</color>
-    <color name="mono_light_playlist_item_artist_title">#ff2f2f2f</color>
+    <color name="nav_drawer_background_neon">#ffff7f00</color>
+    <color name="nav_drawer_background_mono_light">#ffff7f00</color>
+    <color name="nav_drawer_background_mono_dark">#ffff7f00</color>
 
-    <color name="mono_dark_background">#ff1a1a1a</color>
-    <color name="mono_dark_nav_drawer_background">#ffff7f00</color>
-    <color name="mono_dark_nav_drawer_divider">#ffff7f00</color>
-    <color name="mono_dark_list_divider">#ffc5c5c5</color>
-    <color name="mono_dark_song_label">#ffc5c5c5</color>
-    <color name="mono_dark_playlist_item_track_title">#ffc5c5c5</color>
-    <color name="mono_dark_playlist_item_artist_title">#ffaeaeae</color>
+    <color name="nav_drawer_divider_neon">#ffff7f00</color>
+    <color name="nav_drawer_divider_mono_light">#ffff7f00</color>
+    <color name="nav_drawer_divider_mono_dark">#ffff7f00</color>
+
+    <color name="list_divider_neon">#ffff00d1</color>
+    <color name="list_divider_mono_light">#ff1a1a1a</color>
+    <color name="list_divider_mono_dark">#ffc5c5c5</color>
+
+    <color name="song_label_neon">#ffff7f00</color>
+    <color name="song_label_mono_light">#ff1a1a1a</color>
+    <color name="song_label_mono_dark">#ffc5c5c5</color>
+
+    <color name="playlist_item_track_title_neon">#ff6aff09</color>
+    <color name="playlist_item_track_title_mono_light">#ff1a1a1a</color>
+    <color name="playlist_item_track_title_mono_dark">#ffc5c5c5</color>
+
+    <color name="single_playlist_item_artist_title_neon">#ffffb100</color>
+    <color name="playlist_item_artist_title_mono_light">#ff2f2f2f</color>
+    <color name="playlist_item_artist_title_mono_dark">#ffaeaeae</color>
 
     <!--Action bar specific colors-->
     <color name="actionbar_background">#b4c5c5c5</color>
