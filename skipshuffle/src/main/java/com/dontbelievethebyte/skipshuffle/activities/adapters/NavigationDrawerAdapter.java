@@ -20,7 +20,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
 
     private LayoutInflater layoutInflater;
     private Typeface typeface;
-    private int layoutRessource;
+    private int layoutResource;
     private int selectedItem;
     private int selectedTextBackgroundColor;
     private int uiType;
@@ -30,7 +30,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
         super(context, resource, strings);
         layoutInflater = LayoutInflater.from(context);
         this.typeface = typeface;
-        layoutRessource = resource;
+        layoutResource = resource;
         this.uiType = preferencesHelper.getUIType();
         selectedTextBackgroundColor = ColorMapper.getListDividerColor(preferencesHelper.getUIType());
     }
@@ -60,7 +60,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
         if (null == convertView) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
-                    layoutRessource,
+                    layoutResource,
                     null)
             ;
             convertView.setTag(viewHolder);
