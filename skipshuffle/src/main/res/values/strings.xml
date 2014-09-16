@@ -71,7 +71,8 @@
     </string-array>
 
     <!--File picker-->
-    <string name="file_picker_done">Done</string>
+    <string name="file_picker_done">Ok, I\'m done.</string>
+    <string name="file_picker_cancel">Cancel</string>
 
     <!--Content description for accessibility-->
     <string name="accessibility_play_pause">Play/Pause</string>
