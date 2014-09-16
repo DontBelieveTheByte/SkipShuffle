@@ -20,18 +20,18 @@
             android:headerDividersEnabled="true"
             android:focusable="false"
             android:layout_weight="1"
-            android:dividerHeight="@dimen/common_list_divider_height"
+            android:dividerHeight="@dimen/list_divider_height"
             android:fastScrollEnabled="true"
             android:smoothScrollbar="true"
-            android:paddingTop="@dimen/common_list_padding_top"
-            android:paddingLeft="@dimen/common_list_padding_left_right"
-            android:paddingRight="@dimen/common_list_padding_left_right"
+            android:paddingTop="@dimen/list_padding_top"
+            android:paddingLeft="@dimen/list_padding_left_right"
+            android:paddingRight="@dimen/list_padding_left_right"
             android:divider="@color/list_divider_neon"
             android:drawSelectorOnTop="false" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/common_list_buttons_row_h"
+            android:layout_height="@dimen/list_buttons_row_h"
             android:orientation="horizontal"
             android:baselineAligned="false"
             android:id="@+id/playlist_controls"
@@ -39,44 +39,44 @@
             android:background="@color/background_neon">
 
             <ImageButton
-                android:layout_width="@dimen/common_list_buttons_w_h"
-                android:layout_height="@dimen/common_list_buttons_w_h"
+                android:layout_width="@dimen/list_buttons_w_h"
+                android:layout_height="@dimen/list_buttons_w_h"
                 android:id="@+id/playlist_layout_prev"
                 android:src="@drawable/prev_states_neon"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:layout_marginRight="@dimen/common_list_buttons_separator"
+                android:layout_marginRight="@dimen/list_buttons_separator"
                 android:layout_marginEnd="@dimen/null_size"/>
 
             <ImageButton
-                android:layout_width="@dimen/common_list_buttons_w_h"
-                android:layout_height="@dimen/common_list_buttons_w_h"
+                android:layout_width="@dimen/list_buttons_w_h"
+                android:layout_height="@dimen/list_buttons_w_h"
                 android:id="@+id/playlist_layout_shuffle"
                 android:longClickable="false"
                 android:src="@drawable/shuffle_states_neon"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:layout_marginLeft="@dimen/common_list_buttons_separator"
-                android:layout_marginRight="@dimen/common_list_buttons_separator" />
+                android:layout_marginLeft="@dimen/list_buttons_separator"
+                android:layout_marginRight="@dimen/list_buttons_separator" />
 
             <ImageButton
-                android:layout_width="@dimen/common_list_buttons_w_h"
-                android:layout_height="@dimen/common_list_buttons_w_h"
+                android:layout_width="@dimen/list_buttons_w_h"
+                android:layout_height="@dimen/list_buttons_w_h"
                 android:id="@+id/playlist_layout_play"
                 android:src="@drawable/play_states_neon"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:layout_marginLeft="@dimen/common_list_buttons_separator"
-                android:layout_marginRight="@dimen/common_list_buttons_separator" />
+                android:layout_marginLeft="@dimen/list_buttons_separator"
+                android:layout_marginRight="@dimen/list_buttons_separator" />
 
             <ImageButton
-                android:layout_width="@dimen/common_list_buttons_w_h"
-                android:layout_height="@dimen/common_list_buttons_w_h"
+                android:layout_width="@dimen/list_buttons_w_h"
+                android:layout_height="@dimen/list_buttons_w_h"
                 android:id="@+id/playlist_layout_skip"
                 android:src="@drawable/skip_states_neon"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:layout_marginLeft="@dimen/common_list_buttons_separator"
+                android:layout_marginLeft="@dimen/list_buttons_separator"
                 android:layout_marginStart="@dimen/null_size"
                 android:cropToPadding="false" />
 
@@ -92,11 +92,11 @@
     <!-- The navigation drawer -->
     <ListView
         android:id="@+id/left_drawer1"
-        android:layout_width="@dimen/common_large_port_nav_drawer_width"
+        android:layout_width="@dimen/large_port_nav_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@color/nav_drawer_divider_neon"
-        android:dividerHeight="@dimen/common_large_port_nav_drawer_divider_height"
+        android:dividerHeight="@dimen/large_port_nav_drawer_divider_height"
         android:background="@color/nav_drawer_background_neon"/>
 </android.support.v4.widget.DrawerLayout>
