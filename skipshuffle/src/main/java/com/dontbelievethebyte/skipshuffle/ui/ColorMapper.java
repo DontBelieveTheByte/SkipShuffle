@@ -3,7 +3,7 @@ package com.dontbelievethebyte.skipshuffle.ui;
 import com.dontbelievethebyte.skipshuffle.R;
 
 public class ColorMapper {
-    public static int getBackgroundColor(Integer uiType)
+    public static int getBackground(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -17,7 +17,7 @@ public class ColorMapper {
         }
     }
 
-    public static int getSonglabelColor(Integer uiType)
+    public static int getSongLabel(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -31,7 +31,7 @@ public class ColorMapper {
         }
     }
 
-    public static int getListDividerColor(Integer uiType)
+    public static int getListDivider(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -45,17 +45,31 @@ public class ColorMapper {
         }
     }
 
-    public static int getNavDrawerTextColor(Integer uiType)
+    public static int getNavDrawerBackground(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.color.list_divider_mono_light;
+                return R.color.nav_drawer_background_mono_light;
             case UITypes.MONO_DARK :
-                return R.color.list_divider_mono_dark;
+                return R.color.nav_drawer_background_mono_dark;
             case UITypes.NEON :
-                return R.color.list_divider_neon;
+                return R.color.nav_drawer_background_neon;
             default:
-                return R.color.list_divider_neon;
+                return R.color.nav_drawer_background_neon;
+        }
+    }
+
+    public static int getNavDrawerText(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.nav_drawer_text_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.nav_drawer_text_mono_dark;
+            case UITypes.NEON :
+                return R.color.nav_drawer_text_neon;
+            default:
+                return R.color.nav_drawer_text_neon;
         }
     }
 }

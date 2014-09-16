@@ -4,13 +4,17 @@
     <color name="background_mono_light">#ffc5c5c5</color>
     <color name="background_mono_dark">#ff1a1a1a</color>
 
-    <color name="nav_drawer_background_neon">#ffff7f00</color>
-    <color name="nav_drawer_background_mono_light">#ffff7f00</color>
-    <color name="nav_drawer_background_mono_dark">#ffff7f00</color>
+    <color name="nav_drawer_background_neon">#1E2C56</color>
+    <color name="nav_drawer_background_mono_light">#ffc5c5c5</color>
+    <color name="nav_drawer_background_mono_dark">#ff1a1a1a</color>
 
     <color name="nav_drawer_divider_neon">#ffff7f00</color>
     <color name="nav_drawer_divider_mono_light">#ffff7f00</color>
-    <color name="nav_drawer_divider_mono_dark">#ffff7f00</color>
+    <color name="nav_drawer_divider_mono_dark">#ffc5c5c5</color>
+
+    <color name="nav_drawer_text_neon">#ff6aff09</color>
+    <color name="nav_drawer_text_mono_light">#ff1a1a1a</color>
+    <color name="nav_drawer_text_mono_dark">#ffc5c5c5</color>
 
     <color name="list_divider_neon">#ffff00d1</color>
     <color name="list_divider_mono_light">#ff1a1a1a</color>

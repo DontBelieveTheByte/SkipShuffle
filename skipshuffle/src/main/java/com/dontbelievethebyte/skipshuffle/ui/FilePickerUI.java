@@ -38,11 +38,11 @@ public class FilePickerUI {
     {
         RelativeLayout backgroundLayout = (RelativeLayout) filePickerActivity.findViewById(R.id.file_picker_background_layout);
 
-        backgroundLayout.setBackgroundResource(ColorMapper.getBackgroundColor(uiType));
+        backgroundLayout.setBackgroundResource(ColorMapper.getBackground(uiType));
 
         ColorDrawable colorDrawable = new ColorDrawable(
                 filePickerActivity.getResources().getColor(
-                        ColorMapper.getListDividerColor(uiType)
+                        ColorMapper.getListDivider(uiType)
                 )
         );
         listView.setDivider(colorDrawable);

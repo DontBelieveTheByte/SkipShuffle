@@ -207,7 +207,7 @@ public class MainUI implements PlayerUIInterface {
     {
         RelativeLayout bottomLayout = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
         bottomLayout.setBackgroundResource(
-                ColorMapper.getBackgroundColor(uiType)
+                ColorMapper.getBackground(uiType)
         );
 
         ActionBar actionBar = mainActivity.getSupportActionBar();
@@ -220,12 +220,12 @@ public class MainUI implements PlayerUIInterface {
 
         ColorDrawable navDrawerColorDrawable = new ColorDrawable(
                 mainActivity.getResources().getColor(
-                        ColorMapper.getListDividerColor(uiType)
+                        ColorMapper.getListDivider(uiType)
                 )
         );
 
         drawerList.setBackgroundResource(
-                ColorMapper.getBackgroundColor(uiType)
+                ColorMapper.getNavDrawerBackground(uiType)
         );
 
         drawerList.setDivider(navDrawerColorDrawable);
@@ -233,7 +233,7 @@ public class MainUI implements PlayerUIInterface {
 
         songTitle.setTextColor(
                 mainActivity.getResources().getColor(
-                    ColorMapper.getSonglabelColor(uiType)
+                    ColorMapper.getSongLabel(uiType)
                 )
         );
     }

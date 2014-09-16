@@ -23,7 +23,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
     private int layoutResource;
     private int selectedItem;
     private int selectedTextBackgroundColor;
-    private int uiType;
+    private int textColor;
 
     public NavigationDrawerAdapter(Context context, int resource, String[] strings, PreferencesHelper preferencesHelper, Typeface typeface)
     {
@@ -31,8 +31,10 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
         layoutInflater = LayoutInflater.from(context);
         this.typeface = typeface;
         layoutResource = resource;
-        this.uiType = preferencesHelper.getUIType();
-        selectedTextBackgroundColor = ColorMapper.getListDividerColor(preferencesHelper.getUIType());
+        selectedTextBackgroundColor = ColorMapper.getListDivider(preferencesHelper.getUIType());
+        textColor = context.getResources().getColor(
+                ColorMapper.getNavDrawerText(preferencesHelper.getUIType())
+        );
     }
     public int getSelectedItem()
     {
@@ -86,7 +88,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
             tv.setTypeface(typeface);
         }
         tv.setText(text);
-        tv.setTextColor(ColorMapper.getSonglabelColor(uiType));
+        tv.setTextColor(textColor);
         return tv;
     }
 }

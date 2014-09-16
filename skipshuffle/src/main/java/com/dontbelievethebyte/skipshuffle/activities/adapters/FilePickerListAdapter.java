@@ -55,7 +55,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         checkBoxDrawable = DrawableMapper.getCheckboxDrawable(preferencesHelper.getUIType());
 
         fileNameColor = context.getResources().getColor(
-                ColorMapper.getListDividerColor(preferencesHelper.getUIType())
+                ColorMapper.getListDivider(preferencesHelper.getUIType())
         );
     }
 
