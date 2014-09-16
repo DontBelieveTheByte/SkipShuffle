@@ -73,6 +73,7 @@
     <!--File picker-->
     <string name="file_picker_done">Ok, I\'m done.</string>
     <string name="file_picker_cancel">Cancel</string>
+    <string name="file_picker_directory_empty">Nothing to show here.</string>
 
     <!--Content description for accessibility-->
     <string name="accessibility_play_pause">Play/Pause</string>
