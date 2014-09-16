@@ -3,15 +3,15 @@
     xmlns:skipshuffle="http://schemas.android.com/apk/res-auto"
     tools:context="com.dontbelievethebyte.skipshuffle.activities.MainActivity" >
     <item
-        android:title="@string/menu_refresh"
-        android:id="@+id/refresh_media"
-        android:icon="@drawable/ic_refresh"
-        skipshuffle:showAsAction="ifRoom">
-    </item>
-    <item
         android:title="@string/menu_theme"
         android:id="@+id/theme"
         android:icon="@drawable/ic_theme"
+        skipshuffle:showAsAction="ifRoom">
+    </item>
+    <item
+        android:title="@string/menu_refresh"
+        android:id="@+id/refresh_media"
+        android:icon="@drawable/ic_refresh"
         skipshuffle:showAsAction="ifRoom">
     </item>
     <item
