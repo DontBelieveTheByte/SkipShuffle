@@ -71,7 +71,7 @@ public class PlaylistAdapter extends BaseAdapter {
         if (null == convertView) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
-                    R.layout.common_playlist_item,
+                    R.layout.playlist_item,
                     null)
             ;
             convertView.setTag(viewHolder);

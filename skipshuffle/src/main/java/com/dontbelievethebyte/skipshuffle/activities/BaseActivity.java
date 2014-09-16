@@ -267,7 +267,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         drawerList.setAdapter(
             new NavigationDrawerAdapter(
                     this,
-                    R.layout.common_drawer_list_item,
+                    R.layout.drawer_list_item,
                     getResources().getStringArray(R.array.drawer_menu),
                     preferencesHelper,
                     playerUIInterface.getTypeFace()

@@ -59,7 +59,7 @@ public class MainUI implements PlayerUIInterface {
 
         uiType = mainActivity.getPreferencesHelper().getUIType();
 
-        mainActivity.setContentView(R.layout.common_activity_main);
+        mainActivity.setContentView(R.layout.activity_main);
 
         drawerList = (ListView) mainActivity.findViewById(R.id.left_drawer1);
 

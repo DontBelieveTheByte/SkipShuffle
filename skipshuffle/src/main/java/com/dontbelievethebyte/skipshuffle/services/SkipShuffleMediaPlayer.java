@@ -398,7 +398,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
         RemoteViews remoteViews = new RemoteViews(
                 getPackageName(),
-                R.layout.common_notification
+                R.layout.notification
         );
 
         remoteViews.setOnClickPendingIntent(

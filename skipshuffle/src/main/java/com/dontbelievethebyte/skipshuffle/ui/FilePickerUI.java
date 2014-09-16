@@ -18,7 +18,7 @@ public class FilePickerUI {
     {
         this.filePickerActivity = filePickerActivity;
         uiType = this.filePickerActivity.getPreferencesHelper().getUIType();
-        filePickerActivity.setContentView(R.layout.common_file_picker);
+        filePickerActivity.setContentView(R.layout.file_picker);
 
         ListView listView = (ListView) filePickerActivity.findViewById(android.R.id.list);
 

@@ -40,7 +40,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     {
         super(
                 context,
-                R.layout.common_file_picker_list_item,
+                R.layout.file_picker_list_item,
                 android.R.id.text1, files
         );
 
@@ -95,7 +95,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         if (null == convertView) {
             viewHolder = new ViewHolder();
             convertView = layoutInflater.inflate(
-                    R.layout.common_file_picker_list_item,
+                    R.layout.file_picker_list_item,
                     parent,
                     false
             );
