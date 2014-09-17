@@ -39,8 +39,10 @@
     <string name="menu_set_music_dir">Set music directories</string>
     <string name="menu_haptic_feedback">Haptic feedback toggle (vibration)</string>
 
-    <!--Themes selection dialog-->
-    <string name="dialog_title">Pick a theme</string>
+    <!-- Dialogs-->
+    <string name="dialog_theme_title">Pick a theme</string>
+    <string name="dialog_media_scan_title">Scan media directories</string>
+    <string name="dialog_media_scan_text">Do you want to search for music files?</string>
     <string name="dialog_positive">Select</string>
     <string name="dialog_negative">Cancel</string>
     <string-array name="dialog_theme_items">

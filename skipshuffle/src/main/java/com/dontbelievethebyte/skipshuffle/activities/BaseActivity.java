@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
@@ -159,6 +160,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onResume()
     {
         super.onResume();
+
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
@@ -188,13 +190,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                 if (null == preferencesHelper.getMediaDirectories()) {
                     pickMediaDirectories();
                 } else {
-                    if (null == mediaScannerDialog) {
-                        mediaScannerDialog = new MediaScannerDialog(
-                                this,
-                                new ProgressDialog(this)
-                        );
-                    }
-                    mediaScannerDialog.doScan();
+                    showMediaScanDialog();
                 }
                 return true;
             case R.id.set_target_directories:
@@ -234,7 +230,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void showThemeSelectionDialog()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.dialog_title));
+        builder.setTitle(getString(R.string.dialog_theme_title));
         builder.setSingleChoiceItems(
                 R.array.dialog_theme_items,
                 preferencesHelper.getUIType(),
@@ -258,6 +254,43 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         );
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    protected void showMediaScanDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.dialog_media_scan_title));
+        builder.setMessage(getString(R.string.dialog_media_scan_text));
+
+        builder.setPositiveButton(
+                R.string.dialog_positive,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                        mediaScannerDialog = new MediaScannerDialog(
+                                BaseActivity.this,
+                                new ProgressDialog(BaseActivity.this)
+                        );
+                        mediaScannerDialog.doScan();
+                    }
+                }
+        );
+
+        builder.setNegativeButton(
+                R.string.dialog_negative,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                }
+        );
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     protected void setUpDrawer()
@@ -284,8 +317,16 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
     protected void pickMediaDirectories()
     {
-        Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
-        BaseActivity.this.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
+        if (!(this instanceof FilePickerActivity)) {
+            Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
+            BaseActivity.this.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.media_scan_sel_target_directories,
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 
     public void preferenceChangedCallback(String prefsKey)
