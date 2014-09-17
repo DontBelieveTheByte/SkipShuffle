@@ -1,5 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
@@ -214,6 +215,14 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
     {
         preferencesHelper.getMediaDirectories();
         ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
+
+        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) ?
+                getResources().getDisplayMetrics().widthPixels/4 :
+                getResources().getDisplayMetrics().widthPixels/4;
+
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
+        params.width = drawerWidth;
+        drawerList.setLayoutParams(params);
 
         drawerList.setAdapter(
                 new NavigationDrawerAdapter(

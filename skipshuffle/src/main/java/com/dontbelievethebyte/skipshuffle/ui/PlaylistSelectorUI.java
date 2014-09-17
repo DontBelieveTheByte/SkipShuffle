@@ -27,8 +27,8 @@ public class PlaylistSelectorUI implements PlayerUIInterface {
     {
         this.playlistSelectorActivity = playlistActivity;
         uiType = this.playlistSelectorActivity.getPreferencesHelper().getUIType();
-        setDrawables();
-        setColors();
+        setUpDrawables();
+        setUpColors();
     }
 
     @Override
@@ -93,12 +93,12 @@ public class PlaylistSelectorUI implements PlayerUIInterface {
         return typeface;
     }
 
-    private void setDrawables()
+    private void setUpDrawables()
     {
 
     }
 
-    private void setColors()
+    private void setUpColors()
     {
 
     }

@@ -2,9 +2,7 @@ package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -57,8 +55,8 @@ public class FilePickerUI {
 //
         listView.setEmptyView(emptyView);
 
-        setDrawables();
-        setColors(listView);
+        setUpDrawables();
+        setUpColors(listView);
     }
 
     public Typeface getTypeFace()
@@ -69,7 +67,7 @@ public class FilePickerUI {
         return typeface;
     }
 
-    private void setColors(ListView listView)
+    private void setUpColors(ListView listView)
     {
         backgroundLayout.setBackgroundResource(ColorMapper.getBackground(uiType));
 
@@ -81,10 +79,8 @@ public class FilePickerUI {
         listView.setDivider(colorDrawable);
         listView.setDividerHeight((int)filePickerActivity.getResources().getDimension(R.dimen.list_divider_height));
     }
-    private void setDrawables()
+    private void setUpDrawables()
     {
-
-
         ImageButton okButton = (ImageButton) filePickerActivity.findViewById(R.id.ok);
         okButton.setImageDrawable(
                 filePickerActivity.getResources().getDrawable(

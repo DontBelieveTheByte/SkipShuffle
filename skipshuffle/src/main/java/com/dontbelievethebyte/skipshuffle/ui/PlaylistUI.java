@@ -103,12 +103,12 @@ public class PlaylistUI implements PlayerUIInterface {
         return typeface;
     }
 
-    private void setDrawables()
+    private void setUpDrawables()
     {
 
     }
 
-    private void setColors()
+    private void setUpColors()
     {
 
     }

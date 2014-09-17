@@ -1,10 +1,8 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.widget.DrawerLayout;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -47,8 +45,7 @@ public class MainUI implements PlayerUIInterface {
     protected TextView songTitle;
     protected Typeface typeface;
     protected ListView drawerList;
-
-
+    
     protected int uiType;
 
     public MainUI(MainActivity mainActivity)
@@ -104,7 +101,6 @@ public class MainUI implements PlayerUIInterface {
         );
 
         setUpDrawables();
-        setDrawerDimension();
         setUpColors();
         setUpAnimations();
 
@@ -226,17 +222,6 @@ public class MainUI implements PlayerUIInterface {
                     ColorMapper.getSongLabel(uiType)
                 )
         );
-    }
-
-    protected void setDrawerDimension()
-    {
-        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == mainActivity.getResources().getConfiguration().orientation) ?
-                mainActivity.getResources().getDisplayMetrics().widthPixels/4 :
-                mainActivity.getResources().getDisplayMetrics().widthPixels/4;
-
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
-        params.width = drawerWidth;
-        drawerList.setLayoutParams(params);
     }
 
     protected void setUpAnimations()
