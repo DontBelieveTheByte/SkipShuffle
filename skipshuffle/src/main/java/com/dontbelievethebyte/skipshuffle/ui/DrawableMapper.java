@@ -1,9 +1,9 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-
 import com.dontbelievethebyte.skipshuffle.R;
 
 public class DrawableMapper {
+
     public static int getBackDrawable(Integer uiType)
     {
         switch (uiType) {
@@ -154,6 +154,20 @@ public class DrawableMapper {
                 return R.drawable.prev_btn_pressed_neon;
             default:
                 return R.drawable.prev_btn_pressed_neon;
+        }
+    }
+
+    public static int getPrevRemoveDrawable(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.drawable.remove_states_mono_light;
+            case UITypes.MONO_DARK :
+                return R.drawable.remove_states_mono_dark;
+            case UITypes.NEON :
+                return R.drawable.remove_states_neon;
+            default:
+                return R.drawable.remove_states_neon;
         }
     }
 
