@@ -20,6 +20,10 @@
     <color name="list_divider_mono_light">#ff1a1a1a</color>
     <color name="list_divider_mono_dark">#ffc5c5c5</color>
 
+    <color name="list_empty_text_neon">#ff6aff09</color>
+    <color name="list_empty_text_mono_light">#ff1a1a1a</color>
+    <color name="list_empty_text_mono_dark">#ffc5c5c5</color>
+
     <color name="song_label_neon">#ffff7f00</color>
     <color name="song_label_mono_light">#ff1a1a1a</color>
     <color name="song_label_mono_dark">#ffc5c5c5</color>

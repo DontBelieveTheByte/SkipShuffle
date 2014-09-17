@@ -16,7 +16,6 @@
         android:contentDescription="@string/file_picker_done"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_buttons_w_h"
-        android:text="@string/file_picker_done"
         android:src="@drawable/cancel_states_neon"
         android:background="@android:color/transparent" />
 
@@ -30,7 +29,6 @@
         android:contentDescription="@string/file_picker_go_back"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_buttons_w_h"
-        android:text="@string/file_picker_done"
         android:src="@drawable/back_states_neon"
         android:background="@android:color/transparent" />
 
@@ -44,7 +42,6 @@
         android:contentDescription="@string/file_picker_cancel"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/list_buttons_w_h"
-        android:text="@string/file_picker_done"
         android:src="@drawable/ok_states_neon"
         android:background="@android:color/transparent" />
 

@@ -205,13 +205,14 @@
     <dimen name="list_divider_height">1dp</dimen>
     <dimen name="list_padding_top">12dp</dimen>
     <dimen name="list_padding_left_right">4dp</dimen>
-    <dimen name="list_buttons_row_h">64dp</dimen>
+    <dimen name="list_footer_height">64dp</dimen>
     <dimen name="list_buttons_w_h">48dp</dimen>
-    <dimen name="list_buttons_separator">8dp</dimen>
 
     <!--Single list items layout-->
 
     <dimen name="common_single_list_item_w_h">72dp</dimen>
+
+    <dimen name="file_picker_empty_view_text_size">28sp</dimen>
 
     <dimen name="single_playlist_item_image_padding">12dp</dimen>
     <dimen name="single_playlist_item_image_margin_right">2dp</dimen>
