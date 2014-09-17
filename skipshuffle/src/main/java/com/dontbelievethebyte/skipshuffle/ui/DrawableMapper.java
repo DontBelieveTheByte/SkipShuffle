@@ -4,6 +4,20 @@ package com.dontbelievethebyte.skipshuffle.ui;
 import com.dontbelievethebyte.skipshuffle.R;
 
 public class DrawableMapper {
+    public static int getBackDrawable(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.drawable.back_states_mono_light;
+            case UITypes.MONO_DARK :
+                return R.drawable.back_states_mono_dark;
+            case UITypes.NEON :
+                return R.drawable.back_states_neon;
+            default:
+                return R.drawable.back_states_neon;
+        }
+    }
+
     public static int getCancelDrawable(Integer uiType)
     {
         switch (uiType) {
@@ -29,6 +43,19 @@ public class DrawableMapper {
                 return R.drawable.checkbox_states_neon;
             default:
                 return R.drawable.checkbox_states_neon;
+        }
+    }
+    public static int getFileDrawable(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.drawable.cancel_states_mono_light;
+            case UITypes.MONO_DARK :
+                return R.drawable.cancel_states_mono_dark;
+            case UITypes.NEON :
+                return R.drawable.cancel_states_neon;
+            default:
+                return R.drawable.cancel_states_neon;
         }
     }
 
