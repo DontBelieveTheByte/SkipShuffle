@@ -5,14 +5,12 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.widget.DrawerLayout;
-import android.view.ViewConfiguration;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.support.v7.app.ActionBar;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
@@ -210,14 +208,6 @@ public class MainUI implements PlayerUIInterface {
                 ColorMapper.getBackground(uiType)
         );
 
-        ActionBar actionBar = mainActivity.getSupportActionBar();
-        if (null != actionBar) {
-            if (ViewConfiguration.get(mainActivity).hasPermanentMenuKey()) {
-                actionBar.hide();
-            }
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
         ColorDrawable navDrawerColorDrawable = new ColorDrawable(
                 mainActivity.getResources().getColor(
                         ColorMapper.getListDivider(uiType)
@@ -338,7 +328,8 @@ public class MainUI implements PlayerUIInterface {
     }
 
     @Override
-    public void setSongTitle(String title) {
+    public void setSongTitle(String title)
+    {
         songTitle.setText(title);
         songTitle.setSelected(true);
     }

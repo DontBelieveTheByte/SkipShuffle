@@ -24,12 +24,12 @@ public class MediaScannerDialog {
     {
         this.progressDialog = progressDialog;
         this.activity = activity;
-//        this.progressDialog.setTitle(
-//                activity.getString(R.string.media_scan_start_title)
-//        );
-//        this.progressDialog.setMessage(
-//                activity.getString(R.string.media_scan_start_message)
-//        );
+        this.progressDialog.setTitle(
+                activity.getString(R.string.media_scan_start_title)
+        );
+        this.progressDialog.setMessage(
+                activity.getString(R.string.media_scan_start_message)
+        );
         this.progressDialog.setCancelable(false);
         this.progressDialog.setIndeterminate(true);
     }

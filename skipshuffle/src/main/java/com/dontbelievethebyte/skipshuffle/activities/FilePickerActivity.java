@@ -3,8 +3,10 @@ package com.dontbelievethebyte.skipshuffle.activities;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -171,13 +173,18 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 	@Override
 	public void onBackPressed()
     {
-		if (rootDirectory.getParentFile() != null) {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            if (ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
+                actionBar.hide();
+            }
+        } else if (rootDirectory.getParentFile() != null) {
 			// Go to parent directory
 			rootDirectory = rootDirectory.getParentFile();
 			refreshFilesList();
-			return;
-		}
-		finish();
+		} else {
+            finish();
+        }
 	}
 
 //    @Override

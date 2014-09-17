@@ -89,7 +89,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
                     playlist
             );
 
-            listView = (ListView) findViewById(R.id.current_playlist);
+            listView = (ListView) findViewById(R.id.current_list);
             listView.setOnItemClickListener(this);
             listView.setAdapter(playlistAdapter);
             TextView emptyText = (TextView)findViewById(android.R.id.empty);

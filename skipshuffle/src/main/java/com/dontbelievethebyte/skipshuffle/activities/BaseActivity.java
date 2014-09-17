@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -91,6 +92,17 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     }
 
     @Override
+    public void onBackPressed()
+    {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            if (ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
+                actionBar.hide();
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -104,6 +116,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        setUpActionBar();
     }
 
     @Override
@@ -259,7 +273,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         );
         builder.setNegativeButton(
                 R.string.dialog_negative,
-                new DialogInterface.OnClickListener(){
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int indexPosition) {
                         dialog.dismiss();
@@ -304,6 +318,17 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    protected void setUpActionBar()
+    {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
+            if (ViewConfiguration.get(this).hasPermanentMenuKey()) {
+                actionBar.hide();
+            }
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     protected void setUpDrawer()

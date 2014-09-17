@@ -32,6 +32,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private List<File> files;
     private ArrayList<File> checkedFiles = new ArrayList<File>();
     private Drawable folderDrawable;
+    private Drawable fileDrawable;
     private int checkBoxDrawable;
     private int fileNameColor;
     private Typeface typeface;
@@ -44,11 +45,17 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 android.R.id.text1, files
         );
 
+        String[] prefsFiles = preferencesHelper.getMediaDirectories();
         this.typeface = typeface;
         this.files = files;
 
         folderDrawable = context.getResources().getDrawable(
                     DrawableMapper.getFolderDrawable(preferencesHelper.getUIType()
+                )
+        );
+
+        fileDrawable = context.getResources().getDrawable(
+                DrawableMapper.getFileDrawable(preferencesHelper.getUIType()
                 )
         );
 
@@ -108,7 +115,8 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 
         viewHolder.image = setFolderImage(
                 convertView,
-                R.id.file_picker_image
+                R.id.file_picker_image,
+                file
         );
 
         viewHolder.fileName = setFileName(
@@ -122,14 +130,24 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 R.id.file_picker_checkbox,
                 file
         );
+        if (file.isDirectory()) {
+           convertView.setEnabled(false);
+           convertView.setBackgroundColor(R.color.list_divider_neon);
+        }
 
         return convertView;
     }
 
-    private ImageView setFolderImage(View view, int resourceId)
+    private ImageView setFolderImage(View view, int resourceId, final File file)
     {
         ImageView folderImage = (ImageView) view.findViewById(resourceId);
-        folderImage.setImageDrawable(folderDrawable);
+
+        folderImage.setImageDrawable(
+                file.isDirectory() ?
+                        folderDrawable :
+                        fileDrawable
+        );
+
         return folderImage;
     }
 
@@ -148,32 +166,29 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     {
         CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
 
-        checkBox.setBackgroundResource(checkBoxDrawable);
-
-        checkBox.setVisibility(
-                file.isFile()?
-                        View.GONE:
-                        View.VISIBLE
-        );
-
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        if (file.isDirectory()) {
+            checkBox.setBackgroundResource(checkBoxDrawable);
+            checkBox.setVisibility(View.VISIBLE);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
-                if (isChecked){
-                    if (!checkedFiles.contains(file)) {
-                        checkedFiles.add(file);
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+                {
+                    if (isChecked){
+                        if (!checkedFiles.contains(file)) {
+                            checkedFiles.add(file);
+                        }
+                    } else {
+                        checkedFiles.remove(file);
                     }
-                } else {
-                    checkedFiles.remove(file);
                 }
-            }
-        });
+            });
 
-        checkBox.setChecked(
-                checkedFiles.contains(file)
-        );
+            checkBox.setChecked(
+                    checkedFiles.contains(file)
+            );
+        } else {
+            checkBox.setVisibility(View.GONE);
+        }
         return checkBox;
     }
-
 }
