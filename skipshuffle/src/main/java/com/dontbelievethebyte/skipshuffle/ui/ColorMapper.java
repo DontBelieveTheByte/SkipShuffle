@@ -17,17 +17,17 @@ public class ColorMapper {
         }
     }
 
-    public static int getSongLabel(Integer uiType)
+    public static int getEmptyListText(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.color.song_label_mono_light;
+                return R.color.list_empty_text_mono_light;
             case UITypes.MONO_DARK :
-                return R.color.song_label_mono_dark;
+                return R.color.list_empty_text_mono_dark;
             case UITypes.NEON :
-                return R.color.song_label_neon;
+                return R.color.list_empty_text_neon;
             default:
-                return R.color.song_label_neon;
+                return R.color.list_empty_text_neon;
         }
     }
 
@@ -70,6 +70,20 @@ public class ColorMapper {
                 return R.color.nav_drawer_text_neon;
             default:
                 return R.color.nav_drawer_text_neon;
+        }
+    }
+
+    public static int getSongLabel(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.song_label_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.song_label_mono_dark;
+            case UITypes.NEON :
+                return R.color.song_label_neon;
+            default:
+                return R.color.song_label_neon;
         }
     }
 }
