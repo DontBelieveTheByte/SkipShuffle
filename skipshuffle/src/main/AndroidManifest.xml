@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.FilePickerActivity" >
+            android:name=".activities.FilePickerActivity"
+            android:theme="@style/CustomActionBarTheme" >
         </activity>
         <activity
             android:name=".activities.PlaylistActivity"
