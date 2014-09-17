@@ -3,9 +3,10 @@
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:id="@+id/empty_directory"
     android:layout_height="fill_parent"
     android:text="@string/file_picker_directory_empty"
     android:textStyle="italic"
-    android:textSize="28sp"
+    android:textSize="@dimen/file_picker_empty_view_text_size"
     android:gravity="center_vertical|center_horizontal"
 />

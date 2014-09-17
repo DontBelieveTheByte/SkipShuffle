@@ -10,12 +10,12 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/background_neon"
-        android:id="@+id/playlist_background_layout">
+        android:id="@+id/background_layout">
 
         <ListView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/current_playlist"
+            android:layout_height="@dimen/null_size"
+            android:id="@+id/current_list"
             android:footerDividersEnabled="true"
             android:headerDividersEnabled="true"
             android:focusable="false"
@@ -28,64 +28,6 @@
             android:paddingRight="@dimen/list_padding_left_right"
             android:divider="@color/list_divider_neon"
             android:drawSelectorOnTop="false" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/list_buttons_row_h"
-            android:orientation="horizontal"
-            android:baselineAligned="false"
-            android:id="@+id/playlist_controls"
-            android:gravity="center"
-            android:background="@color/background_neon">
-
-            <ImageButton
-                android:layout_width="@dimen/list_buttons_w_h"
-                android:layout_height="@dimen/list_buttons_w_h"
-                android:id="@+id/playlist_layout_prev"
-                android:src="@drawable/prev_states_neon"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:layout_marginRight="@dimen/list_buttons_separator"
-                android:layout_marginEnd="@dimen/null_size"/>
-
-            <ImageButton
-                android:layout_width="@dimen/list_buttons_w_h"
-                android:layout_height="@dimen/list_buttons_w_h"
-                android:id="@+id/playlist_layout_shuffle"
-                android:longClickable="false"
-                android:src="@drawable/shuffle_states_neon"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
-                android:layout_marginLeft="@dimen/list_buttons_separator"
-                android:layout_marginRight="@dimen/list_buttons_separator" />
-
-            <ImageButton
-                android:layout_width="@dimen/list_buttons_w_h"
-                android:layout_height="@dimen/list_buttons_w_h"
-                android:id="@+id/playlist_layout_play"
-                android:src="@drawable/play_states_neon"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:layout_marginLeft="@dimen/list_buttons_separator"
-                android:layout_marginRight="@dimen/list_buttons_separator" />
-
-            <ImageButton
-                android:layout_width="@dimen/list_buttons_w_h"
-                android:layout_height="@dimen/list_buttons_w_h"
-                android:id="@+id/playlist_layout_skip"
-                android:src="@drawable/skip_states_neon"
-                android:scaleType="fitCenter"
-                android:background="@android:color/transparent"
-                android:layout_marginLeft="@dimen/list_buttons_separator"
-                android:layout_marginStart="@dimen/null_size"
-                android:cropToPadding="false" />
-
-        </LinearLayout>
-        <TextView
-            android:id="@android:id/empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_playlist" />
 
     </LinearLayout>
 
