@@ -43,7 +43,7 @@
     <string name="dialog_theme_title">Pick a theme</string>
     <string name="dialog_media_scan_title">Scan media directories</string>
     <string name="dialog_media_scan_text">Do you want to search for music files?</string>
-    <string name="dialog_positive">Select</string>
+    <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
     <string-array name="dialog_theme_items">
         <item>Mono Light</item>
