@@ -6,7 +6,12 @@
     <string name="meta_data_unknown_artist">Unknown artist</string>
 
     <!--Activities-->
-    <string name="app_name">SkipShuffle</string>
+    <string name="label_app_name">SkipShuffle</string>
+    <string name="label_file_picker">Media Directories</string>
+    <string name="label_playlist">Playlist</string>
+    <string name="label_playlist_selector">Select Music</string>
+
+
     <string name="activity_playlist">Current Playlist</string>
     <string name="activity_playlist_selector">Select Music</string>
 
