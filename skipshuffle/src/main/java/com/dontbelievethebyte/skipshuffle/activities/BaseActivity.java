@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -22,6 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
@@ -33,6 +35,7 @@ import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
@@ -335,22 +338,47 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
 
-        drawerList.setAdapter(
-            new NavigationDrawerAdapter(
-                    this,
-                    R.layout.drawer_list_item,
-                    getResources().getStringArray(R.array.drawer_menu),
-                    preferencesHelper,
-                    playerUIInterface.getTypeFace()
-            )
+        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) ?
+                getResources().getDisplayMetrics().widthPixels/3 :
+                getResources().getDisplayMetrics().widthPixels/4;
+
+        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
+        params.width = drawerWidth;
+
+        TextView headerView = (TextView) getLayoutInflater().inflate(
+                R.layout.drawer_list_header,
+                null
         );
-        drawerList.setOnTouchListener(onTouchDownHapticFeedback);
-        drawerList.setOnItemClickListener(
-                new NavDrawerClickListener(
-                        this,
-                        (DrawerLayout) findViewById(R.id.drawer_layout)
+
+        headerView.setTextColor(
+                getResources().getColor(
+                        ColorMapper.getNavHeaderText(preferencesHelper.getUIType())
                 )
         );
+
+        drawerList.addHeaderView(headerView);
+        drawerList.setLayoutParams(params);
+        drawerList.setOnTouchListener(onTouchDownHapticFeedback);
+
+        if (!(this instanceof FilePickerActivity)) {
+            headerView.setText(getString(R.string.drawer_header_text));
+            headerView.setTypeface(playerUIInterface.getTypeFace());
+            drawerList.setAdapter(
+                    new NavigationDrawerAdapter(
+                            this,
+                            R.layout.drawer_list_item,
+                            getResources().getStringArray(R.array.drawer_menu),
+                            preferencesHelper,
+                            playerUIInterface.getTypeFace()
+                    )
+            );
+            drawerList.setOnItemClickListener(
+                    new NavDrawerClickListener(
+                            this,
+                            (DrawerLayout) findViewById(R.id.drawer_layout)
+                    )
+            );
+        }
     }
 
     protected void pickMediaDirectories()

@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle.activities.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,8 +66,6 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        Log.d("DERP", "GET VIEW CALLED");
-        //Get item TextView
         ViewHolder viewHolder;
 
         if (null == convertView) {

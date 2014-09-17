@@ -59,6 +59,20 @@ public class ColorMapper {
         }
     }
 
+    public static int getNavHeaderText(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.nav_drawer_header_text_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.nav_drawer_header_text_mono_dark;
+            case UITypes.NEON :
+                return R.color.nav_drawer_header_text_neon;
+            default:
+                return R.color.nav_drawer_header_text_neon;
+        }
+    }
+
     public static int getNavDrawerText(Integer uiType)
     {
         switch (uiType) {

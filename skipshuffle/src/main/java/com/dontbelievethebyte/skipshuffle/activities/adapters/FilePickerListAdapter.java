@@ -36,6 +36,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private int checkBoxDrawable;
     private int fileNameColor;
     private Typeface typeface;
+    private Context context;
 
     public FilePickerListAdapter(Context context, List<File> files, PreferencesHelper preferencesHelper, Typeface typeface)
     {
@@ -46,6 +47,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         );
 
         String[] prefsFiles = preferencesHelper.getMediaDirectories();
+        this.context = context;
         this.typeface = typeface;
         this.files = files;
 
@@ -132,7 +134,9 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         );
         if (file.isDirectory()) {
            convertView.setEnabled(false);
-           convertView.setBackgroundColor(R.color.list_divider_neon);
+           convertView.setBackgroundColor(
+                   context.getResources().getColor(R.color.list_divider_neon)
+           );
         }
 
         return convertView;

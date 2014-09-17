@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
@@ -11,12 +10,13 @@ import android.view.ViewConfiguration;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
-import com.dontbelievethebyte.skipshuffle.activities.util.NavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerNavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
@@ -82,7 +82,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 
         listView.setOnItemClickListener(this);
 
-        // Set the ListAdapter
+        // Set the ListAdapter for list of files
 
         listView.setAdapter(filePickerListAdapter);
 
@@ -133,6 +133,8 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 
         ImageButton okButton = (ImageButton)findViewById(R.id.ok);
         okButton.setOnClickListener(okClickListener);
+
+        setUpDrawer();
     }
 
 
@@ -212,31 +214,31 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected void setUpDrawer()
     {
-        preferencesHelper.getMediaDirectories();
+        super.setUpDrawer();
+
         ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
 
-        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) ?
-                getResources().getDisplayMetrics().widthPixels/4 :
-                getResources().getDisplayMetrics().widthPixels/4;
+        TextView headerView = (TextView) drawerList.findViewById(R.id.drawer_header);
+        headerView.setText(getString(R.string.file_picker_drawer_title));
+        headerView.setTypeface(filePickerUI.getTypeFace());
 
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
-        params.width = drawerWidth;
-        drawerList.setLayoutParams(params);
+        drawerList.addHeaderView(headerView);
 
         String[] test = new String[] {"test", "derpsadasdasda", "Derpington", "Shippingftron"};
-        drawerList.setAdapter(
-                new FilePickerDrawerAdapter(
-                        this,
-                        R.layout.filepicker_drawer_list_item,
+
+        FilePickerDrawerAdapter filePickerDrawerAdapter = new FilePickerDrawerAdapter(
+                this,
+                R.layout.file_picker_drawer_list_item,
 //                        preferencesHelper.getMediaDirectories(),
-                        test,
-                        preferencesHelper,
-                        playerUIInterface.getTypeFace()
-                )
+                test,
+                preferencesHelper,
+                filePickerUI.getTypeFace()
         );
-        drawerList.setOnTouchListener(onTouchDownHapticFeedback);
+
+        drawerList.setAdapter(filePickerDrawerAdapter);
+
         drawerList.setOnItemClickListener(
-                new NavDrawerClickListener(
+                new FilePickerNavDrawerClickListener(
                         this,
                         (DrawerLayout) findViewById(R.id.drawer_layout)
                 )

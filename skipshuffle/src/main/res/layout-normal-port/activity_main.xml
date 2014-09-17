@@ -127,7 +127,7 @@
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:paddingTop="@dimen/navdrawer_padding_top"
-        android:divider="@color/nav_drawer_divider_neon"
+        android:divider="@color/list_divider_neon"
         android:dividerHeight="@dimen/normal_port_nav_drawer_divider_height"
         android:background="@color/nav_drawer_background_neon"/>
 

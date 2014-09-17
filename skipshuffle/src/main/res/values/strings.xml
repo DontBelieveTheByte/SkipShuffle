@@ -11,10 +11,6 @@
     <string name="label_playlist">Current Playlist</string>
     <string name="label_playlist_selector">Select Music</string>
 
-    <string name="menu_refresh">Refresh</string>
-    <string name="title_activity_playlist">Playlist</string>
-    <string name="action_settings">Settings</string>
-
     <!--Media scanner related stuff-->
     <string name="media_scan_start_title">"Scanning audio files..."</string>
     <string name="media_scan_start_message">"Please wait."</string>
@@ -38,6 +34,7 @@
     <string name="menu_theme">Theme</string>
     <string name="menu_set_music_dir">Set music directories</string>
     <string name="menu_haptic_feedback">Haptic feedback toggle (vibration)</string>
+    <string name="menu_refresh">Refresh</string>
 
     <!-- Dialogs-->
     <string name="dialog_theme_title">Pick a theme</string>
@@ -65,7 +62,8 @@
     <string name="shuffle">Re-suffling</string>
     <string name="playlist_load_error">Playlist Error, playlist ID : %</string>
 
-    <!--Themes-->
+    <!--Main navigation drawer-->
+    <string name="drawer_header_text">Browse</string>
     <string-array name="drawer_menu">
         <item>Songs</item>
         <item>Artists</item>
