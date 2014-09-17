@@ -13,17 +13,27 @@ import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
 
 public class FilePickerUI {
     private int uiType;
+    private int emptyViewTextColor;
     private FilePickerActivity filePickerActivity;
     private Typeface typeface;
     private ViewGroup backgroundLayout;
+    private ListView drawerList;
+    private TextView emptyView;
 
     public FilePickerUI(FilePickerActivity filePickerActivity)
     {
-        this.filePickerActivity = filePickerActivity;
-        uiType = this.filePickerActivity.getPreferencesHelper().getUIType();
         filePickerActivity.setContentView(R.layout.activity_list);
 
+        this.filePickerActivity = filePickerActivity;
+
+        uiType = this.filePickerActivity.getPreferencesHelper().getUIType();
+
+        emptyViewTextColor = filePickerActivity.getResources().getColor(
+                ColorMapper.getEmptyListText(filePickerActivity.getPreferencesHelper().getUIType())
+        );
+
         backgroundLayout = (ViewGroup) filePickerActivity.findViewById(R.id.background_layout);
+
         LayoutInflater layoutInflater = filePickerActivity.getLayoutInflater();
         layoutInflater.inflate(
                 R.layout.file_picker_footer,
@@ -40,20 +50,10 @@ public class FilePickerUI {
                 backgroundLayout
         );
 
-        int emptyTextColor = filePickerActivity.getResources().getColor(
-                ColorMapper.getEmptyListText(filePickerActivity.getPreferencesHelper().getUIType())
-        );
-
-        TextView emptyView = (TextView) backgroundLayout.findViewById(R.id.empty_directory);
-
-        emptyView.setTextColor(emptyTextColor);
-
-//        (TextView) emptyView.setTextColor(emptyTextColor);
-
-        //Change this @TODO
-//        ((ViewGroup)listView.getParent()).addView(emptyView);
-//
+        emptyView = (TextView) backgroundLayout.findViewById(R.id.empty_directory);
         listView.setEmptyView(emptyView);
+
+        drawerList = (ListView) filePickerActivity.findViewById(R.id.left_drawer1);
 
         setUpDrawables();
         setUpColors(listView);
@@ -69,7 +69,12 @@ public class FilePickerUI {
 
     private void setUpColors(ListView listView)
     {
+        //@TODO should probably be in future setUpDimension method.
+        int listDividerHeight = (int)filePickerActivity.getResources().getDimension(R.dimen.list_divider_height);
+
         backgroundLayout.setBackgroundResource(ColorMapper.getBackground(uiType));
+
+        emptyView.setTextColor(emptyViewTextColor);
 
         ColorDrawable colorDrawable = new ColorDrawable(
                 filePickerActivity.getResources().getColor(
@@ -77,8 +82,22 @@ public class FilePickerUI {
                 )
         );
         listView.setDivider(colorDrawable);
-        listView.setDividerHeight((int)filePickerActivity.getResources().getDimension(R.dimen.list_divider_height));
+        listView.setDividerHeight(listDividerHeight);
+
+        ColorDrawable navDrawerColorDrawable = new ColorDrawable(
+                    filePickerActivity.getResources().getColor(
+                        ColorMapper.getListDivider(uiType)
+                )
+        );
+
+        drawerList.setBackgroundResource(
+                ColorMapper.getNavDrawerBackground(uiType)
+        );
+
+        drawerList.setDivider(navDrawerColorDrawable);
+        drawerList.setDividerHeight(listDividerHeight);
     }
+
     private void setUpDrawables()
     {
         ImageButton okButton = (ImageButton) filePickerActivity.findViewById(R.id.ok);

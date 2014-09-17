@@ -45,7 +45,7 @@ public class MainUI implements PlayerUIInterface {
     protected TextView songTitle;
     protected Typeface typeface;
     protected ListView drawerList;
-    
+
     protected int uiType;
 
     public MainUI(MainActivity mainActivity)
@@ -199,6 +199,9 @@ public class MainUI implements PlayerUIInterface {
 
     protected void setUpColors()
     {
+        //@TODO should probably be in future setUpDimension method.
+        int listDividerHeight = (int)mainActivity.getResources().getDimension(R.dimen.list_divider_height);
+
         RelativeLayout bottomLayout = (RelativeLayout) mainActivity.findViewById(R.id.bottom);
         bottomLayout.setBackgroundResource(
                 ColorMapper.getBackground(uiType)
@@ -215,7 +218,7 @@ public class MainUI implements PlayerUIInterface {
         );
 
         drawerList.setDivider(navDrawerColorDrawable);
-        drawerList.setDividerHeight(1);
+        drawerList.setDividerHeight(listDividerHeight);
 
         songTitle.setTextColor(
                 mainActivity.getResources().getColor(
