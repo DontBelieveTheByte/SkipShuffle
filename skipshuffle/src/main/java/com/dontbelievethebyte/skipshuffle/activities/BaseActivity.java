@@ -297,7 +297,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        // Do nothing
                         dialog.dismiss();
                     }
                 }
