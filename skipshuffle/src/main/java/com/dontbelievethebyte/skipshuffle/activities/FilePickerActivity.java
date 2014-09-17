@@ -1,113 +1,131 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
-import android.app.ListActivity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
+import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
+import com.dontbelievethebyte.skipshuffle.activities.util.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
+import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FilePickerActivity extends ListActivity {
-
-	protected File mDirectory;
-	protected ArrayList<File> mFiles;
-	protected boolean singleMode= false;
-
-	protected FilePickerListAdapter mAdapter;
-	protected boolean mShowHiddenFiles = false;
+public class FilePickerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "SkipShuffleFilePicker";
+    private boolean mShowHiddenFiles = false;
+    private ArrayList<File> files;
+    private File rootDirectory;
+    private FilePickerListAdapter filePickerListAdapter;
     private FilePickerUI filePickerUI;
+    private ListView listView;
     private PreferencesHelper preferencesHelper;
+
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
     {
 		super.onCreate(savedInstanceState);
+
         preferencesHelper = new PreferencesHelper(this);
-        filePickerUI = new FilePickerUI(this);
-		// Set the view to be shown if the list is empty
-		getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-		LayoutInflater inflator = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View emptyView = inflator.inflate(
-                R.layout.file_picker_empty_view,
-                null
-        );
-
-		((ViewGroup)getListView().getParent()).addView(emptyView);
-
-        getListView().setEmptyView(emptyView);
-
 
 		// Point to external storage as root.
-        mDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        rootDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 
 		// Initialize the ArrayList
-		mFiles = new ArrayList<File>();
+		files = new ArrayList<File>();
 
-		// Set the ListAdapter
-		mAdapter = new FilePickerListAdapter(
+        setUI(preferencesHelper.getUIType());
+
+        Toast.makeText(
+                getApplicationContext(),
+                R.string.media_scan_sel_target_directories,
+                Toast.LENGTH_LONG
+        ).show();
+    }
+
+    @Override
+    protected void setUI(Integer type) {
+
+        filePickerUI = UIFactory.createFilePickerUI(this, type);
+
+        filePickerListAdapter = new FilePickerListAdapter(
                 this,
-                mFiles,
+                files,
                 preferencesHelper,
                 filePickerUI.getTypeFace()
         );
 
-        setListAdapter(mAdapter);
+        // Set the view to be shown if the list is empty
 
-		ImageButton ok = (ImageButton)findViewById(R.id.ok);
+        listView = (ListView) findViewById(R.id.current_list);
 
-		ok.setOnClickListener( new OnClickListener() {
-			public void onClick(View v) {
-				returnResults();
-			}
-		});
+        listView.setOnItemClickListener(this);
 
-        ImageButton cancel = (ImageButton)findViewById(R.id.cancel);
+        // Set the ListAdapter
 
-        cancel.setOnClickListener( new OnClickListener() {
-            public void onClick(View v) {
+        listView.setAdapter(filePickerListAdapter);
+
+        View.OnClickListener backClickListener= new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                onBackPressed();
+            }
+        };
+
+        View.OnClickListener okClickListener= new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                if (filePickerListAdapter.getFiles().length < 1) {
+                    Toast.makeText(
+                            FilePickerActivity.this,
+                            R.string.pick_media_nothing_selected,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    setResult(RESULT_CANCELED);
+                } else {
+                    Log.d(TAG, "PREF : " + filePickerListAdapter.getFiles()[0].toString());
+                    preferencesHelper.setMediaDirectories(filePickerListAdapter.getFiles());
+                    setResult(RESULT_OK);
+                }
+                finish();
+            }
+        };
+
+        View.OnClickListener cancelClickListener= new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Toast.makeText(
+                        FilePickerActivity.this,
+                        R.string.pick_media_nothing_selected,
+                        Toast.LENGTH_SHORT
+                ).show();
                 setResult(RESULT_CANCELED);
                 finish();
             }
-        });
+        };
 
+        ImageButton backButton = (ImageButton)findViewById(R.id.back);
+        backButton.setOnClickListener(backClickListener);
 
-        this.getListView().setLongClickable(true);
+        ImageButton cancelButton = (ImageButton)findViewById(R.id.cancel);
+        cancelButton.setOnClickListener(cancelClickListener);
 
-        this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-			public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-				File newFile = (File)parent.getItemAtPosition(position);
-				if (newFile.isDirectory()) {
-					mAdapter.toggleCheckBox(newFile);
-					if (singleMode) {
-						returnResults();
-					} else {
-                        mAdapter.notifyDataSetChanged();
-                    }
-				}
-				return true;
-			}
-		});
-        Toast.makeText(getApplicationContext(), R.string.media_scan_sel_target_directories, Toast.LENGTH_LONG).show();
+        ImageButton okButton = (ImageButton)findViewById(R.id.ok);
+        okButton.setOnClickListener(okClickListener);
     }
 
     public PreferencesHelper getPreferencesHelper() {
@@ -126,52 +144,89 @@ public class FilePickerActivity extends ListActivity {
 	protected void refreshFilesList()
     {
 		// Clear the files ArrayList
-		mFiles.clear();
+		files.clear();
 		//clear the checked item list
-		mAdapter.clearBoxes();
+		filePickerListAdapter.clearBoxes();
 		// Set the extension file filter
 		File[] files;
 
 		// Get the files in the directory
-        files = mDirectory.listFiles();
+        files = rootDirectory.listFiles();
 
 		if (files != null && files.length > 0) {
 			for(File f : files) {
-				if (f.isHidden() && !mShowHiddenFiles|| f.isFile()) {
+				if (f.isHidden() && !mShowHiddenFiles) {
 					// Don't add the file
 					continue;
 				}
 				// Add the file the ArrayAdapter
-				mFiles.add(f);
+				this.files.add(f);
 			}
 
-			Collections.sort(mFiles, new FileComparator());
+			Collections.sort(this.files, new FileComparator());
 		}
-		mAdapter.notifyDataSetChanged();
+		filePickerListAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void onBackPressed()
     {
-		if (mDirectory.getParentFile() != null) {
+		if (rootDirectory.getParentFile() != null) {
 			// Go to parent directory
-			mDirectory = mDirectory.getParentFile();
+			rootDirectory = rootDirectory.getParentFile();
 			refreshFilesList();
 			return;
 		}
-
 		finish();
 	}
 
+//    @Override
+//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        File newFile = (File)adapterView.getItemAtPosition(i);
+//        if (newFile.isDirectory()) {
+//            filePickerListAdapter.toggleCheckBox(newFile);
+//            filePickerListAdapter.notifyDataSetChanged();
+//        }
+////        return true;
+//    }
+
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id)
+//	protected void onItemClick(ListView l, View v, int position, long id)
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
     {
-        mDirectory = (File)l.getItemAtPosition(position);
+        rootDirectory = (File)adapterView.getItemAtPosition(i);
         refreshFilesList();
-		super.onListItemClick(l, v, position, id);
+//		super.onListItemClick(l, v, position, id);
 	}
 
-	private class FileComparator implements Comparator<File> {
+    @Override
+    public void mediaBroadcastReceiverCallback() {}
+
+    @Override
+    protected void setUpDrawer()
+    {
+        preferencesHelper.getMediaDirectories();
+        ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
+
+        drawerList.setAdapter(
+                new NavigationDrawerAdapter(
+                        this,
+                        R.layout.drawer_list_item,
+                        preferencesHelper.getMediaDirectories(),
+                        preferencesHelper,
+                        playerUIInterface.getTypeFace()
+                )
+        );
+        drawerList.setOnTouchListener(onTouchDownHapticFeedback);
+        drawerList.setOnItemClickListener(
+                new NavDrawerClickListener(
+                        this,
+                        (DrawerLayout) findViewById(R.id.drawer_layout)
+                )
+        );
+    }
+
+    private class FileComparator implements Comparator<File> {
 		public int compare(File f1, File f2) {
 			if (f1 == f2) {
 				return 0;
@@ -189,18 +244,4 @@ public class FilePickerActivity extends ListActivity {
 		}
 	}
 
-    private void returnResults()
-    {
-        if (mAdapter.getFiles().length < 1) {
-            Toast.makeText(
-                    this,
-                    R.string.pick_media_nothing_selected,
-                    Toast.LENGTH_SHORT
-            ).show();
-            setResult(RESULT_CANCELED);
-        } else {
-            setResult(RESULT_OK);
-        }
-        finish();
-    }
 }

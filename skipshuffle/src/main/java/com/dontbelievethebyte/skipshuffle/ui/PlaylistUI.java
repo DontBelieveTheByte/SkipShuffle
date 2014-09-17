@@ -38,7 +38,7 @@ public class PlaylistUI implements PlayerUIInterface {
         skipBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_skip);
         prevBtn = (ImageButton) playlistActivity.findViewById(R.id.playlist_layout_prev);
 
-        backgroundLayout = (LinearLayout) playlistActivity.findViewById(R.id.playlist_background_layout);
+        backgroundLayout = (LinearLayout) playlistActivity.findViewById(R.id.background_layout);
     }
 
     @Override
