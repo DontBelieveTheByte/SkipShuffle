@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
-import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.util.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
@@ -175,15 +175,13 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 	public void onBackPressed()
     {
         ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            if (ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
-                actionBar.hide();
-            }
+        if (null != actionBar && ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
+            actionBar.hide();
         } else if (rootDirectory.getParentFile() != null) {
-			// Go to parent directory
-			rootDirectory = rootDirectory.getParentFile();
-			refreshFilesList();
-		} else {
+            // Go to parent directory
+            rootDirectory = rootDirectory.getParentFile();
+            refreshFilesList();
+        } else {
             finish();
         }
 	}
@@ -224,11 +222,13 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         params.width = drawerWidth;
         drawerList.setLayoutParams(params);
 
+        String[] test = new String[] {"test", "derpsadasdasda", "Derpington", "Shippingftron"};
         drawerList.setAdapter(
-                new NavigationDrawerAdapter(
+                new FilePickerDrawerAdapter(
                         this,
                         R.layout.drawer_list_item,
-                        preferencesHelper.getMediaDirectories(),
+//                        preferencesHelper.getMediaDirectories(),
+                        test,
                         preferencesHelper,
                         playerUIInterface.getTypeFace()
                 )
