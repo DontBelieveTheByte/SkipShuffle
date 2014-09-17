@@ -234,10 +234,15 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         builder.setSingleChoiceItems(
                 R.array.dialog_theme_items,
                 preferencesHelper.getUIType(),
+                null
+        );
+        builder.setPositiveButton(
+                R.string.dialog_positive,
                 new DialogInterface.OnClickListener(){
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int indexPosition) {
-                        switch (indexPosition){
+                    public void onClick(DialogInterface dialog, int indexPosition) {
+                        ListView lw = ((AlertDialog)dialog).getListView();
+                        switch (lw.getCheckedItemPosition()){
                             case UITypes.MONO_LIGHT:
                                 preferencesHelper.setUIType(UITypes.MONO_LIGHT);
                                 break;
@@ -248,7 +253,16 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                                 preferencesHelper.setUIType(UITypes.NEON);
                                 break;
                         }
-                        dialogInterface.dismiss();
+                        dialog.dismiss();
+                    }
+                }
+        );
+        builder.setNegativeButton(
+                R.string.dialog_negative,
+                new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexPosition) {
+                        dialog.dismiss();
                     }
                 }
         );
