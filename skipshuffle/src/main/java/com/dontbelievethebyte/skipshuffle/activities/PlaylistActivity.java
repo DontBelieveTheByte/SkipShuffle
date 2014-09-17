@@ -175,7 +175,7 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
             ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
             imageView.setImageDrawable(
                     getResources().getDrawable(
-                            DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
+                            DrawableMapper.getPause(preferencesHelper.getUIType())
                     )
             );
         } else {

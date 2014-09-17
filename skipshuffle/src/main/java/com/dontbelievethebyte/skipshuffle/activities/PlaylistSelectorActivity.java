@@ -182,7 +182,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
             imageView.setImageDrawable(
                     getResources().getDrawable(
-                            DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
+                            DrawableMapper.getPause(preferencesHelper.getUIType())
                     )
             );
         } else {

@@ -2,6 +2,8 @@ package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
+import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
 
@@ -20,6 +23,7 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
         public ImageButton removeButton;
     }
 
+    private Drawable removeButtonDrawable;
     private LayoutInflater layoutInflater;
     private Typeface typeface;
     private int layoutResource;
@@ -36,6 +40,9 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
         selectedTextBackgroundColor = ColorMapper.getListDivider(preferencesHelper.getUIType());
         textColor = context.getResources().getColor(
                 ColorMapper.getNavDrawerText(preferencesHelper.getUIType())
+        );
+        removeButtonDrawable = context.getResources().getDrawable(
+                DrawableMapper.getRemove(preferencesHelper.getUIType())
         );
     }
 
@@ -60,6 +67,7 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        Log.d("DERP", "GET VIEW CALLED");
         //Get item TextView
         ViewHolder viewHolder;
 
@@ -79,6 +87,12 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
                 getItem(position),
                 R.id.drawer_item_text
         );
+
+        viewHolder.removeButton = setRemoveButton(
+                convertView,
+                R.id.remove
+        );
+
         if (position == selectedItem) {
             convertView.setBackgroundColor(selectedTextBackgroundColor);
         }
@@ -94,5 +108,12 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
         tv.setText(text);
         tv.setTextColor(textColor);
         return tv;
+    }
+
+    private ImageButton setRemoveButton(View view, int resourceId)
+    {
+        ImageButton removeButton = (ImageButton) view.findViewById(resourceId);
+        removeButton.setImageDrawable(removeButtonDrawable);
+        return removeButton;
     }
 }

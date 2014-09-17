@@ -103,19 +103,19 @@ public class FilePickerUI {
         ImageButton okButton = (ImageButton) filePickerActivity.findViewById(R.id.ok);
         okButton.setImageDrawable(
                 filePickerActivity.getResources().getDrawable(
-                    DrawableMapper.getOkDrawable(uiType)
+                    DrawableMapper.getOk(uiType)
                 )
         );
         ImageButton cancelButton = (ImageButton) filePickerActivity.findViewById(R.id.cancel);
         cancelButton.setImageDrawable(
                 filePickerActivity.getResources().getDrawable(
-                        DrawableMapper.getCancelDrawable(uiType)
+                        DrawableMapper.getCancel(uiType)
                 )
         );
         ImageButton backButton = (ImageButton) filePickerActivity.findViewById(R.id.back);
         backButton.setImageDrawable(
                 filePickerActivity.getResources().getDrawable(
-                        DrawableMapper.getBackDrawable(uiType)
+                        DrawableMapper.getBack(uiType)
                 )
         );
     }

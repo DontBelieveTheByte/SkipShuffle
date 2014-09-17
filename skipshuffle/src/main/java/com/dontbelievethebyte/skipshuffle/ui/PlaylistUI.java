@@ -46,7 +46,7 @@ public class PlaylistUI implements PlayerUIInterface {
     {
         playBtn.setImageDrawable(
                 playlistActivity.getResources().getDrawable(
-                        DrawableMapper.getPlayDrawable(playlistActivity.getPreferencesHelper().getUIType())
+                        DrawableMapper.getPlay(playlistActivity.getPreferencesHelper().getUIType())
                 )
         );
     }
@@ -56,7 +56,7 @@ public class PlaylistUI implements PlayerUIInterface {
     {
         playBtn.setImageDrawable(
                 playlistActivity.getResources().getDrawable(
-                        DrawableMapper.getPauseDrawable(playlistActivity.getPreferencesHelper().getUIType())
+                        DrawableMapper.getPause(playlistActivity.getPreferencesHelper().getUIType())
                 )
         );
     }

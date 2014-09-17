@@ -107,8 +107,8 @@ public class PlaylistSelectorAdapter extends BaseAdapter {
                 params.width = params.height;
                 iv.setImageDrawable(
                         context.getResources().getDrawable(
-                                isPlay ? DrawableMapper.getPlayDrawable(preferencesHelper.getUIType())
-                                       : DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
+                                isPlay ? DrawableMapper.getPlay(preferencesHelper.getUIType())
+                                       : DrawableMapper.getPause(preferencesHelper.getUIType())
                         )
                 );
             } else {

@@ -426,12 +426,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         if (!playerWrapper.isPlaying()) {
             remoteViews.setImageViewResource(
                     R.id.notif_play,
-                    DrawableMapper.getPauseDrawable(preferencesHelper.getUIType())
+                    DrawableMapper.getPause(preferencesHelper.getUIType())
             );
         } else {
             remoteViews.setImageViewResource(
                     R.id.notif_play,
-                    DrawableMapper.getPlayDrawable(preferencesHelper.getUIType())
+                    DrawableMapper.getPlay(preferencesHelper.getUIType())
             );
         }
 

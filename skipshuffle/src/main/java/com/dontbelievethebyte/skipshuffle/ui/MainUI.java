@@ -66,38 +66,38 @@ public class MainUI implements PlayerUIInterface {
         songTitle = (TextView) mainActivity.findViewById(R.id.song_label);
 
         playDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPlayDrawable(uiType)
+                DrawableMapper.getPlay(uiType)
         );
         pauseDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPauseDrawable(uiType)
+                DrawableMapper.getPause(uiType)
         );
         prevDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPrevDrawable(uiType)
+                DrawableMapper.getPrev(uiType)
         );
         skipDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getSkipDrawable(uiType)
+                DrawableMapper.getSkip(uiType)
         );
         shuffleDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getShuffleDrawable(uiType)
+                DrawableMapper.getShuffle(uiType)
         );
         playlistDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPlaylistDrawable(uiType)
+                DrawableMapper.getPlaylist(uiType)
         );
 
         playPressedDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPlayPressedDrawable(uiType)
+                DrawableMapper.getPlayPressed(uiType)
         );
         pausePressedDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPausePressedDrawable(uiType)
+                DrawableMapper.getPausePressed(uiType)
         );
         prevPressedDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getPrevPressedDrawable(uiType)
+                DrawableMapper.getPrevPressed(uiType)
         );
         skipPressedDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getSkipPressedDrawable(uiType)
+                DrawableMapper.getSkipPressed(uiType)
         );
         shufflePressedDrawable = mainActivity.getResources().getDrawable(
-                DrawableMapper.getShufflePressedDrawable(uiType)
+                DrawableMapper.getShufflePressed(uiType)
         );
 
         setUpDrawables();

@@ -4,7 +4,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 
 public class DrawableMapper {
 
-    public static int getBackDrawable(Integer uiType)
+    public static int getBack(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -18,7 +18,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getCancelDrawable(Integer uiType)
+    public static int getCancel(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -32,7 +32,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getCheckboxDrawable(Integer uiType)
+    public static int getCheckbox(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -45,7 +45,7 @@ public class DrawableMapper {
                 return R.drawable.checkbox_states_neon;
         }
     }
-    public static int getFileDrawable(Integer uiType)
+    public static int getFile(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -59,7 +59,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getOkDrawable(Integer uiType)
+    public static int getOk(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -73,7 +73,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPlayDrawable(Integer uiType)
+    public static int getPlay(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -87,7 +87,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPlayPressedDrawable(Integer uiType)
+    public static int getPlayPressed(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -101,7 +101,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPauseDrawable(Integer uiType)
+    public static int getPause(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -115,7 +115,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPausePressedDrawable(Integer uiType)
+    public static int getPausePressed(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -129,7 +129,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPrevDrawable(Integer uiType)
+    public static int getPrev(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -143,7 +143,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPrevPressedDrawable(Integer uiType)
+    public static int getPrevPressed(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -157,7 +157,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPrevRemoveDrawable(Integer uiType)
+    public static int getRemove(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -171,7 +171,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getSkipDrawable(Integer uiType)
+    public static int getSkip(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -185,7 +185,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getSkipPressedDrawable(Integer uiType)
+    public static int getSkipPressed(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -199,7 +199,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getShuffleDrawable(Integer uiType)
+    public static int getShuffle(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -213,7 +213,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getShufflePressedDrawable(Integer uiType)
+    public static int getShufflePressed(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -227,7 +227,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getPlaylistDrawable(Integer uiType)
+    public static int getPlaylist(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -241,7 +241,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getFolderDrawable(Integer uiType)
+    public static int getFolder(Integer uiType)
     {
         switch (uiType){
             case UITypes.MONO_LIGHT :

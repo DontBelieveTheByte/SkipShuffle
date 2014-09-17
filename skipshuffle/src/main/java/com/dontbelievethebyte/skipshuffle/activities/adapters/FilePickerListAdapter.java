@@ -50,16 +50,16 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         this.files = files;
 
         folderDrawable = context.getResources().getDrawable(
-                    DrawableMapper.getFolderDrawable(preferencesHelper.getUIType()
-                )
+                    DrawableMapper.getFolder(preferencesHelper.getUIType()
+                    )
         );
 
         fileDrawable = context.getResources().getDrawable(
-                DrawableMapper.getFileDrawable(preferencesHelper.getUIType()
+                DrawableMapper.getFile(preferencesHelper.getUIType()
                 )
         );
 
-        checkBoxDrawable = DrawableMapper.getCheckboxDrawable(preferencesHelper.getUIType());
+        checkBoxDrawable = DrawableMapper.getCheckbox(preferencesHelper.getUIType());
 
         fileNameColor = context.getResources().getColor(
                 ColorMapper.getListDivider(preferencesHelper.getUIType())

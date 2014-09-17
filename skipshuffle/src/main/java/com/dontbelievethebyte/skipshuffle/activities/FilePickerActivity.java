@@ -38,6 +38,10 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
     private PreferencesHelper preferencesHelper;
 
 
+    public PreferencesHelper getPreferencesHelper() {
+        return preferencesHelper;
+    }
+
     @Override
 	protected void onCreate(Bundle savedInstanceState)
     {
@@ -131,9 +135,6 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         okButton.setOnClickListener(okClickListener);
     }
 
-    public PreferencesHelper getPreferencesHelper() {
-        return preferencesHelper;
-    }
 
 	@Override
 	protected void onResume() {
@@ -226,7 +227,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         drawerList.setAdapter(
                 new FilePickerDrawerAdapter(
                         this,
-                        R.layout.drawer_list_item,
+                        R.layout.filepicker_drawer_list_item,
 //                        preferencesHelper.getMediaDirectories(),
                         test,
                         preferencesHelper,
