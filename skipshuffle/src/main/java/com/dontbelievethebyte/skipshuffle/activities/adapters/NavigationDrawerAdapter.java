@@ -36,10 +36,12 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
                 ColorMapper.getNavDrawerText(preferencesHelper.getUIType())
         );
     }
+
     public int getSelectedItem()
     {
         return selectedItem;
     }
+
     public void setSelectedItem(int selectedItem)
     {
         this.selectedItem = selectedItem;
