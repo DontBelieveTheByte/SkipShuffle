@@ -29,6 +29,7 @@
     <string name="playlist_error">Playlist error.</string>
     <string name="pick_media_nothing_selected">Nothing Selected.</string>
     <string name="player_wrapper_song_error">Error playing file : </string>
+    <string name="not_a_directory">%s is not a directory.</string>
 
     <!--Main menu-->
     <string name="menu_theme">Theme</string>

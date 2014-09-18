@@ -32,7 +32,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
     private static final String TAG = "SkipShuffleFilePicker";
     private static final String LAST_CURRENT_DIRECTORY = "lastCurrentDirectory";
     private ArrayList<File> files;
-    private File rootDirectory;
+    private File currentDirectory;
     private FilePickerListAdapter filePickerListAdapter;
     private FilePickerUI filePickerUI;
     private PreferencesHelper preferencesHelper;
@@ -48,7 +48,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         preferencesHelper = new PreferencesHelper(this);
 
 		// Point to external storage as root.
-        rootDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        currentDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 
 		// Initialize the ArrayList
 		files = new ArrayList<File>();
@@ -147,7 +147,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
     protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
-        rootDirectory = (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY);
+        currentDirectory = (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY);
     }
 
     /**
@@ -155,11 +155,14 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 	 */
 	protected void refreshFilesList()
     {
-		files.clear(); // Clear the files ArrayList
-		filePickerListAdapter.clearBoxes(); //clear the checked item list
-        files.addAll(Arrays.asList(rootDirectory.listFiles()));
-		Collections.sort(files, new FileComparator());
-		filePickerListAdapter.notifyDataSetChanged();
+        File newFiles[] = currentDirectory.listFiles();
+        if (null != newFiles && newFiles.length > 0) {
+            files.clear(); // Clear the files ArrayList
+            files.addAll(Arrays.asList(newFiles));
+            Collections.sort(files, new FileComparator());
+            filePickerListAdapter.clearBoxes(); //clear the checked item list
+            filePickerListAdapter.notifyDataSetChanged();
+        }
 	}
 
 	@Override
@@ -168,9 +171,9 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar && ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
             actionBar.hide();
-        } else if (rootDirectory.getParentFile() != null) {
+        } else if (currentDirectory.getParentFile() != null) {
             // Go to parent directory
-            rootDirectory = rootDirectory.getParentFile();
+            currentDirectory = currentDirectory.getParentFile();
             refreshFilesList();
         } else {
             finish();
@@ -188,18 +191,24 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 //    }
 
 	@Override
-//	protected void onItemClick(ListView l, View v, int position, long id)
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
     {
-        rootDirectory = (File)adapterView.getItemAtPosition(i);
-        refreshFilesList();
-//		super.onListItemClick(l, v, position, id);
+        currentDirectory = (File)adapterView.getItemAtPosition(i);
+        if (currentDirectory.isDirectory()) {
+            refreshFilesList();
+        } else {
+            Toast.makeText(
+                    FilePickerActivity.this,
+                    getString(R.string.not_a_directory, currentDirectory.getName()),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
 	}
 
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        outState.putSerializable(LAST_CURRENT_DIRECTORY, rootDirectory);
+        outState.putSerializable(LAST_CURRENT_DIRECTORY, currentDirectory);
         super.onSaveInstanceState(outState);
     }
 
