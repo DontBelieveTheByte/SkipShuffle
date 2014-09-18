@@ -386,11 +386,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         if (!(this instanceof FilePickerActivity)) {
             Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
             BaseActivity.this.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.media_scan_sel_target_directories,
-                    Toast.LENGTH_LONG
-            ).show();
         }
     }
 
