@@ -6,8 +6,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerDrawerAdapter;
+import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
+
+import java.io.File;
 
 public class FilePickerNavDrawerClickListener implements ListView.OnItemClickListener {
 
@@ -23,8 +26,13 @@ public class FilePickerNavDrawerClickListener implements ListView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView parent, View view, int position, long id)
     {
+        FilePickerListAdapter filePickerListAdapter = (FilePickerListAdapter) parent.getAdapter();
         drawer.closeDrawer(Gravity.START);
-        FilePickerDrawerAdapter filePickerDrawerAdapter1 = (FilePickerDrawerAdapter) parent.getAdapter();
-        filePickerDrawerAdapter1.setSelectedItem(position);
+        File item = filePickerListAdapter.getItem(position);
+        Toast.makeText(
+                context,
+                item.getName(),
+                Toast.LENGTH_LONG
+        ).show();
     }
 }

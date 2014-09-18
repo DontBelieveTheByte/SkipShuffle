@@ -55,13 +55,6 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 		// Initialize the ArrayList
 		files = new ArrayList<File>();
 
-        setUI(preferencesHelper.getUIType());
-
-        Toast.makeText(
-                getApplicationContext(),
-                R.string.media_scan_sel_target_directories,
-                Toast.LENGTH_LONG
-        ).show();
     }
 
     @Override
@@ -139,7 +132,15 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 
 
 	@Override
-	protected void onResume() {
+	protected void onResume()
+    {
+        setUI(preferencesHelper.getUIType());
+
+        Toast.makeText(
+                getApplicationContext(),
+                R.string.media_scan_sel_target_directories,
+                Toast.LENGTH_LONG
+        ).show();
         refreshFilesList();
         super.onResume();
     }
@@ -224,7 +225,10 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 
         drawerList.addHeaderView(headerView);
 
-        String[] test = new String[] {"test", "derpsadasdasda", "Derpington", "Shippingftron"};
+//        String[] test = new String[] {"test", "derpsadasdasda", "Derpington", "Shippingftron"};
+
+        String[] test = preferencesHelper.getMediaDirectories();
+
 
         FilePickerDrawerAdapter filePickerDrawerAdapter = new FilePickerDrawerAdapter(
                 this,

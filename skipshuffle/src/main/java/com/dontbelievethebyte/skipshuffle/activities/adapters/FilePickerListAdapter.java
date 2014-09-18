@@ -36,7 +36,6 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private int checkBoxDrawable;
     private int fileNameColor;
     private Typeface typeface;
-    private Context context;
 
     public FilePickerListAdapter(Context context, List<File> files, PreferencesHelper preferencesHelper, Typeface typeface)
     {
@@ -46,8 +45,6 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 android.R.id.text1, files
         );
 
-        String[] prefsFiles = preferencesHelper.getMediaDirectories();
-        this.context = context;
         this.typeface = typeface;
         this.files = files;
 
@@ -64,7 +61,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         checkBoxDrawable = DrawableMapper.getCheckbox(preferencesHelper.getUIType());
 
         fileNameColor = context.getResources().getColor(
-                ColorMapper.getListDivider(preferencesHelper.getUIType())
+                ColorMapper.getSongLabel(preferencesHelper.getUIType())
         );
     }
 
@@ -132,11 +129,17 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 R.id.file_picker_checkbox,
                 file
         );
-        if (file.isDirectory()) {
+        if (!file.isDirectory()) {
            convertView.setEnabled(false);
-           convertView.setBackgroundColor(
-                   context.getResources().getColor(R.color.list_divider_neon)
-           );
+//           convertView.setBackgroundColor(
+//                   context.getResources().getColor(fileBackgroundColor)
+//           );
+        } else {
+            convertView.setEnabled(true);
+//            convertView.setBackgroundColor(
+//                    context.getResources().getColor(fileBackgroundColor)
+//            );
+//            convertView.setBackgroundColor(Color.TRANSPARENT);
         }
 
         return convertView;

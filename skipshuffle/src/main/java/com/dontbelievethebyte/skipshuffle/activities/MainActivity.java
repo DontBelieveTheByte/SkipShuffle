@@ -52,7 +52,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void setUI(Integer type) {
+    protected void setUI(Integer type)
+    {
         ui = UIFactory.createMainUI(this, type);
 
         //Useful for parent class.

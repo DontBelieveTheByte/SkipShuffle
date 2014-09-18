@@ -59,6 +59,20 @@ public class DrawableMapper {
         }
     }
 
+    public static int getFolder(Integer uiType)
+    {
+        switch (uiType){
+            case UITypes.MONO_LIGHT :
+                return R.drawable.folder_mono_light;
+            case UITypes.MONO_DARK :
+                return R.drawable.folder_mono_dark;
+            case UITypes.NEON :
+                return R.drawable.folder_neon;
+            default:
+                return R.drawable.folder_neon;
+        }
+    }
+
     public static int getOk(Integer uiType)
     {
         switch (uiType) {
@@ -238,20 +252,6 @@ public class DrawableMapper {
                 return R.drawable.playlist_states_neon;
             default:
                 return R.drawable.playlist_states_neon;
-        }
-    }
-
-    public static int getFolder(Integer uiType)
-    {
-        switch (uiType){
-            case UITypes.MONO_LIGHT :
-                return R.drawable.folder_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.folder_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.folder_neon;
-            default:
-                return R.drawable.folder_neon;
         }
     }
 }
