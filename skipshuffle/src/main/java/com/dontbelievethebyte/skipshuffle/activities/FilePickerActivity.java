@@ -23,24 +23,22 @@ import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class FilePickerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "SkipShuffleFilePicker";
-    private boolean mShowHiddenFiles = false;
+    private static final String LAST_CURRENT_DIRECTORY = "lastCurrentDirectory";
     private ArrayList<File> files;
     private File rootDirectory;
     private FilePickerListAdapter filePickerListAdapter;
     private FilePickerUI filePickerUI;
-    private ListView listView;
     private PreferencesHelper preferencesHelper;
 
-
-    public PreferencesHelper getPreferencesHelper() {
-        return preferencesHelper;
-    }
+    @Override
+    public void mediaBroadcastReceiverCallback() {}
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -71,7 +69,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 
         // Set the view to be shown if the list is empty
 
-        listView = (ListView) findViewById(R.id.current_list);
+        ListView listView = (ListView) findViewById(R.id.current_list);
 
         listView.setOnItemClickListener(this);
 
@@ -97,7 +95,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
                     ).show();
                     setResult(RESULT_CANCELED);
                 } else {
-                    Log.d(TAG, "PREF : " + filePickerListAdapter.getFiles()[0].toString());
+                    Log.d(TAG, "PREF : " + filePickerListAdapter.getFiles()[0]);
                     preferencesHelper.setMediaDirectories(filePickerListAdapter.getFiles());
                     setResult(RESULT_OK);
                 }
@@ -145,33 +143,22 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         super.onResume();
     }
 
-	/**
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+        rootDirectory = (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY);
+    }
+
+    /**
 	 * Updates the list view to the current directory
 	 */
 	protected void refreshFilesList()
     {
-		// Clear the files ArrayList
-		files.clear();
-		//clear the checked item list
-		filePickerListAdapter.clearBoxes();
-		// Set the extension file filter
-		File[] files;
-
-		// Get the files in the directory
-        files = rootDirectory.listFiles();
-
-		if (files != null && files.length > 0) {
-			for(File f : files) {
-				if (f.isHidden() && !mShowHiddenFiles) {
-					// Don't add the file
-					continue;
-				}
-				// Add the file the ArrayAdapter
-				this.files.add(f);
-			}
-
-			Collections.sort(this.files, new FileComparator());
-		}
+		files.clear(); // Clear the files ArrayList
+		filePickerListAdapter.clearBoxes(); //clear the checked item list
+        files.addAll(Arrays.asList(rootDirectory.listFiles()));
+		Collections.sort(files, new FileComparator());
 		filePickerListAdapter.notifyDataSetChanged();
 	}
 
@@ -210,7 +197,11 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 	}
 
     @Override
-    public void mediaBroadcastReceiverCallback() {}
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        outState.putSerializable(LAST_CURRENT_DIRECTORY, rootDirectory);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void setUpDrawer()
