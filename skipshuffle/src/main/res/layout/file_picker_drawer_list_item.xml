@@ -16,8 +16,10 @@
         android:paddingStart="@dimen/null_size"
         android:layout_gravity="start|center_vertical"
         android:textSize="@dimen/navdrawer_item_text_size"
+        android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
         android:textColor="@color/song_label_neon"
-	    android:singleLine="true"
 	    android:text="@string/file_picker_done"/>
 
     <ImageButton

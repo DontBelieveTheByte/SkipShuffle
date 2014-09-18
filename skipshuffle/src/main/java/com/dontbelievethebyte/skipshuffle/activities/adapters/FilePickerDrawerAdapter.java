@@ -26,7 +26,7 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
     private LayoutInflater layoutInflater;
     private Typeface typeface;
     private int layoutResource;
-    private int selectedItem;
+    private Integer selectedItem;
     private int selectedTextBackgroundColor;
     private int textColor;
 
@@ -52,7 +52,13 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
 
     public void setSelectedItem(int selectedItem)
     {
-        this.selectedItem = selectedItem;
+        if (selectedItem > getCount()) {
+            this.selectedItem = getCount();
+        } else if (selectedItem < 0) {
+            this.selectedItem = 0;
+        } else {
+            this.selectedItem = selectedItem;
+        }
         notifyDataSetChanged();
         //Trigger from activity.
         //private NavigationDrawerAdapter mAdapter;
@@ -82,7 +88,8 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
         viewHolder.title = setTitle(
                 convertView,
                 getItem(position),
-                R.id.drawer_item_text
+                R.id.drawer_item_text,
+                position
         );
 
         viewHolder.removeButton = setRemoveButton(
@@ -90,13 +97,13 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
                 R.id.remove
         );
 
-        if (position == selectedItem) {
+        if (null != selectedItem && position == selectedItem) {
             convertView.setBackgroundColor(selectedTextBackgroundColor);
         }
         return convertView;
     }
 
-    private TextView setTitle(View view, String text, int resourceId)
+    private TextView setTitle(View view, String text, int resourceId, int position)
     {
         TextView tv = (TextView) view.findViewById(resourceId);
         if (null != typeface) {
@@ -104,6 +111,11 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
         }
         tv.setText(text);
         tv.setTextColor(textColor);
+        if (null != selectedItem && position == selectedItem) {
+            tv.setSelected(true);
+        } else {
+            tv.setSelected(false);
+        }
         return tv;
     }
 
