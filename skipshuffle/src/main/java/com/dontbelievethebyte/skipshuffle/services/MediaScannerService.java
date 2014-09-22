@@ -36,7 +36,7 @@ public class MediaScannerService extends IntentService {
     protected void onHandleIntent(Intent intent)
     {
         preferencesHelper = new PreferencesHelper(getApplicationContext());
-        String[] directoryPaths = preferencesHelper.getMediaDirectories();
+        ArrayList<String> directoryPaths = preferencesHelper.getMediaDirectories();
         dbHandler = new DbHandler(getApplicationContext());
         mediaMetadataRetriever = new MediaMetadataRetriever();
         for (String directory : directoryPaths) {

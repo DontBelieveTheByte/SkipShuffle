@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -9,14 +8,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.PlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 import com.dontbelievethebyte.skipshuffle.ui.PlaylistUI;
+import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import org.json.JSONException;
 
@@ -28,28 +27,14 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     private DbHandler dbHandler;
     private ListView listView;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-
-        //Register class specific callback from MediaBroadcastReceiverCallback interface.
-        preferencesHelper.registerCallBack(this);
-
-        setUI(preferencesHelper.getUIType());
-
-        dbHandler = new DbHandler(getApplicationContext());
-
-        loadPlaylist(preferencesHelper.getLastPlaylist());
-    }
-
     @Override
     public void onResume()
     {
         super.onResume();
         preferencesHelper.registerCallBack(this);
         mediaPlayerBroadcastReceiver.registerCallback(this);
+        dbHandler = new DbHandler(getApplicationContext());
+        loadPlaylist(preferencesHelper.getLastPlaylist());
     }
 
     @Override

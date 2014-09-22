@@ -29,7 +29,7 @@ public class PlaylistUI implements PlayerUIInterface {
     {
         this.playlistActivity = playlistActivity;
 
-        playlistActivity.setContentView(R.layout.activity_list);
+        playlistActivity.setContentView(R.layout.list_activity);
 
         uiType = playlistActivity.getPreferencesHelper().getUIType();
 

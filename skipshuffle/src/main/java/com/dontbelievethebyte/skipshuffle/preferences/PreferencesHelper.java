@@ -2,7 +2,6 @@ package com.dontbelievethebyte.skipshuffle.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -13,6 +12,7 @@ import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PreferencesHelper {
@@ -23,7 +23,7 @@ public class PreferencesHelper {
     private Long currentPlaylist;
     private Integer currentPlaylistPosition;
     private Integer currentUIType;
-    private String[] directories;
+    private ArrayList<String> directories;
     private SharedPreferences sharedPreferences;
     private Context context;
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
@@ -57,19 +57,34 @@ public class PreferencesHelper {
         return currentPlaylistPosition;
     }
 
-    public String[] getMediaDirectories()
+    public ArrayList<String> getMediaDirectories()
     {
+
         if (null == directories) {
+            directories = new ArrayList<String>();
+
             String directoriesString = sharedPreferences.getString(
                     context.getString(R.string.pref_media_directories),
-                    Environment.getExternalStorageDirectory().getAbsolutePath()
+                    null
             );
-            directories = directoriesString.split(context.getString(R.string.pref_media_directories_separator));
-            //Cleanup the last path because it won't split.
-            directories[directories.length-1] = directories[directories.length-1].replace(
-                    context.getString(R.string.pref_media_directories_separator),
-                    ""
-            );
+            if (null != directoriesString) {
+                directories.addAll(
+                        Arrays.asList(
+                            directoriesString.split(
+                                context.getString(R.string.pref_media_directories_separator)
+                            )
+                        )
+                );
+                //Cleanup the last path because it won't split.
+                directories.set(
+                        directories.size()-1,
+                        directories.get(
+                                directories.size() -1).replace(
+                                context.getString(R.string.pref_media_directories_separator),
+                                ""
+                        )
+                );
+            }
         }
         return directories;
     }
@@ -193,11 +208,14 @@ public class PreferencesHelper {
                 ).apply();
     }
 
-    public void setMediaDirectories(String[] newDirectories)
+    public void setMediaDirectories(ArrayList<String> newDirectories)
     {
         StringBuilder stringBuilder = new StringBuilder();
         for(String directory : newDirectories){
-            stringBuilder.append(directory).append(context.getString(R.string.pref_media_directories_separator));
+            stringBuilder.append(directory)
+                         .append(
+                             context.getString(R.string.pref_media_directories_separator)
+                         );
         }
         sharedPreferences.edit()
                 .putString(
@@ -205,7 +223,6 @@ public class PreferencesHelper {
                         stringBuilder.toString()
                 ).apply();
         directories = newDirectories;
-        Log.d(TAG, "NEW DIRS SAVED :  cibt : " + context.getClass().getSimpleName() );
     }
 
     public void setUIType(int UIType)

@@ -42,7 +42,8 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         super(
                 context,
                 R.layout.file_picker_list_item,
-                android.R.id.text1, files
+                android.R.id.text1,
+                files
         );
 
         this.typeface = typeface;
@@ -70,14 +71,12 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         checkedFiles = new ArrayList<File>();
     }
 
-    public String[] getFiles()
+    public ArrayList<String> getFiles()
     {
-        String[] mediaDirectoriesToScan = new String[checkedFiles.size()];
-        int i = 0;
+        ArrayList<String> mediaDirectoriesToScan = new ArrayList<String>();
         //Save to a class instance array in case the activity needs to restart.
         for (File directory : checkedFiles){
-            mediaDirectoriesToScan[i] = directory.getAbsolutePath();
-            i++;
+            mediaDirectoriesToScan.add(directory.getAbsolutePath());
         }
         return mediaDirectoriesToScan;
     }

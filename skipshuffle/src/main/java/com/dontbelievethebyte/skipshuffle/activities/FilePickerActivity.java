@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
+import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerClickListener;
 import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerNavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
@@ -27,12 +27,22 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FilePickerActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class FilePickerActivity extends BaseActivity {
 
     private static final String TAG = "SkipShuffleFilePicker";
     private static final String LAST_CURRENT_DIRECTORY = "lastCurrentDirectory";
     private ArrayList<File> files;
+
+    public File getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    public void setCurrentDirectory(File currentDirectory) {
+        this.currentDirectory = currentDirectory;
+    }
+
     private File currentDirectory;
+    private File externalRootDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
     private FilePickerListAdapter filePickerListAdapter;
     private FilePickerUI filePickerUI;
     private PreferencesHelper preferencesHelper;
@@ -46,13 +56,16 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 		super.onCreate(savedInstanceState);
 
         preferencesHelper = new PreferencesHelper(this);
+        files = new ArrayList<File>();
 
-		// Point to external storage as root.
-        currentDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-
-		// Initialize the ArrayList
-		files = new ArrayList<File>();
-
+        if (null != savedInstanceState) {
+            File lastFile = (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY);
+            currentDirectory = (null != lastFile) ?
+                    lastFile :
+                    new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        } else {
+            currentDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        }
     }
 
     @Override
@@ -71,7 +84,12 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
 
         ListView listView = (ListView) findViewById(R.id.current_list);
 
-        listView.setOnItemClickListener(this);
+        listView.setOnItemClickListener(
+                new FilePickerClickListener(
+                        this,
+                        (DrawerLayout) findViewById(R.id.drawer_layout)
+                )
+        );
 
         // Set the ListAdapter for list of files
 
@@ -87,7 +105,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         View.OnClickListener okClickListener= new View.OnClickListener() {
             public void onClick(View v)
             {
-                if (filePickerListAdapter.getFiles().length < 1) {
+                if (filePickerListAdapter.getFiles().size() < 1) {
                     Toast.makeText(
                             FilePickerActivity.this,
                             R.string.pick_media_nothing_selected,
@@ -95,7 +113,7 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
                     ).show();
                     setResult(RESULT_CANCELED);
                 } else {
-                    Log.d(TAG, "PREF : " + filePickerListAdapter.getFiles()[0]);
+                    Log.d(TAG, "PREF : " + filePickerListAdapter.getFiles());
                     preferencesHelper.setMediaDirectories(filePickerListAdapter.getFiles());
                     setResult(RESULT_OK);
                 }
@@ -128,12 +146,9 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         setUpDrawer();
     }
 
-
 	@Override
 	protected void onResume()
     {
-        setUI(preferencesHelper.getUIType());
-
         Toast.makeText(
                 getApplicationContext(),
                 R.string.media_scan_sel_target_directories,
@@ -144,62 +159,35 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    public void onBackPressed()
     {
-        super.onRestoreInstanceState(savedInstanceState);
-        currentDirectory = (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY);
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar && ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
+            actionBar.hide();
+        } else if (externalRootDirectory.equals(currentDirectory.getParentFile())) {
+            // Go to parent directory
+//            currentDirectory = externalRootDirectory;
+//            refreshFilesList();
+        } else {
+            finish();
+        }
+
     }
 
-    /**
-	 * Updates the list view to the current directory
-	 */
-	protected void refreshFilesList()
+	public void refreshFilesList()
     {
         File newFiles[] = currentDirectory.listFiles();
-        if (null != newFiles && newFiles.length > 0) {
+        if (null == newFiles) {
             files.clear(); // Clear the files ArrayList
             files.addAll(Arrays.asList(newFiles));
             Collections.sort(files, new FileComparator());
             filePickerListAdapter.clearBoxes(); //clear the checked item list
             filePickerListAdapter.notifyDataSetChanged();
-        }
-	}
-
-	@Override
-	public void onBackPressed()
-    {
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar && ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
-            actionBar.hide();
-        } else if (currentDirectory.getParentFile() != null) {
-            // Go to parent directory
+        } else {
             currentDirectory = currentDirectory.getParentFile();
-            refreshFilesList();
-        } else {
-            finish();
-        }
-	}
-
-//    @Override
-//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        File newFile = (File)adapterView.getItemAtPosition(i);
-//        if (newFile.isDirectory()) {
-//            filePickerListAdapter.toggleCheckBox(newFile);
-//            filePickerListAdapter.notifyDataSetChanged();
-//        }
-////        return true;
-//    }
-
-	@Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-    {
-        currentDirectory = (File)adapterView.getItemAtPosition(i);
-        if (currentDirectory.isDirectory()) {
-            refreshFilesList();
-        } else {
             Toast.makeText(
                     FilePickerActivity.this,
-                    getString(R.string.not_a_directory, currentDirectory.getName()),
+                    getString(R.string.no_access),
                     Toast.LENGTH_SHORT
             ).show();
         }
@@ -218,35 +206,27 @@ public class FilePickerActivity extends BaseActivity implements AdapterView.OnIt
         super.setUpDrawer();
 
         ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
-
         TextView headerView = (TextView) drawerList.findViewById(R.id.drawer_header);
         headerView.setText(getString(R.string.file_picker_drawer_title));
         headerView.setTypeface(filePickerUI.getTypeFace());
-
         drawerList.addHeaderView(headerView);
 
-//        String[] test = new String[] {"test", "derpsadasdasda", "Derpington", "Shippingftron"};
-
-        String[] test = preferencesHelper.getMediaDirectories();
-
+        ArrayList<String> prefsDirectories = preferencesHelper.getMediaDirectories();
 
         FilePickerDrawerAdapter filePickerDrawerAdapter = new FilePickerDrawerAdapter(
                 this,
                 R.layout.file_picker_drawer_list_item,
-//                        preferencesHelper.getMediaDirectories(),
-                test,
+                (null != prefsDirectories) ? prefsDirectories : new ArrayList<String>(),
                 preferencesHelper,
                 filePickerUI.getTypeFace()
         );
-
-        drawerList.setAdapter(filePickerDrawerAdapter);
-
         drawerList.setOnItemClickListener(
                 new FilePickerNavDrawerClickListener(
                         this,
                         (DrawerLayout) findViewById(R.id.drawer_layout)
                 )
         );
+        drawerList.setAdapter(filePickerDrawerAdapter);
     }
 
     private class FileComparator implements Comparator<File> {

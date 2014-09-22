@@ -15,6 +15,8 @@ import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
+import java.util.ArrayList;
+
 public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
 
     private static class ViewHolder {
@@ -30,7 +32,7 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
     private int selectedTextBackgroundColor;
     private int textColor;
 
-    public FilePickerDrawerAdapter(Context context, int resource, String[] strings, PreferencesHelper preferencesHelper, Typeface typeface)
+    public FilePickerDrawerAdapter(Context context, int resource, ArrayList<String> strings, PreferencesHelper preferencesHelper, Typeface typeface)
     {
         super(context, resource, strings);
         layoutInflater = LayoutInflater.from(context);

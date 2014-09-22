@@ -22,7 +22,7 @@ public class FilePickerUI {
 
     public FilePickerUI(FilePickerActivity filePickerActivity)
     {
-        filePickerActivity.setContentView(R.layout.activity_list);
+        filePickerActivity.setContentView(R.layout.list_activity);
 
         this.filePickerActivity = filePickerActivity;
 

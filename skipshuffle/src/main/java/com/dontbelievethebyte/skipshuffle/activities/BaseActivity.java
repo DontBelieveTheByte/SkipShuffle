@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
@@ -110,10 +109,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         super.onCreate(savedInstanceState);
 
-        //Set up preferences and listener but callback are implemented by child classes.
-        preferencesHelper = new PreferencesHelper(getApplicationContext());
-        preferencesHelper.registerPrefsChangedListener();
-
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
 
@@ -178,6 +173,10 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         super.onResume();
 
+        //Set up preferences and listener but callback are implemented by child classes.
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        preferencesHelper.registerPrefsChangedListener();
+
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
@@ -187,6 +186,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                 new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE)
         );
         preferencesHelper.registerPrefsChangedListener();
+        setUI(preferencesHelper.getUIType());
     }
 
     @Override

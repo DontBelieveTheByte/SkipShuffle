@@ -18,8 +18,6 @@ public class MainActivity extends BaseActivity {
     {
         super.onCreate(savedInstanceState);
 
-        setUI(preferencesHelper.getUIType());
-
         //Start the mediaPlayer service.
         startService(
                 new Intent(
