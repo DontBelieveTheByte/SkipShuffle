@@ -158,7 +158,10 @@ public class MainUI implements PlayerUIInterface {
     public Typeface getTypeFace()
     {
         if (null == typeface) {
-            typeface = Typeface.createFromAsset(mainActivity.getAssets(), "fonts/UbuntuMono-B.ttf" );
+            typeface = Typeface.createFromAsset(
+                    mainActivity.getAssets(),
+                    TypeFaceMapper.getTypeFace(uiType)
+            );
         }
         return typeface;
     }

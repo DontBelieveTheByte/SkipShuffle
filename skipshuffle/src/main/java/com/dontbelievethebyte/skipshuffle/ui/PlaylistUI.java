@@ -97,7 +97,7 @@ public class PlaylistUI implements PlayerUIInterface {
         if (null == typeface) {
             typeface = Typeface.createFromAsset(
                     playlistActivity.getAssets(),
-                    "fonts/UbuntuMono-B.ttf"
+                    TypeFaceMapper.getTypeFace(uiType)
             );
         }
         return typeface;

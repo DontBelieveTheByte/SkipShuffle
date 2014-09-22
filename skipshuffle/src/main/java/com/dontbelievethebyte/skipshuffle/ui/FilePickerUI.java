@@ -62,7 +62,11 @@ public class FilePickerUI {
     public Typeface getTypeFace()
     {
         if (null == typeface) {
-            typeface = Typeface.createFromAsset(filePickerActivity.getAssets(), "fonts/UbuntuMono-B.ttf" );
+            typeface = Typeface.createFromAsset(
+                    filePickerActivity.getAssets(),
+                    TypeFaceMapper.getTypeFace(uiType)
+
+            );
         }
         return typeface;
     }
