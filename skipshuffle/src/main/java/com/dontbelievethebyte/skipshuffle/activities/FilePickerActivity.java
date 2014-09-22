@@ -108,10 +108,7 @@ public class FilePickerActivity extends BaseActivity {
         ListView listView = (ListView) findViewById(R.id.current_list);
 
         listView.setOnItemClickListener(
-                new FilePickerClickListener(
-                        this,
-                        (DrawerLayout) findViewById(R.id.drawer_layout)
-                )
+                new FilePickerClickListener(this)
         );
 
         // Set the ListAdapter for list of files
@@ -119,7 +116,6 @@ public class FilePickerActivity extends BaseActivity {
         listView.setAdapter(filePickerListAdapter);
 
         filePickerListAdapter.setCurrentDirectory(rootDirectory);
-
 
         View.OnClickListener backClickListener= new View.OnClickListener() {
             public void onClick(View v)

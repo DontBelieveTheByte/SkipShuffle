@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.activities.util;
 
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,12 +14,10 @@ import java.io.File;
 public class FilePickerClickListener implements ListView.OnItemClickListener {
 
     private FilePickerActivity filePickerActivity;
-    private DrawerLayout drawer;
 
-    public FilePickerClickListener(FilePickerActivity filePickerActivity, DrawerLayout drawer)
+    public FilePickerClickListener(FilePickerActivity filePickerActivity)
     {
         this.filePickerActivity = filePickerActivity;
-        this.drawer = drawer;
     }
 
     @Override
