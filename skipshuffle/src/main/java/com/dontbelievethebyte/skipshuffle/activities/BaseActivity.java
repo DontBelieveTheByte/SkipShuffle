@@ -215,6 +215,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                 return true;
             case R.id.haptic_feedback_toggle:
                 preferencesHelper.hapticFeedbackToggle();
+                return true;
             case R.id.theme:
                 showThemeSelectionDialog();
                 return true;
@@ -393,6 +394,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             setUI(preferencesHelper.getUIType());
+            Log.d(TAG, "UI CALLBACK CALLED");
         }
     }
 }
