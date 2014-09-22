@@ -39,7 +39,6 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 
         //Register class specific callbacks.
-        preferencesHelper.registerCallBack(this);
         mediaPlayerBroadcastReceiver.registerCallback(this);
         ui.reboot();
     }

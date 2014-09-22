@@ -11,14 +11,18 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
+import com.dontbelievethebyte.skipshuffle.activities.util.DirectoryComparator;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FilePickerListAdapter extends ArrayAdapter<File>
@@ -29,18 +33,20 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         public CheckBox checkBox;
     }
 
-    private List<File> files;
     private ArrayList<File> checkedFiles = new ArrayList<File>();
+    private List<File> files;
     private Drawable folderDrawable;
     private Drawable fileDrawable;
-    private int checkBoxDrawable;
+    private File currentDirectory;
+
     private int fileNameColor;
+    private int checkBoxDrawable;
     private Typeface typeface;
 
-    public FilePickerListAdapter(Context context, List<File> files, PreferencesHelper preferencesHelper, Typeface typeface)
+    public FilePickerListAdapter(FilePickerActivity filePickerActivity, List<File> files, Typeface typeface)
     {
         super(
-                context,
+                filePickerActivity,
                 R.layout.file_picker_list_item,
                 android.R.id.text1,
                 files
@@ -49,20 +55,20 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         this.typeface = typeface;
         this.files = files;
 
-        folderDrawable = context.getResources().getDrawable(
-                    DrawableMapper.getFolder(preferencesHelper.getUIType()
+        folderDrawable = filePickerActivity.getResources().getDrawable(
+                    DrawableMapper.getFolder(filePickerActivity.getPreferencesHelper().getUIType()
                     )
         );
 
-        fileDrawable = context.getResources().getDrawable(
-                DrawableMapper.getFile(preferencesHelper.getUIType()
+        fileDrawable = filePickerActivity.getResources().getDrawable(
+                DrawableMapper.getFile(filePickerActivity.getPreferencesHelper().getUIType()
                 )
         );
 
-        checkBoxDrawable = DrawableMapper.getCheckbox(preferencesHelper.getUIType());
+        checkBoxDrawable = DrawableMapper.getCheckbox(filePickerActivity.getPreferencesHelper().getUIType());
 
-        fileNameColor = context.getResources().getColor(
-                ColorMapper.getSongLabel(preferencesHelper.getUIType())
+        fileNameColor = filePickerActivity.getResources().getColor(
+                ColorMapper.getSongLabel(filePickerActivity.getPreferencesHelper().getUIType())
         );
     }
 
@@ -88,6 +94,15 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         } else {
             checkedFiles.add(file);
         }
+    }
+
+    public File getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    public void setCurrentDirectory(File currentDirectory) {
+        this.currentDirectory = currentDirectory;
+        refreshFilesList();
     }
 
     @Override
@@ -128,19 +143,6 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 R.id.file_picker_checkbox,
                 file
         );
-        if (!file.isDirectory()) {
-           convertView.setEnabled(false);
-//           convertView.setBackgroundColor(
-//                   context.getResources().getColor(fileBackgroundColor)
-//           );
-        } else {
-            convertView.setEnabled(true);
-//            convertView.setBackgroundColor(
-//                    context.getResources().getColor(fileBackgroundColor)
-//            );
-//            convertView.setBackgroundColor(Color.TRANSPARENT);
-        }
-
         return convertView;
     }
 
@@ -179,13 +181,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                    if (isChecked){
-                        if (!checkedFiles.contains(file)) {
-                            checkedFiles.add(file);
-                        }
-                    } else {
-                        checkedFiles.remove(file);
-                    }
+                    toggleCheckBox(file);
                 }
             });
 
@@ -196,5 +192,24 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             checkBox.setVisibility(View.GONE);
         }
         return checkBox;
+    }
+
+    public void refreshFilesList()
+    {
+        File newFiles[] = currentDirectory.listFiles();
+        if (null != newFiles) {
+            files.clear(); // Clear the files ArrayList
+            files.addAll(Arrays.asList(newFiles));
+            Collections.sort(files, new DirectoryComparator());
+            clearBoxes(); //clear the checked item list
+            notifyDataSetChanged();
+        } else {
+            currentDirectory = currentDirectory.getParentFile();
+            Toast.makeText(
+                    getContext(),
+                    getContext().getString(R.string.no_access),
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 }

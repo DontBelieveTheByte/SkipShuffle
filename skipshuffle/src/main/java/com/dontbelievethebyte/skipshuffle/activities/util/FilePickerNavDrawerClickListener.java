@@ -23,7 +23,6 @@ public class FilePickerNavDrawerClickListener implements ListView.OnItemClickLis
     {
         this.context = context;
         this.drawer = drawer;
-        Log.d("DEPR", "CLICKEDDDDDDDDDDD");
     }
 
     @Override

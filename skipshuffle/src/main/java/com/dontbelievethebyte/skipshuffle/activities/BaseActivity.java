@@ -176,6 +176,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         //Set up preferences and listener but callback are implemented by child classes.
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         preferencesHelper.registerPrefsChangedListener();
+        preferencesHelper.registerCallBack(this);
 
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
@@ -185,7 +186,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                 mediaPlayerBroadcastReceiver,
                 new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE)
         );
-        preferencesHelper.registerPrefsChangedListener();
         setUI(preferencesHelper.getUIType());
     }
 

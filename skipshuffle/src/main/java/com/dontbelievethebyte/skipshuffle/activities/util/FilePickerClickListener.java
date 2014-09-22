@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
+import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
 
 import java.io.File;
 
@@ -26,6 +27,7 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
     public void onItemClick(AdapterView adapterView, View view, int position, long id)
     {
         File newDirectory = (File) adapterView.getItemAtPosition(position);
+        FilePickerListAdapter filePickerListAdapter = (FilePickerListAdapter) adapterView.getAdapter();
 
         if (null == newDirectory) {
             Toast.makeText(
@@ -34,14 +36,15 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
                     Toast.LENGTH_SHORT
             ).show();
         } else if (newDirectory.isDirectory()) {
-            filePickerActivity.setCurrentDirectory(newDirectory);
-            filePickerActivity.refreshFilesList();
+            filePickerListAdapter.setCurrentDirectory(newDirectory);
+            filePickerListAdapter.refreshFilesList();
         } else {
             Toast.makeText(
                     filePickerActivity,
                     filePickerActivity.getString(
                             R.string.not_a_directory,
-                            filePickerActivity.getCurrentDirectory().getName()),
+                            newDirectory.getName()
+                    ),
                     Toast.LENGTH_SHORT
             ).show();
         }
