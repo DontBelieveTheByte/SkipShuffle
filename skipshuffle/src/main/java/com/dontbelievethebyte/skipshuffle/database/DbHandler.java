@@ -20,16 +20,13 @@ import java.util.TreeMap;
 public class DbHandler extends SQLiteOpenHelper {
 
     private static final String TAG = "SkipShuffleDB";
-
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "skipshuffle.db";
     private static final String TABLE_TRACKS = "tracks";
     private static final String TABLE_PLAYLIST = "playlist";
     private static final String TABLE_ARTISTS = "artists";
     private static final String TABLE_ALBUMS = "album";
     private static final String TABLE_GENRES = "genre";
-
-
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TRACKS = "tracks";
     public static final String COLUMN_PATH = "path";
@@ -41,7 +38,6 @@ public class DbHandler extends SQLiteOpenHelper {
     public static final String COLUMN_METADATA_GENRE = "genre";
     public static final String COLUMN_METADATA_GENRE_ID = "genre_id";
     public static final String COLUMN_PLAYLIST_ID = "playlist_id";
-
 
     public DbHandler(Context context)
     {
@@ -60,21 +56,15 @@ public class DbHandler extends SQLiteOpenHelper {
                 COLUMN_METADATA_ALBUM_ID + " INTEGER," +
                 COLUMN_METADATA_GENRE_ID + " INTEGER" +
                 ")";
-        sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
-
         String CREATE_ARTISTS_TABLE = "CREATE TABLE " +
                 TABLE_ARTISTS + "(" +
-                COLUMN_METADATA_ARTIST + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_METADATA_ARTIST + " INTEGER PRIMARY KEY AUTOINCREMENT" +
                 ")";
-        sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
-
         String CREATE_ALBUMS_TABLE = "CREATE TABLE " +
                 TABLE_ALBUMS + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_METADATA_ALBUM + " TEXT," +
+                COLUMN_METADATA_ALBUM + " TEXT" +
                 ")";
-        sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
-
         String CREATE_GENRES_TABLE = "CREATE TABLE " +
                 TABLE_GENRES + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -84,21 +74,16 @@ public class DbHandler extends SQLiteOpenHelper {
                 COLUMN_METADATA_ALBUM + " TEXT," +
                 COLUMN_METADATA_GENRE + " TEXT" +
                 ")";
-        sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
-
         String CREATE_PLAYLIST_TABLE = "CREATE TABLE " +
                 TABLE_PLAYLIST + "(" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_TRACKS + " TEXT" +
                 ")";
-
         sqLiteDatabase.execSQL(CREATE_TRACKS_TABLE);
         sqLiteDatabase.execSQL(CREATE_ARTISTS_TABLE);
         sqLiteDatabase.execSQL(CREATE_ALBUMS_TABLE);
         sqLiteDatabase.execSQL(CREATE_GENRES_TABLE);
         sqLiteDatabase.execSQL(CREATE_PLAYLIST_TABLE);
-
-
     }
 
     @Override
