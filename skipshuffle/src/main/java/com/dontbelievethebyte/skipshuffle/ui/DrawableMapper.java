@@ -49,13 +49,13 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.cancel_states_mono_light;
+                return R.drawable.file_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.cancel_states_mono_dark;
+                return R.drawable.file_mono_dark;
             case UITypes.NEON :
-                return R.drawable.cancel_states_neon;
+                return R.drawable.file_neon;
             default:
-                return R.drawable.cancel_states_neon;
+                return R.drawable.file_neon;
         }
     }
 

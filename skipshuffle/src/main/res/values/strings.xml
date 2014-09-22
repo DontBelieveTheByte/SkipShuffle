@@ -12,7 +12,7 @@
     <string name="label_playlist_selector">Select Music</string>
 
     <!--Media scanner related stuff-->
-    <string name="media_scan_start_title">"Scanning audio files..."</string>
+    <string name="media_scan_start_title">"Scanning audio files&#8230;"</string>
     <string name="media_scan_start_message">"Please wait."</string>
     <string name="media_scan_sel_target_directories">Select media directories.</string>
     <string name="media_scan_no_directory">No directory selected.</string>
@@ -30,6 +30,7 @@
     <string name="pick_media_nothing_selected">Nothing Selected.</string>
     <string name="player_wrapper_song_error">Error playing file : </string>
     <string name="not_a_directory">%s is not a directory.</string>
+    <string name="no_access">Unable to access.</string>
 
     <!--Main menu-->
     <string name="menu_theme">Theme</string>
