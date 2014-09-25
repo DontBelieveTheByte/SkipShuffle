@@ -39,7 +39,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private Drawable folderDrawable;
     private Drawable fileDrawable;
     private File currentDirectory;
-    private ArrayList<File> currentWathedDirectories;
+    private ArrayList<File> currentWatchedDirectories;
     private int fileNameColor;
     private int checkBoxDrawable;
     private int checkBoxSubDirectorySelectedDrawable;
@@ -150,7 +150,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 
     public void setCurrentWatchedDirectories(ArrayList<File> currentWatchedDirectories)
     {
-        this.currentWathedDirectories = currentWatchedDirectories;
+        this.currentWatchedDirectories = currentWatchedDirectories;
     }
 
     public void setTypeface(Typeface typeface)
@@ -202,7 +202,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             });
 
             checkBox.setChecked(
-                    checkedFiles.contains(file) || currentWathedDirectories.contains(file) || subDirectorySelected
+                    checkedFiles.contains(file) || currentWatchedDirectories.contains(file) || subDirectorySelected
             );
         } else {
             checkBox.setVisibility(View.GONE);
@@ -234,7 +234,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         try {
             String parentDirectoryName = parentDirectory.getCanonicalPath();
 
-            for (File directory : currentWathedDirectories) {
+            for (File directory : currentWatchedDirectories) {
                 String directoryName = directory.getCanonicalPath();
                 if (!parentDirectoryName.equals(directoryName) &&
                         directory.getCanonicalPath().startsWith(
