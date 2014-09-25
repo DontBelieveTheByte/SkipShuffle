@@ -20,6 +20,7 @@ import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,16 +35,17 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     }
 
     private ArrayList<File> checkedFiles = new ArrayList<File>();
-    private List<File> files;
+    private List<File> listedFiles;
     private Drawable folderDrawable;
     private Drawable fileDrawable;
     private File currentDirectory;
-
+    private ArrayList<File> currentWathedDirectories;
     private int fileNameColor;
     private int checkBoxDrawable;
+    private int checkBoxSubDirectorySelectedDrawable;
     private Typeface typeface;
 
-    public FilePickerListAdapter(FilePickerActivity filePickerActivity, List<File> files, Typeface typeface)
+    public FilePickerListAdapter(FilePickerActivity filePickerActivity, List<File> files)
     {
         super(
                 filePickerActivity,
@@ -52,8 +54,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 files
         );
 
-        this.typeface = typeface;
-        this.files = files;
+        this.listedFiles = files;
 
         folderDrawable = filePickerActivity.getResources().getDrawable(
                     DrawableMapper.getFolder(filePickerActivity.getPreferencesHelper().getUIType()
@@ -66,6 +67,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         );
 
         checkBoxDrawable = DrawableMapper.getCheckbox(filePickerActivity.getPreferencesHelper().getUIType());
+        checkBoxSubDirectorySelectedDrawable = DrawableMapper.getCheckboxSubdirectorySelected(filePickerActivity.getPreferencesHelper().getUIType());
 
         fileNameColor = filePickerActivity.getResources().getColor(
                 ColorMapper.getSongLabel(filePickerActivity.getPreferencesHelper().getUIType())
@@ -74,10 +76,10 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 
     public void clearBoxes()
     {
-        checkedFiles = new ArrayList<File>();
+//        checkedFiles = new ArrayList<File>();
     }
 
-    public ArrayList<String> getFiles()
+    public ArrayList<String> getListedFiles()
     {
         ArrayList<String> mediaDirectoriesToScan = new ArrayList<String>();
         //Save to a class instance array in case the activity needs to restart.
@@ -124,7 +126,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        File file = files.get(position);
+        File file = listedFiles.get(position);
 
         viewHolder.image = setFolderImage(
                 convertView,
@@ -146,16 +148,24 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         return convertView;
     }
 
+    public void setCurrentWatchedDirectories(ArrayList<File> currentWatchedDirectories)
+    {
+        this.currentWathedDirectories = currentWatchedDirectories;
+    }
+
+    public void setTypeface(Typeface typeface)
+    {
+        this.typeface = typeface;
+    }
+
     private ImageView setFolderImage(View view, int resourceId, final File file)
     {
         ImageView folderImage = (ImageView) view.findViewById(resourceId);
-
         folderImage.setImageDrawable(
                 file.isDirectory() ?
-                        folderDrawable :
+                        folderDrawable:
                         fileDrawable
         );
-
         return folderImage;
     }
 
@@ -173,9 +183,15 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private CheckBox setCheckbox(View view, int resourceId, final File file)
     {
         CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
+        boolean subDirectorySelected = isSubdirectorySelected(file);
 
         if (file.isDirectory()) {
-            checkBox.setBackgroundResource(checkBoxDrawable);
+            checkBox.setBackgroundResource(
+                    subDirectorySelected ?
+                            checkBoxSubDirectorySelectedDrawable:
+                            checkBoxDrawable
+            );
+
             checkBox.setVisibility(View.VISIBLE);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
             {
@@ -186,7 +202,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             });
 
             checkBox.setChecked(
-                    checkedFiles.contains(file)
+                    checkedFiles.contains(file) || currentWathedDirectories.contains(file) || subDirectorySelected
             );
         } else {
             checkBox.setVisibility(View.GONE);
@@ -198,9 +214,9 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     {
         File newFiles[] = currentDirectory.listFiles();
         if (null != newFiles) {
-            files.clear(); // Clear the files ArrayList
-            files.addAll(Arrays.asList(newFiles));
-            Collections.sort(files, new DirectoryComparator());
+            listedFiles.clear(); // Clear the listedFiles ArrayList
+            listedFiles.addAll(Arrays.asList(newFiles));
+            Collections.sort(listedFiles, new DirectoryComparator());
             clearBoxes(); //clear the checked item list
             notifyDataSetChanged();
         } else {
@@ -210,6 +226,27 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                     getContext().getString(R.string.no_access),
                     Toast.LENGTH_SHORT
             ).show();
+        }
+    }
+
+    private boolean isSubdirectorySelected(File parentDirectory)
+    {
+        try {
+            String parentDirectoryName = parentDirectory.getCanonicalPath();
+
+            for (File directory : currentWathedDirectories) {
+                String directoryName = directory.getCanonicalPath();
+                if (!parentDirectoryName.equals(directoryName) &&
+                        directory.getCanonicalPath().startsWith(
+                            parentDirectory.getCanonicalPath()
+                        )
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException exception){
+            return false;
         }
     }
 }
