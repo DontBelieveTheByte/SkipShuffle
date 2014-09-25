@@ -45,6 +45,21 @@ public class DrawableMapper {
                 return R.drawable.checkbox_states_neon;
         }
     }
+
+    public static int getCheckboxSubdirectorySelected(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.drawable.checkbox_subdirectory_selected_states_mono_light;
+            case UITypes.MONO_DARK :
+                return R.drawable.checkbox_subdirectory_selected_states_mono_dark;
+            case UITypes.NEON :
+                return R.drawable.checkbox_subdirectory_selected_states_neon;
+            default:
+                return R.drawable.checkbox_subdirectory_selected_states_neon;
+        }
+    }
+
     public static int getFile(Integer uiType)
     {
         switch (uiType) {
