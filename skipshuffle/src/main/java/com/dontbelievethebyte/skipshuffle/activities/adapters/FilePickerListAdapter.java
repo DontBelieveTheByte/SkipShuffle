@@ -66,8 +66,12 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 )
         );
 
-        checkBoxDrawable = DrawableMapper.getCheckbox(filePickerActivity.getPreferencesHelper().getUIType());
-        checkBoxSubDirectorySelectedDrawable = DrawableMapper.getCheckboxSubdirectorySelected(filePickerActivity.getPreferencesHelper().getUIType());
+        checkBoxDrawable = DrawableMapper.getCheckbox(
+                filePickerActivity.getPreferencesHelper().getUIType()
+        );
+        checkBoxSubDirectorySelectedDrawable = DrawableMapper.getCheckboxSubdirectorySelected(
+                filePickerActivity.getPreferencesHelper().getUIType()
+        );
 
         fileNameColor = filePickerActivity.getResources().getColor(
                 ColorMapper.getSongLabel(filePickerActivity.getPreferencesHelper().getUIType())
@@ -79,7 +83,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 //        checkedFiles = new ArrayList<File>();
     }
 
-    public ArrayList<String> getListedFiles()
+    public ArrayList<String> getListedFiles()//@TODO wrong return
     {
         ArrayList<String> mediaDirectoriesToScan = new ArrayList<String>();
         //Save to a class instance array in case the activity needs to restart.
@@ -188,7 +192,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         if (file.isDirectory()) {
             checkBox.setBackgroundResource(
                     subDirectorySelected ?
-                            checkBoxSubDirectorySelectedDrawable:
+                            checkBoxSubDirectorySelectedDrawable :
                             checkBoxDrawable
             );
 
@@ -229,7 +233,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         }
     }
 
-    private boolean isSubdirectorySelected(File parentDirectory)
+    public boolean isSubdirectorySelected(File parentDirectory)
     {
         try {
             String parentDirectoryName = parentDirectory.getCanonicalPath();

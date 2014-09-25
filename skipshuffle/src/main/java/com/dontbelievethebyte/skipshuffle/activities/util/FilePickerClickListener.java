@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle.activities.util;
 
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +26,6 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
     {
         File newDirectory = (File) adapterView.getItemAtPosition(position);
         FilePickerListAdapter filePickerListAdapter = (FilePickerListAdapter) adapterView.getAdapter();
-
         if (null == newDirectory) {
             Toast.makeText(
                     filePickerActivity,
@@ -33,8 +33,17 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
                     Toast.LENGTH_SHORT
             ).show();
         } else if (newDirectory.isDirectory()) {
-            filePickerListAdapter.setCurrentDirectory(newDirectory);
-            filePickerListAdapter.refreshFilesList();
+            CheckBox checkBox = (CheckBox) view.findViewById(R.id.file_picker_checkbox);
+            if (checkBox.isChecked()) {
+                Toast.makeText(
+                        filePickerActivity,
+                        R.string.subdirectory_included,
+                        Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                filePickerListAdapter.setCurrentDirectory(newDirectory);
+                filePickerListAdapter.refreshFilesList();
+            }
         } else {
             Toast.makeText(
                     filePickerActivity,

@@ -36,6 +36,6 @@ public class FilePickerNavDrawerClickListener implements ListView.OnItemClickLis
                 R.string.media_scan_sel_target_directories,
                 Toast.LENGTH_LONG
         ).show();
-        Log.d("DEPR", "CLICKEDDDDDDDDDDD");
+        Log.d("POSITION", " : " + position);
     }
 }

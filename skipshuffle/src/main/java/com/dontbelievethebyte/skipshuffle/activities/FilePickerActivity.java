@@ -28,12 +28,14 @@ public class FilePickerActivity extends BaseActivity {
 
     private static final String TAG = "SkipShuffleFilePicker";
     private static final String LAST_CURRENT_DIRECTORY = "lastCurrentDirectory";
+    private static final String LAST_CURRENT_WATCHED_DIRECTORIES = "lastCurrentWatchedDirectories";
 
     private File rootDirectory;
     private File externalStorageRootDirectory;
     private FilePickerListAdapter filePickerListAdapter;
     private FilePickerUI filePickerUI;
     private PreferencesHelper preferencesHelper;
+    private ArrayList<File> currentWatchedDirectories;
 
     @Override
     public void mediaBroadcastReceiverCallback() {}
@@ -63,13 +65,32 @@ public class FilePickerActivity extends BaseActivity {
         externalStorageRootDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 
         preferencesHelper = new PreferencesHelper(this);
+        currentWatchedDirectories = new ArrayList<File>();
 
         if (null != savedInstanceState) {
             rootDirectory = (null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY)) ?
                                 (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) :
                                 externalStorageRootDirectory;
+//            if (null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES)) {
+//
+//
+//                ArrayList<String> directories = (ArrayList<String>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES);
+//
+//                for(File directory : directories){
+//                    directories[i] = directory.getAbsolutePath();
+//                }
+//
+//            } else {
+                for (String directoryString : preferencesHelper.getMediaDirectories()) {
+                    currentWatchedDirectories.add(new File(directoryString));
+//                }
+            }
+
         } else {
             rootDirectory = externalStorageRootDirectory;
+            for (String directoryString : preferencesHelper.getMediaDirectories()) {
+                currentWatchedDirectories.add(new File(directoryString));
+            }
         }
     }
 
@@ -89,6 +110,14 @@ public class FilePickerActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState)
     {
         outState.putSerializable(LAST_CURRENT_DIRECTORY, filePickerListAdapter.getCurrentDirectory());
+
+        String[] directories = new String[currentWatchedDirectories.size()];
+        int i = 0;
+        for(File directory : currentWatchedDirectories){
+            directories[i] = directory.getAbsolutePath();
+        }
+        outState.putSerializable(LAST_CURRENT_WATCHED_DIRECTORIES, directories);
+
         super.onSaveInstanceState(outState);
     }
 
@@ -99,23 +128,16 @@ public class FilePickerActivity extends BaseActivity {
 
         filePickerListAdapter = new FilePickerListAdapter(
                 this,
-                new ArrayList<File>(),
-                filePickerUI.getTypeFace()
+                new ArrayList<File>()
         );
 
-        // Set the view to be shown if the list is empty
+        filePickerListAdapter.setCurrentWatchedDirectories(currentWatchedDirectories);
+        filePickerListAdapter.setCurrentDirectory(rootDirectory);
+        filePickerListAdapter.setTypeface(filePickerUI.getTypeFace());
 
         ListView listView = (ListView) findViewById(R.id.current_list);
-
-        listView.setOnItemClickListener(
-                new FilePickerClickListener(this)
-        );
-
-        // Set the ListAdapter for list of files
-
+        listView.setOnItemClickListener(new FilePickerClickListener(this));
         listView.setAdapter(filePickerListAdapter);
-
-        filePickerListAdapter.setCurrentDirectory(rootDirectory);
 
         View.OnClickListener backClickListener= new View.OnClickListener() {
             public void onClick(View v)
@@ -127,7 +149,7 @@ public class FilePickerActivity extends BaseActivity {
         View.OnClickListener okClickListener= new View.OnClickListener() {
             public void onClick(View v)
             {
-                if (filePickerListAdapter.getFiles().size() < 1) {
+                if (filePickerListAdapter.getListedFiles().size() < 1) {
                     Toast.makeText(
                             FilePickerActivity.this,
                             R.string.pick_media_nothing_selected,
@@ -135,8 +157,8 @@ public class FilePickerActivity extends BaseActivity {
                     ).show();
                     setResult(RESULT_CANCELED);
                 } else {
-                    Log.d(TAG, "PREF : " + filePickerListAdapter.getFiles());
-                    preferencesHelper.setMediaDirectories(filePickerListAdapter.getFiles());
+                    Log.d(TAG, "PREF : " + filePickerListAdapter.getListedFiles());
+                    preferencesHelper.setMediaDirectories(filePickerListAdapter.getListedFiles());
                     setResult(RESULT_OK);
                 }
                 finish();
