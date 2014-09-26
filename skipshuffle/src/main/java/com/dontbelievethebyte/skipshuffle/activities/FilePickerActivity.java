@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ImageButton;
@@ -46,9 +45,9 @@ public class FilePickerActivity extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar && ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
             actionBar.hide();
-        } else if (null != filePickerListAdapter.getCurrentDirectory().getParentFile()) {
-            filePickerListAdapter.setCurrentDirectory(
-                    filePickerListAdapter.getCurrentDirectory().getParentFile()
+        } else if (null != filePickerListAdapter.getCurrentListedDirectory().getParentFile()) {
+            filePickerListAdapter.setCurrentListedDirectory(
+                    filePickerListAdapter.getCurrentListedDirectory().getParentFile()
             );
             filePickerListAdapter.refreshFilesList();
         } else {
@@ -67,31 +66,15 @@ public class FilePickerActivity extends BaseActivity {
         preferencesHelper = new PreferencesHelper(this);
         currentWatchedDirectories = new ArrayList<File>();
 
-        if (null != savedInstanceState) {
-            rootDirectory = (null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY)) ?
+        rootDirectory = ( null != savedInstanceState &&
+                          null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY)) ?
                                 (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) :
                                 externalStorageRootDirectory;
-//            if (null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES)) {
-//
-//
-//                ArrayList<String> directories = (ArrayList<String>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES);
-//
-//                for(File directory : directories){
-//                    directories[i] = directory.getAbsolutePath();
-//                }
-//
-//            } else {
-                for (String directoryString : preferencesHelper.getMediaDirectories()) {
-                    currentWatchedDirectories.add(new File(directoryString));
-//                }
-            }
 
-        } else {
-            rootDirectory = externalStorageRootDirectory;
-            for (String directoryString : preferencesHelper.getMediaDirectories()) {
-                currentWatchedDirectories.add(new File(directoryString));
-            }
-        }
+        currentWatchedDirectories = null != savedInstanceState &&
+                                    null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) ?
+                                    (ArrayList<File>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) :
+                                        preferencesHelper.getMediaDirectories();
     }
 
 	@Override
@@ -109,15 +92,8 @@ public class FilePickerActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        outState.putSerializable(LAST_CURRENT_DIRECTORY, filePickerListAdapter.getCurrentDirectory());
-
-        String[] directories = new String[currentWatchedDirectories.size()];
-        int i = 0;
-        for(File directory : currentWatchedDirectories){
-            directories[i] = directory.getAbsolutePath();
-        }
-        outState.putSerializable(LAST_CURRENT_WATCHED_DIRECTORIES, directories);
-
+        outState.putSerializable(LAST_CURRENT_DIRECTORY, filePickerListAdapter.getCurrentListedDirectory());
+        outState.putSerializable(LAST_CURRENT_WATCHED_DIRECTORIES, currentWatchedDirectories);
         super.onSaveInstanceState(outState);
     }
 
@@ -131,8 +107,8 @@ public class FilePickerActivity extends BaseActivity {
                 new ArrayList<File>()
         );
 
-        filePickerListAdapter.setCurrentWatchedDirectories(currentWatchedDirectories);
-        filePickerListAdapter.setCurrentDirectory(rootDirectory);
+        filePickerListAdapter.setCurrentSelectedDirectories(currentWatchedDirectories);
+        filePickerListAdapter.setCurrentListedDirectory(rootDirectory);
         filePickerListAdapter.setTypeface(filePickerUI.getTypeFace());
 
         ListView listView = (ListView) findViewById(R.id.current_list);
@@ -149,7 +125,7 @@ public class FilePickerActivity extends BaseActivity {
         View.OnClickListener okClickListener= new View.OnClickListener() {
             public void onClick(View v)
             {
-                if (filePickerListAdapter.getListedFiles().size() < 1) {
+                if (filePickerListAdapter.getSelectedDirectories().size() < 1) {
                     Toast.makeText(
                             FilePickerActivity.this,
                             R.string.pick_media_nothing_selected,
@@ -157,8 +133,7 @@ public class FilePickerActivity extends BaseActivity {
                     ).show();
                     setResult(RESULT_CANCELED);
                 } else {
-                    Log.d(TAG, "PREF : " + filePickerListAdapter.getListedFiles());
-                    preferencesHelper.setMediaDirectories(filePickerListAdapter.getListedFiles());
+                    preferencesHelper.setMediaDirectories(filePickerListAdapter.getSelectedDirectories());
                     setResult(RESULT_OK);
                 }
                 finish();
@@ -197,16 +172,16 @@ public class FilePickerActivity extends BaseActivity {
 
         ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
         TextView headerView = (TextView) drawerList.findViewById(R.id.drawer_header);
-        headerView.setText(getString(R.string.file_picker_drawer_title));
+        headerView.setText(
+                getString(R.string.file_picker_drawer_title)
+        );
         headerView.setTypeface(filePickerUI.getTypeFace());
         drawerList.addHeaderView(headerView);
-
-        ArrayList<String> prefsDirectories = preferencesHelper.getMediaDirectories();
 
         FilePickerDrawerAdapter filePickerDrawerAdapter = new FilePickerDrawerAdapter(
                 this,
                 R.layout.file_picker_drawer_list_item,
-                (null != prefsDirectories) ? prefsDirectories : new ArrayList<String>(),
+                currentWatchedDirectories,
                 preferencesHelper,
                 filePickerUI.getTypeFace()
         );
