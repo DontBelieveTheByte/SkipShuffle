@@ -30,7 +30,8 @@
     <string name="pick_media_nothing_selected">Nothing Selected.</string>
     <string name="player_wrapper_song_error">Error playing file : </string>
     <string name="not_a_directory">%s is not a directory.</string>
-    <string name="subdirectory_included">Subdirectories are already included.</string>
+    <string name="parent_directory_selected">Swapper for higher level directory.</string>
+    <string name="sub_directory_selected">Swapped for lower level directory.</string>
     <string name="no_access">Unable to access.</string>
 
     <!--Main menu-->
