@@ -34,12 +34,11 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         public CheckBox checkBox;
     }
 
-    private ArrayList<File> checkedFiles = new ArrayList<File>();
     private List<File> listedFiles;
     private Drawable folderDrawable;
     private Drawable fileDrawable;
-    private File currentDirectory;
-    private ArrayList<File> currentWatchedDirectories;
+    private File currentListedDirectory;
+    private ArrayList<File> currentSelectedDirectories;
     private int fileNameColor;
     private int checkBoxDrawable;
     private int checkBoxSubDirectorySelectedDrawable;
@@ -83,31 +82,36 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 //        checkedFiles = new ArrayList<File>();
     }
 
-    public ArrayList<String> getListedFiles()//@TODO wrong return
+    public ArrayList<String> getSelectedDirectories()//@TODO wrong return
     {
         ArrayList<String> mediaDirectoriesToScan = new ArrayList<String>();
         //Save to a class instance array in case the activity needs to restart.
-        for (File directory : checkedFiles){
+        for (File directory : currentSelectedDirectories){
             mediaDirectoriesToScan.add(directory.getAbsolutePath());
         }
         return mediaDirectoriesToScan;
     }
 
-    public void toggleCheckBox(File file)
+    public void toggleDirectorySelection(File checkBoxAssociatedFile)
     {
-        if (checkedFiles.contains(file)) {
-            checkedFiles.remove(file);
+        if (currentSelectedDirectories.contains(checkBoxAssociatedFile)) {
+            if (isSubdirectorySelected(checkBoxAssociatedFile)) {
+
+            } else if (isParentdirectorySelected(checkBoxAssociatedFile)) {
+
+            }
+            currentSelectedDirectories.remove(checkBoxAssociatedFile);
         } else {
-            checkedFiles.add(file);
+            currentSelectedDirectories.add(checkBoxAssociatedFile);
         }
     }
 
-    public File getCurrentDirectory() {
-        return currentDirectory;
+    public File getCurrentListedDirectory() {
+        return currentListedDirectory;
     }
 
-    public void setCurrentDirectory(File currentDirectory) {
-        this.currentDirectory = currentDirectory;
+    public void setCurrentListedDirectory(File currentListedDirectory) {
+        this.currentListedDirectory = currentListedDirectory;
         refreshFilesList();
     }
 
@@ -152,9 +156,9 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         return convertView;
     }
 
-    public void setCurrentWatchedDirectories(ArrayList<File> currentWatchedDirectories)
+    public void setCurrentSelectedDirectories(ArrayList<File> currentSelectedDirectories)
     {
-        this.currentWatchedDirectories = currentWatchedDirectories;
+        this.currentSelectedDirectories = currentSelectedDirectories;
     }
 
     public void setTypeface(Typeface typeface)
@@ -184,12 +188,12 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         return fileName;
     }
 
-    private CheckBox setCheckbox(View view, int resourceId, final File file)
+    private CheckBox setCheckbox(View view, int resourceId, final File associatedDirectory)
     {
         CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
-        boolean subDirectorySelected = isSubdirectorySelected(file);
+        boolean subDirectorySelected = isSubdirectorySelected(associatedDirectory);
 
-        if (file.isDirectory()) {
+        if (associatedDirectory.isDirectory()) {
             checkBox.setBackgroundResource(
                     subDirectorySelected ?
                             checkBoxSubDirectorySelectedDrawable :
@@ -201,12 +205,32 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
-                    toggleCheckBox(file);
+                    if (isChecked) {
+                        if (isSubdirectorySelected(associatedDirectory)) {
+                            Toast.makeText(
+                                    getContext(),
+                                    R.string.sub_directory_selected,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        } else if (isParentdirectorySelected(associatedDirectory)) {
+                            Toast.makeText(
+                                    getContext(),
+                                    R.string.parent_directory_selected,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+
+                    toggleDirectorySelection(associatedDirectory);
                 }
             });
 
             checkBox.setChecked(
-                    checkedFiles.contains(file) || currentWatchedDirectories.contains(file) || subDirectorySelected
+                    currentSelectedDirectories.contains(associatedDirectory) || currentSelectedDirectories.contains(associatedDirectory) || subDirectorySelected
             );
         } else {
             checkBox.setVisibility(View.GONE);
@@ -216,7 +240,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 
     public void refreshFilesList()
     {
-        File newFiles[] = currentDirectory.listFiles();
+        File newFiles[] = currentListedDirectory.listFiles();
         if (null != newFiles) {
             listedFiles.clear(); // Clear the listedFiles ArrayList
             listedFiles.addAll(Arrays.asList(newFiles));
@@ -224,7 +248,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             clearBoxes(); //clear the checked item list
             notifyDataSetChanged();
         } else {
-            currentDirectory = currentDirectory.getParentFile();
+            currentListedDirectory = currentListedDirectory.getParentFile();
             Toast.makeText(
                     getContext(),
                     getContext().getString(R.string.no_access),
@@ -238,7 +262,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         try {
             String parentDirectoryName = parentDirectory.getCanonicalPath();
 
-            for (File directory : currentWatchedDirectories) {
+            for (File directory : currentSelectedDirectories) {
                 String directoryName = directory.getCanonicalPath();
                 if (!parentDirectoryName.equals(directoryName) &&
                         directory.getCanonicalPath().startsWith(
@@ -252,5 +276,26 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         } catch (IOException exception){
             return false;
         }
+    }
+
+    public boolean isParentdirectorySelected(File subDirectory)
+    {
+//        try {
+//            String parentDirectoryName = subDirectory.getCanonicalPath();
+//
+//            for (File directory : currentSelectedDirectories) {
+//                String directoryName = directory.getCanonicalPath();
+//                if (!parentDirectoryName.equals(directoryName) &&
+//                        directory.getCanonicalPath().startsWith(
+//                                subDirectory.getCanonicalPath()
+//                        )
+//                        ) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        } catch (IOException exception){
+            return false;
+//        }
     }
 }
