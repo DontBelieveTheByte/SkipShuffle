@@ -29,6 +29,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.util.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.activities.util.NavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.callback.MediaBroadcastReceiverCallback;
 import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
@@ -47,6 +48,12 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected PreferencesHelper preferencesHelper;
     protected MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
     protected PlayerUIInterface playerUIInterface;
+
+    public ToastHelper getToastHelper() {
+        return toastHelper;
+    }
+
+    protected ToastHelper toastHelper;
 
     private static final int FILE_PICKER_REQUEST_CODE = 9002;
     private boolean isOptionsMenuOpen = false;
@@ -108,6 +115,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        toastHelper = new ToastHelper(this);
 
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
@@ -174,7 +183,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         super.onResume();
 
         //Set up preferences and listener but callback are implemented by child classes.
-        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        preferencesHelper = new PreferencesHelper(this);
         preferencesHelper.registerPrefsChangedListener();
         preferencesHelper.registerCallBack(this);
 
