@@ -33,29 +33,9 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     private DbHandler dbHandler;
     private ListView listView;
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+    protected void handleBackPressed() {
 
-        //Register class specific callback from MediaBroadcastReceiverCallback interface.
-        preferencesHelper.registerCallBack(this);
-
-        setUI(preferencesHelper.getUIType());
-
-        dbHandler = new DbHandler(getApplicationContext());
-
-        loadType(preferencesHelper.getLastPlaylist());
-        setUpDrawer();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        preferencesHelper.registerCallBack(this);
-        mediaPlayerBroadcastReceiver.registerCallback(this);
     }
 
     @Override
@@ -103,6 +83,18 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             );
             preferencesHelper.setLastPlaylist(1);
             preferencesHelper.setLastPlaylistPosition(0);
+        }
+    }
+
+    @Override
+    public void preferenceChangedCallback(String prefsKey)
+    {
+        super.preferenceChangedCallback(prefsKey);
+        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
+            loadType(preferencesHelper.getLastPlaylist());
+        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+            setUI(preferencesHelper.getUIType());
+            loadType(preferencesHelper.getLastPlaylist());
         }
     }
 
@@ -159,15 +151,27 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     }
 
     @Override
-    public void preferenceChangedCallback(String prefsKey)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        super.preferenceChangedCallback(prefsKey);
-        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
-            loadType(preferencesHelper.getLastPlaylist());
-        } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            setUI(preferencesHelper.getUIType());
-            loadType(preferencesHelper.getLastPlaylist());
-        }
+        super.onCreate(savedInstanceState);
+
+        //Register class specific callback from MediaBroadcastReceiverCallback interface.
+        preferencesHelper.registerCallBack(this);
+
+        setUI(preferencesHelper.getUIType());
+
+        dbHandler = new DbHandler(getApplicationContext());
+
+        loadType(preferencesHelper.getLastPlaylist());
+        setUpDrawer();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        preferencesHelper.registerCallBack(this);
+        mediaPlayerBroadcastReceiver.registerCallback(this);
     }
 
     @Override

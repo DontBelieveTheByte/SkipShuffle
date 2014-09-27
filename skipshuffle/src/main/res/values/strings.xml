@@ -36,6 +36,7 @@
     <string name="directory_added">Added : %s.</string>
     <string name="directory_removed">Removed : %s.</string>
     <string name="no_access">Unable to access.</string>
+    <string name="directory_top_level">Top level of external storage.</string>
 
     <!--Main menu-->
     <string name="menu_theme">Theme</string>

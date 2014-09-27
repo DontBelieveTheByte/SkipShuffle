@@ -27,13 +27,9 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     private ListView listView;
 
     @Override
-    public void onResume()
+    protected void handleBackPressed()
     {
-        super.onResume();
-        preferencesHelper.registerCallBack(this);
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-        dbHandler = new DbHandler(getApplicationContext());
-        loadPlaylist(preferencesHelper.getLastPlaylist());
+
     }
 
     @Override
@@ -136,15 +132,13 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     @Override
-    public void preferenceChangedCallback(String prefsKey)
+    public void onResume()
     {
-        super.preferenceChangedCallback(prefsKey);
-        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
-        }
-        else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
-        }
+        super.onResume();
+        preferencesHelper.registerCallBack(this);
+        mediaPlayerBroadcastReceiver.registerCallback(this);
+        dbHandler = new DbHandler(getApplicationContext());
+        loadPlaylist(preferencesHelper.getLastPlaylist());
     }
 
     @Override
@@ -170,5 +164,17 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
             );
         }
         ui.doPause();
+    }
+
+    @Override
+    public void preferenceChangedCallback(String prefsKey)
+    {
+        super.preferenceChangedCallback(prefsKey);
+        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
+            loadPlaylist(preferencesHelper.getLastPlaylist());
+        }
+        else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+            loadPlaylist(preferencesHelper.getLastPlaylist());
+        }
     }
 }

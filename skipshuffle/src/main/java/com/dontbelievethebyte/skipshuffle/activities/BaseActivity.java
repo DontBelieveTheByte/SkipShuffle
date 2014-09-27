@@ -58,7 +58,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     private static final int FILE_PICKER_REQUEST_CODE = 9002;
     private boolean isOptionsMenuOpen = false;
 
-    abstract protected void setUI(Integer type);
+    protected abstract void setUI(Integer type);
+    protected abstract void handleBackPressed();
 
     public MediaPlayerBroadcastReceiver getMediaPlayerBroadcastReceiver()
     {
@@ -104,10 +105,13 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     public void onBackPressed()
     {
         ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            if (ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
-                actionBar.hide();
-            }
+        if (null != actionBar &&
+            ViewConfiguration.get(this).hasPermanentMenuKey() &&
+            actionBar.isShowing()
+        ) {
+            actionBar.hide();
+        } else {
+            handleBackPressed();
         }
     }
 

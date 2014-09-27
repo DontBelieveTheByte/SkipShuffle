@@ -14,6 +14,12 @@ public class MainActivity extends BaseActivity {
     private MainUI ui;
 
     @Override
+    protected void handleBackPressed()
+    {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -123,5 +129,4 @@ public class MainActivity extends BaseActivity {
         //Set up navigation drawer for selecting playlist.
         setUpDrawer();
     }
-
 }

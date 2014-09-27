@@ -3,9 +3,7 @@ package com.dontbelievethebyte.skipshuffle.activities;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,14 +35,11 @@ public class FilePickerActivity extends BaseActivity {
     private ArrayList<File> currentWatchedDirectories;
 
     @Override
-    public void mediaBroadcastReceiverCallback() {}
-
-    @Override
-    public void onBackPressed()
-    {
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar && ViewConfiguration.get(this).hasPermanentMenuKey() && actionBar.isShowing()) {
-            actionBar.hide();
+    protected void handleBackPressed(){
+        if (externalStorageRootDirectory.equals(filePickerListAdapter.getCurrentListedDirectory())) {
+            toastHelper.showShortToast(
+                    getString(R.string.directory_top_level)
+            );
         } else if (null != filePickerListAdapter.getCurrentListedDirectory().getParentFile()) {
             filePickerListAdapter.setCurrentListedDirectory(
                     filePickerListAdapter.getCurrentListedDirectory().getParentFile()
@@ -53,8 +48,10 @@ public class FilePickerActivity extends BaseActivity {
         } else {
             finish();
         }
-
     }
+
+    @Override
+    public void mediaBroadcastReceiverCallback() {}
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
