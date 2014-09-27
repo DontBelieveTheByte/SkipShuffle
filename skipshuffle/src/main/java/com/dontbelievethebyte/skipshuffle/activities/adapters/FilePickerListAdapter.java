@@ -11,11 +11,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
+import com.dontbelievethebyte.skipshuffle.activities.exception.ParentDirectoryException;
+import com.dontbelievethebyte.skipshuffle.activities.exception.SubdirectoryException;
 import com.dontbelievethebyte.skipshuffle.activities.util.DirectoryComparator;
+import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
@@ -43,6 +45,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private int checkBoxDrawable;
     private int checkBoxSubDirectorySelectedDrawable;
     private Typeface typeface;
+    private ToastHelper toastHelper;
 
     public FilePickerListAdapter(FilePickerActivity filePickerActivity, List<File> files)
     {
@@ -54,6 +57,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         );
 
         this.listedFiles = files;
+        toastHelper = filePickerActivity.getToastHelper();
 
         folderDrawable = filePickerActivity.getResources().getDrawable(
                     DrawableMapper.getFolder(filePickerActivity.getPreferencesHelper().getUIType()
@@ -82,27 +86,82 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 //        checkedFiles = new ArrayList<File>();
     }
 
-    public ArrayList<String> getSelectedDirectories()//@TODO wrong return
+    public ArrayList<File> getSelectedDirectories()
     {
-        ArrayList<String> mediaDirectoriesToScan = new ArrayList<String>();
-        //Save to a class instance array in case the activity needs to restart.
-        for (File directory : currentSelectedDirectories){
-            mediaDirectoriesToScan.add(directory.getAbsolutePath());
-        }
-        return mediaDirectoriesToScan;
+        return currentSelectedDirectories;
     }
 
-    public void toggleDirectorySelection(File checkBoxAssociatedFile)
-    {
-        if (currentSelectedDirectories.contains(checkBoxAssociatedFile)) {
-            if (isSubdirectorySelected(checkBoxAssociatedFile)) {
-
-            } else if (isParentdirectorySelected(checkBoxAssociatedFile)) {
-
+    public void addWatchedDirectory(File checkBoxAssociatedFile){
+        try {
+            if (!currentSelectedDirectories.contains(checkBoxAssociatedFile)) {
+                isSubdirectorySelected(checkBoxAssociatedFile);
+                isParentDirectorySelected(checkBoxAssociatedFile);
+                currentSelectedDirectories.add(checkBoxAssociatedFile);
+                toastHelper.showShortToast(
+                        String.format(
+                                getContext().getString(R.string.directory_added),
+                                checkBoxAssociatedFile.getName()
+                        )
+                );
             }
-            currentSelectedDirectories.remove(checkBoxAssociatedFile);
-        } else {
-            currentSelectedDirectories.add(checkBoxAssociatedFile);
+        } catch (SubdirectoryException subdirectoryException) {
+            currentSelectedDirectories.remove(
+                subdirectoryException.getSubdirectory()
+            );
+            toastHelper.showShortToast(
+                    String.format(
+                            getContext().getString(R.string.sub_directory_selected),
+                            checkBoxAssociatedFile.getName()
+                    )
+            );
+        } catch (ParentDirectoryException parentDirectoryException) {
+            currentSelectedDirectories.remove(
+                parentDirectoryException.getParentDirectory()
+            );
+            toastHelper.showShortToast(
+                    String.format(
+                            getContext().getString(R.string.parent_directory_selected),
+                            checkBoxAssociatedFile.getName()
+                    )
+            );
+        } finally {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void removeWatchedDirectory(File checkBoxAssociatedFile){
+        try {
+            if (currentSelectedDirectories.contains(checkBoxAssociatedFile)) {
+                isSubdirectorySelected(checkBoxAssociatedFile);
+                isParentDirectorySelected(checkBoxAssociatedFile);
+                currentSelectedDirectories.add(checkBoxAssociatedFile);
+                toastHelper.showShortToast(
+                        getContext().getString(
+                                R.string.directory_removed
+                        )
+                );
+            }
+        } catch (SubdirectoryException subdirectoryException) {
+            currentSelectedDirectories.remove(
+                    subdirectoryException.getSubdirectory()
+            );
+            toastHelper.showShortToast(
+                    getContext().getString(
+                            R.string.sub_directory_selected
+                    )
+            );
+        } catch (ParentDirectoryException parentDirectoryException) {
+            currentSelectedDirectories.remove(
+                    parentDirectoryException.getParentDirectory()
+            );
+
+            toastHelper.showShortToast(
+                    getContext().getString(
+                            R.string.parent_directory_selected
+                    )
+            );
+        } finally {
+            notifyDataSetChanged();
         }
     }
 
@@ -191,13 +250,21 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private CheckBox setCheckbox(View view, int resourceId, final File associatedDirectory)
     {
         CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
-        boolean subDirectorySelected = isSubdirectorySelected(associatedDirectory);
-
         if (associatedDirectory.isDirectory()) {
+            boolean subDirectorySelected = false;
+            boolean parentDirectorySelected = false;
+            try {
+                subDirectorySelected = isSubdirectorySelected(associatedDirectory);
+                parentDirectorySelected = isParentDirectorySelected(associatedDirectory);
+            } catch (SubdirectoryException subDirectoryException) {
+                subDirectorySelected = true;
+            } catch (ParentDirectoryException parentDirectoryException) {
+               parentDirectorySelected = true;
+            }
             checkBox.setBackgroundResource(
-                    subDirectorySelected ?
-                            checkBoxSubDirectorySelectedDrawable :
-                            checkBoxDrawable
+                    !subDirectorySelected  && !parentDirectorySelected?
+                            checkBoxDrawable :
+                            checkBoxSubDirectorySelectedDrawable
             );
 
             checkBox.setVisibility(View.VISIBLE);
@@ -206,26 +273,10 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     if (isChecked) {
-                        if (isSubdirectorySelected(associatedDirectory)) {
-                            Toast.makeText(
-                                    getContext(),
-                                    R.string.sub_directory_selected,
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        } else if (isParentdirectorySelected(associatedDirectory)) {
-                            Toast.makeText(
-                                    getContext(),
-                                    R.string.parent_directory_selected,
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        } else {
-
-                        }
+                        addWatchedDirectory(associatedDirectory);
                     } else {
-
+                        removeWatchedDirectory(associatedDirectory);
                     }
-
-                    toggleDirectorySelection(associatedDirectory);
                 }
             });
 
@@ -249,15 +300,13 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             notifyDataSetChanged();
         } else {
             currentListedDirectory = currentListedDirectory.getParentFile();
-            Toast.makeText(
-                    getContext(),
-                    getContext().getString(R.string.no_access),
-                    Toast.LENGTH_SHORT
-            ).show();
+            toastHelper.showShortToast(
+                    getContext().getString(R.string.no_access)
+            );
         }
     }
 
-    public boolean isSubdirectorySelected(File parentDirectory)
+    public boolean isSubdirectorySelected(File parentDirectory) throws SubdirectoryException
     {
         try {
             String parentDirectoryName = parentDirectory.getCanonicalPath();
@@ -269,7 +318,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                             parentDirectory.getCanonicalPath()
                         )
                 ) {
-                    return true;
+                    throw new SubdirectoryException(directory);
                 }
             }
             return false;
@@ -278,7 +327,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         }
     }
 
-    public boolean isParentdirectorySelected(File subDirectory)
+    public boolean isParentDirectorySelected(File subDirectory) throws ParentDirectoryException
     {
 //        try {
 //            String parentDirectoryName = subDirectory.getCanonicalPath();
@@ -299,3 +348,4 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
 //        }
     }
 }
+

@@ -15,9 +15,10 @@ import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
+import java.io.File;
 import java.util.ArrayList;
 
-public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
+public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
 
     private static class ViewHolder {
         public TextView title;
@@ -32,13 +33,15 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
     private int selectedTextBackgroundColor;
     private int textColor;
 
-    public FilePickerDrawerAdapter(Context context, int resource, ArrayList<String> strings, PreferencesHelper preferencesHelper, Typeface typeface)
+    public FilePickerDrawerAdapter(Context context, int resource, ArrayList<File> watchedDirectories, PreferencesHelper preferencesHelper, Typeface typeface)
     {
-        super(context, resource, strings);
+        super(context, resource, watchedDirectories);
         layoutInflater = LayoutInflater.from(context);
         this.typeface = typeface;
         layoutResource = resource;
-        selectedTextBackgroundColor = ColorMapper.getListDivider(preferencesHelper.getUIType());
+        selectedTextBackgroundColor = ColorMapper.getListDivider(
+                preferencesHelper.getUIType()
+        );
         textColor = context.getResources().getColor(
                 ColorMapper.getNavDrawerText(preferencesHelper.getUIType())
         );
@@ -89,7 +92,7 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<String> {
 
         viewHolder.title = setTitle(
                 convertView,
-                getItem(position),
+                getItem(position).getAbsolutePath(),
                 R.id.drawer_item_text,
                 position
         );

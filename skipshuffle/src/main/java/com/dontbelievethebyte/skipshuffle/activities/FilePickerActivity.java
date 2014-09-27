@@ -82,11 +82,9 @@ public class FilePickerActivity extends BaseActivity {
     {
         super.onResume();
         filePickerListAdapter.refreshFilesList();
-        Toast.makeText(
-                getApplicationContext(),
-                R.string.media_scan_sel_target_directories,
-                Toast.LENGTH_LONG
-        ).show();
+        toastHelper.showLongToast(
+                getString(R.string.media_scan_sel_target_directories)
+        );
     }
 
     @Override
@@ -126,11 +124,9 @@ public class FilePickerActivity extends BaseActivity {
             public void onClick(View v)
             {
                 if (filePickerListAdapter.getSelectedDirectories().size() < 1) {
-                    Toast.makeText(
-                            FilePickerActivity.this,
-                            R.string.pick_media_nothing_selected,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    toastHelper.showShortToast(
+                        getString(R.string.pick_media_nothing_selected)
+                    );
                     setResult(RESULT_CANCELED);
                 } else {
                     preferencesHelper.setMediaDirectories(filePickerListAdapter.getSelectedDirectories());

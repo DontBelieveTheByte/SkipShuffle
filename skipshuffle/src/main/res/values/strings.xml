@@ -25,13 +25,16 @@
     <!-- Toasts -->
     <string name="haptic_feedback_not_available">Your device doesn\'t support haptic feedback.</string>
     <string name="haptic_feedback_off">Haptic feedback turned off.</string>
+    <string name="haptic_feedback_on">Haptic feedback turned on.</string>
     <string name="shuffle_empty_playlist">Cannot shuffle empty playlist.</string>
     <string name="playlist_error">Playlist error.</string>
     <string name="pick_media_nothing_selected">Nothing Selected.</string>
     <string name="player_wrapper_song_error">Error playing file : </string>
     <string name="not_a_directory">%s is not a directory.</string>
-    <string name="parent_directory_selected">Swapper for higher level directory.</string>
-    <string name="sub_directory_selected">Swapped for lower level directory.</string>
+    <string name="parent_directory_selected">Swapped %s for higher level directory.</string>
+    <string name="sub_directory_selected">Swapped %s for lower level directory.</string>
+    <string name="directory_added">Added : %s.</string>
+    <string name="directory_removed">Removed : %s.</string>
     <string name="no_access">Unable to access.</string>
 
     <!--Main menu-->

@@ -5,12 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +19,11 @@ public class PreferencesHelper {
 
     private static final String TAG = "SkipShufflePrefsHelper";
 
-    private boolean isHapticFeedback;
+    private Boolean isHapticFeedback;
     private Long currentPlaylist;
     private Integer currentPlaylistPosition;
     private Integer currentUIType;
-    private ArrayList<String> directories;
+    private ArrayList<File> directories;
     private SharedPreferences sharedPreferences;
     private Context context;
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
@@ -57,33 +57,36 @@ public class PreferencesHelper {
         return currentPlaylistPosition;
     }
 
-    public ArrayList<String> getMediaDirectories()
+    public ArrayList<File> getMediaDirectories()
     {
-
         if (null == directories) {
-            directories = new ArrayList<String>();
+            directories = new ArrayList<File>();
 
             String directoriesString = sharedPreferences.getString(
                     context.getString(R.string.pref_media_directories),
                     null
             );
             if (null != directoriesString) {
-                directories.addAll(
+                ArrayList <String> directoryBuilder = new ArrayList<String>();
+                directoryBuilder.addAll(
                         Arrays.asList(
-                            directoriesString.split(
-                                context.getString(R.string.pref_media_directories_separator)
-                            )
+                                directoriesString.split(
+                                        context.getString(R.string.pref_media_directories_separator)
+                                )
                         )
                 );
                 //Cleanup the last path because it won't split.
-                directories.set(
-                        directories.size()-1,
-                        directories.get(
-                                directories.size() -1).replace(
+                directoryBuilder.set(
+                        directoryBuilder.size()-1,
+                        directoryBuilder.get(
+                                directoryBuilder.size() -1).replace(
                                 context.getString(R.string.pref_media_directories_separator),
                                 ""
                         )
                 );
+                for (String directoryName : directoryBuilder) {
+                    directories.add(new File(directoryName));
+                }
             }
         }
         return directories;
@@ -100,53 +103,17 @@ public class PreferencesHelper {
         return currentUIType;
     }
 
-    public void hapticFeedbackToggle()
-    {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        long[] pattern = {
-                0L,
-                500L,
-                110L,
-                500L,
-                110L,
-                450L,
-                110L,
-                200L,
-                110L,
-                170L,
-                40L,
-                450L,
-                110L,
-                200L,
-                110L,
-                170L,
-                40L,
-                500L
-        };
-
-        if (vibrator.hasVibrator()) {
-            if (isHapticFeedback) {
-                setHapticFeedback(false);
-                Toast.makeText(
-                        context,
-                        R.string.haptic_feedback_off,
-                        Toast.LENGTH_SHORT
-                ).show();
-            } else {
-                setHapticFeedback(true);
-                vibrator.vibrate(pattern, -1);
-            }
-        } else {
-            Toast.makeText(
-                    context,
-                    R.string.haptic_feedback_not_available,
-                    Toast.LENGTH_SHORT
-            ).show();
-        }
-    }
-
     public boolean isHapticFeedback()
     {
+        if (null == isHapticFeedback) {
+            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
+            isHapticFeedback = vibrator.hasVibrator() &&
+                               sharedPreferences.getBoolean(
+                                       context.getString(R.string.pref_haptic_feedback),
+                                       false
+                               );
+        }
         return isHapticFeedback;
     }
 
@@ -179,13 +146,41 @@ public class PreferencesHelper {
 
     public void setHapticFeedback(boolean isHapticFeedback)
     {
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
+        long[] pattern = {
+                0L,
+                500L,
+                110L,
+                500L,
+                110L,
+                450L,
+                110L,
+                200L,
+                110L,
+                170L,
+                40L,
+                450L,
+                110L,
+                200L,
+                110L,
+                170L,
+                40L,
+                500L
+        };
+
+        if (vibrator.hasVibrator() && isHapticFeedback) {
+
+            vibrator.vibrate(pattern, -1);
+            this.isHapticFeedback = true;
+        } else {
+            this.isHapticFeedback = false;
+        }
         sharedPreferences.edit()
-                .putBoolean(
-                        context.getString(
-                                R.string.pref_haptic_feedback),
-                        true
-                ).apply();
-        this.isHapticFeedback = isHapticFeedback;
+                         .putBoolean(
+                               context.getString(R.string.pref_haptic_feedback),
+                               this.isHapticFeedback
+                         ).apply();
     }
 
     public void setLastPlaylist(long lastPlaylistId)
@@ -208,10 +203,10 @@ public class PreferencesHelper {
                 ).apply();
     }
 
-    public void setMediaDirectories(ArrayList<String> newDirectories)
+    public void setMediaDirectories(ArrayList<File> newDirectories)
     {
         StringBuilder stringBuilder = new StringBuilder();
-        for(String directory : newDirectories){
+        for(File directory : newDirectories){
             stringBuilder.append(directory)
                          .append(
                              context.getString(R.string.pref_media_directories_separator)

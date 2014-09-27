@@ -116,7 +116,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         super.onCreate(savedInstanceState);
 
-        toastHelper = new ToastHelper(this);
+        toastHelper = new ToastHelper(getApplicationContext());
 
         //Is mandatory to get the current state of the player.
         mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
@@ -223,7 +223,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                 pickMediaDirectories();
                 return true;
             case R.id.haptic_feedback_toggle:
-                preferencesHelper.hapticFeedbackToggle();
+                preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
                 return true;
             case R.id.theme:
                 showThemeSelectionDialog();
@@ -403,6 +403,12 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             setUI(preferencesHelper.getUIType());
+        } else if (getString(R.string.pref_haptic_feedback).equals(prefsKey)) {
+            toastHelper.showShortToast(
+                    preferencesHelper.isHapticFeedback() ?
+                            getString(R.string.haptic_feedback_off) :
+                            getString(R.string.haptic_feedback_on)
+            );
         }
     }
 }

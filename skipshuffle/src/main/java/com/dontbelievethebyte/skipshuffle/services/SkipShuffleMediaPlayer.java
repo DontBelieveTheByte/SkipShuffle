@@ -11,10 +11,10 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
+import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistEmptyException;
@@ -38,6 +38,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     private AndroidPlayerWrapper playerWrapper;
     private PreferencesHelper preferencesHelper;
     private DbHandler dbHandler;
+    private ToastHelper toastHelper;
 
     private class AndroidPlayerWrapper implements MediaPlayer.OnPreparedListener,
                                                   MediaPlayer.OnCompletionListener,
@@ -48,6 +49,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
         private AndroidPlayerWrapper()
         {
+            toastHelper = new ToastHelper(getApplicationContext());
             mp = new MediaPlayer();
             mp.setOnCompletionListener(this);
             mp.setOnPreparedListener(this);
@@ -101,11 +103,9 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 //Reload the first playlist in case of error.
                 preferencesHelper.setLastPlaylist(1);
                 preferencesHelper.setLastPlaylistPosition(0);
-                Toast.makeText(
-                        getApplicationContext(),
-                        R.string.playlist_error,
-                        Toast.LENGTH_SHORT
-                ).show();
+                toastHelper.showShortToast(
+                        getString(R.string.playlist_error)
+                );
             }
         }
 
@@ -142,11 +142,9 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 seekPosition = 0;
                 loadAudioFile(playlist.getFirst());
             } catch (PlaylistEmptyException e){
-                Toast.makeText(
-                        getApplicationContext(),
-                        R.string.shuffle_empty_playlist,
-                        Toast.LENGTH_SHORT
-                ).show();
+                toastHelper.showShortToast(
+                        getString(R.string.shuffle_empty_playlist)
+                );
             }
             doPlay();
         }
@@ -169,18 +167,14 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 mp.setDataSource(track.getPath());
                 mp.prepare();
             } catch (IOException e) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        getApplicationContext().getResources().getString(R.string.player_wrapper_song_error) + track.getPath(),
-                        Toast.LENGTH_SHORT
-                ).show();
+                toastHelper.showShortToast(
+                        getString(R.string.player_wrapper_song_error) + track.getPath()
+                );
                 doSkip();
             } catch (IllegalArgumentException e) {
-                Toast.makeText(
-                        getApplicationContext(),
-                        getApplicationContext().getResources().getString(R.string.player_wrapper_song_error) + track.getPath(),
-                        Toast.LENGTH_SHORT
-                ).show();
+                toastHelper.showShortToast(
+                        getString(R.string.player_wrapper_song_error) + track.getPath()
+                );
                 doSkip();
             }
         }
@@ -235,12 +229,13 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
 
             playerWrapper.setPlaylist(playlist);
 
-        } catch (JSONException jsonException){
-            Toast.makeText(
-                    getApplicationContext(),
-                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
-                    Toast.LENGTH_LONG
-            ).show();
+        } catch (JSONException jsonException) {
+            toastHelper.showShortToast(
+                    String.format(
+                            getString(R.string.playlist_load_error),
+                            preferencesHelper.getLastPlaylist()
+                    )
+            );
             preferencesHelper.setLastPlaylist(1);
             preferencesHelper.setLastPlaylistPosition(0);
         }
@@ -277,11 +272,12 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 broadcastCurrentState();
                 playerWrapper.setPlaylist(playlist);
             } catch (JSONException jsonException){
-                Toast.makeText(
-                        getApplicationContext(),
-                        String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
-                        Toast.LENGTH_LONG
-                ).show();
+                toastHelper.showLongToast(
+                        String.format(
+                                getString(R.string.playlist_load_error),
+                                preferencesHelper.getLastPlaylist()
+                        )
+                );
                 preferencesHelper.setLastPlaylist(1);
                 preferencesHelper.setLastPlaylistPosition(0);
             }

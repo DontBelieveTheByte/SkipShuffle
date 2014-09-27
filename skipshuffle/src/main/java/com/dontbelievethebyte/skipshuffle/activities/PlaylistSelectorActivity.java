@@ -6,7 +6,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
@@ -95,11 +94,13 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
             TextView emptyText = (TextView)findViewById(android.R.id.empty);
             listView.setEmptyView(emptyText);
         } catch (JSONException jsonException){
-            Toast.makeText(
-                    getApplicationContext(),
-                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
-                    Toast.LENGTH_LONG
-            ).show();
+            toastHelper.showLongToast(
+                    String.format(
+                            getString(R.string.playlist_load_error),
+                            preferencesHelper.getLastPlaylist()
+                    )
+
+            );
             preferencesHelper.setLastPlaylist(1);
             preferencesHelper.setLastPlaylistPosition(0);
         }

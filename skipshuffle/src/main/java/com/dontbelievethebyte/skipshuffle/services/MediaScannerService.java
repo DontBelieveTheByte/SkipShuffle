@@ -4,9 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
@@ -26,6 +26,7 @@ public class MediaScannerService extends IntentService {
     private RandomPlaylist playlist;
     private MediaMetadataRetriever mediaMetadataRetriever;
     private PreferencesHelper preferencesHelper;
+    private ToastHelper toastHelper;
 
     public MediaScannerService()
     {
@@ -36,17 +37,17 @@ public class MediaScannerService extends IntentService {
     protected void onHandleIntent(Intent intent)
     {
         preferencesHelper = new PreferencesHelper(getApplicationContext());
-        ArrayList<String> directoryPaths = preferencesHelper.getMediaDirectories();
+        ArrayList<File> directoryPaths = preferencesHelper.getMediaDirectories();
         dbHandler = new DbHandler(getApplicationContext());
         mediaMetadataRetriever = new MediaMetadataRetriever();
-        for (String directory : directoryPaths) {
-            File dir = new File(directory);
-            recursiveMediaDirectoryScan(dir);
+        for (File directory : directoryPaths) {
+            recursiveMediaDirectoryScan(directory);
         }
     }
 
     private void recursiveMediaDirectoryScan(File dir)
     {
+        toastHelper = new ToastHelper(getApplicationContext());
         try {
             playlist = new RandomPlaylist(
                     preferencesHelper.getLastPlaylist(),
@@ -54,11 +55,12 @@ public class MediaScannerService extends IntentService {
             );
             playlist.setPosition(0);
         } catch (JSONException jsonException){
-            Toast.makeText(
-                    getApplicationContext(),
-                    String.format(getString(R.string.playlist_load_error), preferencesHelper.getLastPlaylist()),
-                    Toast.LENGTH_LONG
-            ).show();
+            toastHelper.showLongToast(
+                    String.format(
+                            getString(R.string.playlist_load_error),
+                            preferencesHelper.getLastPlaylist()
+                    )
+            );
         }
 
         File[] files = dir.listFiles();
@@ -77,7 +79,9 @@ public class MediaScannerService extends IntentService {
             }
         }
         if (validFiles.size() == 0) {
-            Toast.makeText(getApplicationContext(), R.string.media_scan_directory_empty, Toast.LENGTH_LONG).show();
+            toastHelper.showLongToast(
+                    getString(R.string.media_scan_directory_empty)
+            );
             broadcastIntentStatus(
                     null,
                     null,

@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle.activities.util;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
@@ -26,23 +25,19 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
         File newDirectory = (File) adapterView.getItemAtPosition(position);
         FilePickerListAdapter filePickerListAdapter = (FilePickerListAdapter) adapterView.getAdapter();
         if (null == newDirectory) {
-            Toast.makeText(
-                    filePickerActivity,
-                    filePickerActivity.getString(R.string.no_access),
-                    Toast.LENGTH_SHORT
-            ).show();
+            filePickerActivity.getToastHelper().showLongToast(
+                    filePickerActivity.getString(R.string.no_access)
+            );
         } else if (newDirectory.isDirectory()) {
             filePickerListAdapter.setCurrentListedDirectory(newDirectory);
             filePickerListAdapter.refreshFilesList();
         } else {
-            Toast.makeText(
-                    filePickerActivity,
+            filePickerActivity.getToastHelper().showShortToast(
                     filePickerActivity.getString(
                             R.string.not_a_directory,
                             newDirectory.getName()
-                    ),
-                    Toast.LENGTH_SHORT
-            ).show();
+                    )
+            );
         }
     }
 }

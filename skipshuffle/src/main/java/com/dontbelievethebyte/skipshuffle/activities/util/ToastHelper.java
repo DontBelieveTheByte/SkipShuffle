@@ -5,11 +5,13 @@ import android.widget.Toast;
 
 public class ToastHelper {
 
-    private Toast toast;
+    private static Toast toast;
+
+    private Context context;
 
     public ToastHelper(Context context)
     {
-        toast = new Toast(context);
+        this.context = context;
     }
 
     public void showShortToast(String toastMessage)
@@ -24,9 +26,14 @@ public class ToastHelper {
 
     private void setUpToast(String toastMessage, int duration)
     {
-        toast.cancel();
-        toast.setText(toastMessage);
-        toast.setDuration(duration);
+        if (null != toast) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(
+                context,
+                toastMessage,
+                duration
+        );
         toast.show();
     }
 }
