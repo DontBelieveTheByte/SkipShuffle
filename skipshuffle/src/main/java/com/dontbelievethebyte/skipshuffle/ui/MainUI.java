@@ -13,13 +13,10 @@ public class MainUI extends AbstractPlayerUI {
 
     public MainUI(MainActivity activity)
     {
-        super(activity, R.layout.activity_main);
-
+        super(activity, R.layout.activity_main1);
         playlistBtn = (ImageButton) activity.findViewById(R.id.playlistBtn);
-        songTitle = (TextView) activity.findViewById(R.id.song_label);
-
         playlistBtn.setOnTouchListener(baseActivity);
-
+        songTitle = (TextView) activity.findViewById(R.id.song_label);
         setUpDrawables();
         setUpDimensions();
         setUpDrawer();
@@ -97,6 +94,14 @@ public class MainUI extends AbstractPlayerUI {
                 playBtn.clearAnimation();
             }
         }
+    }
+
+    @Override
+    public void setSongTitle(String title)
+    {
+        songTitle.setText(title);
+        songTitle.setTypeface(getTypeFace());
+        songTitle.setSelected(true);
     }
 
     protected void setUpAnimations()
@@ -201,13 +206,5 @@ public class MainUI extends AbstractPlayerUI {
                     ColorMapper.getSongLabel(uiType)
                 )
         );
-    }
-
-    @Override
-    public void setSongTitle(String title)
-    {
-        songTitle.setText(title);
-        songTitle.setTypeface(getTypeFace());
-        songTitle.setSelected(true);
     }
 }
