@@ -11,12 +11,12 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public abstract class AbstractUI {
-    protected BaseActivity baseActivity;
-    protected ViewGroup bottomLayout;
     protected int uiType;
-    protected Typeface typeface;
-    protected ListView drawerList;
 
+    protected BaseActivity baseActivity;
+    protected ListView drawerList;
+    protected Typeface typeface;
+    protected ViewGroup bottomLayout;
 
     public AbstractUI(BaseActivity activity, int contentLayout)
     {
