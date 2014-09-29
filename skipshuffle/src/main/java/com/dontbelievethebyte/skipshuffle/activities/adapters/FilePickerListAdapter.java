@@ -1,9 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -17,12 +15,10 @@ import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
 import com.dontbelievethebyte.skipshuffle.activities.exception.ParentDirectoryException;
 import com.dontbelievethebyte.skipshuffle.activities.exception.SubdirectoryException;
 import com.dontbelievethebyte.skipshuffle.activities.util.DirectoryComparator;
-import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,25 +36,24 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     private Drawable folderDrawable;
     private Drawable fileDrawable;
     private DirectoryComparator directoryComparator;
-    private File currentListedDirectory;
-    private ArrayList<File> currentSelectedDirectories;
+    private FilePickerActivity filePickerActivity;
+
     private int fileNameColor;
     private int checkBoxDrawable;
     private int checkBoxSubDirectorySelectedDrawable;
     private Typeface typeface;
-    private ToastHelper toastHelper;
 
-    public FilePickerListAdapter(FilePickerActivity filePickerActivity, List<File> files)
+    public FilePickerListAdapter(FilePickerActivity filePickerActivity, ArrayList<File> listedFiles)
     {
         super(
                 filePickerActivity,
                 R.layout.file_picker_list_item,
                 android.R.id.text1,
-                files
+                listedFiles
         );
 
-        this.listedFiles = files;
-        toastHelper = filePickerActivity.getToastHelper();
+        this.filePickerActivity = filePickerActivity;
+        this.listedFiles = listedFiles;
 
         folderDrawable = filePickerActivity.getResources().getDrawable(
                     DrawableMapper.getFolder(filePickerActivity.getPreferencesHelper().getUIType()
@@ -83,63 +78,14 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         directoryComparator = new DirectoryComparator();
     }
 
-    public ArrayList<File> getSelectedDirectories()
-    {
-        return currentSelectedDirectories;
-    }
-
-    public void addWatchedDirectory(File checkBoxAssociatedFile){
-        try {
-            if (!currentSelectedDirectories.contains(checkBoxAssociatedFile)) {
-                isSubdirectorySelected(checkBoxAssociatedFile);
-                isParentDirectorySelected(checkBoxAssociatedFile);
-                currentSelectedDirectories.add(checkBoxAssociatedFile);
-                toastHelper.showShortToast(
-                        String.format(
-                                getContext().getString(R.string.directory_added),
-                                checkBoxAssociatedFile.getName()
-                        )
-                );
-            }
-        } catch (SubdirectoryException subdirectoryException) {
-            currentSelectedDirectories.remove(
-                    subdirectoryException.getSubdirectory()
-            );
-            toastHelper.showShortToast(
-                    String.format(
-                            getContext().getString(R.string.sub_directory_selected),
-                            checkBoxAssociatedFile.getName()
-                    )
-            );
-        } catch (ParentDirectoryException parentDirectoryException) {
-            currentSelectedDirectories.remove(
-                    parentDirectoryException.getParentDirectory()
-            );
-            toastHelper.showShortToast(
-                    String.format(
-                            getContext().getString(R.string.parent_directory_selected),
-                            checkBoxAssociatedFile.getName()
-                    )
-            );
-        } finally {
-            notifyDataSetChanged();
-        }
-    }
-
-    public File getCurrentListedDirectory() {
-        return currentListedDirectory;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         ViewHolder viewHolder;
 
         if (null == convertView) {
             viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(
+            convertView = filePickerActivity.getLayoutInflater().inflate(
                     R.layout.file_picker_list_item,
                     parent,
                     false
@@ -149,133 +95,40 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        File file = listedFiles.get(position);
+        File aDirectory = listedFiles.get(position);
 
         viewHolder.image = setFolderImage(
                 convertView,
                 R.id.file_picker_image,
-                file
+                aDirectory
         );
 
         viewHolder.fileName = setFileName(
                 convertView,
                 R.id.file_picker_text,
-                file
+                aDirectory
         );
 
         viewHolder.checkBox = setCheckbox(
                 convertView,
                 R.id.file_picker_checkbox,
-                file
+                aDirectory
         );
         return convertView;
     }
 
-    public boolean isSubdirectorySelected(File parentDirectory) throws SubdirectoryException
-    {
-        try {
-            String parentDirectoryName = parentDirectory.getCanonicalPath();
-
-            for (File directory : currentSelectedDirectories) {
-                String directoryName = directory.getCanonicalPath();
-                if (!parentDirectoryName.equals(directoryName) &&
-                        directory.getCanonicalPath().startsWith(
-                                parentDirectory.getCanonicalPath()
-                        )
-                        ) {
-                    throw new SubdirectoryException(directory);
-                }
-            }
-            return false;
-        } catch (IOException exception){
-            return false;
-        }
-    }
-
-    public boolean isParentDirectorySelected(File subDirectory) throws ParentDirectoryException
-    {
-//        try {
-//            String parentDirectoryName = subDirectory.getCanonicalPath();
-//
-//            for (File directory : currentSelectedDirectories) {
-//                String directoryName = directory.getCanonicalPath();
-//                if (!parentDirectoryName.equals(directoryName) &&
-//                        directory.getCanonicalPath().startsWith(
-//                                subDirectory.getCanonicalPath()
-//                        )
-//                        ) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        } catch (IOException exception){
-        return false;
-//        }
-    }
-
     public void refreshFilesList()
     {
-        File newFiles[] = currentListedDirectory.listFiles();
-        if (null != newFiles) {
-            listedFiles.clear(); // Clear the listedFiles ArrayList
-            listedFiles.addAll(Arrays.asList(newFiles));
-            Collections.sort(
-                    listedFiles,
-                    directoryComparator
-            );
-            notifyDataSetChanged();
-        } else {
-            currentListedDirectory = currentListedDirectory.getParentFile();
-            toastHelper.showShortToast(
-                    getContext().getString(R.string.no_access)
-            );
-        }
-    }
-
-    public void removeWatchedDirectory(File checkBoxAssociatedFile){
-        try {
-            if (currentSelectedDirectories.contains(checkBoxAssociatedFile)) {
-                isSubdirectorySelected(checkBoxAssociatedFile);
-                isParentDirectorySelected(checkBoxAssociatedFile);
-                currentSelectedDirectories.add(checkBoxAssociatedFile);
-                toastHelper.showShortToast(
-                        getContext().getString(
-                                R.string.directory_removed
-                        )
-                );
-            }
-        } catch (SubdirectoryException subdirectoryException) {
-            currentSelectedDirectories.remove(
-                    subdirectoryException.getSubdirectory()
-            );
-            toastHelper.showShortToast(
-                    getContext().getString(
-                            R.string.sub_directory_selected
-                    )
-            );
-        } catch (ParentDirectoryException parentDirectoryException) {
-            currentSelectedDirectories.remove(
-                    parentDirectoryException.getParentDirectory()
-            );
-
-            toastHelper.showShortToast(
-                    getContext().getString(
-                            R.string.parent_directory_selected
-                    )
-            );
-        } finally {
-            notifyDataSetChanged();
-        }
-    }
-
-    public void setCurrentListedDirectory(File currentListedDirectory) {
-        this.currentListedDirectory = currentListedDirectory;
-        refreshFilesList();
-    }
-
-    public void setCurrentSelectedDirectories(ArrayList<File> currentSelectedDirectories)
-    {
-        this.currentSelectedDirectories = currentSelectedDirectories;
+        listedFiles.clear(); // Clear the listedFiles ArrayList
+        listedFiles.addAll(
+                Arrays.asList(filePickerActivity.getCurrentListedDirectory().listFiles()
+                )
+        );
+        Collections.sort(
+                listedFiles,
+                directoryComparator
+        );
+        filePickerActivity.notifyAdaptersDataSetChanged();
     }
 
     public void setTypeface(Typeface typeface)
@@ -305,15 +158,15 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
         return fileName;
     }
 
-    private CheckBox setCheckbox(View view, int resourceId, final File associatedDirectory)
+    private CheckBox setCheckbox(View view, int resourceId, final File aDirectory)
     {
         CheckBox checkBox = (CheckBox) view.findViewById(resourceId);
-        if (associatedDirectory.isDirectory()) {
+        if (aDirectory.isDirectory()) {
             boolean subDirectorySelected = false;
             boolean parentDirectorySelected = false;
             try {
-                subDirectorySelected = isSubdirectorySelected(associatedDirectory);
-                parentDirectorySelected = isParentDirectorySelected(associatedDirectory);
+                subDirectorySelected = filePickerActivity.isSubdirectorySelected(aDirectory);
+                parentDirectorySelected = filePickerActivity.isParentDirectorySelected(aDirectory);
             } catch (SubdirectoryException subDirectoryException) {
                 subDirectorySelected = true;
             } catch (ParentDirectoryException parentDirectoryException) {
@@ -331,15 +184,15 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
                 {
                     if (isChecked) {
-                        addWatchedDirectory(associatedDirectory);
+                        filePickerActivity.addSelectedDirectory(aDirectory);
                     } else {
-                        removeWatchedDirectory(associatedDirectory);
+                        filePickerActivity.removeSelectedDirectory(aDirectory);
                     }
                 }
             });
 
             checkBox.setChecked(
-                    currentSelectedDirectories.contains(associatedDirectory) || currentSelectedDirectories.contains(associatedDirectory) || subDirectorySelected
+                    filePickerActivity.getCurrentSelectedDirectories().contains(aDirectory) || subDirectorySelected
             );
         } else {
             checkBox.setVisibility(View.GONE);

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -22,8 +21,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAdapter;
@@ -35,29 +34,25 @@ import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
-public abstract class BaseActivity extends ActionBarActivity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback {
+public abstract class BaseActivity extends ActionBarActivity implements MediaBroadcastReceiverCallback, PreferenceChangedCallback, View.OnTouchListener {
 
-    protected static final String TAG = "SkipShuffle";
+    public static final String TAG = "SkipShuffle";
+
     protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
-    protected MediaScannerDialog mediaScannerDialog;
-
-    protected PreferencesHelper preferencesHelper;
+    protected ListView.OnItemClickListener navDrawerItemClickListener;
+    protected ArrayAdapter<?> navDrawerListAdapter;
     protected MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
+    protected MediaScannerDialog mediaScannerDialog;
     protected PlayerUIInterface playerUIInterface;
-
-    public ToastHelper getToastHelper() {
-        return toastHelper;
-    }
+    protected PreferencesHelper preferencesHelper;
 
     protected ToastHelper toastHelper;
-
     private static final int FILE_PICKER_REQUEST_CODE = 9002;
-    private boolean isOptionsMenuOpen = false;
 
+    private boolean isOptionsMenuOpen = false;
     protected abstract void setUI(Integer type);
     protected abstract void handleBackPressed();
 
@@ -66,27 +61,14 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         return mediaPlayerBroadcastReceiver;
     }
 
-    protected View.OnTouchListener onTouchDownHapticFeedback = new View.OnTouchListener()
-    {
-        @Override
-        public boolean onTouch(View view, MotionEvent event) {
-            if (MotionEvent.ACTION_DOWN == event.getAction()){
-                if (preferencesHelper.isHapticFeedback()) {
-                    view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-                }
-                if (mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0) {
-                    pickMediaDirectories();
-                    //Return true because we already handled the event and want to prevent bubbling.
-                    return true;
-                }
-            }
-            return false;
-        }
-    };
-
     public PreferencesHelper getPreferencesHelper()
     {
         return preferencesHelper;
+    }
+
+    public ToastHelper getToastHelper()
+    {
+        return toastHelper;
     }
 
     @Override
@@ -119,6 +101,12 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        preferencesHelper = new PreferencesHelper(this);
+
+        //Set up preferences and listener but callback are implemented by child classes.
+        preferencesHelper.registerPrefsChangedListener();
+        preferencesHelper.registerCallBack(this);
 
         toastHelper = new ToastHelper(getApplicationContext());
 
@@ -186,11 +174,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         super.onResume();
 
-        //Set up preferences and listener but callback are implemented by child classes.
-        preferencesHelper = new PreferencesHelper(this);
-        preferencesHelper.registerPrefsChangedListener();
-        preferencesHelper.registerCallBack(this);
-
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
@@ -210,6 +193,23 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
             mediaScannerDialog.dismiss();
         }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        if (MotionEvent.ACTION_DOWN == event.getAction()){
+            if (preferencesHelper.isHapticFeedback()) {
+                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            }
+            if ((mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0)  &&
+                !(this instanceof FilePickerActivity)
+            ) {
+                pickMediaDirectories();
+                //Return true because we already handled the event and want to prevent bubbling.
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -350,49 +350,25 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
     protected void setUpDrawer()
     {
-        ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
-
-        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation) ?
-                getResources().getDisplayMetrics().widthPixels/3 :
-                getResources().getDisplayMetrics().widthPixels/4;
-
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
-        params.width = drawerWidth;
-
-        TextView headerView = (TextView) getLayoutInflater().inflate(
-                R.layout.drawer_list_header,
-                null
-        );
-
-        headerView.setTextColor(
-                getResources().getColor(
-                        ColorMapper.getNavHeaderText(preferencesHelper.getUIType())
-                )
-        );
-
-        drawerList.addHeaderView(headerView);
-        drawerList.setLayoutParams(params);
-        drawerList.setOnTouchListener(onTouchDownHapticFeedback);
-
         if (!(this instanceof FilePickerActivity)) {
-            headerView.setText(getString(R.string.drawer_header_text));
-            headerView.setTypeface(playerUIInterface.getTypeFace());
-            drawerList.setAdapter(
-                    new NavigationDrawerAdapter(
-                            this,
-                            R.layout.drawer_list_item,
-                            getResources().getStringArray(R.array.drawer_menu),
-                            preferencesHelper,
-                            playerUIInterface.getTypeFace()
-                    )
+            navDrawerItemClickListener = new NavDrawerClickListener(
+                    this,
+                    (DrawerLayout) findViewById(R.id.drawer_layout)
             );
-            drawerList.setOnItemClickListener(
-                    new NavDrawerClickListener(
-                            this,
-                            (DrawerLayout) findViewById(R.id.drawer_layout)
-                    )
+
+            navDrawerListAdapter = new NavigationDrawerAdapter(
+                    this,
+                    R.layout.drawer_list_item,
+                    getResources().getStringArray(R.array.drawer_menu),
+                    getPreferencesHelper(),
+                    playerUIInterface.getTypeFace()
             );
         }
+
+        ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
+        drawerList.setOnTouchListener(this);
+        drawerList.setAdapter(navDrawerListAdapter);
+        drawerList.setOnItemClickListener(navDrawerItemClickListener);
     }
 
     protected void pickMediaDirectories()

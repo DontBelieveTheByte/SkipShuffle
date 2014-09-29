@@ -1,7 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -11,22 +9,14 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
 
-public class FilePickerUI {
-    private int uiType;
+public class FilePickerUI extends AbstractUI {
     private int emptyViewTextColor;
-    private FilePickerActivity filePickerActivity;
-    private Typeface typeface;
     private ViewGroup backgroundLayout;
-    private ListView drawerList;
     private TextView emptyView;
 
     public FilePickerUI(FilePickerActivity filePickerActivity)
     {
-        filePickerActivity.setContentView(R.layout.list_activity);
-
-        this.filePickerActivity = filePickerActivity;
-
-        uiType = this.filePickerActivity.getPreferencesHelper().getUIType();
+        super(filePickerActivity, R.layout.list_activity);
 
         emptyViewTextColor = filePickerActivity.getResources().getColor(
                 ColorMapper.getEmptyListText(filePickerActivity.getPreferencesHelper().getUIType())
@@ -53,75 +43,54 @@ public class FilePickerUI {
         emptyView = (TextView) backgroundLayout.findViewById(R.id.empty_directory);
         listView.setEmptyView(emptyView);
 
-        drawerList = (ListView) filePickerActivity.findViewById(R.id.left_drawer1);
-
         setUpDrawables();
-        setUpColors(listView);
+        setUpDimensions();
     }
 
-    public Typeface getTypeFace()
-    {
-        if (null == typeface) {
-            typeface = Typeface.createFromAsset(
-                    filePickerActivity.getAssets(),
-                    TypeFaceMapper.getTypeFace(uiType)
-
-            );
-        }
-        return typeface;
-    }
-
-    private void setUpColors(ListView listView)
-    {
-        //@TODO should probably be in future setUpDimension method.
-        int listDividerHeight = (int)filePickerActivity.getResources().getDimension(R.dimen.list_divider_height);
-
-        backgroundLayout.setBackgroundResource(ColorMapper.getBackground(uiType));
-
-        emptyView.setTextColor(emptyViewTextColor);
-
-        ColorDrawable colorDrawable = new ColorDrawable(
-                filePickerActivity.getResources().getColor(
-                        ColorMapper.getListDivider(uiType)
-                )
-        );
-        listView.setDivider(colorDrawable);
-        listView.setDividerHeight(listDividerHeight);
-
-        ColorDrawable navDrawerColorDrawable = new ColorDrawable(
-                    filePickerActivity.getResources().getColor(
-                        ColorMapper.getListDivider(uiType)
-                )
-        );
-
-        drawerList.setBackgroundResource(
-                ColorMapper.getNavDrawerBackground(uiType)
-        );
-
-        drawerList.setDivider(navDrawerColorDrawable);
-        drawerList.setDividerHeight(listDividerHeight);
-    }
 
     private void setUpDrawables()
     {
-        ImageButton okButton = (ImageButton) filePickerActivity.findViewById(R.id.ok);
+        ImageButton okButton = (ImageButton) baseActivity.findViewById(R.id.ok);
         okButton.setImageDrawable(
-                filePickerActivity.getResources().getDrawable(
+                baseActivity.getResources().getDrawable(
                     DrawableMapper.getOk(uiType)
                 )
         );
-        ImageButton cancelButton = (ImageButton) filePickerActivity.findViewById(R.id.cancel);
+        ImageButton cancelButton = (ImageButton) baseActivity.findViewById(R.id.cancel);
         cancelButton.setImageDrawable(
-                filePickerActivity.getResources().getDrawable(
+                baseActivity.getResources().getDrawable(
                         DrawableMapper.getCancel(uiType)
                 )
         );
-        ImageButton backButton = (ImageButton) filePickerActivity.findViewById(R.id.back);
+        ImageButton backButton = (ImageButton) baseActivity.findViewById(R.id.back);
         backButton.setImageDrawable(
-                filePickerActivity.getResources().getDrawable(
+                baseActivity.getResources().getDrawable(
                         DrawableMapper.getBack(uiType)
                 )
         );
     }
 
+    protected void setUpDrawer()
+    {
+
+        TextView headerView = (TextView) baseActivity.getLayoutInflater().inflate(
+                R.layout.drawer_list_header,
+                drawerList
+        );
+
+        headerView.setTextColor(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getNavHeaderText(
+                                baseActivity.getPreferencesHelper().getUIType()
+                        )
+                )
+        );
+        headerView.setText(
+                baseActivity.getString(R.string.drawer_header_text)
+        );
+        headerView.setTypeface(getTypeFace());
+
+        drawerList.addHeaderView(headerView);
+
+    }
 }

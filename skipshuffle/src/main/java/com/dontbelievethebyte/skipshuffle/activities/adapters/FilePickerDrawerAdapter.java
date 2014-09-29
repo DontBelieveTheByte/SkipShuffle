@@ -1,9 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities.adapters;
 
-import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,12 +9,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
 
@@ -26,64 +23,43 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
     }
 
     private Drawable removeButtonDrawable;
-    private LayoutInflater layoutInflater;
-    private Typeface typeface;
-    private int layoutResource;
-    private Integer selectedItem;
+    private FilePickerActivity filePickerActivity;
     private int selectedTextBackgroundColor;
     private int textColor;
+    private Typeface typeface;
 
-    public FilePickerDrawerAdapter(Context context, int resource, ArrayList<File> watchedDirectories, PreferencesHelper preferencesHelper, Typeface typeface)
+    public FilePickerDrawerAdapter(FilePickerActivity filePickerActivity, int layoutResource, Typeface typeFace)
     {
-        super(context, resource, watchedDirectories);
-        layoutInflater = LayoutInflater.from(context);
-        this.typeface = typeface;
-        layoutResource = resource;
+        super(
+                filePickerActivity,
+                layoutResource,
+                filePickerActivity.getCurrentSelectedDirectories()
+        );
+        this.filePickerActivity = filePickerActivity;
+        this.typeface = typeFace;
+
         selectedTextBackgroundColor = ColorMapper.getListDivider(
-                preferencesHelper.getUIType()
+                filePickerActivity.getPreferencesHelper().getUIType()
         );
-        textColor = context.getResources().getColor(
-                ColorMapper.getNavDrawerText(preferencesHelper.getUIType())
+        textColor = filePickerActivity.getResources().getColor(
+                ColorMapper.getNavDrawerText(filePickerActivity.getPreferencesHelper().getUIType())
         );
-        removeButtonDrawable = context.getResources().getDrawable(
-                DrawableMapper.getRemove(preferencesHelper.getUIType())
+        removeButtonDrawable = filePickerActivity.getResources().getDrawable(
+                DrawableMapper.getRemove(filePickerActivity.getPreferencesHelper().getUIType())
         );
-    }
-
-    public int getSelectedItem()
-    {
-        return selectedItem;
-    }
-
-    public void setSelectedItem(int selectedItem)
-    {
-        if (selectedItem > getCount()) {
-            this.selectedItem = getCount();
-        } else if (selectedItem < 0) {
-            this.selectedItem = 0;
-        } else {
-            this.selectedItem = selectedItem;
-        }
-        notifyDataSetChanged();
-        //Trigger from activity.
-        //private NavigationDrawerAdapter mAdapter;
-        //...
-        //private void selectItem(int position) {
-        //        mAdapter.setSelectedItem(position);
-        //        ...
-        //}
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (null == convertView) {
             viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(
-                    layoutResource,
-                    null)
+            convertView = filePickerActivity.getLayoutInflater().inflate(
+                    R.layout.file_picker_drawer_list_item,
+                    parent,
+                    false)
             ;
             convertView.setTag(viewHolder);
         } else {
@@ -97,14 +73,23 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
                 position
         );
 
+//        viewHolder.title.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                notifyDataSetChanged();
+//                viewHolder.title.setSelected(true);
+//                Log.d(BaseActivity.TAG, "CLOCKCKCK");
+//            }
+//        });
         viewHolder.removeButton = setRemoveButton(
                 convertView,
                 R.id.remove
         );
 
-        if (null != selectedItem && position == selectedItem) {
-            convertView.setBackgroundColor(selectedTextBackgroundColor);
-        }
+//        if (null != selectedItem && position == selectedItem) {@TODO Fix this fucking shit.
+//            convertView.setBackgroundColor(selectedTextBackgroundColor);
+//        }
+
         return convertView;
     }
 
@@ -116,11 +101,6 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
         }
         tv.setText(text);
         tv.setTextColor(textColor);
-        if (null != selectedItem && position == selectedItem) {
-            tv.setSelected(true);
-        } else {
-            tv.setSelected(false);
-        }
         return tv;
     }
 
@@ -128,6 +108,14 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
     {
         ImageButton removeButton = (ImageButton) view.findViewById(resourceId);
         removeButton.setImageDrawable(removeButtonDrawable);
+//        removeButton.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Log.d("SHIT MOTHERFUCKER BITCH CUNT§", "Touched");
+//                    }
+//                }
+//        );
         return removeButton;
     }
 }

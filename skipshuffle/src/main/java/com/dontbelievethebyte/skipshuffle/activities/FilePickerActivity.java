@@ -2,56 +2,141 @@ package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
+import com.dontbelievethebyte.skipshuffle.activities.exception.ParentDirectoryException;
+import com.dontbelievethebyte.skipshuffle.activities.exception.SubdirectoryException;
 import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerClickListener;
-import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerNavDrawerClickListener;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FilePickerActivity extends BaseActivity {
 
-    private static final String TAG = "SkipShuffleFilePicker";
     private static final String LAST_CURRENT_DIRECTORY = "lastCurrentDirectory";
     private static final String LAST_CURRENT_WATCHED_DIRECTORIES = "lastCurrentWatchedDirectories";
 
-    private File rootDirectory;
+    private ArrayList<BaseAdapter> childAdapters;
+    private ArrayList<File> currentSelectedDirectories;
+    private File currentListedDirectory;
     private File externalStorageRootDirectory;
     private FilePickerListAdapter filePickerListAdapter;
     private FilePickerUI filePickerUI;
-    private PreferencesHelper preferencesHelper;
-    private ArrayList<File> currentWatchedDirectories;
 
-    @Override
-    protected void handleBackPressed(){
-        if (externalStorageRootDirectory.equals(filePickerListAdapter.getCurrentListedDirectory())) {
+    public void addSelectedDirectory(File newDirectory)
+    {
+        try {
+            if (!currentSelectedDirectories.contains(newDirectory)) {
+                isSubdirectorySelected(newDirectory);
+                isParentDirectorySelected(newDirectory);
+                currentSelectedDirectories.add(newDirectory);
+                toastHelper.showShortToast(
+                        String.format(
+                                getString(R.string.directory_added),
+                                newDirectory.getName()
+                        )
+                );
+            }
+        } catch (SubdirectoryException subdirectoryException) {
+            currentSelectedDirectories.remove(
+                    subdirectoryException.getSubdirectory()
+            );
             toastHelper.showShortToast(
-                    getString(R.string.directory_top_level)
+                    String.format(
+                            getString(R.string.sub_directory_selected),
+                            newDirectory.getName()
+                    )
             );
-        } else if (null != filePickerListAdapter.getCurrentListedDirectory().getParentFile()) {
-            filePickerListAdapter.setCurrentListedDirectory(
-                    filePickerListAdapter.getCurrentListedDirectory().getParentFile()
+        } catch (ParentDirectoryException parentDirectoryException) {
+            currentSelectedDirectories.remove(
+                    parentDirectoryException.getParentDirectory()
             );
-            filePickerListAdapter.refreshFilesList();
-        } else {
-            finish();
+            toastHelper.showShortToast(
+                    String.format(
+                            getString(R.string.parent_directory_selected),
+                            newDirectory.getName()
+                    )
+            );
+        } finally {
+            notifyAdaptersDataSetChanged();
+        }
+    }
+
+    public File getCurrentListedDirectory()
+    {
+        return currentListedDirectory;
+    }
+
+
+
+    public ArrayList<File> getCurrentSelectedDirectories()
+    {
+        return currentSelectedDirectories;
+    }
+
+    public boolean isSubdirectorySelected(File verifyingDirectory) throws SubdirectoryException
+    {
+        try {
+            String verifyingDirectoryPath = verifyingDirectory.getCanonicalPath();
+
+            for (File directory : currentSelectedDirectories) {
+                String directoryPath = directory.getCanonicalPath();
+                if (!verifyingDirectoryPath.equals(directoryPath) &&
+                        directory.getCanonicalPath().startsWith(
+                                verifyingDirectory.getCanonicalPath()
+                        )
+                        ) {
+                    toastHelper.showLongToast("Children was found");
+                    throw new SubdirectoryException(directory);
+                }
+            }
+            return false;
+        } catch (IOException exception){
+            return false;
+        }
+    }
+
+    public boolean isParentDirectorySelected(File verifyingDirectory) throws ParentDirectoryException
+    {
+        try {
+            String verifyingDirectoryPath = verifyingDirectory.getCanonicalPath();
+
+            for (File directory : currentSelectedDirectories) {
+                String directoryPath = directory.getCanonicalPath();
+                if (!verifyingDirectoryPath.equals(directoryPath) &&
+                        directory.getCanonicalPath().startsWith(
+                                verifyingDirectory.getCanonicalPath()
+                        )
+                        ) {
+                    toastHelper.showLongToast("Parent was found");
+                    throw new ParentDirectoryException(directory);
+                }
+            }
+            return false;
+        } catch (IOException exception){
+            return false;
         }
     }
 
     @Override
-    public void mediaBroadcastReceiverCallback() {}
+    public void mediaBroadcastReceiverCallback() {/*Implements abstract for template method pattern.*/}
+
+    public void notifyAdaptersDataSetChanged()
+    {
+        for (BaseAdapter adapter : childAdapters) {
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     @Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -60,24 +145,24 @@ public class FilePickerActivity extends BaseActivity {
 
         externalStorageRootDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
 
-        preferencesHelper = new PreferencesHelper(this);
-        currentWatchedDirectories = new ArrayList<File>();
+        childAdapters = new ArrayList<BaseAdapter>();
 
-        rootDirectory = ( null != savedInstanceState &&
-                          null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY)) ?
-                                (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) :
-                                externalStorageRootDirectory;
+        currentListedDirectory = null != savedInstanceState &&
+                                 null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) ?
+                                     (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) :
+                                     externalStorageRootDirectory;
 
-        currentWatchedDirectories = null != savedInstanceState &&
-                                    null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) ?
-                                    (ArrayList<File>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) :
-                                        preferencesHelper.getMediaDirectories();
+        currentSelectedDirectories = null != savedInstanceState &&
+                                     null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) ?
+                                         (ArrayList<File>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) :
+                                         preferencesHelper.getMediaDirectories();
     }
 
 	@Override
 	protected void onResume()
     {
         super.onResume();
+
         filePickerListAdapter.refreshFilesList();
         toastHelper.showLongToast(
                 getString(R.string.media_scan_sel_target_directories)
@@ -87,9 +172,51 @@ public class FilePickerActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        outState.putSerializable(LAST_CURRENT_DIRECTORY, filePickerListAdapter.getCurrentListedDirectory());
-        outState.putSerializable(LAST_CURRENT_WATCHED_DIRECTORIES, currentWatchedDirectories);
+        outState.putSerializable(
+                LAST_CURRENT_DIRECTORY,
+                getCurrentListedDirectory()
+        );
+        outState.putSerializable(
+                LAST_CURRENT_WATCHED_DIRECTORIES,
+                currentSelectedDirectories
+        );
         super.onSaveInstanceState(outState);
+    }
+
+    public void removeSelectedDirectory(File directoryToRemove)
+    {
+        if (currentSelectedDirectories.contains(directoryToRemove)) {
+            currentSelectedDirectories.remove(directoryToRemove);
+            notifyAdaptersDataSetChanged();
+            toastHelper.showShortToast(
+                    String.format(
+                            getString(R.string.directory_removed),
+                            directoryToRemove
+                    )
+            );
+        }
+    }
+
+    public void setCurrentListedDirectory(File currentListedDirectory)
+    {
+        this.currentListedDirectory = currentListedDirectory;
+    }
+
+    @Override
+    protected void handleBackPressed()
+    {
+        if (externalStorageRootDirectory.equals(getCurrentListedDirectory())) {
+            toastHelper.showShortToast(
+                    getString(R.string.directory_top_level)
+            );
+        } else if (null != getCurrentListedDirectory().getParentFile()) {
+            setCurrentListedDirectory(
+                    getCurrentListedDirectory().getParentFile()
+            );
+            filePickerListAdapter.refreshFilesList();
+        } else {
+            finish();
+        }
     }
 
     @Override
@@ -97,14 +224,15 @@ public class FilePickerActivity extends BaseActivity {
 
         filePickerUI = UIFactory.createFilePickerUI(this, type);
 
+        ArrayList<File> listedFile = new ArrayList<File>(
+                Arrays.asList(currentListedDirectory.listFiles())
+        );
         filePickerListAdapter = new FilePickerListAdapter(
                 this,
-                new ArrayList<File>()
+                listedFile
         );
-
-        filePickerListAdapter.setCurrentSelectedDirectories(currentWatchedDirectories);
-        filePickerListAdapter.setCurrentListedDirectory(rootDirectory);
         filePickerListAdapter.setTypeface(filePickerUI.getTypeFace());
+        childAdapters.add(filePickerListAdapter);
 
         ListView listView = (ListView) findViewById(R.id.current_list);
         listView.setOnItemClickListener(new FilePickerClickListener(this));
@@ -120,13 +248,13 @@ public class FilePickerActivity extends BaseActivity {
         View.OnClickListener okClickListener= new View.OnClickListener() {
             public void onClick(View v)
             {
-                if (filePickerListAdapter.getSelectedDirectories().size() < 1) {
+                if (getCurrentSelectedDirectories().size() < 1) {
                     toastHelper.showShortToast(
                         getString(R.string.pick_media_nothing_selected)
                     );
                     setResult(RESULT_CANCELED);
                 } else {
-                    preferencesHelper.setMediaDirectories(filePickerListAdapter.getSelectedDirectories());
+                    preferencesHelper.setMediaDirectories(getCurrentSelectedDirectories());
                     setResult(RESULT_OK);
                 }
                 finish();
@@ -136,23 +264,24 @@ public class FilePickerActivity extends BaseActivity {
         View.OnClickListener cancelClickListener= new View.OnClickListener() {
             public void onClick(View v)
             {
-                Toast.makeText(
-                        FilePickerActivity.this,
-                        R.string.pick_media_nothing_selected,
-                        Toast.LENGTH_SHORT
-                ).show();
+                toastHelper.showShortToast(
+                        getString(R.string.pick_media_nothing_selected)
+                );
                 setResult(RESULT_CANCELED);
                 finish();
             }
         };
 
         ImageButton backButton = (ImageButton)findViewById(R.id.back);
+        backButton.setOnTouchListener(this);
         backButton.setOnClickListener(backClickListener);
 
         ImageButton cancelButton = (ImageButton)findViewById(R.id.cancel);
+        backButton.setOnTouchListener(this);
         cancelButton.setOnClickListener(cancelClickListener);
 
         ImageButton okButton = (ImageButton)findViewById(R.id.ok);
+        okButton.setOnTouchListener(this);
         okButton.setOnClickListener(okClickListener);
 
         setUpDrawer();
@@ -161,30 +290,22 @@ public class FilePickerActivity extends BaseActivity {
     @Override
     protected void setUpDrawer()
     {
-        super.setUpDrawer();
 
-        ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
-        TextView headerView = (TextView) drawerList.findViewById(R.id.drawer_header);
-        headerView.setText(
-                getString(R.string.file_picker_drawer_title)
-        );
-        headerView.setTypeface(filePickerUI.getTypeFace());
-        drawerList.addHeaderView(headerView);
-
-        FilePickerDrawerAdapter filePickerDrawerAdapter = new FilePickerDrawerAdapter(
+//        drawerList.setOnItemClickListener(new FilePickerNavDrawerClickListener());
+//        TextView headerView = (TextView) drawerList.findViewById(R.id.drawer_header);
+//        headerView.setText(
+//                getString(R.string.file_picker_drawer_title)
+//        );
+//        headerView.setTypeface(filePickerUI.getTypeFace());
+//        drawerList.addHeaderView(headerView);
+//        drawerList.setOnItemClickListener(
+//                new FilePickerNavDrawerClickListener()
+//        );
+        navDrawerListAdapter = new FilePickerDrawerAdapter(
                 this,
                 R.layout.file_picker_drawer_list_item,
-                currentWatchedDirectories,
-                preferencesHelper,
                 filePickerUI.getTypeFace()
         );
-        drawerList.setOnItemClickListener(
-                new FilePickerNavDrawerClickListener(
-                        this,
-                        (DrawerLayout) findViewById(R.id.drawer_layout)
-                )
-        );
-        drawerList.setAdapter(filePickerDrawerAdapter);
+        childAdapters.add(navDrawerListAdapter);
     }
-
 }

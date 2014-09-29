@@ -62,13 +62,6 @@ public class MainActivity extends BaseActivity {
         //Useful for parent class.
         playerUIInterface = ui;
 
-        //Register haptic feedback for all buttons.
-        ui.playBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.skipBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.playlistBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.prevBtn.setOnTouchListener(onTouchDownHapticFeedback);
-        ui.shuffleBtn.setOnTouchListener(onTouchDownHapticFeedback);
-
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

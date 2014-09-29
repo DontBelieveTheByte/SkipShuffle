@@ -29,7 +29,7 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
                     filePickerActivity.getString(R.string.no_access)
             );
         } else if (newDirectory.isDirectory()) {
-            filePickerListAdapter.setCurrentListedDirectory(newDirectory);
+            filePickerActivity.setCurrentListedDirectory(newDirectory);
             filePickerListAdapter.refreshFilesList();
         } else {
             filePickerActivity.getToastHelper().showShortToast(
