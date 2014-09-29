@@ -3,6 +3,7 @@ package com.dontbelievethebyte.skipshuffle.ui;
 import android.graphics.drawable.Drawable;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
@@ -40,6 +41,8 @@ public abstract class AbstractPlayerUI extends AbstractUI implements PlayerUIInt
     public AbstractPlayerUI(BaseActivity baseActivity, int contentLayout)
     {
         super(baseActivity, contentLayout);
+
+        bottomLayout = (RelativeLayout) baseActivity.findViewById(R.id.bottom);
 
         prevBtn = (ImageButton) baseActivity.findViewById(R.id.prevBtn);
         playBtn = (ImageButton) baseActivity.findViewById(R.id.playBtn);

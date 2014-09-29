@@ -4,14 +4,15 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public abstract class AbstractUI {
     protected BaseActivity baseActivity;
+    protected ViewGroup bottomLayout;
     protected int uiType;
     protected Typeface typeface;
     protected ListView drawerList;
@@ -23,7 +24,7 @@ public abstract class AbstractUI {
         uiType = baseActivity.getPreferencesHelper().getUIType();
         baseActivity.setContentView(contentLayout);
         drawerList = (ListView) activity.findViewById(R.id.left_drawer1);
-
+        bottomLayout = (ViewGroup) baseActivity.findViewById(R.id.bottom);
     }
 
     public Typeface getTypeFace()
@@ -53,15 +54,14 @@ public abstract class AbstractUI {
 
     protected void setUpColors()
     {
-        RelativeLayout bottomLayout = (RelativeLayout) baseActivity.findViewById(R.id.bottom);
-        bottomLayout.setBackgroundResource(
-                ColorMapper.getBackground(uiType)
-        );
-
         ColorDrawable navDrawerColorDrawable = new ColorDrawable(
                 baseActivity.getResources().getColor(
                         ColorMapper.getListDivider(uiType)
                 )
+        );
+
+        bottomLayout.setBackgroundResource(
+                ColorMapper.getBackground(uiType)
         );
 
         drawerList.setBackgroundResource(
