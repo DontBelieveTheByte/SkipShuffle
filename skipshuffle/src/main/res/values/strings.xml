@@ -93,5 +93,5 @@
     <string name="accessibility_prev">Previous</string>
     <string name="accessibility_shuffle">Shuffle</string>
     <string name="accessibility_skipshuffle">SkipShuffle</string>
-
+    <string name="accessibility_playlist">SkipShuffle</string>
 </resources>
