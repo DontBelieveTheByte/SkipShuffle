@@ -365,7 +365,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
             );
         }
 
-        ListView drawerList = (ListView) findViewById(R.id.left_drawer1);
+        ListView drawerList = (ListView) findViewById(R.id.nav_drawer);
         drawerList.setOnTouchListener(this);
         drawerList.setAdapter(navDrawerListAdapter);
         drawerList.setOnItemClickListener(navDrawerItemClickListener);

@@ -13,6 +13,9 @@ import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 public abstract class AbstractUI {
     protected int uiType;
 
+    protected boolean isLandScape;
+    protected int computedScreenHeight;
+    protected int computedScreenWidth;
     protected BaseActivity baseActivity;
     protected ListView drawerList;
     protected Typeface typeface;
@@ -23,8 +26,11 @@ public abstract class AbstractUI {
         this.baseActivity = activity;
         uiType = baseActivity.getPreferencesHelper().getUIType();
         baseActivity.setContentView(contentLayout);
-        drawerList = (ListView) activity.findViewById(R.id.left_drawer1);
+        drawerList = (ListView) activity.findViewById(R.id.nav_drawer);
         bottomLayout = (ViewGroup) baseActivity.findViewById(R.id.bottom);
+        isLandScape = Configuration.ORIENTATION_LANDSCAPE == baseActivity.getResources().getConfiguration().orientation;
+        computedScreenHeight = baseActivity.getResources().getDisplayMetrics().heightPixels;
+        computedScreenWidth = baseActivity.getResources().getDisplayMetrics().widthPixels;
     }
 
     public Typeface getTypeFace()
@@ -40,25 +46,15 @@ public abstract class AbstractUI {
 
     protected void setUpDimensions()
     {
-        int drawerWidth = (Configuration.ORIENTATION_LANDSCAPE == baseActivity.getResources().getConfiguration().orientation) ?
-                baseActivity.getResources().getDisplayMetrics().widthPixels/ DimensionsMapper.drawerWidthDividerLandscape :
-                baseActivity.getResources().getDisplayMetrics().widthPixels/ DimensionsMapper.drawerWidthDividerPortrait;
-
         DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
-        params.width = drawerWidth;
+        params.width = (int) (computedScreenWidth * ( isLandScape ? DimensionsMapper.Drawer.Landscape.width : DimensionsMapper.Drawer.Portrait.width));
         drawerList.setLayoutParams(params);
-
         int listDividerHeight = (int)baseActivity.getResources().getDimension(R.dimen.list_divider_height);
         drawerList.setDividerHeight(listDividerHeight);
     }
 
     protected void setUpColors()
     {
-        ColorDrawable navDrawerColorDrawable = new ColorDrawable(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getListDivider(uiType)
-                )
-        );
 
         bottomLayout.setBackgroundResource(
                 ColorMapper.getBackground(uiType)
@@ -68,6 +64,12 @@ public abstract class AbstractUI {
                 ColorMapper.getNavDrawerBackground(uiType)
         );
 
-        drawerList.setDivider(navDrawerColorDrawable);
+        ColorDrawable navDrawerSeparatorColorDrawable = new ColorDrawable(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getListDivider(uiType)
+                )
+        );
+
+        drawerList.setDivider(navDrawerSeparatorColorDrawable);
     }
 }

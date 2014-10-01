@@ -36,7 +36,7 @@ public abstract class AbstractPlayerUI extends AbstractUI implements PlayerUIInt
     protected Animation flipLeftAnimation;
     protected Animation blinkAnimation;
 
-    protected TextView songTitle;
+    protected TextView songLabel;
 
     public AbstractPlayerUI(BaseActivity baseActivity, int contentLayout)
     {
@@ -84,12 +84,29 @@ public abstract class AbstractPlayerUI extends AbstractUI implements PlayerUIInt
                 DrawableMapper.getShufflePressed(uiType)
         );
 
+        //        TextView headerView = (TextView) baseActivity.getLayoutInflater().inflate(
+//                R.layout.drawer_list_header,
+//                drawerList
+//        );
+
+//        headerView.setTextColor(
+//                baseActivity.getResources().getColor(
+//                        ColorMapper.getNavHeaderText(baseActivity.getPreferencesHelper().getUIType())
+//                )
+//        );
+//        headerView.setText(
+//                baseActivity.getString(R.string.drawer_header_text)
+//        );
+//        headerView.setTypeface(getTypeFace());
+//
+//        drawerList.addHeaderView(headerView);
         //Register haptic feedback for all buttons.
         playBtn.setOnTouchListener(baseActivity);
         skipBtn.setOnTouchListener(baseActivity);
         prevBtn.setOnTouchListener(baseActivity);
         shuffleBtn.setOnTouchListener(baseActivity);
     }
+
     @Override
     public void doPlay()
     {
@@ -123,7 +140,7 @@ public abstract class AbstractPlayerUI extends AbstractUI implements PlayerUIInt
     }
 
     @Override
-    public void setSongTitle(String title) {
+    public void setSongLabel(String title) {
 
     }
 
@@ -133,26 +150,6 @@ public abstract class AbstractPlayerUI extends AbstractUI implements PlayerUIInt
         playBtn.setImageDrawable(playDrawable);
         shuffleBtn.setImageDrawable(shuffleDrawable);
         skipBtn.setImageDrawable(skipDrawable);
-    }
-
-    protected void setUpDrawer()
-    {
-//        TextView headerView = (TextView) baseActivity.getLayoutInflater().inflate(
-//                R.layout.drawer_list_header,
-//                drawerList
-//        );
-//
-//        headerView.setTextColor(
-//                baseActivity.getResources().getColor(
-//                        ColorMapper.getNavHeaderText(baseActivity.getPreferencesHelper().getUIType())
-//                )
-//        );
-//        headerView.setText(
-//                baseActivity.getString(R.string.drawer_header_text)
-//        );
-//        headerView.setTypeface(getTypeFace());
-//
-//        drawerList.addHeaderView(headerView);
     }
 
 }
