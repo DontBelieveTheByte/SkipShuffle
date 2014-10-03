@@ -3,10 +3,11 @@ package com.dontbelievethebyte.skipshuffle.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
-import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
@@ -19,27 +20,31 @@ import java.util.List;
 
 public class MediaScannerService extends IntentService {
 
-    private static final String TAG = "SkipShuffleMediaScan";
-
     private AudioFileTypeValidator audioFileTypeValidator = new AudioFileTypeValidator();
     private DbHandler dbHandler;
     private RandomPlaylist playlist;
     private MediaMetadataRetriever mediaMetadataRetriever;
     private PreferencesHelper preferencesHelper;
-    private ToastHelper toastHelper;
+
+    private class Status {
+        public String currentDirectory;
+        public String currentFile;
+        public boolean isLastFile;
+    }
 
     public MediaScannerService()
     {
         super("SkipShuffleMediaScanner");
+
     }
 
     @Override
     protected void onHandleIntent(Intent intent)
     {
         preferencesHelper = new PreferencesHelper(getApplicationContext());
-        ArrayList<File> directoryPaths = preferencesHelper.getMediaDirectories();
         dbHandler = new DbHandler(getApplicationContext());
         mediaMetadataRetriever = new MediaMetadataRetriever();
+        ArrayList<File> directoryPaths = preferencesHelper.getMediaDirectories();
         for (File directory : directoryPaths) {
             recursiveMediaDirectoryScan(directory);
         }
@@ -47,7 +52,6 @@ public class MediaScannerService extends IntentService {
 
     private void recursiveMediaDirectoryScan(File dir)
     {
-        toastHelper = new ToastHelper(getApplicationContext());
         try {
             playlist = new RandomPlaylist(
                     preferencesHelper.getLastPlaylist(),
@@ -55,41 +59,36 @@ public class MediaScannerService extends IntentService {
             );
             playlist.setPosition(0);
         } catch (JSONException jsonException){
-            toastHelper.showLongToast(
-                    String.format(
-                            getString(R.string.playlist_load_error),
-                            preferencesHelper.getLastPlaylist()
-                    )
-            );
+            Log.d(BaseActivity.TAG, "Json Error");
         }
 
         File[] files = dir.listFiles();
 
         List<String> validFiles = new ArrayList<String>();
 
-        for (int i = 0; i < files.length; i++) {
-            //Check if directory
-            if (files[i].isDirectory())
-                recursiveMediaDirectoryScan(files[i]);
+        for (File file : files) {
+            //Check if currentDirectory
+            if (file.isDirectory())
+                recursiveMediaDirectoryScan(file);
             else {
                 //Fill an array list with valid files since when can't trust the last file position index to be a valid audio file.
-                if (audioFileTypeValidator.validate(files[i].getAbsolutePath())) {
-                    validFiles.add(files[i].getAbsolutePath());
+                if (audioFileTypeValidator.validate(file.getAbsolutePath())) {
+                    validFiles.add(file.getAbsolutePath());
                 }
             }
         }
         if (validFiles.size() == 0) {
-            toastHelper.showLongToast(
-                    getString(R.string.media_scan_directory_empty)
-            );
-            broadcastIntentStatus(
-                    null,
-                    null,
-                    true
-            );
+            Status status = new Status();
+            status.isLastFile = true;
+            broadcastIntentStatus(status);
         } else {
-            for (int j = 0; j < validFiles.size();j++){
-                broadcastIntentStatus(dir.getAbsolutePath(), validFiles.get(j), (j == validFiles.size() - 1));
+            for (int j = 0; j < validFiles.size(); j++) {
+                SystemClock.sleep(3000);
+                Status status = new Status();
+                status.currentDirectory = dir.getAbsolutePath();
+                status.currentFile = validFiles.get(j);
+                status.isLastFile = (j == validFiles.size() - 1);
+                broadcastIntentStatus(status);
 //                Track track = new Track();
 //                track.setPath(validFiles.get(j));
 //                mediaMetadataRetriever.setDataSource(track.getPath());
@@ -108,12 +107,12 @@ public class MediaScannerService extends IntentService {
         }
     }
 
-    private void broadcastIntentStatus(String directory, String status, boolean isLast)
+    private void broadcastIntentStatus(Status status)
     {
         Intent intent = new Intent(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING);
-        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_DIRECTORY_PROCESSING, directory);
-        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING, status);
-        intent.putExtra(MediaScannerBroadcastMessageContract.IS_LAST_FILE_PROCESSING, isLast);
+        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_DIRECTORY_PROCESSING, status.currentDirectory);
+        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING, status.currentFile);
+        intent.putExtra(MediaScannerBroadcastMessageContract.IS_LAST_FILE_PROCESSING, status.isLastFile);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
