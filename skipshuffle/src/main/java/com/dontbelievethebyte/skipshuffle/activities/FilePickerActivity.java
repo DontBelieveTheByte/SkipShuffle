@@ -13,6 +13,7 @@ import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdap
 import com.dontbelievethebyte.skipshuffle.activities.exception.ParentDirectoryException;
 import com.dontbelievethebyte.skipshuffle.activities.exception.SubdirectoryException;
 import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerClickListener;
+import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerNavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
@@ -167,6 +168,7 @@ public class FilePickerActivity extends BaseActivity {
         toastHelper.showLongToast(
                 getString(R.string.media_scan_sel_target_directories)
         );
+        setNavigationDrawerContent();
     }
 
     @Override
@@ -283,29 +285,32 @@ public class FilePickerActivity extends BaseActivity {
         ImageButton okButton = (ImageButton)findViewById(R.id.ok);
         okButton.setOnTouchListener(this);
         okButton.setOnClickListener(okClickListener);
-
-        setUpDrawer();
     }
 
     @Override
-    protected void setUpDrawer()
+    protected void setNavigationDrawerContent()
     {
+        ListView drawerList = (ListView) findViewById(R.id.nav_drawer);
+        drawerList.setOnTouchListener(this);
+        drawerList.setOnItemClickListener(new FilePickerNavDrawerClickListener());
 
-//        drawerList.setOnItemClickListener(new FilePickerNavDrawerClickListener());
-//        TextView headerView = (TextView) drawerList.findViewById(R.id.drawer_header);
+//        TextView headerView = (TextView) findViewById(R.id.drawer_header);
 //        headerView.setText(
 //                getString(R.string.file_picker_drawer_title)
 //        );
-//        headerView.setTypeface(filePickerUI.getTypeFace());
 //        drawerList.addHeaderView(headerView);
-//        drawerList.setOnItemClickListener(
-//                new FilePickerNavDrawerClickListener()
-//        );
+//        headerView.setTypeface(filePickerUI.getTypeFace());
+        drawerList.setOnItemClickListener(
+                new FilePickerNavDrawerClickListener()
+        );
         navDrawerListAdapter = new FilePickerDrawerAdapter(
                 this,
                 R.layout.file_picker_drawer_list_item,
                 filePickerUI.getTypeFace()
         );
+        drawerList.setAdapter(navDrawerListAdapter);
+//        drawerList.setOnItemClickListener(navDrawerItemClickListener);
+
         childAdapters.add(navDrawerListAdapter);
     }
 }
