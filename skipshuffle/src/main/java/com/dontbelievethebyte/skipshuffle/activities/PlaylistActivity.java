@@ -32,21 +32,6 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
 
     }
 
-    @Override
-    public void mediaBroadcastReceiverCallback()
-    {
-        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
-                mediaPlayerBroadcastReceiver.getPlayerState())
-        ) {
-            ui.doPlay();
-        } else {
-            ui.doPause();
-        }
-        playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
-        playlistAdapter.notifyDataSetChanged();
-        listView.smoothScrollToPositionFromTop(playlist.getPosition(), 0);
-    }
-
     protected void loadPlaylist(long playlistId)
     {
         try {
@@ -76,6 +61,68 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
             );
             preferencesHelper.setLastPlaylist(1);
             preferencesHelper.setLastPlaylistPosition(0);
+        }
+    }
+
+    @Override
+    public void mediaBroadcastReceiverCallback()
+    {
+        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
+                mediaPlayerBroadcastReceiver.getPlayerState())
+        ) {
+            ui.doPlay();
+        } else {
+            ui.doPause();
+        }
+        playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
+        playlistAdapter.notifyDataSetChanged();
+        listView.smoothScrollToPositionFromTop(playlist.getPosition(), 0);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        preferencesHelper.registerCallBack(this);
+        mediaPlayerBroadcastReceiver.registerCallback(this);
+        dbHandler = new DbHandler(getApplicationContext());
+        loadPlaylist(preferencesHelper.getLastPlaylist());
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+    {
+        if (playlist.getPosition() == position &&
+            mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+        ) {
+            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                    null
+            );
+            ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
+            imageView.setImageDrawable(
+                    getResources().getDrawable(
+                            DrawableMapper.getPause(preferencesHelper.getUIType())
+                    )
+            );
+        } else {
+            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                    position
+            );
+        }
+        ui.doPause();
+    }
+
+    @Override
+    public void preferenceChangedCallback(String prefsKey)
+    {
+        super.preferenceChangedCallback(prefsKey);
+        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
+            loadPlaylist(preferencesHelper.getLastPlaylist());
+        }
+        else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+            loadPlaylist(preferencesHelper.getLastPlaylist());
         }
     }
 
@@ -124,53 +171,6 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
         });
 
 
-        setUpDrawer();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        preferencesHelper.registerCallBack(this);
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-        dbHandler = new DbHandler(getApplicationContext());
-        loadPlaylist(preferencesHelper.getLastPlaylist());
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-    {
-        if (playlist.getPosition() == position &&
-            mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
-        ) {
-            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                    null
-            );
-            ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
-            imageView.setImageDrawable(
-                    getResources().getDrawable(
-                            DrawableMapper.getPause(preferencesHelper.getUIType())
-                    )
-            );
-        } else {
-            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                    position
-            );
-        }
-        ui.doPause();
-    }
-
-    @Override
-    public void preferenceChangedCallback(String prefsKey)
-    {
-        super.preferenceChangedCallback(prefsKey);
-        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
-        }
-        else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
-        }
+        setNavigationDrawerContent();
     }
 }
