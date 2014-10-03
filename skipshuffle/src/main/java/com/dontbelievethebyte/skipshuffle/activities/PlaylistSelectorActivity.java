@@ -34,26 +34,12 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     private ListView listView;
 
     @Override
-    protected void handleBackPressed() {
-
-    }
-
-    @Override
-    public void mediaBroadcastReceiverCallback()
+    protected void handleBackPressed()
     {
-        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
-                mediaPlayerBroadcastReceiver.getPlayerState())
-                ) {
-            ui.doPlay();
-        } else {
-            ui.doPause();
-        }
-        playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
-        playlistAdapter.notifyDataSetChanged();
-        listView.smoothScrollToPositionFromTop(playlist.getPosition(), 0);
+
     }
 
-    protected void loadType(long playlistId)
+    private void loadPlaylist(long playlistId)
     {
         try {
             playlist = new RandomPlaylist(
@@ -87,14 +73,78 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
     }
 
     @Override
+    public void mediaBroadcastReceiverCallback()
+    {
+        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
+                mediaPlayerBroadcastReceiver.getPlayerState())
+                ) {
+            ui.doPlay();
+        } else {
+            ui.doPause();
+        }
+        playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
+        playlistAdapter.notifyDataSetChanged();
+        listView.smoothScrollToPositionFromTop(playlist.getPosition(), 0);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        //Register class specific callback from MediaBroadcastReceiverCallback interface.
+        preferencesHelper.registerCallBack(this);
+
+        setUI(preferencesHelper.getUIType());
+
+        dbHandler = new DbHandler(getApplicationContext());
+
+        loadPlaylist(preferencesHelper.getLastPlaylist());
+        setNavigationDrawerContent();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        preferencesHelper.registerCallBack(this);
+        mediaPlayerBroadcastReceiver.registerCallback(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+    {
+        if (playlist.getPosition() == position &&
+                mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+                ) {
+            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                    null
+            );
+            ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
+            imageView.setImageDrawable(
+                    getResources().getDrawable(
+                            DrawableMapper.getPause(preferencesHelper.getUIType())
+                    )
+            );
+        } else {
+            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
+                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                    position
+            );
+        }
+        ui.doPause();
+    }
+
+    @Override
     public void preferenceChangedCallback(String prefsKey)
     {
         super.preferenceChangedCallback(prefsKey);
         if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
-            loadType(preferencesHelper.getLastPlaylist());
+            loadPlaylist(preferencesHelper.getLastPlaylist());
         } else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
             setUI(preferencesHelper.getUIType());
-            loadType(preferencesHelper.getLastPlaylist());
+            loadPlaylist(preferencesHelper.getLastPlaylist());
         }
     }
 
@@ -143,55 +193,7 @@ public class PlaylistSelectorActivity extends BaseActivity implements AdapterVie
         });
 
 
-        setUpDrawer();
+        setNavigationDrawerContent();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-
-        //Register class specific callback from MediaBroadcastReceiverCallback interface.
-        preferencesHelper.registerCallBack(this);
-
-        setUI(preferencesHelper.getUIType());
-
-        dbHandler = new DbHandler(getApplicationContext());
-
-        loadType(preferencesHelper.getLastPlaylist());
-        setUpDrawer();
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        preferencesHelper.registerCallBack(this);
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-    {
-        if (playlist.getPosition() == position &&
-                mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
-                ) {
-            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                    null
-            );
-            ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
-            imageView.setImageDrawable(
-                    getResources().getDrawable(
-                            DrawableMapper.getPause(preferencesHelper.getUIType())
-                    )
-            );
-        } else {
-            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                    position
-            );
-        }
-        ui.doPause();
-    }
 }
