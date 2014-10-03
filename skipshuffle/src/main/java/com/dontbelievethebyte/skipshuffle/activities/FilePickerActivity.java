@@ -77,8 +77,6 @@ public class FilePickerActivity extends BaseActivity {
         return currentListedDirectory;
     }
 
-
-
     public ArrayList<File> getCurrentSelectedDirectories()
     {
         return currentSelectedDirectories;
@@ -155,14 +153,16 @@ public class FilePickerActivity extends BaseActivity {
         currentSelectedDirectories = null != savedInstanceState &&
                                      null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) ?
                                          (ArrayList<File>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) :
-                                         preferencesHelper.getMediaDirectories();
+                                         null;
     }
 
 	@Override
 	protected void onResume()
     {
         super.onResume();
-
+        if (null == currentSelectedDirectories) {
+            currentSelectedDirectories = preferencesHelper.getMediaDirectories();
+        }
         filePickerListAdapter.refreshFilesList();
         toastHelper.showLongToast(
                 getString(R.string.media_scan_sel_target_directories)

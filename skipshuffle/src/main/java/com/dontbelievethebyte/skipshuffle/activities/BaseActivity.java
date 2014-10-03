@@ -102,12 +102,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         super.onCreate(savedInstanceState);
 
-        preferencesHelper = new PreferencesHelper(this);
-
-        //Set up preferences and listener but callback are implemented by child classes.
-        preferencesHelper.registerPrefsChangedListener();
-        preferencesHelper.registerCallBack(this);
-
         toastHelper = new ToastHelper(getApplicationContext());
 
         //Is mandatory to get the current state of the player.
@@ -173,7 +167,13 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onResume()
     {
         super.onResume();
+        preferencesHelper = new PreferencesHelper(this);
 
+        //Set up preferences and listener but callback are implemented by child classes.
+        preferencesHelper.registerPrefsChangedListener();
+        preferencesHelper.registerCallBack(this);
+
+        setUI(preferencesHelper.getUIType());
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
             mediaScannerDialog.show();
@@ -182,7 +182,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                 mediaPlayerBroadcastReceiver,
                 new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE)
         );
-        setUI(preferencesHelper.getUIType());
     }
 
     @Override
