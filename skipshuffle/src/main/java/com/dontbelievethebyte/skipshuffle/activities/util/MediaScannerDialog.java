@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.activities.util;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +8,7 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.services.MediaScannerBroadcastMessageContract;
 import com.dontbelievethebyte.skipshuffle.services.MediaScannerService;
 
@@ -18,17 +18,17 @@ public class MediaScannerDialog {
     private boolean isDialogShowing = false;
     private ProgressDialog progressDialog;
     private BroadcastReceiver mediaScannerReceiver;
-    private Activity activity;
+    private BaseActivity baseActivity;
 
-    public MediaScannerDialog(Activity activity, ProgressDialog progressDialog)
+    public MediaScannerDialog(BaseActivity baseActivity)
     {
-        this.progressDialog = progressDialog;
-        this.activity = activity;
+        this.progressDialog = new ProgressDialog(baseActivity);
+        this.baseActivity = baseActivity;
         this.progressDialog.setTitle(
-                activity.getString(R.string.media_scan_start_title)
+                baseActivity.getString(R.string.media_scan_start_title)
         );
         this.progressDialog.setMessage(
-                activity.getString(R.string.media_scan_start_message)
+                baseActivity.getString(R.string.media_scan_start_message)
         );
         this.progressDialog.setCancelable(false);
         this.progressDialog.setIndeterminate(true);
@@ -38,10 +38,10 @@ public class MediaScannerDialog {
     {
         registerMediaScannerBroadcastReceiver();
         Intent mediaScannerIntent = new Intent(
-                activity,
+                baseActivity,
                 MediaScannerService.class
         );
-        activity.startService(mediaScannerIntent);
+        baseActivity.startService(mediaScannerIntent);
         isScanningMedia = true;
     }
 
@@ -72,13 +72,18 @@ public class MediaScannerDialog {
                         setTitle(currentDirectory);
                         setMessage(currentFile);
                     } else {
+                        if (null == currentDirectory && null == currentFile) {
+                            baseActivity.getToastHelper().showLongToast(
+                                    baseActivity.getString(R.string.media_scan_directory_empty)
+                            );
+                        }
                         dismiss();
                         unregisterMediaScannerBroadcastReceiver();
                     }
                 }
             };
         }
-        LocalBroadcastManager.getInstance(activity)
+        LocalBroadcastManager.getInstance(baseActivity)
                 .registerReceiver(
                         mediaScannerReceiver,
                         new IntentFilter(
@@ -90,7 +95,7 @@ public class MediaScannerDialog {
     public void unregisterMediaScannerBroadcastReceiver()
     {
         if (mediaScannerReceiver != null) {
-            LocalBroadcastManager.getInstance(activity)
+            LocalBroadcastManager.getInstance(baseActivity)
                                  .unregisterReceiver(mediaScannerReceiver);
         }
         dismiss();
@@ -112,7 +117,7 @@ public class MediaScannerDialog {
 
     private void setTitle(String title)
     {
-        progressDialog.setTitle(activity.getString(
+        progressDialog.setTitle(baseActivity.getString(
                         R.string.media_scan_dialog_title,
                         title
                 )

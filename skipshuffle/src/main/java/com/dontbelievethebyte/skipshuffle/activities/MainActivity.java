@@ -120,6 +120,6 @@ public class MainActivity extends BaseActivity {
         ui.reboot();
 
         //Set up navigation drawer for selecting playlist.
-        setUpDrawer();
+        setNavigationDrawerContent();
     }
 }

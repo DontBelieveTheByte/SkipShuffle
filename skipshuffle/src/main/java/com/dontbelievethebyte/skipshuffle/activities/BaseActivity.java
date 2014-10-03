@@ -1,7 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -75,10 +73,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onActivityResult (int requestCode, int resultCode, Intent data)
     {
         if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-            mediaScannerDialog = new MediaScannerDialog(
-                    this,
-                    new ProgressDialog(BaseActivity.this)
-            );
+            mediaScannerDialog = new MediaScannerDialog(this);
             mediaScannerDialog.doScan();
         }
     }
@@ -143,12 +138,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
         //Check if we're scanning media beforehand and.
         if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
-            mediaScannerDialog = new MediaScannerDialog(
-                    this,
-                    new ProgressDialog(BaseActivity.this)
-            );
+            mediaScannerDialog = new MediaScannerDialog(this);
             mediaScannerDialog.registerMediaScannerBroadcastReceiver();
-            Log.d(TAG, "media directories to scan wasn't NULL");
         }
     }
 
@@ -313,8 +304,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                     {
                         dialog.dismiss();
                         mediaScannerDialog = new MediaScannerDialog(
-                                BaseActivity.this,
-                                new ProgressDialog(BaseActivity.this)
+                                BaseActivity.this
                         );
                         mediaScannerDialog.doScan();
                     }
@@ -347,7 +337,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         }
     }
 
-    protected void setUpDrawer()
+    protected void setNavigationDrawerContent()
     {
         if (!(this instanceof FilePickerActivity)) {
             navDrawerItemClickListener = new NavDrawerClickListener(
