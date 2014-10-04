@@ -12,18 +12,21 @@ import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.services.MediaScannerBroadcastMessageContract;
 import com.dontbelievethebyte.skipshuffle.services.MediaScannerService;
 
+import java.lang.ref.WeakReference;
+
 public class MediaScannerDialog {
 
     private boolean isScanningMedia = false;
     private boolean isDialogShowing = false;
     private ProgressDialog progressDialog;
     private BroadcastReceiver mediaScannerReceiver;
-    private BaseActivity baseActivity;
+    WeakReference<BaseActivity> weakActivity;
 
     public MediaScannerDialog(BaseActivity baseActivity)
     {
-        this.progressDialog = new ProgressDialog(baseActivity);
-        this.baseActivity = baseActivity;
+        weakActivity = new WeakReference<BaseActivity>(baseActivity);
+
+        this.progressDialog = new ProgressDialog(weakActivity.get());
         this.progressDialog.setTitle(
                 baseActivity.getString(R.string.media_scan_start_title)
         );
@@ -36,12 +39,11 @@ public class MediaScannerDialog {
 
     public void doScan()
     {
-        registerMediaScannerBroadcastReceiver();
         Intent mediaScannerIntent = new Intent(
-                baseActivity,
+                weakActivity.get(),
                 MediaScannerService.class
         );
-        baseActivity.startService(mediaScannerIntent);
+        weakActivity.get().startService(mediaScannerIntent);
         isScanningMedia = true;
     }
 
@@ -50,7 +52,7 @@ public class MediaScannerDialog {
         return isScanningMedia;
     }
 
-    public void registerMediaScannerBroadcastReceiver()
+    public void registerBroadcastReceiver()
     {
         if (null == mediaScannerReceiver) {
             mediaScannerReceiver = new BroadcastReceiver() {
@@ -73,17 +75,17 @@ public class MediaScannerDialog {
                         setMessage(currentFile);
                     } else {
                         if (null == currentDirectory && null == currentFile) {
-                            baseActivity.getToastHelper().showLongToast(
-                                    baseActivity.getString(R.string.media_scan_directory_empty)
+                            weakActivity.get().getToastHelper().showLongToast(
+                                    weakActivity.get().getString(R.string.media_scan_directory_empty)
                             );
                         }
                         dismiss();
-                        unregisterMediaScannerBroadcastReceiver();
+                        unregisterBroadcastReceiver();
                     }
                 }
             };
         }
-        LocalBroadcastManager.getInstance(baseActivity)
+        LocalBroadcastManager.getInstance(weakActivity.get())
                 .registerReceiver(
                         mediaScannerReceiver,
                         new IntentFilter(
@@ -92,22 +94,21 @@ public class MediaScannerDialog {
                 );
     }
 
-    public void unregisterMediaScannerBroadcastReceiver()
+    public void unregisterBroadcastReceiver()
     {
         if (mediaScannerReceiver != null) {
-            LocalBroadcastManager.getInstance(baseActivity)
+            LocalBroadcastManager.getInstance(weakActivity.get())
                                  .unregisterReceiver(mediaScannerReceiver);
         }
-        dismiss();
-        isScanningMedia = false;
     }
 
     public void dismiss()
     {
         if (isDialogShowing) {
             progressDialog.dismiss();
+            isDialogShowing = false;
+            isScanningMedia = false;
         }
-        isDialogShowing = false;
     }
 
     private void setMessage(String message)
@@ -117,7 +118,7 @@ public class MediaScannerDialog {
 
     private void setTitle(String title)
     {
-        progressDialog.setTitle(baseActivity.getString(
+        progressDialog.setTitle(weakActivity.get().getString(
                         R.string.media_scan_dialog_title,
                         title
                 )
@@ -128,7 +129,7 @@ public class MediaScannerDialog {
     {
         if (!isDialogShowing) {
             progressDialog.show();
+            isDialogShowing = true;
         }
-        isDialogShowing = true;
     }
 }

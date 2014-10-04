@@ -74,6 +74,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     {
         if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
             mediaScannerDialog = new MediaScannerDialog(this);
+            mediaScannerDialog.registerBroadcastReceiver();
             mediaScannerDialog.doScan();
         }
     }
@@ -139,7 +140,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
         //Check if we're scanning media beforehand and.
         if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
             mediaScannerDialog = new MediaScannerDialog(this);
-            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            mediaScannerDialog.registerBroadcastReceiver();
         }
     }
 
@@ -147,7 +148,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     protected void onPause()
     {
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-            mediaScannerDialog.unregisterMediaScannerBroadcastReceiver();
+            mediaScannerDialog.unregisterBroadcastReceiver();
+            mediaScannerDialog.dismiss();
         }
         unregisterReceiver(mediaPlayerBroadcastReceiver);
         preferencesHelper.unRegisterPrefsChangedListener();
@@ -166,7 +168,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
 
         setUI(preferencesHelper.getUIType());
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-            mediaScannerDialog.registerMediaScannerBroadcastReceiver();
+            mediaScannerDialog.registerBroadcastReceiver();
             mediaScannerDialog.show();
         }
         registerReceiver(
@@ -178,8 +180,8 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        outState.putBoolean(IS_SCANNING_MEDIA, true);
-        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
+        if (mediaScannerDialog != null) {
+            outState.putBoolean(IS_SCANNING_MEDIA, mediaScannerDialog.isScanningMedia());
             mediaScannerDialog.dismiss();
         }
         super.onSaveInstanceState(outState);
@@ -306,6 +308,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaBro
                         mediaScannerDialog = new MediaScannerDialog(
                                 BaseActivity.this
                         );
+                        mediaScannerDialog.registerBroadcastReceiver();
                         mediaScannerDialog.doScan();
                     }
                 }

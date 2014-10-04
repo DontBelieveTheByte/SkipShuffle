@@ -26,16 +26,9 @@ public class MediaScannerService extends IntentService {
     private MediaMetadataRetriever mediaMetadataRetriever;
     private PreferencesHelper preferencesHelper;
 
-    private class Status {
-        public String currentDirectory;
-        public String currentFile;
-        public boolean isLastFile;
-    }
-
     public MediaScannerService()
     {
         super("SkipShuffleMediaScanner");
-
     }
 
     @Override
@@ -77,18 +70,13 @@ public class MediaScannerService extends IntentService {
                 }
             }
         }
+
         if (validFiles.size() == 0) {
-            Status status = new Status();
-            status.isLastFile = true;
-            broadcastIntentStatus(status);
+            broadcastIntentStatus(builStatus(null));
         } else {
             for (int j = 0; j < validFiles.size(); j++) {
                 SystemClock.sleep(3000);
-                Status status = new Status();
-                status.currentDirectory = dir.getAbsolutePath();
-                status.currentFile = validFiles.get(j);
-                status.isLastFile = (j == validFiles.size() - 1);
-                broadcastIntentStatus(status);
+//                broadcastIntentStatus(status); //@TODO fix this right away.
 //                Track track = new Track();
 //                track.setPath(validFiles.get(j));
 //                mediaMetadataRetriever.setDataSource(track.getPath());
@@ -107,12 +95,26 @@ public class MediaScannerService extends IntentService {
         }
     }
 
-    private void broadcastIntentStatus(Status status)
+    private MediaScanStatus builStatus(File file)
+    {
+        MediaScanStatus status = new MediaScanStatus();
+        if (null == file) {
+            status.setLastFile(true);
+        } else {
+//            status.setCurrentDirectory(file.getAbsolutePath());
+//            status.setCurrentFile(validFiles.get(j));
+//            status.setLastFile((j == validFiles.size() - 1));
+        }
+
+        return status;
+    }
+
+    private void broadcastIntentStatus(MediaScanStatus status)
     {
         Intent intent = new Intent(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING);
-        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_DIRECTORY_PROCESSING, status.currentDirectory);
-        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING, status.currentFile);
-        intent.putExtra(MediaScannerBroadcastMessageContract.IS_LAST_FILE_PROCESSING, status.isLastFile);
+        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_DIRECTORY_PROCESSING, status.getCurrentDirectory());
+        intent.putExtra(MediaScannerBroadcastMessageContract.CURRENT_FILE_PROCESSING, status.getCurrentFile());
+        intent.putExtra(MediaScannerBroadcastMessageContract.IS_LAST_FILE_PROCESSING, status.isLastFile());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }
