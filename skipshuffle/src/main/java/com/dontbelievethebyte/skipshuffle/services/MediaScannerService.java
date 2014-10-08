@@ -9,22 +9,21 @@ import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.database.DbHandler;
-import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-
-import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class MediaScannerService extends IntentService {
 
     private AudioFileTypeValidator audioFileTypeValidator = new AudioFileTypeValidator();
     private DbHandler dbHandler;
-    private RandomPlaylist playlist;
+    private MediaScanStatus mediaScanStatus;
     private MediaMetadataRetriever mediaMetadataRetriever;
     private PreferencesHelper preferencesHelper;
+    private HashSet<File> mediaDirectories;
 
     public MediaScannerService()
     {
@@ -37,76 +36,51 @@ public class MediaScannerService extends IntentService {
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         dbHandler = new DbHandler(getApplicationContext());
         mediaMetadataRetriever = new MediaMetadataRetriever();
-        ArrayList<File> directoryPaths = preferencesHelper.getMediaDirectories();
-        for (File directory : directoryPaths) {
-            recursiveMediaDirectoryScan(directory);
+        mediaScanStatus = new MediaScanStatus();
+        mediaDirectories = new HashSet<File>();
+        prepareDirectories();
+        for (File directory: mediaDirectories) {
+            scanMediaDirectoryScan(directory);
         }
+        onLastFile();
     }
 
-    private void recursiveMediaDirectoryScan(File dir)
+    private void addToPlayer(Track track)
     {
-        try {
-            playlist = new RandomPlaylist(
-                    preferencesHelper.getLastPlaylist(),
-                    dbHandler
-            );
-            playlist.setPosition(0);
-        } catch (JSONException jsonException){
-            Log.d(BaseActivity.TAG, "Json Error");
-        }
+        addToSongs(track);
+        addToAlbums(track);
+        addToArtist(track);
+        addToGenre(track);
+    }
 
-        File[] files = dir.listFiles();
+    private void addToAlbums(Track track)
+    {
 
-        List<String> validFiles = new ArrayList<String>();
+    }
 
-        for (File file : files) {
-            //Check if currentDirectory
-            if (file.isDirectory())
-                recursiveMediaDirectoryScan(file);
-            else {
-                //Fill an array list with valid files since when can't trust the last file position index to be a valid audio file.
-                if (audioFileTypeValidator.validate(file.getAbsolutePath())) {
-                    validFiles.add(file.getAbsolutePath());
-                }
-            }
-        }
+    private void addToGenre(Track track)
+    {
 
-        if (validFiles.size() == 0) {
-            broadcastIntentStatus(builStatus(null));
-        } else {
-            for (int j = 0; j < validFiles.size(); j++) {
-                SystemClock.sleep(3000);
-//                broadcastIntentStatus(status); //@TODO fix this right away.
-//                Track track = new Track();
-//                track.setPath(validFiles.get(j));
-//                mediaMetadataRetriever.setDataSource(track.getPath());
-//                track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
-//                track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
-//                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
-//                track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
-//                dbHandler.addTrack(track);
-//                playlist.addTrack(track);
-            }
+    }
 
+    private void addToSongs(Track track)
+    {
+//        try {
+//            playlist = new RandomPlaylist(
+//                    preferencesHelper.getLastPlaylist(),
+//                    dbHandler
+//            );
+//            playlist.addTrack(track);
+//            playlist.setPosition(0);
 //            playlist.save();
-              dbHandler.currate();
-//            preferencesHelper.setLastPlaylist(1L);
-//            preferencesHelper.setLastPlaylistPosition(0);
-        }
+//        } catch (JSONException jsonException){
+//            Log.d(BaseActivity.TAG, "Json Error");
+//        }
     }
 
-    private MediaScanStatus builStatus(File file)
+    private void addToArtist(Track track)
     {
-        MediaScanStatus status = new MediaScanStatus();
-        if (null == file) {
-            status.setLastFile(true);
-        } else {
-//            status.setCurrentDirectory(file.getAbsolutePath());
-//            status.setCurrentFile(validFiles.get(j));
-//            status.setLastFile((j == validFiles.size() - 1));
-        }
 
-        return status;
     }
 
     private void broadcastIntentStatus(MediaScanStatus status)
@@ -117,4 +91,74 @@ public class MediaScannerService extends IntentService {
         intent.putExtra(MediaScannerBroadcastMessageContract.IS_LAST_FILE_PROCESSING, status.isLastFile());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    private ArrayList<File> filterValidFiles(File[] files)
+    {
+        ArrayList<File> validFiles = new ArrayList<File>();
+        for (File file : files) {
+            if (!file.isDirectory() && audioFileTypeValidator.validate(file.getAbsolutePath())) {
+                validFiles.add(file);
+            }
+        }
+        return validFiles;
+    }
+
+    private Track createTrackFromFile(File audioFile)
+    {
+        Track track = new Track();
+        mediaMetadataRetriever.setDataSource(audioFile.getAbsolutePath());
+        track.setPath(audioFile.getAbsolutePath());
+        track.setTitle(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+        track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
+        track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
+        track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
+        Log.d(BaseActivity.TAG, track.getTitle());
+//        dbHandler.addTrack(track);
+        return track;
+    }
+    private void prepareDirectories()
+    {
+        ArrayList<File> directoryPaths = preferencesHelper.getMediaDirectories();
+        for (File directory : directoryPaths) {
+            if (directory.isDirectory()) {
+                mediaDirectories.add(directory);
+                prepareSubDirectories(directory);
+            }
+        }
+    }
+
+    private void prepareSubDirectories(File directory)
+    {
+        for (File file : directory.listFiles()) {
+            if (file.isDirectory()) {
+                mediaDirectories.add(file);
+                prepareSubDirectories(file);
+            }
+        }
+    }
+
+    private void scanMediaDirectoryScan(File directory)
+    {
+        ArrayList<File> validFiles = filterValidFiles(directory.listFiles());
+        for (File file : validFiles) {
+            SystemClock.sleep(2000);
+            Track track = createTrackFromFile(file);
+            addToPlayer(track);
+            mediaScanStatus.setCurrentDirectory(directory.getPath());
+            mediaScanStatus.setCurrentFile(track.getPath());
+            mediaScanStatus.setLastFile(false);
+            broadcastIntentStatus(mediaScanStatus);
+        }
+    }
+
+    private void onLastFile()
+    {
+        preferencesHelper.setLastPlaylist(1L);
+        preferencesHelper.setLastPlaylistPosition(0);
+        mediaScanStatus.setCurrentFile(null);
+        mediaScanStatus.setCurrentDirectory(null);
+        mediaScanStatus.setLastFile(true);
+        broadcastIntentStatus(mediaScanStatus);
+    }
+
 }
