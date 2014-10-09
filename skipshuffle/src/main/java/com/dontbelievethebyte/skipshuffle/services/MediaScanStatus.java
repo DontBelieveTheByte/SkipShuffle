@@ -1,7 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.services;
 
-import android.content.Intent;
-
 public class MediaScanStatus {
 
     public String currentDirectory;
@@ -9,10 +7,6 @@ public class MediaScanStatus {
     public boolean isLastFile;
 
     public MediaScanStatus()
-    {
-    }
-
-    public MediaScanStatus(Intent intent)
     {
 
     }
