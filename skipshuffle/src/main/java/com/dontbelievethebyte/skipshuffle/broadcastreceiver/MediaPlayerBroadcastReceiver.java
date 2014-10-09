@@ -1,11 +1,12 @@
-package com.dontbelievethebyte.skipshuffle.services;
+package com.dontbelievethebyte.skipshuffle.broadcastreceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callback.PlayerBroadcastReceiverCallback;
+import com.dontbelievethebyte.skipshuffle.callback.MediaPlayerBroadcastReceiverCallback;
+import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 
 import java.util.ArrayList;
 
@@ -16,12 +17,12 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
     private String playerState;
     private String currentSongTitle;
     private Context context;
-    private ArrayList<PlayerBroadcastReceiverCallback> mediaBroadcastReceiverCallbacks;
+    private ArrayList<MediaPlayerBroadcastReceiverCallback> mediaBroadcastReceiverCallbacks;
 
     public MediaPlayerBroadcastReceiver(Context context)
     {
         this.context = context;
-        mediaBroadcastReceiverCallbacks = new ArrayList<PlayerBroadcastReceiverCallback>();
+        mediaBroadcastReceiverCallbacks = new ArrayList<MediaPlayerBroadcastReceiverCallback>();
     }
 
     public long getPlaylistID()
@@ -66,7 +67,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         if (null == playerState)
             playerState = SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE;
 
-        for(PlayerBroadcastReceiverCallback mediaBroadcastReceiverCallback : mediaBroadcastReceiverCallbacks) {
+        for(MediaPlayerBroadcastReceiverCallback mediaBroadcastReceiverCallback : mediaBroadcastReceiverCallbacks) {
             mediaBroadcastReceiverCallback.mediaBroadcastReceiverCallback();
         }
     }
@@ -79,7 +80,7 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         currentSongTitle = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE);
     }
 
-    public void registerCallback(PlayerBroadcastReceiverCallback mediaBroadcastReceiverCallback)
+    public void registerCallback(MediaPlayerBroadcastReceiverCallback mediaBroadcastReceiverCallback)
     {
         mediaBroadcastReceiverCallbacks.add(mediaBroadcastReceiverCallback);
     }

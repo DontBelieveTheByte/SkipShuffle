@@ -27,15 +27,15 @@ import com.dontbelievethebyte.skipshuffle.activities.adapters.NavigationDrawerAd
 import com.dontbelievethebyte.skipshuffle.activities.util.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.activities.util.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
-import com.dontbelievethebyte.skipshuffle.callback.PlayerBroadcastReceiverCallback;
+import com.dontbelievethebyte.skipshuffle.callback.MediaPlayerBroadcastReceiverCallback;
 import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.broadcastreceiver.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
-public abstract class BaseActivity extends ActionBarActivity implements PlayerBroadcastReceiverCallback, PreferenceChangedCallback, View.OnTouchListener {
+public abstract class BaseActivity extends ActionBarActivity implements MediaPlayerBroadcastReceiverCallback, PreferenceChangedCallback, View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
 

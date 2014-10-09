@@ -15,7 +15,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.services.MediaPlayerBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.broadcastreceiver.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
