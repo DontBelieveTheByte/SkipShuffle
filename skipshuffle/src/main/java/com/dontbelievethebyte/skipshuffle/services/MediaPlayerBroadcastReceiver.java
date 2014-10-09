@@ -71,16 +71,16 @@ public class MediaPlayerBroadcastReceiver extends BroadcastReceiver{
         }
     }
 
-    public void registerCallback(PlayerBroadcastReceiverCallback mediaBroadcastReceiverCallback)
-    {
-        mediaBroadcastReceiverCallbacks.add(mediaBroadcastReceiverCallback);
-    }
-
     private void parseReceivedIntent(Intent intent)
     {
         playlistID = intent.getLongExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID, 0);
         playerState = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
         playlistPosition = intent.getIntExtra(SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION, 0);
         currentSongTitle = intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE);
+    }
+
+    public void registerCallback(PlayerBroadcastReceiverCallback mediaBroadcastReceiverCallback)
+    {
+        mediaBroadcastReceiverCallbacks.add(mediaBroadcastReceiverCallback);
     }
 }
