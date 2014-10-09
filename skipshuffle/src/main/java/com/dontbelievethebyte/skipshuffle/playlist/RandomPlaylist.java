@@ -47,65 +47,63 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void addTrack(Track track)
     {
-        if (!tracksIds.contains(track.getId())) {
+        if (!tracksIds.contains(track.getId()))
             tracksIds.add(track.getId());
-        }
     }
 
     @Override
     public void removeTrack(Track track)
     {
-        if (tracksIds.contains(track.getId())) {
+        if (tracksIds.contains(track.getId()))
             tracksIds.remove(track.getId());
-        }
     }
 
     @Override
     public Track getFirst() throws PlaylistEmptyException
     {
-        if (0 == tracksIds.size()) {
+        if (0 == tracksIds.size())
             throw new PlaylistEmptyException(playlistId);
-        }
+
         return dbHandler.getTrack(tracksIds.get(0));
     }
 
     @Override
     public Track getCurrent() throws PlaylistEmptyException
     {
-        if (0 == tracksIds.size()) {
+        if (0 == tracksIds.size())
             throw new PlaylistEmptyException(playlistId);
-        }
+
         return dbHandler.getTrack(tracksIds.get(playlistPosition));
     }
 
     @Override
     public Track getAtPosition(int position) throws IndexOutOfBoundsException
     {
-        if (position > tracksIds.size()) {
+        if (position > tracksIds.size())
             position = tracksIds.size();
-        }
+
         return dbHandler.getTrack(tracksIds.get(position));
     }
 
     @Override
     public Track getNext()
     {
-        if (playlistPosition >= tracksIds.size()) {
+        if (playlistPosition >= tracksIds.size())
             playlistPosition = 0;
-        } else {
+        else
             playlistPosition++;
-        }
+
         return dbHandler.getTrack((long)playlistPosition);
     }
 
     @Override
     public Track getPrev()
     {
-        if (playlistPosition <= 0) {
+        if (playlistPosition <= 0)
             playlistPosition = 0;
-        } else {
+        else
             playlistPosition--;
-        }
+
         return dbHandler.getTrack((long)playlistPosition);
     }
 
@@ -124,13 +122,12 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void setPosition(int position)
     {
-        if (position > tracksIds.size()) {
+        if (position > tracksIds.size())
             playlistPosition = tracksIds.size();
-        } else if (position < 0) {
+        else if (position < 0)
             playlistPosition = 0;
-        } else {
+        else
             playlistPosition = position;
-        }
     }
 
     @Override
@@ -143,11 +140,10 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void save()
     {
-        if (playlistId != null) {
+        if (playlistId != null)
             dbHandler.savePlaylist(playlistId, tracksIds);
-        } else {
+        else
             dbHandler.savePlaylist(null, tracksIds);
-        }
     }
 
     @Override
