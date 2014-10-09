@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 public class AudioFileTypeValidator {
     private Pattern pattern;
-    private Matcher matcher;
 
     private static final String FILE_TYPES_PATTERN = ".*\\.(?:m(p(3|4)|4a|id|kv)|aac|flac|xmf|3gp|r(tttl|tx)|ota|imy|ogg|wav)$";
 
@@ -16,7 +15,7 @@ public class AudioFileTypeValidator {
 
     public boolean validate(final String filename)
     {
-        matcher = pattern.matcher(filename);
+        Matcher matcher = pattern.matcher(filename);
         return matcher.matches();
     }
 }
