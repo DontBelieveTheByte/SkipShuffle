@@ -8,8 +8,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.database.DbHandler;
-import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 
 import java.io.File;

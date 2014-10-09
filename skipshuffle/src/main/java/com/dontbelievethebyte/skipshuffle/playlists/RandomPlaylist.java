@@ -1,6 +1,6 @@
-package com.dontbelievethebyte.skipshuffle.playlist;
+package com.dontbelievethebyte.skipshuffle.playlists;
 
-import com.dontbelievethebyte.skipshuffle.database.DbHandler;
+import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
 
 import org.json.JSONException;
 

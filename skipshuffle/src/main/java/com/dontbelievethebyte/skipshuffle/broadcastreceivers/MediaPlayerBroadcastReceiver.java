@@ -1,11 +1,11 @@
-package com.dontbelievethebyte.skipshuffle.broadcastreceiver;
+package com.dontbelievethebyte.skipshuffle.broadcastreceivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callback.MediaPlayerBroadcastReceiverCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.MediaPlayerBroadcastReceiverCallback;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 
 import java.util.ArrayList;

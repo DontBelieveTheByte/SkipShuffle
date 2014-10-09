@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.database;
+package com.dontbelievethebyte.skipshuffle.persistance;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 
 import org.json.JSONArray;
 import org.json.JSONException;

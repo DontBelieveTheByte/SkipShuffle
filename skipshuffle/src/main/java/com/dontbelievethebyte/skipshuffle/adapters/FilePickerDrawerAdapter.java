@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.activities.adapters;
+package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;

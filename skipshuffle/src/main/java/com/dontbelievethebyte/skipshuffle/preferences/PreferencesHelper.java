@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 import java.io.File;

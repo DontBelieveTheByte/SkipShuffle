@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.activities.util;
+package com.dontbelievethebyte.skipshuffle.utilities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.broadcastreceiver.MediaScannerBroadcastReceiver;
-import com.dontbelievethebyte.skipshuffle.callback.MediaScannerBroadcastReceiverCallback;
+import com.dontbelievethebyte.skipshuffle.broadcastreceivers.MediaScannerBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.callbacks.MediaScannerBroadcastReceiverCallback;
 import com.dontbelievethebyte.skipshuffle.services.MediaScannerBroadcastMessageContract;
 import com.dontbelievethebyte.skipshuffle.services.MediaScannerService;
 

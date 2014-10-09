@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.activities.exception;
+package com.dontbelievethebyte.skipshuffle.exceptions;
 
 import java.io.File;
 

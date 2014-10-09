@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.activities.util;
+package com.dontbelievethebyte.skipshuffle.utilities;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
-import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.FilePickerListAdapter;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.activities.util;
+package com.dontbelievethebyte.skipshuffle.utilities;
 
 import java.io.File;
 import java.util.Comparator;

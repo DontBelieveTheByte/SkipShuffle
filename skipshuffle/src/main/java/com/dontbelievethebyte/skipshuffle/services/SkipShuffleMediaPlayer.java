@@ -14,13 +14,13 @@ import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
-import com.dontbelievethebyte.skipshuffle.activities.util.ToastHelper;
-import com.dontbelievethebyte.skipshuffle.callback.PreferenceChangedCallback;
-import com.dontbelievethebyte.skipshuffle.database.DbHandler;
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
+import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 

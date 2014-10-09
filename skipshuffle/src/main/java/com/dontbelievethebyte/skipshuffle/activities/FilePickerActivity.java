@@ -8,12 +8,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerDrawerAdapter;
-import com.dontbelievethebyte.skipshuffle.activities.adapters.FilePickerListAdapter;
-import com.dontbelievethebyte.skipshuffle.activities.exception.ParentDirectoryException;
-import com.dontbelievethebyte.skipshuffle.activities.exception.SubdirectoryException;
-import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerClickListener;
-import com.dontbelievethebyte.skipshuffle.activities.util.FilePickerNavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.adapters.FilePickerDrawerAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.FilePickerListAdapter;
+import com.dontbelievethebyte.skipshuffle.exceptions.ParentDirectoryException;
+import com.dontbelievethebyte.skipshuffle.exceptions.SubdirectoryException;
+import com.dontbelievethebyte.skipshuffle.utilities.FilePickerClickListener;
+import com.dontbelievethebyte.skipshuffle.utilities.FilePickerNavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 

@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.activities.adapters;
+package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,15 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.broadcastreceiver.MediaPlayerBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.broadcastreceivers.MediaPlayerBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
-public class PlaylistSelectorAdapter extends BaseAdapter {
+public class PlaylistAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         public TextView title;
@@ -33,10 +33,10 @@ public class PlaylistSelectorAdapter extends BaseAdapter {
     private PreferencesHelper preferencesHelper;
     private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
-    public PlaylistSelectorAdapter(Context context,
-                                   PreferencesHelper preferencesHelper,
-                                   MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
-                                   PlaylistInterface playlist)
+    public PlaylistAdapter(Context context,
+                           PreferencesHelper preferencesHelper,
+                           MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
+                           PlaylistInterface playlist)
     {
         this.context = context;
         this.playlist = playlist;
@@ -108,7 +108,7 @@ public class PlaylistSelectorAdapter extends BaseAdapter {
                 iv.setImageDrawable(
                         context.getResources().getDrawable(
                                 isPlay ? DrawableMapper.getPlay(preferencesHelper.getUIType())
-                                       : DrawableMapper.getPause(preferencesHelper.getUIType())
+                                        : DrawableMapper.getPause(preferencesHelper.getUIType())
                         )
                 );
             } else {

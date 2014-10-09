@@ -1,7 +1,8 @@
-package com.dontbelievethebyte.skipshuffle.activities.adapters;
+package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,10 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
-import com.dontbelievethebyte.skipshuffle.activities.exception.ParentDirectoryException;
-import com.dontbelievethebyte.skipshuffle.activities.exception.SubdirectoryException;
-import com.dontbelievethebyte.skipshuffle.activities.util.DirectoryComparator;
+import com.dontbelievethebyte.skipshuffle.exceptions.ParentDirectoryException;
+import com.dontbelievethebyte.skipshuffle.exceptions.SubdirectoryException;
+import com.dontbelievethebyte.skipshuffle.utilities.DirectoryComparator;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
@@ -81,6 +83,7 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        Log.d(BaseActivity.TAG, "EMPTY? : " + Boolean.toString(isEmpty()));
         ViewHolder viewHolder;
 
         if (null == convertView) {

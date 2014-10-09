@@ -8,10 +8,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.database.DbHandler;
-import com.dontbelievethebyte.skipshuffle.activities.adapters.PlaylistAdapter;
-import com.dontbelievethebyte.skipshuffle.playlist.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
+import com.dontbelievethebyte.skipshuffle.adapters.PlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
