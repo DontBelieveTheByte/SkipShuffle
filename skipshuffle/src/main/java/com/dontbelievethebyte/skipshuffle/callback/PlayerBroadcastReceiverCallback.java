@@ -1,5 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.callback;
 
-public interface MediaBroadcastReceiverCallback {
+public interface PlayerBroadcastReceiverCallback {
     public void mediaBroadcastReceiverCallback();
 }
