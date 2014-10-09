@@ -219,7 +219,8 @@ public class FilePickerActivity extends BaseActivity {
     {
         this.currentListedDirectory = currentListedDirectory;
         filePickerListAdapter.refreshFilesList();
-        Log.d(BaseActivity.TAG, "EMPTY? : " + Boolean.toString(filePickerListAdapter.isEmpty()));
+        if (filePickerListAdapter.isEmpty())
+            handleEmptyList();
     }
 
     @Override
@@ -328,5 +329,10 @@ public class FilePickerActivity extends BaseActivity {
 //        drawerList.setOnItemClickListener(navDrawerItemClickListener);
 
         childAdapters.add(navDrawerListAdapter);
+    }
+
+    private void handleEmptyList()
+    {
+        Log.d(BaseActivity.TAG, "EMPTY? : " + Boolean.toString(filePickerListAdapter.isEmpty()));
     }
 }

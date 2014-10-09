@@ -1,7 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
 import android.graphics.drawable.ColorDrawable;
-import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -16,34 +15,24 @@ public class FilePickerUI extends AbstractUI {
 
     public FilePickerUI(FilePickerActivity filePickerActivity)
     {
-        super(filePickerActivity, R.layout.list_activity);
+        super(filePickerActivity, R.layout.file_picker_activity);
 
         bottomLayout = (LinearLayout) baseActivity.findViewById(R.id.background_layout);
 
-        LayoutInflater layoutInflater = filePickerActivity.getLayoutInflater();
-        layoutInflater.inflate(
-                R.layout.file_picker_footer,
-                bottomLayout
-        );
-
         listView = (ListView) filePickerActivity.findViewById(R.id.current_list);
-
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setLongClickable(true);
-
-        layoutInflater.inflate(
-                R.layout.file_picker_empty_view,
-                bottomLayout
-        );
-
         emptyView = (TextView) bottomLayout.findViewById(R.id.empty_directory);
         listView.setEmptyView(emptyView);
-
         setUpColors();
         setUpDrawables();
         setUpDimensions();
     }
 
+    public void setUpEmptyList()
+    {
+
+    }
 
     private void setUpDrawables()
     {
@@ -87,6 +76,11 @@ public class FilePickerUI extends AbstractUI {
         );
 
         listView.setDivider(colorDrawable);
+        emptyView.setTextColor(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getEmptyListText(uiType)
+                )
+        );
     }
 
     protected void setUpDrawer()

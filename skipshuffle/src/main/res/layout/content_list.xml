@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/null_size"
+    android:id="@+id/current_list"
+    android:footerDividersEnabled="true"
+    android:headerDividersEnabled="true"
+    android:focusable="false"
+    android:layout_weight="1"
+    android:dividerHeight="@dimen/list_divider_height"
+    android:fastScrollEnabled="true"
+    android:smoothScrollbar="true"
+    android:paddingTop="@dimen/list_padding_top"
+    android:paddingLeft="@dimen/list_padding_left_right"
+    android:paddingRight="@dimen/list_padding_left_right"
+    android:divider="@color/list_divider_neon"
+    android:drawSelectorOnTop="false" />
+

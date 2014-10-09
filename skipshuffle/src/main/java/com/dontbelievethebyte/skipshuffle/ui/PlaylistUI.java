@@ -7,7 +7,7 @@ public class PlaylistUI extends AbstractPlayerUI {
 
     public PlaylistUI(PlaylistActivity activity)
     {
-        super(activity, R.layout.list_activity);
+        super(activity, R.layout.content_list);
 
     }
 }
