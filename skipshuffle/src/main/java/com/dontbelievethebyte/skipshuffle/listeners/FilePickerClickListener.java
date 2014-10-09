@@ -6,7 +6,6 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
-import com.dontbelievethebyte.skipshuffle.adapters.FilePickerListAdapter;
 
 import java.io.File;
 
