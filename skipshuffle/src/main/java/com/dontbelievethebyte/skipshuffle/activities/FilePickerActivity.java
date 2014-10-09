@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -12,8 +13,8 @@ import com.dontbelievethebyte.skipshuffle.adapters.FilePickerDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.FilePickerListAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.ParentDirectoryException;
 import com.dontbelievethebyte.skipshuffle.exceptions.SubdirectoryException;
-import com.dontbelievethebyte.skipshuffle.utilities.FilePickerClickListener;
-import com.dontbelievethebyte.skipshuffle.utilities.FilePickerNavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.listeners.FilePickerClickListener;
+import com.dontbelievethebyte.skipshuffle.listeners.FilePickerNavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.FilePickerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
@@ -49,38 +50,12 @@ public class FilePickerActivity extends BaseActivity {
                 );
             }
         } catch (SubdirectoryException subdirectoryException) {
-            currentSelectedDirectories.remove(
-                    subdirectoryException.getSubdirectory()
-            );
-            toastHelper.showShortToast(
-                    String.format(
-                            getString(R.string.sub_directory_selected),
-                            newDirectory.getName()
-                    )
-            );
+            handleSubdirectoryException(subdirectoryException);
         } catch (ParentDirectoryException parentDirectoryException) {
-            currentSelectedDirectories.remove(
-                    parentDirectoryException.getParentDirectory()
-            );
-            toastHelper.showShortToast(
-                    String.format(
-                            getString(R.string.parent_directory_selected),
-                            newDirectory.getName()
-                    )
-            );
+            handleParentDirectoryException(parentDirectoryException);
         } finally {
             notifyAdaptersDataSetChanged();
         }
-    }
-
-    public File getCurrentListedDirectory()
-    {
-        return currentListedDirectory;
-    }
-
-    public ArrayList<File> getCurrentSelectedDirectories()
-    {
-        return currentSelectedDirectories;
     }
 
     public boolean isSubdirectorySelected(File verifyingDirectory) throws SubdirectoryException
@@ -127,8 +102,47 @@ public class FilePickerActivity extends BaseActivity {
         }
     }
 
+    private void handleSubdirectoryException(SubdirectoryException subdirectoryException)
+    {
+        currentSelectedDirectories.remove(
+                subdirectoryException.getSubdirectory()
+        );
+        toastHelper.showShortToast(
+                String.format(
+                        getString(R.string.sub_directory_selected),
+                        subdirectoryException.getSubdirectory().getName()
+                )
+        );
+    }
+
+    private void handleParentDirectoryException(ParentDirectoryException parentDirectoryException)
+    {
+        currentSelectedDirectories.remove(
+                parentDirectoryException.getParentDirectory()
+        );
+        toastHelper.showShortToast(
+                String.format(
+                        getString(R.string.sub_directory_selected),
+                        parentDirectoryException.getParentDirectory().getName()
+                )
+        );
+    }
+
+    public File getCurrentListedDirectory()
+    {
+        return currentListedDirectory;
+    }
+
+    public ArrayList<File> getCurrentSelectedDirectories()
+    {
+        return currentSelectedDirectories;
+    }
+
     @Override
-    public void mediaBroadcastReceiverCallback() {/*Implements abstract for template method pattern.*/}
+    public void mediaBroadcastReceiverCallback()
+    {
+    /*Implements abstract for template method pattern.*/
+    }
 
     public void notifyAdaptersDataSetChanged()
     {
@@ -143,27 +157,29 @@ public class FilePickerActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
         externalStorageRootDirectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-
         childAdapters = new ArrayList<BaseAdapter>();
 
-        currentListedDirectory = null != savedInstanceState &&
-                                 null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) ?
-                                     (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) :
-                                     externalStorageRootDirectory;
+        handleSavedInstanceState(savedInstanceState);
+    }
 
-        currentSelectedDirectories = null != savedInstanceState &&
-                                     null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) ?
-                                         (ArrayList<File>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) :
-                                         null;
+    private void handleSavedInstanceState(Bundle savedInstanceState)
+    {
+        currentListedDirectory = null != savedInstanceState && null != savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) ?
+                (File) savedInstanceState.getSerializable(LAST_CURRENT_DIRECTORY) :
+                externalStorageRootDirectory;
+
+        currentSelectedDirectories = null != savedInstanceState && null != savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) ?
+                (ArrayList<File>) savedInstanceState.getSerializable(LAST_CURRENT_WATCHED_DIRECTORIES) :
+                null;
     }
 
 	@Override
 	protected void onResume()
     {
         super.onResume();
-        if (null == currentSelectedDirectories) {
+        if (null == currentSelectedDirectories)
             currentSelectedDirectories = preferencesHelper.getMediaDirectories();
-        }
+
         filePickerListAdapter.refreshFilesList();
         toastHelper.showLongToast(
                 getString(R.string.media_scan_sel_target_directories)
@@ -202,28 +218,28 @@ public class FilePickerActivity extends BaseActivity {
     public void setCurrentListedDirectory(File currentListedDirectory)
     {
         this.currentListedDirectory = currentListedDirectory;
+        filePickerListAdapter.refreshFilesList();
+        Log.d(BaseActivity.TAG, "EMPTY? : " + Boolean.toString(filePickerListAdapter.isEmpty()));
     }
 
     @Override
     protected void handleBackPressed()
     {
-        if (externalStorageRootDirectory.equals(getCurrentListedDirectory())) {
+        if (externalStorageRootDirectory.equals(getCurrentListedDirectory()))
             toastHelper.showShortToast(
                     getString(R.string.directory_top_level)
             );
-        } else if (null != getCurrentListedDirectory().getParentFile()) {
+        else if (null != getCurrentListedDirectory().getParentFile())
             setCurrentListedDirectory(
                     getCurrentListedDirectory().getParentFile()
             );
-            filePickerListAdapter.refreshFilesList();
-        } else {
+        else
             finish();
-        }
     }
 
     @Override
-    protected void setUI(Integer type) {
-
+    protected void setUI(Integer type)
+    {
         filePickerUI = UIFactory.createFilePickerUI(this, type);
 
         ArrayList<File> listedFile = new ArrayList<File>(

@@ -25,7 +25,7 @@ import android.widget.ListView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
-import com.dontbelievethebyte.skipshuffle.utilities.NavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.callbacks.MediaPlayerBroadcastReceiverCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;

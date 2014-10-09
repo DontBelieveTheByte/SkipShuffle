@@ -2,7 +2,6 @@ package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.activities.FilePickerActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.ParentDirectoryException;
 import com.dontbelievethebyte.skipshuffle.exceptions.SubdirectoryException;
-import com.dontbelievethebyte.skipshuffle.utilities.DirectoryComparator;
 import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.utilities.DirectoryComparator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -83,7 +81,6 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        Log.d(BaseActivity.TAG, "EMPTY? : " + Boolean.toString(isEmpty()));
         ViewHolder viewHolder;
 
         if (null == convertView) {
@@ -124,14 +121,19 @@ public class FilePickerListAdapter extends ArrayAdapter<File>
     {
         listedFiles.clear(); // Clear the listedFiles ArrayList
         listedFiles.addAll(
-                Arrays.asList(filePickerActivity.getCurrentListedDirectory().listFiles()
-                )
+                Arrays.asList(filePickerActivity.getCurrentListedDirectory().listFiles())
         );
         Collections.sort(
                 listedFiles,
                 directoryComparator
         );
         filePickerActivity.notifyAdaptersDataSetChanged();
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        return listedFiles.isEmpty();
     }
 
     public void setTypeface(Typeface typeface)

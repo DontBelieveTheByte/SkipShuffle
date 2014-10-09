@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.utilities;
+package com.dontbelievethebyte.skipshuffle.listeners;
 
 import android.util.Log;
 import android.view.View;

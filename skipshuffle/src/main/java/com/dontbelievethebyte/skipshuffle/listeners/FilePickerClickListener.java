@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.utilities;
+package com.dontbelievethebyte.skipshuffle.listeners;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,21 +23,19 @@ public class FilePickerClickListener implements ListView.OnItemClickListener {
     public void onItemClick(AdapterView adapterView, View view, int position, long id)
     {
         File newDirectory = (File) adapterView.getItemAtPosition(position);
-        FilePickerListAdapter filePickerListAdapter = (FilePickerListAdapter) adapterView.getAdapter();
-        if (null == newDirectory) {
+
+        if (null == newDirectory)
             filePickerActivity.getToastHelper().showLongToast(
                     filePickerActivity.getString(R.string.no_access)
             );
-        } else if (newDirectory.isDirectory()) {
+        else if (newDirectory.isDirectory())
             filePickerActivity.setCurrentListedDirectory(newDirectory);
-            filePickerListAdapter.refreshFilesList();
-        } else {
+        else
             filePickerActivity.getToastHelper().showShortToast(
                     filePickerActivity.getString(
                             R.string.not_a_directory,
                             newDirectory.getName()
                     )
             );
-        }
     }
 }

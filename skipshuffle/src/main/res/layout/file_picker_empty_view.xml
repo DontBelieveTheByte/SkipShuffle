@@ -8,5 +8,6 @@
     android:text="@string/file_picker_directory_empty"
     android:textStyle="italic"
     android:textSize="@dimen/file_picker_empty_view_text_size"
+    android:layout_weight="1"
     android:gravity="center_vertical|center_horizontal"
 />

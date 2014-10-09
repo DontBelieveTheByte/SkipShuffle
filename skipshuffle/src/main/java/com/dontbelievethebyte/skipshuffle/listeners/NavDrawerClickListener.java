@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.utilities;
+package com.dontbelievethebyte.skipshuffle.listeners;
 
 import android.content.Context;
 import android.content.Intent;
