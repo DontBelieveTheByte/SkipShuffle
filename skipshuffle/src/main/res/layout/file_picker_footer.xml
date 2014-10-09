@@ -5,7 +5,6 @@
     android:layout_width="fill_parent"
     android:layout_alignParentBottom="true"
     android:layout_height="@dimen/list_footer_height"
-    android:background="@android:color/black"
     android:gravity="bottom">
 
     <View
