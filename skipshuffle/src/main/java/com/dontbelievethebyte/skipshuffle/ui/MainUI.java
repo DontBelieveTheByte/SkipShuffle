@@ -10,7 +10,10 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
+import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 
 public class MainUI extends AbstractPlayerUI {
 
@@ -76,26 +79,13 @@ public class MainUI extends AbstractPlayerUI {
     @Override
     public void reboot()
     {
-        setSongLabel(
-                baseActivity.getMediaPlayerBroadcastReceiver()
-                        .getCurrentSongTitle()
-        );
 
-        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
-                baseActivity.getMediaPlayerBroadcastReceiver()
-                        .getPlayerState())
-                ) {
+        setSongLabel(buildFormattedTitle());
+
+        if (baseActivity.getMediaPlayer().getPlayerWrapper().isPlaying())
             doPlay();
-        } else {
+        else
             doPause();
-            if (baseActivity.getMediaPlayerBroadcastReceiver().getCurrentSongTitle().equals(
-                    baseActivity.getResources().getString(
-                            R.string.meta_data_unknown_current_song_title
-                    )
-            )) {
-                playBtn.clearAnimation();
-            }
-        }
     }
 
     @Override
@@ -336,5 +326,23 @@ public class MainUI extends AbstractPlayerUI {
                         ColorMapper.getSongLabel(uiType)
                 )
         );
+    }
+
+    private String buildFormattedTitle()
+    {
+        SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
+        PlaylistInterface playlist = skipShuffleMediaPlayer.getPlaylist();
+        try {
+            Track currentTrack = playlist.getCurrent();
+            if (null == currentTrack.getArtist() || null == currentTrack.getTitle()) {
+                return (null == currentTrack.getPath()) ?
+                        baseActivity.getString(R.string.meta_data_unknown_current_song_title) :
+                        currentTrack.getPath().substring(currentTrack.getPath().lastIndexOf("/") + 1);
+            } else {
+                return currentTrack.getArtist() + " - " + currentTrack.getTitle();
+            }
+        } catch (PlaylistEmptyException playlistEmptyException) {
+            return baseActivity.getString(R.string.meta_data_unknown_current_song_title);
+        }
     }
 }

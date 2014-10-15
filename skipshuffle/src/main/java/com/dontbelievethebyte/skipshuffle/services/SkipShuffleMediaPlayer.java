@@ -1,28 +1,25 @@
 package com.dontbelievethebyte.skipshuffle.services;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
-import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.notification.PlayerNotification;
 import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
 import org.json.JSONException;
 
@@ -31,7 +28,6 @@ import java.io.IOException;
 public class SkipShuffleMediaPlayer extends Service implements PreferenceChangedCallback {
 
     private static final String TAG = "SkipShuffleMediaPlayer";
-    private static final int NOTIFICATION_ID = 9001;
 
     private PlaylistInterface playlist;
     private ClientCommandsBroadcastReceiver clientCommandsBroadcastReceiver;
@@ -39,8 +35,9 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     private PreferencesHelper preferencesHelper;
     private DbHandler dbHandler;
     private ToastHelper toastHelper;
+    private PlayerNotification notification;
 
-    private class AndroidPlayerWrapper implements MediaPlayer.OnPreparedListener,
+    public class AndroidPlayerWrapper implements MediaPlayer.OnPreparedListener,
                                                   MediaPlayer.OnCompletionListener,
                                                   MediaPlayer.OnSeekCompleteListener {
         private int seekPosition = 0;
@@ -63,7 +60,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 mp.seekTo(seekPosition);
             } else {
                 mp.start();
-                broadcastCurrentState();
             }
         }
 
@@ -77,7 +73,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         public void onSeekComplete(MediaPlayer mediaPlayer)
         {
             mp.start();
-            broadcastCurrentState();
         }
 
         public void doJump(Integer playlistPosition)
@@ -115,7 +110,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                 mp.pause();
                 seekPosition = mp.getCurrentPosition();
             }
-            broadcastCurrentState();
         }
 
         public void doSkip()
@@ -157,7 +151,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         public void setPlaylist(PlaylistInterface playlist)
         {
             this.playlist = playlist;
-            broadcastCurrentState();
         }
 
         private void loadAudioFile(Track track)
@@ -180,6 +173,11 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         }
     }
 
+    public AndroidPlayerWrapper getPlayerWrapper()
+    {
+        return playerWrapper;
+    }
+
     private class ClientCommandsBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent)
@@ -197,8 +195,15 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                     playerWrapper.doPause();
                 }
             }
-            setNotification();
+            notification.showNotification();
             preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+        }
+    }
+
+    public class MediaPlayerBinder extends Binder {
+        public SkipShuffleMediaPlayer getService()
+        {
+            return SkipShuffleMediaPlayer.this;
         }
     }
 
@@ -216,6 +221,8 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         preferencesHelper = new PreferencesHelper(getApplicationContext());
 
         dbHandler = new DbHandler(getApplicationContext());
+
+        notification = new PlayerNotification(this);
 
         try {
             playlist = new RandomPlaylist(
@@ -245,8 +252,8 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     public void onDestroy()
     {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(NOTIFICATION_ID);
-        removeNotification();
+        notificationManager.cancel(PlayerNotification.getNotificationId());
+        notification.cancelNotification();
         unregisterMediaPlayerBroadcastReceiver();
         playerWrapper.doPause();
         preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
@@ -256,6 +263,7 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
+        startForeground(PlayerNotification.getNotificationId(), notification.buildNotification());
         return START_STICKY;
     }
 
@@ -269,7 +277,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
                         dbHandler
                 );
                 playlist.setPosition(0);
-                broadcastCurrentState();
                 playerWrapper.setPlaylist(playlist);
             } catch (JSONException jsonException){
                 toastHelper.showLongToast(
@@ -304,59 +311,6 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         }
     }
 
-    private void broadcastCurrentState()
-    {
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE);
-        String formattedTitle;
-        try {
-            formattedTitle = buildFormattedTitle(playlist.getCurrent());
-        } catch (PlaylistEmptyException e){
-            formattedTitle = buildFormattedTitle(null);
-        }
-        intent.putExtra(
-                    SkipShuflleMediaPlayerCommandsContract.CURRENT_STATE,
-                    playerWrapper.isPlaying() ?
-                        SkipShuflleMediaPlayerCommandsContract.STATE_PLAY :
-                        SkipShuflleMediaPlayerCommandsContract.STATE_PAUSE
-              ).putExtra(
-                    SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_ID,
-                    playlist.getId()
-              ).putExtra(
-                    SkipShuflleMediaPlayerCommandsContract.STATE_CURRENT_SONG_TITLE,
-                    formattedTitle
-              ).putExtra(
-                    SkipShuflleMediaPlayerCommandsContract.STATE_PLAYLIST_POSITION,
-                    playlist.getPosition()
-              );
-        sendStickyBroadcast(intent);
-    }
-
-    private String buildFormattedTitle(Track track)
-    {
-        if (null == track) {
-            return getApplicationContext().getString(R.string.meta_data_unknown_current_song_title);
-        }
-        else if (null == track.getArtist() || null == track.getTitle()) {
-            return (null == track.getPath()) ?
-                    getApplicationContext().getString(R.string.meta_data_unknown_current_song_title) :
-                    track.getPath().substring(track.getPath().lastIndexOf("/") + 1);
-        } else {
-            return track.getArtist() + " - " + track.getTitle();
-        }
-    }
-
-    private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode)
-    {
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        return PendingIntent.getBroadcast(
-                this,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
-        );
-    }
-
     private void handleCommand(String command, Intent intent)
     {
         if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)){
@@ -383,87 +337,13 @@ public class SkipShuffleMediaPlayer extends Service implements PreferenceChanged
         }
     }
 
-    private void removeNotification()
+    public PreferencesHelper getPreferencesHelper()
     {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(NOTIFICATION_ID);
+        return preferencesHelper;
     }
 
-    private void setNotification()
-    {
-
-        RemoteViews remoteViews = new RemoteViews(
-                getPackageName(),
-                R.layout.notification
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_prev,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
-                        0
-                )
-        );
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_shuffle,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
-                        1
-                )
-        );
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_skip,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
-                        3
-                )
-        );
-
-        if (!playerWrapper.isPlaying()) {
-            remoteViews.setImageViewResource(
-                    R.id.notif_play,
-                    DrawableMapper.getPause(preferencesHelper.getUIType())
-            );
-        } else {
-            remoteViews.setImageViewResource(
-                    R.id.notif_play,
-                    DrawableMapper.getPlay(preferencesHelper.getUIType())
-            );
-        }
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_play,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                        2
-                )
-        );
-
-        Intent mainActivityIntent = new Intent(getApplicationContext(), MainActivity.class);
-
-
-        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
-                this,
-                4,
-                mainActivityIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_all,
-                mainActivityPendingIntent
-        );
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-
-        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
-                           .setContent(remoteViews);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(
-                NOTIFICATION_ID,
-                notificationBuilder.build()
-        );
+    public PlaylistInterface getPlaylist(){
+        return playlist;
     }
+
 }

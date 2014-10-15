@@ -1,12 +1,14 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -24,28 +26,35 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
-import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
-import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
-import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
-import com.dontbelievethebyte.skipshuffle.callbacks.MediaPlayerBroadcastReceiverCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.broadcastreceivers.MediaPlayerBroadcastReceiver;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
+import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
+import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-public abstract class BaseActivity extends ActionBarActivity implements MediaPlayerBroadcastReceiverCallback, PreferenceChangedCallback, View.OnTouchListener {
+public abstract class BaseActivity extends ActionBarActivity implements PreferenceChangedCallback, View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
 
     protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
     protected ListView.OnItemClickListener navDrawerItemClickListener;
     protected ArrayAdapter<?> navDrawerListAdapter;
-    protected MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
     protected MediaScannerDialog mediaScannerDialog;
     protected PlayerUIInterface playerUIInterface;
     protected PreferencesHelper preferencesHelper;
+    protected PlaylistInterface playlist;
+    protected boolean isBoundToMediaPlayer;
+
+    public SkipShuffleMediaPlayer getMediaPlayer()
+    {
+        return mediaPlayer;
+    }
+
+    protected SkipShuffleMediaPlayer mediaPlayer;
 
     protected ToastHelper toastHelper;
     private static final int FILE_PICKER_REQUEST_CODE = 9002;
@@ -54,10 +63,24 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
     protected abstract void setUI(Integer type);
     protected abstract void handleBackPressed();
 
-    public MediaPlayerBroadcastReceiver getMediaPlayerBroadcastReceiver()
-    {
-        return mediaPlayerBroadcastReceiver;
-    }
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mediaPlayerServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service)
+        {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            SkipShuffleMediaPlayer.MediaPlayerBinder binder = (SkipShuffleMediaPlayer.MediaPlayerBinder) service;
+            mediaPlayer = binder.getService();
+            isBoundToMediaPlayer = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBoundToMediaPlayer = false;
+        }
+    };
+
 
     public PreferencesHelper getPreferencesHelper()
     {
@@ -98,10 +121,14 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
     {
         super.onCreate(savedInstanceState);
 
-        toastHelper = new ToastHelper(getApplicationContext());
+        startService(
+                new Intent(
+                        getApplicationContext(),
+                        SkipShuffleMediaPlayer.class
+                )
+        );
 
-        //Is mandatory to get the current state of the player.
-        mediaPlayerBroadcastReceiver = new MediaPlayerBroadcastReceiver(getApplicationContext());
+        toastHelper = new ToastHelper(getApplicationContext());
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -151,7 +178,6 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
             mediaScannerDialog.unregisterBroadcastReceiver();
             mediaScannerDialog.dismiss();
         }
-        unregisterReceiver(mediaPlayerBroadcastReceiver);
         preferencesHelper.unRegisterPrefsChangedListener();
         super.onPause();
     }
@@ -171,10 +197,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
             mediaScannerDialog.registerBroadcastReceiver();
             mediaScannerDialog.show();
         }
-        registerReceiver(
-                mediaPlayerBroadcastReceiver,
-                new IntentFilter(SkipShuflleMediaPlayerCommandsContract.CMD_GET_PLAYER_STATE)
-        );
+        playerUIInterface.setSongLabel("TEST FOR NOW");
     }
 
     @Override
@@ -188,14 +211,19 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
     }
 
     @Override
+    protected void onStart()
+    {
+        Intent intent = new Intent(this, SkipShuffleMediaPlayer.class);
+        bindService(intent, mediaPlayerServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
     public boolean onTouch(View view, MotionEvent event) {
         if (MotionEvent.ACTION_DOWN == event.getAction()){
             if (preferencesHelper.isHapticFeedback()) {
                 view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
-            if ((mediaPlayerBroadcastReceiver == null || preferencesHelper.getLastPlaylist() == 0)  &&
-                !(this instanceof FilePickerActivity)
-            ) {
+            if ((preferencesHelper.getLastPlaylist() == 0)  && !(this instanceof FilePickerActivity)) {
                 pickMediaDirectories();
                 //Return true because we already handled the event and want to prevent bubbling.
                 return true;
@@ -357,7 +385,7 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
             );
         }
 
-        ListView drawerList = (ListView) findViewById(R.id.nav_drawer);
+        ListView drawerList = (ListView) findViewById(R.id.drawer_list);
         drawerList.setOnTouchListener(this);
         drawerList.setAdapter(navDrawerListAdapter);
         drawerList.setOnItemClickListener(navDrawerItemClickListener);
@@ -383,4 +411,5 @@ public abstract class BaseActivity extends ActionBarActivity implements MediaPla
             );
         }
     }
+
 }

@@ -29,11 +29,6 @@ public class FilePickerUI extends AbstractUI {
         setUpDimensions();
     }
 
-    public void setUpEmptyList()
-    {
-
-    }
-
     private void setUpDrawables()
     {
         ImageButton okButton = (ImageButton) baseActivity.findViewById(R.id.ok);
@@ -81,29 +76,5 @@ public class FilePickerUI extends AbstractUI {
                         ColorMapper.getEmptyListText(uiType)
                 )
         );
-    }
-
-    protected void setUpDrawer()
-    {
-
-        TextView headerView = (TextView) baseActivity.getLayoutInflater().inflate(
-                R.layout.drawer_list_header,
-                drawerList
-        );
-
-        headerView.setTextColor(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getNavHeaderText(
-                                baseActivity.getPreferencesHelper().getUIType()
-                        )
-                )
-        );
-        headerView.setText(
-                baseActivity.getString(R.string.drawer_header_text)
-        );
-        headerView.setTypeface(getTypeFace());
-
-        drawerList.addHeaderView(headerView);
-
     }
 }

@@ -1,13 +1,10 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 
-import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 import com.dontbelievethebyte.skipshuffle.ui.MainUI;
+import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 public class MainActivity extends BaseActivity {
 
@@ -17,20 +14,6 @@ public class MainActivity extends BaseActivity {
     protected void handleBackPressed()
     {
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-
-        //Start the mediaPlayer service.
-        startService(
-                new Intent(
-                        getApplicationContext(),
-                        SkipShuffleMediaPlayer.class
-                )
-        );
     }
 
     @Override
@@ -45,12 +28,6 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 
         //Register class specific callbacks.
-        mediaPlayerBroadcastReceiver.registerCallback(this);
-        ui.reboot();
-    }
-
-    @Override
-    public void mediaBroadcastReceiverCallback() {
         ui.reboot();
     }
 
@@ -65,25 +42,18 @@ public class MainActivity extends BaseActivity {
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(mediaPlayerBroadcastReceiver.getPlayerState())) {
+                if (mediaPlayer.getPlayerWrapper().isPlaying()) {
                     ui.doPause();
                 } else {
                     ui.doPlay();
                 }
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                        null
-                );
             }
         });
 
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doSkip();
                 ui.doSkip();
             }
         });
@@ -91,10 +61,7 @@ public class MainActivity extends BaseActivity {
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doPrev();
                 ui.doPrev();
             }
         });
@@ -102,10 +69,7 @@ public class MainActivity extends BaseActivity {
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doShuffle();
                 ui.doShuffle();
             }
         });

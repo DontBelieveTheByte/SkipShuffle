@@ -10,10 +10,17 @@ import com.dontbelievethebyte.skipshuffle.services.MediaScannerBroadcastMessageC
 import java.util.ArrayList;
 
 public class MediaScannerBroadcastReceiver extends BroadcastReceiver {
+
     private ArrayList<MediaScannerBroadcastReceiverCallback> scannerBroadcastReceiverCallbacks;
     private String currentDirectory;
     private String currentFile;
-    private boolean isLast = false;
+    private boolean isLast;
+
+    public MediaScannerBroadcastReceiver()
+    {
+        scannerBroadcastReceiverCallbacks = new ArrayList<MediaScannerBroadcastReceiverCallback>();
+        isLast = false;
+    }
 
     public String getCurrentDirectory()
     {
@@ -31,7 +38,8 @@ public class MediaScannerBroadcastReceiver extends BroadcastReceiver {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
         currentDirectory = intent.getStringExtra(
                 MediaScannerBroadcastMessageContract.CURRENT_DIRECTORY_PROCESSING
         );

@@ -26,7 +26,7 @@ public abstract class AbstractUI {
         this.baseActivity = activity;
         uiType = baseActivity.getPreferencesHelper().getUIType();
         baseActivity.setContentView(contentLayout);
-        drawerList = (ListView) activity.findViewById(R.id.nav_drawer);
+        drawerList = (ListView) activity.findViewById(R.id.drawer_list);
         bottomLayout = (ViewGroup) baseActivity.findViewById(R.id.bottom);
         isLandScape = Configuration.ORIENTATION_LANDSCAPE == baseActivity.getResources().getConfiguration().orientation;
         computedScreenHeight = baseActivity.getResources().getDisplayMetrics().heightPixels;
@@ -50,7 +50,7 @@ public abstract class AbstractUI {
         params.width = (int) (computedScreenWidth * ( isLandScape ? DimensionsMapper.Drawer.Landscape.width : DimensionsMapper.Drawer.Portrait.width));
         drawerList.setLayoutParams(params);
         int listDividerHeight = (int)baseActivity.getResources().getDimension(R.dimen.list_divider_height);
-        drawerList.setDividerHeight(listDividerHeight);
+        drawerList.setDividerHeight(33);
     }
 
     protected void setUpColors()

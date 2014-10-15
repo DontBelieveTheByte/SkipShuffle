@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -108,14 +109,15 @@ public class FilePickerDrawerAdapter extends ArrayAdapter<File> {
     {
         ImageButton removeButton = (ImageButton) view.findViewById(resourceId);
         removeButton.setImageDrawable(removeButtonDrawable);
-//        removeButton.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Log.d("SHIT MOTHERFUCKER BITCH CUNT§", "Touched");
-//                    }
-//                }
-//        );
+        removeButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        TextView txt = (TextView) view.findViewById(R.id.drawer_item_text);
+                        Log.d("SHIT MOTHERFUCKER BITCH CUNT§", "Touched : " + txt.getText());
+                    }
+                }
+        );
         return removeButton;
     }
 }

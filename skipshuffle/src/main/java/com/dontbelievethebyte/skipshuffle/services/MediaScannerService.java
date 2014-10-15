@@ -112,7 +112,7 @@ public class MediaScannerService extends IntentService {
         track.setArtist(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST));
         track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM));
         track.setAlbum(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_GENRE));
-        Log.d(BaseActivity.TAG, track.getTitle());
+        Log.d(BaseActivity.TAG, "title is : "  + track.getTitle().toString());
 //        dbHandler.addTrack(track);
         return track;
     }

@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.adapters;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.broadcastreceivers.MediaPlayerBroadcastReceiver;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 public class PlaylistAdapter extends BaseAdapter {
@@ -29,20 +27,16 @@ public class PlaylistAdapter extends BaseAdapter {
 
     private PlaylistInterface playlist;
     private LayoutInflater layoutInflater;
-    private Context context;
+    private BaseActivity baseActivity;
     private PreferencesHelper preferencesHelper;
-    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
-    public PlaylistAdapter(Context context,
-                           PreferencesHelper preferencesHelper,
-                           MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
+    public PlaylistAdapter(BaseActivity baseActivity,
                            PlaylistInterface playlist)
     {
-        this.context = context;
+        this.baseActivity = baseActivity;
         this.playlist = playlist;
-        this.preferencesHelper = preferencesHelper;
-        this.mediaPlayerBroadcastReceiver = mediaPlayerBroadcastReceiver;
-        layoutInflater = LayoutInflater.from(context);
+        this.preferencesHelper = baseActivity.getPreferencesHelper();
+        layoutInflater = LayoutInflater.from(baseActivity);
     }
 
     @Override
@@ -92,8 +86,7 @@ public class PlaylistAdapter extends BaseAdapter {
                 convertView,
                 R.id.track_image,
                 track,
-                position == playlist.getPosition() &&
-                            mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+                position == playlist.getPosition()
         );
         return convertView;
     }
@@ -106,7 +99,7 @@ public class PlaylistAdapter extends BaseAdapter {
             if (track.getId() == playlist.getCurrent().getId()) {
                 params.width = params.height;
                 iv.setImageDrawable(
-                        context.getResources().getDrawable(
+                        baseActivity.getResources().getDrawable(
                                 isPlay ? DrawableMapper.getPlay(preferencesHelper.getUIType())
                                         : DrawableMapper.getPause(preferencesHelper.getUIType())
                         )
@@ -139,7 +132,7 @@ public class PlaylistAdapter extends BaseAdapter {
         String artist = track.getArtist();
         TextView tv = (TextView) view.findViewById(resourceId);
         if (artist == null) {
-            artist = context.getString(R.string.meta_data_unknown_artist);
+            artist = baseActivity.getString(R.string.meta_data_unknown_artist);
         }
         tv.setText(artist);
         return tv;

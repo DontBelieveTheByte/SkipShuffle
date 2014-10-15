@@ -10,13 +10,9 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.adapters.PlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 import com.dontbelievethebyte.skipshuffle.ui.PlaylistUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
-
-import org.json.JSONException;
 
 public class PlaylistActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     protected PlaylistUI ui;
@@ -32,51 +28,19 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
 
     }
 
-    protected void loadPlaylist(long playlistId)
+    protected void loadPlaylist(PlaylistInterface playlist)
     {
-        try {
-            playlist = new RandomPlaylist(
-                    playlistId,
-                    dbHandler
-            );
-            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-            playlistAdapter = new PlaylistAdapter(
-                    getApplicationContext(),
-                    preferencesHelper,
-                    mediaPlayerBroadcastReceiver,
-                    playlist
-            );
+        playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
+        playlistAdapter = new PlaylistAdapter(
+                this,
+                playlist
+        );
 
-            listView = (ListView) findViewById(R.id.current_list);
-            listView.setOnItemClickListener(this);
-            listView.setAdapter(playlistAdapter);
-            TextView emptyText = (TextView)findViewById(android.R.id.empty);
-            listView.setEmptyView(emptyText);
-        } catch (JSONException jsonException){
-            toastHelper.showLongToast(
-                    String.format(
-                            getString(R.string.playlist_load_error),
-                            preferencesHelper.getLastPlaylist()
-                    )
-            );
-            preferencesHelper.setLastPlaylist(1);
-            preferencesHelper.setLastPlaylistPosition(0);
-        }
-    }
-
-    @Override
-    public void mediaBroadcastReceiverCallback()
-    {
-        if (SkipShuflleMediaPlayerCommandsContract.STATE_PLAY.equals(
-                mediaPlayerBroadcastReceiver.getPlayerState())
-        ) {
-            ui.doPlay();
-        } else {
-            ui.doPause();
-        }
-        playlist.setPosition(mediaPlayerBroadcastReceiver.getPlaylistPosition());
-        playlistAdapter.notifyDataSetChanged();
-        listView.smoothScrollToPositionFromTop(playlist.getPosition(), 0);
+        listView = (ListView) findViewById(R.id.current_list);
+        listView.setOnItemClickListener(this);
+        listView.setAdapter(playlistAdapter);
+        TextView emptyText = (TextView)findViewById(android.R.id.empty);
+        listView.setEmptyView(emptyText);
     }
 
     @Override
@@ -84,45 +48,34 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     {
         super.onResume();
         preferencesHelper.registerCallBack(this);
-        mediaPlayerBroadcastReceiver.registerCallback(this);
         dbHandler = new DbHandler(getApplicationContext());
-        loadPlaylist(preferencesHelper.getLastPlaylist());
+        loadPlaylist(mediaPlayer.getPlaylist());
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-        if (playlist.getPosition() == position &&
-            mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
-        ) {
-            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                    null
-            );
+        if ( (playlist.getPosition() == position) && ((mediaPlayer.getPlayerWrapper().isPlaying())) ) {
             ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
             imageView.setImageDrawable(
                     getResources().getDrawable(
                             DrawableMapper.getPause(preferencesHelper.getUIType())
                     )
             );
+            mediaPlayer.getPlayerWrapper().doPause();
+            ui.doPause();
         } else {
-            mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                    SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                    position
-            );
+            mediaPlayer.getPlayerWrapper().doJump(playlist.getPosition());
+            ui.doPlay();
         }
-        ui.doPause();
     }
 
     @Override
     public void preferenceChangedCallback(String prefsKey)
     {
         super.preferenceChangedCallback(prefsKey);
-        if (getString(R.string.pref_current_playlist_id).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
-        }
-        else if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            loadPlaylist(preferencesHelper.getLastPlaylist());
+        if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
+            setUI(preferencesHelper.getUIType());
         }
     }
 
@@ -133,40 +86,28 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
         ui.playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doPlay();
             }
         });
 
         ui.prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doPrev();
             }
         });
 
         ui.skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doSkip();
             }
         });
 
         ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mediaPlayerBroadcastReceiver.broadcastToMediaPlayer(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
-                        null
-                );
+                mediaPlayer.getPlayerWrapper().doShuffle();
             }
         });
 

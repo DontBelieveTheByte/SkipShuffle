@@ -15,8 +15,6 @@ import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.broadcastreceivers.MediaPlayerBroadcastReceiver;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
 
 public class PlaylistSelectorAdapter extends BaseAdapter {
@@ -31,17 +29,14 @@ public class PlaylistSelectorAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private PreferencesHelper preferencesHelper;
-    private MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver;
 
     public PlaylistSelectorAdapter(Context context,
                                    PreferencesHelper preferencesHelper,
-                                   MediaPlayerBroadcastReceiver mediaPlayerBroadcastReceiver,
                                    PlaylistInterface playlist)
     {
         this.context = context;
         this.playlist = playlist;
         this.preferencesHelper = preferencesHelper;
-        this.mediaPlayerBroadcastReceiver = mediaPlayerBroadcastReceiver;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -92,8 +87,7 @@ public class PlaylistSelectorAdapter extends BaseAdapter {
                 convertView,
                 R.id.track_image,
                 track,
-                position == playlist.getPosition() &&
-                            mediaPlayerBroadcastReceiver.getPlayerState().equals(SkipShuflleMediaPlayerCommandsContract.STATE_PLAY)
+                position == playlist.getPosition()
         );
         return convertView;
     }

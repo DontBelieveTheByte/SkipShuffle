@@ -138,12 +138,6 @@ public class FilePickerActivity extends BaseActivity {
         return currentSelectedDirectories;
     }
 
-    @Override
-    public void mediaBroadcastReceiverCallback()
-    {
-    /*Implements abstract for template method pattern.*/
-    }
-
     public void notifyAdaptersDataSetChanged()
     {
         for (BaseAdapter adapter : childAdapters) {
@@ -307,16 +301,9 @@ public class FilePickerActivity extends BaseActivity {
     @Override
     protected void setNavigationDrawerContent()
     {
-        ListView drawerList = (ListView) findViewById(R.id.nav_drawer);
+        ListView drawerList = (ListView) findViewById(R.id.drawer_list);
         drawerList.setOnTouchListener(this);
         drawerList.setOnItemClickListener(new FilePickerNavDrawerClickListener());
-
-//        TextView headerView = (TextView) findViewById(R.id.drawer_header);
-//        headerView.setText(
-//                getString(R.string.file_picker_drawer_title)
-//        );
-//        drawerList.addHeaderView(headerView);
-//        headerView.setTypeface(filePickerUI.getTypeFace());
         drawerList.setOnItemClickListener(
                 new FilePickerNavDrawerClickListener()
         );
@@ -326,8 +313,7 @@ public class FilePickerActivity extends BaseActivity {
                 filePickerUI.getTypeFace()
         );
         drawerList.setAdapter(navDrawerListAdapter);
-//        drawerList.setOnItemClickListener(navDrawerItemClickListener);
-
+        drawerList.setOnItemClickListener(navDrawerItemClickListener);
         childAdapters.add(navDrawerListAdapter);
     }
 
