@@ -37,7 +37,7 @@ import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-import navdrawer.MusicPlayerDrawer;
+import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 
 public abstract class BaseActivity extends ActionBarActivity
         implements ThemeChangedCallback, HapticFeedBackChangedCallback, View.OnTouchListener {
