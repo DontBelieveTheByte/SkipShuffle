@@ -1,5 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.playlists;
 
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+
 import java.util.List;
 
 public interface PlaylistInterface {

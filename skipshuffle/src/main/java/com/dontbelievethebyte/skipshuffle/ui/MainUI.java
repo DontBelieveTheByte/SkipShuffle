@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;

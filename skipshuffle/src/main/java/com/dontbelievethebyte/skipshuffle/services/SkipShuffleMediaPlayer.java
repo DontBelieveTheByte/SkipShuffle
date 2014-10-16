@@ -14,7 +14,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.notification.PlayerNotification;
 import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
-import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;

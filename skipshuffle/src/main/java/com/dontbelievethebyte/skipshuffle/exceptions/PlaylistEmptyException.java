@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.playlists;
+package com.dontbelievethebyte.skipshuffle.exceptions;
 
 
 public class PlaylistEmptyException extends Exception{
