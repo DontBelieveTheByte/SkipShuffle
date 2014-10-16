@@ -27,8 +27,6 @@ import java.io.IOException;
 
 public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCallback {
 
-    private static final String TAG = "SkipShuffleMediaPlayer";
-
     private PlaylistInterface playlist;
     private ClientCommandsBroadcastReceiver clientCommandsBroadcastReceiver;
     private AndroidPlayerWrapper playerWrapper;
