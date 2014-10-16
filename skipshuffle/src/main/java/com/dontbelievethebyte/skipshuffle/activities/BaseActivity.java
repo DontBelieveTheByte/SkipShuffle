@@ -143,15 +143,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     }
 
     @Override
-    protected void onDestroy()
-    {
-        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-            mediaScannerDialog.dismiss();
-        }
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         OptionsMenuCreator optionsMenuCreator = new OptionsMenuCreator(this);
