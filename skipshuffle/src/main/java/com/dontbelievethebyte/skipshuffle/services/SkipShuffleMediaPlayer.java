@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.services;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,9 +11,9 @@ import android.os.IBinder;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.notification.PlayerNotification;
 import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
@@ -186,15 +185,46 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
                         intent
                 );
             } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
-                boolean isHeadphonesPlugged =
-                        (intent.getIntExtra("state", 0) > 0) //Transform state to boolean
-                                && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
-                if (!playerWrapper.isPlaying() && isHeadphonesPlugged) {
-                    playerWrapper.doPause();
-                }
+                handleHeadsetIntent(intent, isInitialStickyBroadcast());
             }
             notification.showNotification();
             preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+        }
+
+        private void handleCommand(String command, Intent intent)
+        {
+            if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)){
+                if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)) {
+                    playerWrapper.doJump(
+                            intent.getIntExtra(
+                                    SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION,
+                                    0
+                            )
+                    );
+                } else {
+                    if (playerWrapper.isPlaying()) {
+                        playerWrapper.doPause();
+                    } else {
+                        playerWrapper.doPlay();
+                    }
+                }
+            } else if (SkipShuflleMediaPlayerCommandsContract.CMD_SKIP.equals(command)) {
+                playerWrapper.doSkip();
+            } else if (SkipShuflleMediaPlayerCommandsContract.CMD_PREV.equals(command)) {
+                playerWrapper.doPrev();
+            } else if (SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST.equals(command)){
+                playerWrapper.doShuffle();
+            }
+        }
+
+        private void handleHeadsetIntent(Intent intent, boolean isInitialStickBroadCast)
+        {
+            boolean isHeadphonesPlugged = (intent.getIntExtra("state", 0) > 0) ;//Transform state to boolean
+            boolean isValidDespiteInitialStickBroadCast = isHeadphonesPlugged && !isInitialStickBroadCast;//Filter out sticky broadcast on service start.
+
+            if (!playerWrapper.isPlaying() && isValidDespiteInitialStickBroadCast) {
+                playerWrapper.doPause();
+            }
         }
     }
 
@@ -235,24 +265,15 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
             playerWrapper.setPlaylist(playlist);
 
         } catch (JSONException jsonException) {
-            toastHelper.showShortToast(
-                    String.format(
-                            getString(R.string.playlist_load_error),
-                            preferencesHelper.getLastPlaylist()
-                    )
-            );
-            preferencesHelper.setLastPlaylist(1);
-            preferencesHelper.setLastPlaylistPosition(0);
+            handleJSONException(jsonException);
         }
     }
 
     @Override
     public void onDestroy()
     {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(PlayerNotification.getNotificationId());
-        notification.cancelNotification();
         unregisterMediaPlayerBroadcastReceiver();
+        notification.cancel();
         playerWrapper.doPause();
         preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
         preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
@@ -309,32 +330,6 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     {
         if (clientCommandsBroadcastReceiver != null) {
             unregisterReceiver(clientCommandsBroadcastReceiver);
-        }
-    }
-
-    private void handleCommand(String command, Intent intent)
-    {
-        if (SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE.equals(command)){
-            if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION)) {
-                playerWrapper.doJump(
-                        intent.getIntExtra(
-                                SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION,
-                                0
-                        )
-                );
-            } else {
-                if (playerWrapper.isPlaying()) {
-                    playerWrapper.doPause();
-                } else {
-                    playerWrapper.doPlay();
-                }
-            }
-        } else if (SkipShuflleMediaPlayerCommandsContract.CMD_SKIP.equals(command)) {
-            playerWrapper.doSkip();
-        } else if (SkipShuflleMediaPlayerCommandsContract.CMD_PREV.equals(command)) {
-            playerWrapper.doPrev();
-        } else if (SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST.equals(command)){
-            playerWrapper.doShuffle();
         }
     }
 

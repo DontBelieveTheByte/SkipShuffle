@@ -41,7 +41,7 @@ public class PlayerNotification {
         );
     }
 
-    public void cancelNotification()
+    public void cancel()
     {
         NotificationManager notificationManager = (NotificationManager) skipShuffleMediaPlayer.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ID);
