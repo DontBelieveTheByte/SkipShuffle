@@ -36,8 +36,8 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     private PlayerNotification notification;
 
     public class AndroidPlayerWrapper implements MediaPlayer.OnPreparedListener,
-                                                  MediaPlayer.OnCompletionListener,
-                                                  MediaPlayer.OnSeekCompleteListener {
+                                                 MediaPlayer.OnCompletionListener,
+                                                 MediaPlayer.OnSeekCompleteListener {
         private int seekPosition = 0;
         private MediaPlayer mp;
         private PlaylistInterface playlist;
