@@ -27,8 +27,8 @@ import android.widget.ListView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
-import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
@@ -46,12 +46,14 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     protected MediaScannerDialog mediaScannerDialog;
     protected PlayerUIInterface playerUIInterface;
     protected PreferencesHelper preferencesHelper;
-    protected PlaylistInterface playlist;
     protected boolean isBoundToMediaPlayer;
 
-    public SkipShuffleMediaPlayer getMediaPlayer()
+    public SkipShuffleMediaPlayer getMediaPlayer() throws NoMediaPlayerException
     {
-        return mediaPlayer;
+        if (null == mediaPlayer)
+            throw new NoMediaPlayerException();
+        else
+            return mediaPlayer;
     }
 
     protected SkipShuffleMediaPlayer mediaPlayer;
@@ -213,6 +215,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     @Override
     protected void onStart()
     {
+        super.onStart();
         Intent intent = new Intent(this, SkipShuffleMediaPlayer.class);
         bindService(intent, mediaPlayerServiceConnection, Context.BIND_AUTO_CREATE);
     }

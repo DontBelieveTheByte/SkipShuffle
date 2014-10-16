@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
@@ -79,13 +80,19 @@ public class MainUI extends AbstractPlayerUI {
     @Override
     public void reboot()
     {
+        try {
+            if (baseActivity.getMediaPlayer().getPlayerWrapper().isPlaying())
+                doPlay();
+            else
+                doPause();
 
-        setSongLabel(buildFormattedTitle());
+            setSongLabel(buildFormattedTitle());
 
-        if (baseActivity.getMediaPlayer().getPlayerWrapper().isPlaying())
-            doPlay();
-        else
-            doPause();
+        } catch (NoMediaPlayerException noMediaPlayerException) {
+            handleNoMediaPlayerException(noMediaPlayerException);
+        } catch (PlaylistEmptyException playlistEmptyException) {
+            handlePlaylistEmptyException(playlistEmptyException);
+        }
     }
 
     @Override
@@ -328,11 +335,11 @@ public class MainUI extends AbstractPlayerUI {
         );
     }
 
-    private String buildFormattedTitle()
+    private String buildFormattedTitle() throws PlaylistEmptyException
     {
-        SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
-        PlaylistInterface playlist = skipShuffleMediaPlayer.getPlaylist();
         try {
+            SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
+            PlaylistInterface playlist = skipShuffleMediaPlayer.getPlaylist();
             Track currentTrack = playlist.getCurrent();
             if (null == currentTrack.getArtist() || null == currentTrack.getTitle()) {
                 return (null == currentTrack.getPath()) ?
@@ -341,8 +348,25 @@ public class MainUI extends AbstractPlayerUI {
             } else {
                 return currentTrack.getArtist() + " - " + currentTrack.getTitle();
             }
-        } catch (PlaylistEmptyException playlistEmptyException) {
-            return baseActivity.getString(R.string.meta_data_unknown_current_song_title);
+        } catch (NoMediaPlayerException noMediaPlayerException){
+            throw new PlaylistEmptyException(0L);
         }
+    }
+
+    private void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
+    {
+        setSongLabel(
+            baseActivity.getString(R.string.meta_data_unknown_current_song_title)
+        );
+    }
+
+    private void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
+    {
+        try {
+            buildFormattedTitle();
+        } catch (PlaylistEmptyException playListEmptyException) {
+            handlePlaylistEmptyException(playListEmptyException);
+        }
+        doPause();
     }
 }
