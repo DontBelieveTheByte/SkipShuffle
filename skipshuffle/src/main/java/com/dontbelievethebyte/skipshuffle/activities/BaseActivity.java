@@ -23,15 +23,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBar;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.menu.OptionsMenuCreator;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
-import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
@@ -106,11 +107,16 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     @Override
     public void onBackPressed()
     {
+        actionBarToggle();
+    }
+
+    private void actionBarToggle()
+    {
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar &&
-            ViewConfiguration.get(this).hasPermanentMenuKey() &&
-            actionBar.isShowing()
-        ) {
+                ViewConfiguration.get(this).hasPermanentMenuKey() &&
+                actionBar.isShowing()
+                ) {
             actionBar.hide();
         } else {
             handleBackPressed();
@@ -273,45 +279,9 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
 
     protected void showThemeSelectionDialog()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.dialog_theme_title));
-        builder.setSingleChoiceItems(
-                R.array.dialog_theme_items,
-                preferencesHelper.getUIType(),
-                null
-        );
-        builder.setPositiveButton(
-                R.string.dialog_positive,
-                new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int indexPosition) {
-                        ListView lw = ((AlertDialog)dialog).getListView();
-                        switch (lw.getCheckedItemPosition()){
-                            case UITypes.MONO_LIGHT:
-                                preferencesHelper.setUIType(UITypes.MONO_LIGHT);
-                                break;
-                            case UITypes.MONO_DARK:
-                                preferencesHelper.setUIType(UITypes.MONO_DARK);
-                                break;
-                            default: //Equivalent to UIFactory.NEON
-                                preferencesHelper.setUIType(UITypes.NEON);
-                                break;
-                        }
-                        dialog.dismiss();
-                    }
-                }
-        );
-        builder.setNegativeButton(
-                R.string.dialog_negative,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int indexPosition) {
-                        dialog.dismiss();
-                    }
-                }
-        );
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        ThemeSelectionDialog themeSelectionDialog = new ThemeSelectionDialog(this);
+        themeSelectionDialog.build();
+        themeSelectionDialog.show();
     }
 
     protected void showMediaScanDialog()
@@ -352,13 +322,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
 
     protected void setUpActionBar()
     {
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar) {
-            if (ViewConfiguration.get(this).hasPermanentMenuKey()) {
-                actionBar.hide();
-            }
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        CustomActionBar customActionBar = new CustomActionBar(this);
+        customActionBar.setUp();
     }
 
     protected void setNavigationDrawerContent()
