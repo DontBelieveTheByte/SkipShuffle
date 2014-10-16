@@ -9,14 +9,12 @@ import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Vibrator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +27,7 @@ import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.menu.OptionsMenuCreator;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
@@ -151,13 +150,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        MenuInflater menuInflater = getMenuInflater();
-        if (vibrator.hasVibrator()) {
-            menuInflater.inflate(R.menu.main, menu);
-        } else {
-            menuInflater.inflate(R.menu.main_no_vibrator, menu);
-        }
+        OptionsMenuCreator optionsMenuCreator = new OptionsMenuCreator(this);
+        optionsMenuCreator.buildOptionsMenuFromContext(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -240,11 +234,11 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     {
         switch (item.getItemId()){
             case R.id.refresh_media:
-                if (null == preferencesHelper.getMediaDirectories()) {
-                    pickMediaDirectories();
-                } else {
-                    showMediaScanDialog();
-                }
+//                if (null == preferencesHelper.getMediaDirectories()) {
+//                    pickMediaDirectories();
+//                } else {
+//                    showMediaScanDialog();
+//                }
                 return true;
             case R.id.set_target_directories:
                 pickMediaDirectories();
@@ -415,4 +409,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
         }
     }
 
+    private void startMediaScanner()
+    {
+
+    }
 }
