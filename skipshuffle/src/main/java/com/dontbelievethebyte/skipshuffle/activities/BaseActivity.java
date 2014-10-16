@@ -122,12 +122,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     {
         super.onCreate(savedInstanceState);
 
-        startService(
-                new Intent(
-                        getApplicationContext(),
-                        SkipShuffleMediaPlayer.class
-                )
-        );
+        startMediaPlayerService();
 
         toastHelper = new ToastHelper(getApplicationContext());
 
@@ -137,12 +132,21 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
         setUpActionBar();
     }
 
+    private void startMediaPlayerService()
+    {
+        startService(
+                new Intent(
+                        getApplicationContext(),
+                        SkipShuffleMediaPlayer.class
+                )
+        );
+    }
+
     @Override
     protected void onDestroy()
     {
         if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
             mediaScannerDialog.dismiss();
-            mediaScannerDialog = null;
         }
         super.onDestroy();
     }
@@ -175,6 +179,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
             mediaScannerDialog.dismiss();
         }
         preferencesHelper.unRegisterPrefsChangedListener();
+        unbindService(mediaPlayerServiceConnection);
         super.onPause();
     }
 
