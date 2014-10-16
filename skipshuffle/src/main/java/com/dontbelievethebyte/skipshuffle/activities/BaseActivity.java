@@ -12,7 +12,6 @@ import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,10 +24,12 @@ import android.widget.ListView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBar;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
-import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
+import com.dontbelievethebyte.skipshuffle.listeners.TouchHandler;
 import com.dontbelievethebyte.skipshuffle.menu.OptionsMenuCreator;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
@@ -36,7 +37,10 @@ import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-public abstract class BaseActivity extends ActionBarActivity implements PreferenceChangedCallback, View.OnTouchListener {
+import navdrawer.MusicPlayerDrawer;
+
+public abstract class BaseActivity extends ActionBarActivity
+        implements ThemeChangedCallback, HapticFeedBackChangedCallback, View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
 
@@ -213,22 +217,18 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     {
         super.onStart();
         Intent intent = new Intent(this, SkipShuffleMediaPlayer.class);
-        bindService(intent, mediaPlayerServiceConnection, Context.BIND_AUTO_CREATE);
+        bindService(
+                intent,
+                mediaPlayerServiceConnection,
+                Context.BIND_AUTO_CREATE
+        );
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        if (MotionEvent.ACTION_DOWN == event.getAction()){
-            if (preferencesHelper.isHapticFeedback()) {
-                view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
-            }
-            if ((preferencesHelper.getLastPlaylist() == 0)  && !(this instanceof FilePickerActivity)) {
-                pickMediaDirectories();
-                //Return true because we already handled the event and want to prevent bubbling.
-                return true;
-            }
-        }
-        return false;
+    public boolean onTouch(View view, MotionEvent event)
+    {
+        TouchHandler touchHandler = new TouchHandler(this);
+        return touchHandler.handleTouch(view, event);
     }
 
     @Override
@@ -329,24 +329,25 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
     protected void setNavigationDrawerContent()
     {
         if (!(this instanceof FilePickerActivity)) {
-            navDrawerItemClickListener = new NavDrawerClickListener(
-                    this,
-                    (DrawerLayout) findViewById(R.id.drawer_layout)
-            );
 
-            navDrawerListAdapter = new NavigationDrawerAdapter(
-                    this,
-                    R.layout.drawer_list_item,
-                    getResources().getStringArray(R.array.drawer_menu),
-                    getPreferencesHelper(),
-                    playerUIInterface.getTypeFace()
+            MusicPlayerDrawer musicPlayerDrawer = new MusicPlayerDrawer(this, R.id.drawer_list);
+            musicPlayerDrawer.setClickListener(
+                    new NavDrawerClickListener(
+                            this,
+                            (DrawerLayout) findViewById(R.id.drawer_layout)
+                    )
+            );
+            musicPlayerDrawer.setTouchListener(this);
+            musicPlayerDrawer.setAdapter(
+                    new NavigationDrawerAdapter(
+                            this,
+                            R.layout.drawer_list_item,
+                            getResources().getStringArray(R.array.drawer_menu),
+                            getPreferencesHelper(),
+                            playerUIInterface.getTypeFace()
+                    )
             );
         }
-
-        ListView drawerList = (ListView) findViewById(R.id.drawer_list);
-        drawerList.setOnTouchListener(this);
-        drawerList.setAdapter(navDrawerListAdapter);
-        drawerList.setOnItemClickListener(navDrawerItemClickListener);
     }
 
     protected void pickMediaDirectories()
@@ -357,21 +358,19 @@ public abstract class BaseActivity extends ActionBarActivity implements Preferen
         }
     }
 
-    public void preferenceChangedCallback(String prefsKey)
+    @Override
+    public void onHapticFeedBackChanged(boolean isHapticFeedback)
     {
-        if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            setUI(preferencesHelper.getUIType());
-        } else if (getString(R.string.pref_haptic_feedback).equals(prefsKey)) {
-            toastHelper.showShortToast(
-                    preferencesHelper.isHapticFeedback() ?
-                            getString(R.string.haptic_feedback_off) :
-                            getString(R.string.haptic_feedback_on)
-            );
-        }
+        toastHelper.showShortToast(
+                isHapticFeedback ?
+                        getString(R.string.haptic_feedback_off) :
+                        getString(R.string.haptic_feedback_on)
+        );
     }
 
-    private void startMediaScanner()
+    @Override
+    public void onThemeChanged(int uiType)
     {
-
+        setUI(uiType);
     }
 }

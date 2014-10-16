@@ -4,16 +4,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callbacks.PreferenceChangedCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
+import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PreferencesHelper {
 
@@ -27,12 +29,17 @@ public class PreferencesHelper {
     private SharedPreferences sharedPreferences;
     private Context context;
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
-    private List<PreferenceChangedCallback> preferenceChangeCallbacks;
+    private Set<ThemeChangedCallback> themeChangedCallbacks;
+    private Set<HapticFeedBackChangedCallback> hapticFeedbackChangedCallbacks;
+    private Set<PlaylistChangedCallback> playlistChangedCallbacks;
 
     public PreferencesHelper(Context context)
     {
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        themeChangedCallbacks = new HashSet<ThemeChangedCallback>();
+        hapticFeedbackChangedCallbacks = new HashSet<HapticFeedBackChangedCallback>();
+        playlistChangedCallbacks = new HashSet<PlaylistChangedCallback>();
     }
 
     public Long getLastPlaylist()
@@ -117,17 +124,11 @@ public class PreferencesHelper {
         return isHapticFeedback;
     }
 
-    public void onPrefsChangedCallback(String prefsKey)
+    public void registerCallBack(Context context)
     {
-        for(PreferenceChangedCallback preferenceChangeCallback : preferenceChangeCallbacks) {
-            preferenceChangeCallback.preferenceChangedCallback(prefsKey);
-        }
-    }
-
-    public void registerCallBack(PreferenceChangedCallback preferenceChangeCallback)
-    {
-        Log.d(TAG, "CALLBACK REGISTERED. " + preferenceChangeCallback.getClass().getSimpleName());
-        preferenceChangeCallbacks.add(preferenceChangeCallback);
+        registerHaptikFeedBackChanged(context);
+        registerPlaylistChanged(context);
+        registerThemeChanged(context);
     }
 
     public void registerPrefsChangedListener()
@@ -136,12 +137,42 @@ public class PreferencesHelper {
             preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefsKey) {
-                    onPrefsChangedCallback(prefsKey);
+                    handleChangedKey(prefsKey);
                 }
             };
-            preferenceChangeCallbacks = new ArrayList<PreferenceChangedCallback>();
         }
         sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+    }
+
+    private void handleChangedKey(String prefsKey)
+    {
+        if(context.getString(R.string.pref_current_ui_type).equals(prefsKey))
+            onThemeChanged();
+        else if (context.getString(R.string.pref_haptic_feedback).equals(prefsKey))
+            onHaptikFeedBackChanged();
+        else if (context.getString(R.string.pref_current_playlist_id).equals(prefsKey))
+            onPlaylistChanged();
+    }
+
+    public void onHaptikFeedBackChanged()
+    {
+        for(HapticFeedBackChangedCallback hapticFeedBackChangedCallback : hapticFeedbackChangedCallbacks) {
+            hapticFeedBackChangedCallback.onHapticFeedBackChanged(isHapticFeedback);
+        }
+    }
+
+    public void onThemeChanged()
+    {
+        for(ThemeChangedCallback themeChangedCallback : themeChangedCallbacks) {
+            themeChangedCallback.onThemeChanged(getUIType());
+        }
+    }
+
+    public void onPlaylistChanged()
+    {
+        for(PlaylistChangedCallback playlistChangedCallback : playlistChangedCallbacks) {
+            playlistChangedCallback.onPlaylistChange(currentPlaylist);
+        }
     }
 
     public void setHapticFeedback(boolean isHapticFeedback)
@@ -186,11 +217,12 @@ public class PreferencesHelper {
     public void setLastPlaylist(long lastPlaylistId)
     {
         currentPlaylist = lastPlaylistId;
-        sharedPreferences.edit()
-                .putLong(
-                        context.getString(R.string.pref_current_playlist_id),
-                        currentPlaylist
-                ).apply();
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putLong(
+            context.getString(R.string.pref_current_playlist_id),
+            currentPlaylist
+        );
+        prefsEditor.apply();
     }
 
     public void setLastPlaylistPosition(int lastPlaylistPosition)
@@ -233,5 +265,32 @@ public class PreferencesHelper {
     public void unRegisterPrefsChangedListener()
     {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+    }
+
+    private void registerHaptikFeedBackChanged(Context context)
+    {
+        if (context instanceof HapticFeedBackChangedCallback) {
+            hapticFeedbackChangedCallbacks.add(
+                    (HapticFeedBackChangedCallback) context
+            );
+        }
+    }
+
+    private void registerThemeChanged(Context context)
+    {
+        if (context instanceof ThemeChangedCallback) {
+            themeChangedCallbacks.add(
+                    (ThemeChangedCallback) context
+            );
+        }
+    }
+
+    private void registerPlaylistChanged(Context context)
+    {
+        if (context instanceof PlaylistChangedCallback) {
+            playlistChangedCallbacks.add(
+                    (PlaylistChangedCallback) context
+            );
+        }
     }
 }

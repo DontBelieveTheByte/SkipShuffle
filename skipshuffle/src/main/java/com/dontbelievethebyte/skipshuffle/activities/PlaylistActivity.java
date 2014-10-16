@@ -71,15 +71,6 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     }
 
     @Override
-    public void preferenceChangedCallback(String prefsKey)
-    {
-        super.preferenceChangedCallback(prefsKey);
-        if (getString(R.string.pref_current_ui_type).equals(prefsKey)) {
-            setUI(preferencesHelper.getUIType());
-        }
-    }
-
-    @Override
     protected void setUI(Integer type)
     {
         ui = UIFactory.createPlaylistUI(this, type);
