@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,11 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBar;
+import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.listeners.TouchHandler;
@@ -50,6 +50,7 @@ public abstract class BaseActivity extends ActionBarActivity
     protected MediaScannerDialog mediaScannerDialog;
     protected PlayerUIInterface playerUIInterface;
     protected PreferencesHelper preferencesHelper;
+    protected CustomActionBarWrapper customActionBar;
     protected boolean isBoundToMediaPlayer;
 
     public SkipShuffleMediaPlayer getMediaPlayer() throws NoMediaPlayerException
@@ -87,7 +88,6 @@ public abstract class BaseActivity extends ActionBarActivity
         }
     };
 
-
     public PreferencesHelper getPreferencesHelper()
     {
         return preferencesHelper;
@@ -99,47 +99,18 @@ public abstract class BaseActivity extends ActionBarActivity
     }
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-            mediaScannerDialog = new MediaScannerDialog(this);
-            mediaScannerDialog.registerBroadcastReceiver();
-            mediaScannerDialog.doScan();
-        }
-    }
-
-    @Override
-    public void onBackPressed()
-    {
-        actionBarToggle();
-    }
-
-    private void actionBarToggle()
-    {
-        ActionBar actionBar = getSupportActionBar();
-        if (null != actionBar &&
-                ViewConfiguration.get(this).hasPermanentMenuKey() &&
-                actionBar.isShowing()
-                ) {
-            actionBar.hide();
-        } else {
-            handleBackPressed();
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
         startMediaPlayerService();
 
-        toastHelper = new ToastHelper(getApplicationContext());
-
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         setUpActionBar();
+
+        toastHelper = new ToastHelper(getApplicationContext());
     }
 
     private void startMediaPlayerService()
@@ -150,6 +121,12 @@ public abstract class BaseActivity extends ActionBarActivity
                         SkipShuffleMediaPlayer.class
                 )
         );
+    }
+
+    protected void setUpActionBar()
+    {
+        customActionBar = new CustomActionBarWrapper(this);
+        customActionBar.setUp();
     }
 
     @Override
@@ -169,6 +146,29 @@ public abstract class BaseActivity extends ActionBarActivity
         if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
             mediaScannerDialog = new MediaScannerDialog(this);
             mediaScannerDialog.registerBroadcastReceiver();
+        }
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+            mediaScannerDialog = new MediaScannerDialog(this);
+            mediaScannerDialog.registerBroadcastReceiver();
+            mediaScannerDialog.doScan();
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        try {
+            if (!customActionBar.isShowing())
+                handleBackPressed();
+
+            customActionBar.showToggle();
+        } catch (NoHardwareMenuKeyException noHardwareMenuKeyException) {
+            handleBackPressed();
         }
     }
 
@@ -320,11 +320,7 @@ public abstract class BaseActivity extends ActionBarActivity
         alert.show();
     }
 
-    protected void setUpActionBar()
-    {
-        CustomActionBar customActionBar = new CustomActionBar(this);
-        customActionBar.setUp();
-    }
+
 
     protected void setNavigationDrawerContent()
     {
