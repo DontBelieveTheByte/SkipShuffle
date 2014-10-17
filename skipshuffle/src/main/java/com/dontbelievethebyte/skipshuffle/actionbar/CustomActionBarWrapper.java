@@ -10,7 +10,8 @@ public class CustomActionBarWrapper {
 
     private BaseActivity baseActivity;
     private ActionBar actionBar;
-    boolean hasHardWareMenuKey;
+    private boolean hasHardWareMenuKey;
+    private boolean isOptionsMenuOpen;
 
     public CustomActionBarWrapper(BaseActivity baseActivity)
     {
@@ -30,17 +31,36 @@ public class CustomActionBarWrapper {
     public void showToggle() throws NoHardwareMenuKeyException
     {
         if (actionBar.isShowing()) {
-            if (hasHardWareMenuKey)
+            if (hasHardWareMenuKey) {
                 actionBar.hide();
-            else
+                isOptionsMenuOpen = false;
+            } else
                 throw new NoHardwareMenuKeyException();
         } else {
             actionBar.show();
+            isOptionsMenuOpen = true;
         }
     }
 
     public boolean isShowing()
     {
         return actionBar.isShowing();
+    }
+
+    public boolean handleOnKeyDownWidthPermanentMenuKey()
+    {
+        if (actionBar.isShowing()) {
+            if (isOptionsMenuOpen) {
+                baseActivity.closeOptionsMenu();
+                actionBar.hide();
+                isOptionsMenuOpen = false;
+            } else {
+                baseActivity.openOptionsMenu();
+                isOptionsMenuOpen = true;
+            }
+        } else {
+            actionBar.show();
+        }
+        return true;
     }
 }
