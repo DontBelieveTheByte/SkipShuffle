@@ -13,7 +13,7 @@ import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public class MediaScannerDialog {
     private BaseActivity baseActivity;
-    private Dialog themeSelectionDialog;
+    private Dialog mediaScannerDialog;
 
     public MediaScannerDialog(BaseActivity baseActivity)
     {
@@ -31,11 +31,11 @@ public class MediaScannerDialog {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        dialog.dismiss();
-                        baseActivity.sendBroadcast (
+                        baseActivity.sendBroadcast(
                                 new Intent(Intent.ACTION_MEDIA_MOUNTED,
                                         Uri.parse("file://" + Environment.getExternalStorageDirectory()))
                         );
+                        dialog.dismiss();
                     }
                 }
         );
@@ -51,14 +51,11 @@ public class MediaScannerDialog {
                 }
         );
 
-        AlertDialog alert = builder.create();
-        alert.show();
-
-        themeSelectionDialog = builder.create();
+        mediaScannerDialog = builder.create();
     }
 
     public void show ()
     {
-        themeSelectionDialog.show();
+        mediaScannerDialog.show();
     }
 }
