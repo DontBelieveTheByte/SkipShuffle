@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.utilities;
+package com.dontbelievethebyte.skipshuffle.dialog;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import com.dontbelievethebyte.skipshuffle.services.MediaScannerService;
 
 import java.lang.ref.WeakReference;
 
-public class MediaScannerDialog implements MediaScannerBroadcastReceiverCallback {
+public class MediaScannerProgressDialog implements MediaScannerBroadcastReceiverCallback {
 
     private boolean isScanningMedia = false;
     private boolean isDialogShowing = false;
@@ -22,7 +22,7 @@ public class MediaScannerDialog implements MediaScannerBroadcastReceiverCallback
     private MediaScannerBroadcastReceiver mediaScannerReceiver;
     WeakReference<BaseActivity> weakActivity;
 
-    public MediaScannerDialog(BaseActivity baseActivity)
+    public MediaScannerProgressDialog(BaseActivity baseActivity)
     {
         weakActivity = new WeakReference<BaseActivity>(baseActivity);
 
