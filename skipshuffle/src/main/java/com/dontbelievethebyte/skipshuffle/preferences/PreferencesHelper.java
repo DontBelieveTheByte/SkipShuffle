@@ -126,7 +126,7 @@ public class PreferencesHelper {
 
     public void registerCallBack(Context context)
     {
-        registerHaptikFeedBackChanged(context);
+        registerHapticFeedBackChanged(context);
         registerPlaylistChanged(context);
         registerThemeChanged(context);
     }
@@ -267,7 +267,7 @@ public class PreferencesHelper {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
     }
 
-    private void registerHaptikFeedBackChanged(Context context)
+    private void registerHapticFeedBackChanged(Context context)
     {
         if (context instanceof HapticFeedBackChangedCallback) {
             hapticFeedbackChangedCallbacks.add(
