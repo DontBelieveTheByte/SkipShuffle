@@ -29,7 +29,7 @@ public class MediaScannerDialog {
                     public void onClick(DialogInterface dialog, int which)
                     {
                         dialog.dismiss();
-                        baseActivity.handleStartMediaScan();
+                        baseActivity.startMediaScan();
                     }
                 }
         );
