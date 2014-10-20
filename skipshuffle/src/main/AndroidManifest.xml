@@ -21,37 +21,6 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.FilePickerActivity"
-            android:theme="@style/CustomActionBarTheme"
-            android:label="@string/label_file_picker"
-            android:parentActivityName="com.dontbelievethebyte.skipshuffle.activities.MainActivity">
-            <!-- Parent baseActivity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dontbelievethebyte.skipshuffle.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".activities.PlaylistActivity"
-            android:theme="@style/CustomActionBarTheme"
-            android:label="@string/label_playlist"
-            android:parentActivityName="com.dontbelievethebyte.skipshuffle.activities.MainActivity" >
-            <!-- Parent baseActivity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dontbelievethebyte.skipshuffle.activities.MainActivity" />
-        </activity>
-        <activity
-            android:name=".activities.PlaylistSelectorActivity"
-            android:theme="@style/CustomActionBarTheme"
-            android:label="@string/label_playlist_selector" >
-            android:parentActivityName="com.dontbelievethebyte.skipshuffle.activities.MainActivity" >
-            <!-- Parent baseActivity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.dontbelievethebyte.skipshuffle.activities.MainActivity" />
-        </activity>
-
         <service android:name=".services.SkipShuffleMediaPlayer" />
         <service android:name=".services.MediaScannerService" />
     </application>
