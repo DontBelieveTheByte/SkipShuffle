@@ -11,11 +11,10 @@ public class MediaScannerHelper {
 
     public static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
 
-    private DialogInterface.OnClickListener positive;
-
     private BaseActivity baseActivity;
-    private MediaScannerProgressDialog mediaScannerProgressDialog;
+    private DialogInterface.OnClickListener positive;
     private MediaScannerClient mediaScannerClient;
+    private MediaScannerProgressDialog mediaScannerProgressDialog;
 
     public MediaScannerHelper(BaseActivity baseActivity)
     {
