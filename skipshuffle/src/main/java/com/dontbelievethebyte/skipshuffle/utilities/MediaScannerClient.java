@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.utilities;
 
-import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -9,14 +8,20 @@ import android.util.Log;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public class MediaScannerClient implements MediaScannerConnection.MediaScannerConnectionClient {
-    private Context context;
+    private BaseActivity baseActivity;
     private MediaScannerConnection mediaScannerConnection;
+    private boolean isScanningMedia = false;
 
-    public MediaScannerClient(Context context)
+    public boolean isScanningMedia()
     {
-        this.context = context;
+        return isScanningMedia;
+    }
+
+    public MediaScannerClient(BaseActivity baseActivity)
+    {
+        this.baseActivity = baseActivity;
         mediaScannerConnection = new MediaScannerConnection(
-                this.context,
+                this.baseActivity,
                 this
         );
     }
@@ -29,16 +34,32 @@ public class MediaScannerClient implements MediaScannerConnection.MediaScannerCo
     @Override
     public void onMediaScannerConnected()
     {
-        Log.d(BaseActivity.TAG, "MEDIA SCANNER CONNECTED ****");
+        isScanningMedia = true;
         mediaScannerConnection.scanFile(
                 Environment.getDownloadCacheDirectory().getAbsolutePath(),
                 "audio/*"
+        );
+        baseActivity.runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        baseActivity.onStartMediaScan();
+                    }
+                }
         );
     }
 
     @Override
     public void onScanCompleted(String s, Uri uri)
     {
-        Log.d(BaseActivity.TAG, "MEDIA SCAN COMPLETE ****");
+        isScanningMedia = false;
+        baseActivity.runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        baseActivity.onStopMediaScan();
+                    }
+                }
+        );
     }
 }
