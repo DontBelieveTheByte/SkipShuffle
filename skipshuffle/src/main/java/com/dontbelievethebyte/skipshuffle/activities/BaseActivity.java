@@ -23,7 +23,6 @@ import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
-import com.dontbelievethebyte.skipshuffle.dialog.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
@@ -34,6 +33,7 @@ import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
+import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
 public abstract class BaseActivity extends ActionBarActivity
@@ -41,28 +41,20 @@ public abstract class BaseActivity extends ActionBarActivity
 
     public static final String TAG = "SkipShuffle";
 
-    protected static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
     protected ListView.OnItemClickListener navDrawerItemClickListener;
-    protected ArrayAdapter<?> navDrawerListAdapter;
-    protected MediaScannerDialog mediaScannerDialog;
+
     protected PlayerUIInterface playerUIInterface;
     protected PreferencesHelper preferencesHelper;
     protected CustomActionBarWrapper customActionBar;
     protected boolean isBoundToMediaPlayer;
 
-    public SkipShuffleMediaPlayer getMediaPlayer() throws NoMediaPlayerException
-    {
-        if (null == mediaPlayer)
-            throw new NoMediaPlayerException();
-        else
-            return mediaPlayer;
-    }
+    private ArrayAdapter<?> navDrawerListAdapter;
+    private MediaScannerHelper mediaScannerHelper;
+    private boolean isOptionsMenuOpen = false;
 
     protected SkipShuffleMediaPlayer mediaPlayer;
-
     protected ToastHelper toastHelper;
 
-    private boolean isOptionsMenuOpen = false;
     protected abstract void setUI(Integer type);
     protected abstract void handleBackPressed();
 
@@ -107,6 +99,7 @@ public abstract class BaseActivity extends ActionBarActivity
         setUpActionBar();
 
         toastHelper = new ToastHelper(getApplicationContext());
+        mediaScannerHelper = new MediaScannerHelper(this);
     }
 
     private void startMediaPlayerService()
@@ -117,6 +110,14 @@ public abstract class BaseActivity extends ActionBarActivity
                         SkipShuffleMediaPlayer.class
                 )
         );
+    }
+
+    public SkipShuffleMediaPlayer getMediaPlayer() throws NoMediaPlayerException
+    {
+        if (null == mediaPlayer)
+            throw new NoMediaPlayerException();
+        else
+            return mediaPlayer;
     }
 
     protected void setUpActionBar()
@@ -139,9 +140,8 @@ public abstract class BaseActivity extends ActionBarActivity
         super.onRestoreInstanceState(savedInstanceState);
 
         //Check if we're scanning media beforehand and.
-        if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
-            mediaScannerDialog = new MediaScannerDialog(this);
-        }
+        if (savedInstanceState.getBoolean(MediaScannerHelper.IS_SCANNING_MEDIA))
+            mediaScannerHelper.startMediaScan();
     }
 
     @Override
@@ -176,20 +176,12 @@ public abstract class BaseActivity extends ActionBarActivity
         preferencesHelper.registerCallBack(this);
 
         setUI(preferencesHelper.getUIType());
-//        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-//            mediaScannerDialog.registerBroadcastReceiver();
-//            mediaScannerDialog.show();
-//        }
-        playerUIInterface.setSongLabel("TEST FOR NOW");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-//        if (mediaScannerDialog != null) {
-//            outState.putBoolean(IS_SCANNING_MEDIA, mediaScannerDialog.isScanningMedia());
-//            mediaScannerDialog.dismiss();
-//        }
+        outState.putBoolean(MediaScannerHelper.IS_SCANNING_MEDIA, mediaScannerHelper.isScanningMedia());
         super.onSaveInstanceState(outState);
     }
 
@@ -217,14 +209,7 @@ public abstract class BaseActivity extends ActionBarActivity
     {
         switch (item.getItemId()){
             case R.id.refresh_media:
-//                if (null == preferencesHelper.getMediaDirectories()) {
-//                    pickMediaDirectories();
-//                } else {
-//                    showMediaScanDialog();
-//                }
-                return true;
-            case R.id.set_target_directories:
-//                pickMediaDirectories();
+                mediaScannerHelper.showMediaScannerDialog();
                 return true;
             case R.id.haptic_feedback_toggle:
                 preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
@@ -244,15 +229,12 @@ public abstract class BaseActivity extends ActionBarActivity
             if (actionBar.isShowing()) {
                 if (isOptionsMenuOpen) {
                     closeOptionsMenu();
-                    isOptionsMenuOpen = false;
                     actionBar.hide();
-                } else {
+                } else
                     openOptionsMenu();
-                    isOptionsMenuOpen = true;
-                }
-            } else {
+                isOptionsMenuOpen = !isOptionsMenuOpen;
+            } else
                 actionBar.show();
-            }
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -300,20 +282,5 @@ public abstract class BaseActivity extends ActionBarActivity
     public void onThemeChanged(int uiType)
     {
         setUI(uiType);
-    }
-
-    public void startMediaScan()
-    {
-
-    }
-
-    public void onStartMediaScan()
-    {
-
-    }
-
-    public void onStopMediaScan()
-    {
-
     }
 }

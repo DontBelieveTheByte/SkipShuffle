@@ -1,29 +1,34 @@
 package com.dontbelievethebyte.skipshuffle.utilities;
 
+import android.app.Activity;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
-
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public class MediaScannerClient implements MediaScannerConnection.MediaScannerConnectionClient {
-    private BaseActivity baseActivity;
     private MediaScannerConnection mediaScannerConnection;
     private boolean isScanningMedia = false;
+
+
+
+    private MediaScannerHelper mediaScannerHelper;
+
+    public MediaScannerClient(Activity activity)
+    {
+        mediaScannerConnection = new MediaScannerConnection(
+                activity,
+                this
+        );
+    }
+
+    public void setMediaScannerHelper(MediaScannerHelper mediaScannerHelper)
+    {
+        this.mediaScannerHelper = mediaScannerHelper;
+    }
 
     public boolean isScanningMedia()
     {
         return isScanningMedia;
-    }
-
-    public MediaScannerClient(BaseActivity baseActivity)
-    {
-        this.baseActivity = baseActivity;
-        mediaScannerConnection = new MediaScannerConnection(
-                this.baseActivity,
-                this
-        );
     }
 
     public void doScan()
@@ -39,27 +44,13 @@ public class MediaScannerClient implements MediaScannerConnection.MediaScannerCo
                 Environment.getDownloadCacheDirectory().getAbsolutePath(),
                 "audio/*"
         );
-        baseActivity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        baseActivity.onStartMediaScan();
-                    }
-                }
-        );
+        mediaScannerHelper.onStartMediaScan();
     }
 
     @Override
     public void onScanCompleted(String s, Uri uri)
     {
         isScanningMedia = false;
-        baseActivity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        baseActivity.onStopMediaScan();
-                    }
-                }
-        );
+        mediaScannerHelper.onStopMediaScan();
     }
 }

@@ -1,37 +1,37 @@
 package com.dontbelievethebyte.skipshuffle.dialog;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public class MediaScannerDialog {
-    private BaseActivity baseActivity;
+    private Activity activity;
     private Dialog mediaScannerDialog;
+    private DialogInterface.OnClickListener positive;
 
-    public MediaScannerDialog(BaseActivity baseActivity)
+    public MediaScannerDialog(Activity activity)
     {
-        this.baseActivity = baseActivity;
+        this.activity = activity;
+    }
+
+    public void setPositive(DialogInterface.OnClickListener positive)
+    {
+        this.positive = positive;
     }
 
     public void build()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
-        builder.setTitle(baseActivity.getString(R.string.dialog_media_scan_title));
-        builder.setMessage(baseActivity.getString(R.string.dialog_media_scan_text));
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(activity.getString(R.string.dialog_media_scan_title));
+        builder.setMessage(activity.getString(R.string.dialog_media_scan_text));
 
         builder.setPositiveButton(
                 R.string.dialog_positive,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-                        baseActivity.startMediaScan();
-                    }
-                }
+                positive
         );
 
         builder.setNegativeButton(
