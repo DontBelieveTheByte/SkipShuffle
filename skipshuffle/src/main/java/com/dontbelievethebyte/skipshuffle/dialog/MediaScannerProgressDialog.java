@@ -12,12 +12,6 @@ public class MediaScannerProgressDialog {
         this.progressBar = progressBar;
     }
 
-    public boolean isShowing()
-    {
-        int visibility = progressBar.getVisibility();
-        return (visibility == View.VISIBLE);
-    }
-
     public void show()
     {
         progressBar.setVisibility(View.VISIBLE);
