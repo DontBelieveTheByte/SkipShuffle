@@ -1,9 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
@@ -25,19 +23,18 @@ import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
+import com.dontbelievethebyte.skipshuffle.dialog.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.listeners.TouchHandler;
 import com.dontbelievethebyte.skipshuffle.menu.OptionsMenuCreator;
+import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
-import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
-
-import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 
 public abstract class BaseActivity extends ActionBarActivity
         implements ThemeChangedCallback, HapticFeedBackChangedCallback, View.OnTouchListener {
@@ -64,7 +61,6 @@ public abstract class BaseActivity extends ActionBarActivity
     protected SkipShuffleMediaPlayer mediaPlayer;
 
     protected ToastHelper toastHelper;
-    private static final int FILE_PICKER_REQUEST_CODE = 9002;
 
     private boolean isOptionsMenuOpen = false;
     protected abstract void setUI(Integer type);
@@ -145,17 +141,6 @@ public abstract class BaseActivity extends ActionBarActivity
         //Check if we're scanning media beforehand and.
         if (savedInstanceState.getBoolean(IS_SCANNING_MEDIA)) {
             mediaScannerDialog = new MediaScannerDialog(this);
-            mediaScannerDialog.registerBroadcastReceiver();
-        }
-    }
-
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == FILE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
-            mediaScannerDialog = new MediaScannerDialog(this);
-            mediaScannerDialog.registerBroadcastReceiver();
-            mediaScannerDialog.doScan();
         }
     }
 
@@ -175,10 +160,6 @@ public abstract class BaseActivity extends ActionBarActivity
     @Override
     protected void onPause()
     {
-        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-            mediaScannerDialog.unregisterBroadcastReceiver();
-            mediaScannerDialog.dismiss();
-        }
         preferencesHelper.unRegisterPrefsChangedListener();
         unbindService(mediaPlayerServiceConnection);
         super.onPause();
@@ -195,20 +176,20 @@ public abstract class BaseActivity extends ActionBarActivity
         preferencesHelper.registerCallBack(this);
 
         setUI(preferencesHelper.getUIType());
-        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
-            mediaScannerDialog.registerBroadcastReceiver();
-            mediaScannerDialog.show();
-        }
+//        if (mediaScannerDialog != null && mediaScannerDialog.isScanningMedia()) {
+//            mediaScannerDialog.registerBroadcastReceiver();
+//            mediaScannerDialog.show();
+//        }
         playerUIInterface.setSongLabel("TEST FOR NOW");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-        if (mediaScannerDialog != null) {
-            outState.putBoolean(IS_SCANNING_MEDIA, mediaScannerDialog.isScanningMedia());
-            mediaScannerDialog.dismiss();
-        }
+//        if (mediaScannerDialog != null) {
+//            outState.putBoolean(IS_SCANNING_MEDIA, mediaScannerDialog.isScanningMedia());
+//            mediaScannerDialog.dismiss();
+//        }
         super.onSaveInstanceState(outState);
     }
 
@@ -243,7 +224,7 @@ public abstract class BaseActivity extends ActionBarActivity
 //                }
                 return true;
             case R.id.set_target_directories:
-                pickMediaDirectories();
+//                pickMediaDirectories();
                 return true;
             case R.id.haptic_feedback_toggle:
                 preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
@@ -284,74 +265,25 @@ public abstract class BaseActivity extends ActionBarActivity
         themeSelectionDialog.show();
     }
 
-    protected void showMediaScanDialog()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.dialog_media_scan_title));
-        builder.setMessage(getString(R.string.dialog_media_scan_text));
-
-        builder.setPositiveButton(
-                R.string.dialog_positive,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-                        mediaScannerDialog = new MediaScannerDialog(
-                                BaseActivity.this
-                        );
-                        mediaScannerDialog.registerBroadcastReceiver();
-                        mediaScannerDialog.doScan();
-                    }
-                }
-        );
-
-        builder.setNegativeButton(
-                R.string.dialog_negative,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        dialog.dismiss();
-                    }
-                }
-        );
-
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-
-
     protected void setNavigationDrawerContent()
     {
-        if (!(this instanceof FilePickerActivity)) {
-
-            MusicPlayerDrawer musicPlayerDrawer = new MusicPlayerDrawer(this, R.id.drawer_list);
-            musicPlayerDrawer.setClickListener(
-                    new NavDrawerClickListener(
-                            this,
-                            (DrawerLayout) findViewById(R.id.drawer_layout)
-                    )
-            );
-            musicPlayerDrawer.setTouchListener(this);
-            musicPlayerDrawer.setAdapter(
-                    new NavigationDrawerAdapter(
-                            this,
-                            R.layout.drawer_list_item,
-                            getResources().getStringArray(R.array.drawer_menu),
-                            getPreferencesHelper(),
-                            playerUIInterface.getTypeFace()
-                    )
-            );
-        }
-    }
-
-    protected void pickMediaDirectories()
-    {
-        if (!(this instanceof FilePickerActivity)) {
-            Intent intent = new Intent(BaseActivity.this, FilePickerActivity.class);
-            BaseActivity.this.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
-        }
+        MusicPlayerDrawer musicPlayerDrawer = new MusicPlayerDrawer(this, R.id.drawer_list);
+        musicPlayerDrawer.setClickListener(
+                new NavDrawerClickListener(
+                        this,
+                        (DrawerLayout) findViewById(R.id.drawer_layout)
+                )
+        );
+        musicPlayerDrawer.setTouchListener(this);
+        musicPlayerDrawer.setAdapter(
+                new NavigationDrawerAdapter(
+                        this,
+                        R.layout.drawer_list_item,
+                        getResources().getStringArray(R.array.drawer_menu),
+                        getPreferencesHelper(),
+                        playerUIInterface.getTypeFace()
+                )
+        );
     }
 
     @Override
@@ -368,5 +300,20 @@ public abstract class BaseActivity extends ActionBarActivity
     public void onThemeChanged(int uiType)
     {
         setUI(uiType);
+    }
+
+    public void startMediaScan()
+    {
+
+    }
+
+    public void onStartMediaScan()
+    {
+
+    }
+
+    public void onStopMediaScan()
+    {
+
     }
 }
