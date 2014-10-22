@@ -3,16 +3,19 @@ package com.dontbelievethebyte.skipshuffle.dialog;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
-
 public class MediaScannerProgressDialog {
 
     private ProgressBar progressBar;
 
-    public MediaScannerProgressDialog(MainActivity mainActivity)
+    public MediaScannerProgressDialog(ProgressBar progressBar)
     {
-        progressBar = (ProgressBar) mainActivity.findViewById(R.id.progressBar);
+        this.progressBar = progressBar;
+    }
+
+    public boolean isShowing()
+    {
+        int visibility = progressBar.getVisibility();
+        return (visibility == View.VISIBLE);
     }
 
     public void show()
