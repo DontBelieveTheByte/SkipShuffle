@@ -15,12 +15,6 @@
         skipshuffle:showAsAction="ifRoom">
     </item>
     <item
-        android:title="@string/menu_set_music_dir"
-        android:id="@+id/set_target_directories"
-        android:icon="@drawable/ic_folder"
-        skipshuffle:showAsAction="ifRoom">
-    </item>
-    <item
         android:title="@string/menu_refresh"
         android:id="@+id/refresh_media"
         android:icon="@drawable/ic_refresh"
