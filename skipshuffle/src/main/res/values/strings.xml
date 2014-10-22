@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--Default meta data-->
+    <!-- Default meta data -->
     <string name="meta_data_unknown_current_song_title">Nothing is playing.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
 
-    <!--Activities-->
+    <!-- Activities -->
     <string name="label_app_name">SkipShuffle</string>
     <string name="label_file_picker">Media Directories</string>
     <string name="label_playlist">Current Playlist</string>
     <string name="label_playlist_selector">Select Music</string>
 
-    <!--Media scanner related stuff-->
-    <string name="media_scan_start_title">"Scanning audio files&#8230;"</string>
-    <string name="media_scan_start_message">"Please wait."</string>
-    <string name="media_scan_sel_target_directories">Select media directories.</string>
-    <string name="media_scan_no_directory">No directory selected.</string>
-    <string name="media_scan_directory_valid">Scanning : %s</string>
-    <string name="media_scan_directory_invalid">Invalid directory : %s</string>
-    <string name="media_scan_dialog_title">Scanning media in : %s</string>
+    <!-- Media scanner related stuff -->
+    <string name="media_scan_start_title">"Scanning audio files…"</string>
     <string name="media_scan_done">Done scanning media.</string>
-    <string name="media_scan_directory_empty">Selected directory didn\'t contain any audio files.</string>
 
     <!-- Toasts -->
     <string name="haptic_feedback_not_available">Your device doesn\'t support haptic feedback.</string>
@@ -38,25 +31,26 @@
     <string name="no_access">Unable to access.</string>
     <string name="directory_top_level">Top level of external storage.</string>
 
-    <!--Main menu-->
+    <!-- Main menu -->
     <string name="menu_theme">Theme</string>
     <string name="menu_set_music_dir">Set music directories</string>
     <string name="menu_haptic_feedback">Haptic feedback toggle (vibration)</string>
     <string name="menu_refresh">Refresh</string>
 
-    <!-- Dialogs-->
+    <!-- Dialogs -->
     <string name="dialog_theme_title">Pick a theme</string>
     <string name="dialog_media_scan_title">Scan media directories</string>
     <string name="dialog_media_scan_text">Do you want to search for music files?</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
+
     <string-array name="dialog_theme_items">
         <item>Mono Light</item>
         <item>Mono Dark</item>
         <item>Neon</item>
     </string-array>
 
-    <!--Preferences    -->
+    <!-- Preferences -->
     <string name="pref_haptic_feedback">PREF_HAPTIC_FEEDBACK</string>
     <string name="pref_media_directories">PREF_MEDIA_DIRECTORIES</string>
     <string name="pref_media_directories_separator">☃ಠ_ಠ☃</string>
@@ -64,14 +58,15 @@
     <string name="pref_current_playlist_position">PREF_PLAYLIST_POSITION</string>
     <string name="pref_current_ui_type">PREF_CURRENT_UI_TYPE</string>
 
-    <!--State info-->
+    <!-- State info -->
     <string name="media_player_unkown_command">Unknown command.</string>
     <string name="empty_playlist">There are no items yet, you may scan for media by selecting a target location from the menu.</string>
     <string name="shuffle">Re-suffling</string>
     <string name="playlist_load_error">Playlist Error, playlist ID : %</string>
 
-    <!--Main navigation drawer-->
+    <!-- Main navigation drawer -->
     <string name="drawer_header_text">Browse</string>
+
     <string-array name="drawer_menu">
         <item>Songs</item>
         <item>Artists</item>
@@ -79,7 +74,7 @@
         <item>Genre</item>
     </string-array>
 
-    <!--File picker-->
+    <!-- File picker -->
     <string name="file_picker_done">OK, I\'m done.</string>
     <string name="file_picker_cancel">Cancel</string>
     <string name="file_picker_go_back">Go back</string>
@@ -87,11 +82,13 @@
     <string name="file_picker_drawer_title">Media Directories</string>
     <string name="file_picker_drawer_empty">No directory.</string>
 
-    <!--Content description for accessibility-->
+    <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>
     <string name="accessibility_skip">Skip</string>
     <string name="accessibility_prev">Previous</string>
     <string name="accessibility_shuffle">Shuffle</string>
     <string name="accessibility_skipshuffle">SkipShuffle</string>
     <string name="accessibility_playlist">Playlist</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
