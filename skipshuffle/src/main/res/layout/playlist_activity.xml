@@ -16,8 +16,6 @@
 
         <include layout="@layout/content_list"/>
 
-        <include layout="@layout/file_picker_empty_view" />
-
         <include layout="@layout/media_player_footer"/>
 
     </LinearLayout>
