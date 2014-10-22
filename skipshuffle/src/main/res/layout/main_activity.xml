@@ -112,6 +112,14 @@
                 android:layout_height="0px"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
     </RelativeLayout>
     <!-- The navigation drawer -->
     <include layout="@layout/drawer_list"/>
