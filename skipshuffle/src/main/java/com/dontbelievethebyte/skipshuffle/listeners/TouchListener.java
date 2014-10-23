@@ -7,11 +7,11 @@ import android.view.View;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 
-public class TouchHandler {
+public class TouchListener {
 
     BaseActivity baseActivity;
 
-    public TouchHandler(BaseActivity baseActivity)
+    public TouchListener(BaseActivity baseActivity)
     {
         this.baseActivity = baseActivity;
     }
