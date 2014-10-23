@@ -13,9 +13,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.notification.PlayerNotification;
-import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
@@ -30,7 +28,6 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     private ClientCommandsBroadcastReceiver clientCommandsBroadcastReceiver;
     private AndroidPlayerWrapper playerWrapper;
     private PreferencesHelper preferencesHelper;
-    private DbHandler dbHandler;
     private ToastHelper toastHelper;
     private PlayerNotification notification;
 
@@ -248,25 +245,23 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
 
         preferencesHelper = new PreferencesHelper(getApplicationContext());
 
-        dbHandler = new DbHandler(getApplicationContext());
-
         notification = new PlayerNotification(this);
 
-        try {
-            playlist = new RandomPlaylist(
-                    preferencesHelper.getLastPlaylist(),
-                    dbHandler
-            );
-
-            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-
-            playerWrapper = new AndroidPlayerWrapper();
-
-            playerWrapper.setPlaylist(playlist);
-
-        } catch (JSONException jsonException) {
-            handleJSONException(jsonException);
-        }
+//        try {
+////            playlist = new RandomPlaylist(
+////                    preferencesHelper.getLastPlaylist(),
+////                    dbHandler
+////            );
+//
+//            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
+//
+//            playerWrapper = new AndroidPlayerWrapper();
+//
+//            playerWrapper.setPlaylist(playlist);
+//
+//        } catch (JSONException jsonException) {
+//            handleJSONException(jsonException);
+//        }
     }
 
     @Override
@@ -289,16 +284,16 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     @Override
     public void onPlaylistChange(long playlistId)
     {
-        try {
-            playlist = new RandomPlaylist(
-                    playlistId,
-                    dbHandler
-            );
-            playlist.setPosition(0);
-            playerWrapper.setPlaylist(playlist);
-        } catch (JSONException jsonException){
-            handleJSONException(jsonException);
-        }
+//        try {
+//            playlist = new RandomPlaylist(
+//                    playlistId,
+//                    dbHandler
+//            );
+//            playlist.setPosition(0);
+//            playerWrapper.setPlaylist(playlist);
+//        } catch (JSONException jsonException){
+//            handleJSONException(jsonException);
+//        }
     }
 
     private void handleJSONException(JSONException jSONException)
