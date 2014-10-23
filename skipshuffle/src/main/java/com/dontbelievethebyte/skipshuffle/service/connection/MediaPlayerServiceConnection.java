@@ -1,10 +1,11 @@
-package com.dontbelievethebyte.skipshuffle.service;
+package com.dontbelievethebyte.skipshuffle.service.connection;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
 public class MediaPlayerServiceConnection implements ServiceConnection {
 
