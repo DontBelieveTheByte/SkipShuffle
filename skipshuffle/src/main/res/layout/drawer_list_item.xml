@@ -18,5 +18,5 @@
         android:textSize="@dimen/navdrawer_item_text_size"
         android:textColor="@color/song_label_neon"
 	    android:singleLine="true"
-	    android:text="@string/file_picker_done"/>
+	    android:text="@string/meta_data_unknown_artist"/>
 </LinearLayout>
