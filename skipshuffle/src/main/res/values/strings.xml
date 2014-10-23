@@ -7,7 +7,6 @@
 
     <!-- Activities -->
     <string name="label_app_name">SkipShuffle</string>
-    <string name="label_file_picker">Media Directories</string>
     <string name="label_playlist">Current Playlist</string>
     <string name="label_playlist_selector">Select Music</string>
 
@@ -21,15 +20,8 @@
     <string name="haptic_feedback_on">Haptic feedback turned on.</string>
     <string name="shuffle_empty_playlist">Cannot shuffle empty playlist.</string>
     <string name="playlist_error">Playlist error.</string>
-    <string name="pick_media_nothing_selected">Nothing Selected.</string>
     <string name="player_wrapper_song_error">Error playing file : </string>
-    <string name="not_a_directory">%s is not a directory.</string>
-    <string name="parent_directory_selected">Swapped %s for higher level directory.</string>
-    <string name="sub_directory_selected">Swapped %s for lower level directory.</string>
-    <string name="directory_added">Added : %s.</string>
-    <string name="directory_removed">Removed : %s.</string>
     <string name="no_access">Unable to access.</string>
-    <string name="directory_top_level">Top level of external storage.</string>
     <string name="no_media_player">No media player connected.</string>
 
     <!-- Main menu -->
