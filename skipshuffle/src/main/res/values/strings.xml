@@ -76,14 +76,6 @@
         <item>Playlists</item>
     </string-array>
 
-    <!-- File picker -->
-    <string name="file_picker_done">OK, I\'m done.</string>
-    <string name="file_picker_cancel">Cancel</string>
-    <string name="file_picker_go_back">Go back</string>
-    <string name="file_picker_directory_empty">Nothing to show here.</string>
-    <string name="file_picker_drawer_title">Media Directories</string>
-    <string name="file_picker_drawer_empty">No directory.</string>
-
     <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>
     <string name="accessibility_skip">Skip</string>
