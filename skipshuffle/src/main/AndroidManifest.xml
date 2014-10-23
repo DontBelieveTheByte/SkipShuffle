@@ -12,7 +12,7 @@
         android:label="@string/label_app_name"
         android:theme="@android:style/Theme.Black.NoTitleBar">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.PlayerActivity"
             android:theme="@style/CustomActionBarTheme"
             android:launchMode="singleTop"
             android:label="@string/label_app_name" >
