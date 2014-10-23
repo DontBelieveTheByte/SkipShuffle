@@ -15,7 +15,7 @@ import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 
 public class PlaylistSelectorAdapter extends BaseAdapter {
 

@@ -1,5 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.adapters;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 
-public class PlaylistAdapter extends BaseAdapter {
+public class ArtistsAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         public TextView title;
@@ -27,16 +27,17 @@ public class PlaylistAdapter extends BaseAdapter {
 
     private PlaylistInterface playlist;
     private LayoutInflater layoutInflater;
-    private BaseActivity baseActivity;
+    private Context context;
     private PreferencesHelper preferencesHelper;
 
-    public PlaylistAdapter(BaseActivity baseActivity,
-                           PlaylistInterface playlist)
+    public ArtistsAdapter(Context context,
+                          PreferencesHelper preferencesHelper,
+                          PlaylistInterface playlist)
     {
-        this.baseActivity = baseActivity;
+        this.context = context;
         this.playlist = playlist;
-        this.preferencesHelper = baseActivity.getPreferencesHelper();
-        layoutInflater = LayoutInflater.from(baseActivity);
+        this.preferencesHelper = preferencesHelper;
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -99,9 +100,9 @@ public class PlaylistAdapter extends BaseAdapter {
             if (track.getId() == playlist.getCurrent().getId()) {
                 params.width = params.height;
                 iv.setImageDrawable(
-                        baseActivity.getResources().getDrawable(
+                        context.getResources().getDrawable(
                                 isPlay ? DrawableMapper.getPlay(preferencesHelper.getUIType())
-                                        : DrawableMapper.getPause(preferencesHelper.getUIType())
+                                       : DrawableMapper.getPause(preferencesHelper.getUIType())
                         )
                 );
             } else {
@@ -132,7 +133,7 @@ public class PlaylistAdapter extends BaseAdapter {
         String artist = track.getArtist();
         TextView tv = (TextView) view.findViewById(resourceId);
         if (artist == null) {
-            artist = baseActivity.getString(R.string.meta_data_unknown_artist);
+            artist = context.getString(R.string.meta_data_unknown_artist);
         }
         tv.setText(artist);
         return tv;

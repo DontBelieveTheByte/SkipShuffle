@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.ui.ColorMapper;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
 public class NavigationDrawerAdapter extends ArrayAdapter<String> {
 
@@ -68,18 +68,18 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
                     null)
             ;
             convertView.setTag(viewHolder);
-        } else {
+        } else
             viewHolder = (ViewHolder) convertView.getTag();
-        }
 
         viewHolder.title = setTitle(
                 convertView,
                 getItem(position),
                 R.id.drawer_item_text
         );
-        if (position == selectedItem) {
+
+        if (position == selectedItem)
             convertView.setBackgroundColor(selectedTextBackgroundColor);
-        }
+
         return convertView;
     }
 
