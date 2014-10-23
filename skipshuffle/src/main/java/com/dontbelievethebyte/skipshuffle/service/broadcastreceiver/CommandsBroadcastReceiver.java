@@ -8,10 +8,10 @@ import android.content.IntentFilter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 
-public class ClientCommandsBroadcastReceiver extends BroadcastReceiver {
+public class CommandsBroadcastReceiver extends BroadcastReceiver {
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
 
-    public ClientCommandsBroadcastReceiver(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
+    public CommandsBroadcastReceiver(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
 
     }
