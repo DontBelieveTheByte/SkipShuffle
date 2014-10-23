@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.services;
+package com.dontbelievethebyte.skipshuffle.service;
 
 import android.content.ComponentName;
 import android.content.ServiceConnection;

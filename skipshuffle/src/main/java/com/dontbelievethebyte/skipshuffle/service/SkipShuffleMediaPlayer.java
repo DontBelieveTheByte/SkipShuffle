@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.services;
+package com.dontbelievethebyte.skipshuffle.service;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -24,7 +24,6 @@ import java.io.IOException;
 
 public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCallback {
 
-    private PlaylistInterface playlist;
     private ClientCommandsBroadcastReceiver clientCommandsBroadcastReceiver;
     private AndroidPlayerWrapper playerWrapper;
     private PreferencesHelper preferencesHelper;
@@ -185,7 +184,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
                 handleHeadsetIntent(intent, isInitialStickyBroadcast());
             }
             notification.showNotification();
-            preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+            preferencesHelper.setLastPlaylistPosition(0);
         }
 
         private void handleCommand(String command, Intent intent)
@@ -270,8 +269,8 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         unregisterMediaPlayerBroadcastReceiver();
         notification.cancel();
         playerWrapper.doPause();
-        preferencesHelper.setLastPlaylist(playlist.getPlaylistId());
-        preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+        preferencesHelper.setLastPlaylist(0);
+        preferencesHelper.setLastPlaylistPosition(0);
     }
 
     @Override
@@ -334,7 +333,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     }
 
     public PlaylistInterface getPlaylist(){
-        return playlist;
+        return null;
     }
 
 }

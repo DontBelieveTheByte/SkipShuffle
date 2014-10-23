@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.services;
+package com.dontbelievethebyte.skipshuffle.service;
 
 public class SkipShuflleMediaPlayerCommandsContract {
     public static final String COMMAND = "com.dontbelievethebyte.cmd.COMMAND";
