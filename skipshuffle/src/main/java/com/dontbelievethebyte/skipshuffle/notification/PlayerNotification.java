@@ -9,10 +9,10 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
+import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.services.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 
 public class PlayerNotification {
 
@@ -58,19 +58,17 @@ public class PlayerNotification {
 
     public Notification buildNotification()
     {
-        RemoteViews remoteViews = buildUI();
-
-
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(skipShuffleMediaPlayer);
-
         notificationBuilder.setSmallIcon(R.drawable.ic_notification);
-        notificationBuilder.setContent(remoteViews);
+        notificationBuilder.setContent(
+                buildUI()
+        );
         return notificationBuilder.build();
     }
 
     private RemoteViews buildUI()
     {
-        Intent mainActivityIntent = new Intent(skipShuffleMediaPlayer, MainActivity.class);
+        Intent mainActivityIntent = new Intent(skipShuffleMediaPlayer, PlayerActivity.class);
         SkipShuffleMediaPlayer.AndroidPlayerWrapper androidPlayerWrapper = skipShuffleMediaPlayer.getPlayerWrapper();
 
         RemoteViews remoteViews = new RemoteViews(
@@ -131,7 +129,6 @@ public class PlayerNotification {
                 R.id.notif_all,
                 mainActivityPendingIntent
         );
-
         return remoteViews;
     }
 }
