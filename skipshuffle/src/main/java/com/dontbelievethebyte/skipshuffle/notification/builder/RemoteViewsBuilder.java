@@ -53,16 +53,14 @@ public class RemoteViewsBuilder {
 
     private void buildPlay()
     {
-        SkipShuffleMediaPlayer.AndroidPlayerWrapper androidPlayerWrapper = skipShuffleMediaPlayer.getPlayerWrapper();
+        int imageResource = (skipShuffleMediaPlayer.isPlaying()) ?
+                DrawableMapper.getPause(skipShuffleMediaPlayer.getPreferencesHelper().getUIType()) :
+                DrawableMapper.getPlay(skipShuffleMediaPlayer.getPreferencesHelper().getUIType()) ;
 
-        int imageResource = (!androidPlayerWrapper.isPlaying()) ?
-                DrawableMapper.getPlay(skipShuffleMediaPlayer.getPreferencesHelper().getUIType()) :
-                DrawableMapper.getPause(skipShuffleMediaPlayer.getPreferencesHelper().getUIType());
-
-            remoteViews.setImageViewResource(
-                    R.id.notif_play,
-                    imageResource
-            );
+        remoteViews.setImageViewResource(
+                R.id.notif_play,
+                imageResource
+        );
 
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_play,
