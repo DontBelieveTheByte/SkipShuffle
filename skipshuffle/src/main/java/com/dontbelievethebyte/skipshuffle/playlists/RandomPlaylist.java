@@ -1,9 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.playlists;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.persistance.DbHandler;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,20 +10,14 @@ public class RandomPlaylist implements PlaylistInterface {
 
     private Long playlistId;
 
-    private DbHandler dbHandler;
 
     private int playlistPosition = 0;
 
     private List<Long> tracksIds = new ArrayList<Long>();
 
-    public RandomPlaylist(DbHandler dbHandler){
-        this.dbHandler = dbHandler;
-    }
+    public RandomPlaylist()
+    {
 
-    public RandomPlaylist(Long playlistId, DbHandler dbHandler) throws JSONException {
-        this.dbHandler = dbHandler;
-        this.playlistId = playlistId;
-        tracksIds = dbHandler.loadPlaylist(playlistId);
     }
 
     public Long getPlaylistId()
@@ -62,10 +53,7 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public Track getFirst() throws PlaylistEmptyException
     {
-        if (0 == tracksIds.size())
-            throw new PlaylistEmptyException(playlistId);
-
-        return dbHandler.getTrack(tracksIds.get(0));
+        return null;
     }
 
     @Override
@@ -73,8 +61,7 @@ public class RandomPlaylist implements PlaylistInterface {
     {
         if (0 == tracksIds.size())
             throw new PlaylistEmptyException(playlistId);
-
-        return dbHandler.getTrack(tracksIds.get(playlistPosition));
+        return null;
     }
 
     @Override
@@ -83,7 +70,7 @@ public class RandomPlaylist implements PlaylistInterface {
         if (position > tracksIds.size())
             position = tracksIds.size();
 
-        return dbHandler.getTrack(tracksIds.get(position));
+        return null;
     }
 
     @Override
@@ -94,7 +81,7 @@ public class RandomPlaylist implements PlaylistInterface {
         else
             playlistPosition++;
 
-        return dbHandler.getTrack((long)playlistPosition);
+        return null;
     }
 
     @Override
@@ -105,7 +92,7 @@ public class RandomPlaylist implements PlaylistInterface {
         else
             playlistPosition--;
 
-        return dbHandler.getTrack((long)playlistPosition);
+        return null;
     }
 
     @Override
@@ -141,10 +128,7 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void save()
     {
-        if (playlistId != null)
-            dbHandler.savePlaylist(playlistId, tracksIds);
-        else
-            dbHandler.savePlaylist(null, tracksIds);
+
     }
 
     @Override
@@ -155,6 +139,6 @@ public class RandomPlaylist implements PlaylistInterface {
 
     public List<Track> getAllTracks()
     {
-        return dbHandler.getAllPlaylistTracks(tracksIds);
+        return null;
     }
 }
