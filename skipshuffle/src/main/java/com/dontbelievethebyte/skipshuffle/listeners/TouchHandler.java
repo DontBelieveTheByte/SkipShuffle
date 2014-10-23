@@ -18,20 +18,12 @@ public class TouchHandler {
 
     public boolean handleTouch(View view, MotionEvent motionEvent)
     {
-
-        if (MotionEvent.ACTION_DOWN == motionEvent.getAction()){
-            handleActiveFeedback(view);
-
-//            if ((preferencesHelper.getLastPlaylist() == 0)  && !(this instanceof FilePickerActivity)) {
-//                pickMediaDirectories();
-//                //Return true because we already handled the event and want to prevent bubbling.
-//                return true;
-//            }
-        }
+        if (MotionEvent.ACTION_DOWN == motionEvent.getAction())
+            handleHapticFeedback(view);
         return false;
     }
 
-    private void handleActiveFeedback(View view)
+    private void handleHapticFeedback(View view)
     {
         PreferencesHelper preferencesHelper = baseActivity.getPreferencesHelper();
         if (preferencesHelper.isHapticFeedback()) {
