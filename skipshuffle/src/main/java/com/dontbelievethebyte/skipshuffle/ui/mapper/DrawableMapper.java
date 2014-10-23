@@ -1,6 +1,7 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.mapper;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 public class DrawableMapper {
 

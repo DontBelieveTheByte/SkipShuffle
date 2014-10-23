@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.mapper;
 
 public final class DimensionsMapper {
     //Drawer
