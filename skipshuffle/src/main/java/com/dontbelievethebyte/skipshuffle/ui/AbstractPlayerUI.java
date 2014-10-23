@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 
-public abstract class AbstractPlayerUI extends AbstractUI implements PlayerUIInterface {
+public abstract class AbstractPlayerUI extends BaseUI implements PlayerUIInterface {
 
     public ImageButton playlistBtn;
     public ImageButton prevBtn;

@@ -9,8 +9,11 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.TypeFaceMapper;
 
-public abstract class AbstractUI {
+public abstract class BaseUI {
     protected int uiType;
 
     protected boolean isLandScape;
@@ -21,7 +24,7 @@ public abstract class AbstractUI {
     protected Typeface typeface;
     protected ViewGroup bottomLayout;
 
-    public AbstractUI(BaseActivity activity, int contentLayout)
+    public BaseUI(BaseActivity activity, int contentLayout)
     {
         this.baseActivity = activity;
         uiType = baseActivity.getPreferencesHelper().getUIType();
@@ -71,5 +74,10 @@ public abstract class AbstractUI {
         );
 
         drawerList.setDivider(navDrawerSeparatorColorDrawable);
+    }
+
+    public void loadStub()
+    {
+
     }
 }

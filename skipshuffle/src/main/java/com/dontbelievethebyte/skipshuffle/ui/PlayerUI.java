@@ -9,16 +9,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.MainActivity;
+import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
-import com.dontbelievethebyte.skipshuffle.services.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 
-public class MainUI extends AbstractPlayerUI {
+public class PlayerUI extends AbstractPlayerUI {
 
-    public MainUI(MainActivity activity)
+    public PlayerUI(PlayerActivity activity)
     {
         super(activity, R.layout.main_activity);
         playlistBtn = (ImageButton) activity.findViewById(R.id.playlistBtn);
@@ -81,7 +83,7 @@ public class MainUI extends AbstractPlayerUI {
     public void reboot()
     {
         try {
-            if (baseActivity.getMediaPlayer().getPlayerWrapper().isPlaying())
+            if (baseActivity.getMediaPlayer().isPlaying())
                 doPlay();
             else
                 doPause();
