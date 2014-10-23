@@ -71,8 +71,9 @@
     <string-array name="drawer_menu">
         <item>Songs</item>
         <item>Artists</item>
-        <item>Album</item>
-        <item>Genre</item>
+        <item>Albums</item>
+        <item>Genres</item>
+        <item>Playlists</item>
     </string-array>
 
     <!-- File picker -->
