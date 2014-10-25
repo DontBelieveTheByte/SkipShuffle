@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:skipshuffle="http://schemas.android.com/apk/res-auto"
-    tools:context="com.dontbelievethebyte.skipshuffle.activities.MainActivity" >
+    tools:context="com.dontbelievethebyte.skipshuffle.activities.PlayerActivity" >
     <item
         android:title="@string/menu_theme"
         android:id="@+id/theme"
