@@ -27,9 +27,8 @@ import com.dontbelievethebyte.skipshuffle.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
+import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
@@ -42,22 +41,15 @@ public abstract class BaseActivity extends ActionBarActivity
     protected PlayerUIInterface playerUIInterface;
     protected PreferencesHelper preferencesHelper;
     protected CustomActionBarWrapper customActionBar;
+    protected ToastHelper toastHelper;
+
 
     private MediaScannerHelper mediaScannerHelper;
     private CustomOptionsMenuInterface customOptionsMenu;
+    private MediaPlayerServiceConnection mediaPlayerServiceConnection;
 
-    protected MediaPlayerServiceConnection mediaPlayerServiceConnection;
-    protected ToastHelper toastHelper;
-
-    private BaseUI baseUI;
     protected abstract void handleBackPressed();
-    protected abstract int getViewStub();
-
-    protected void setUI(Integer type)
-    {
-
-    }
-
+    protected abstract void setUI(Integer type);
 
     public PreferencesHelper getPreferencesHelper()
     {
@@ -70,6 +62,7 @@ public abstract class BaseActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         startMediaPlayerService();
+        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -78,7 +71,6 @@ public abstract class BaseActivity extends ActionBarActivity
 
         toastHelper = new ToastHelper(getApplicationContext());
         mediaScannerHelper = new MediaScannerHelper(this);
-        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
     }
 
     private void startMediaPlayerService()

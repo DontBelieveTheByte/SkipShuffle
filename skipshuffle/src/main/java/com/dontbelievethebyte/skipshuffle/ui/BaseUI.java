@@ -9,11 +9,12 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.TypeFaceMapper;
 
-public abstract class BaseUI {
+public class BaseUI {
     protected int uiType;
 
     protected boolean isLandScape;
@@ -24,11 +25,19 @@ public abstract class BaseUI {
     protected Typeface typeface;
     protected ViewGroup bottomLayout;
 
+
+
+    public BaseUI(UIBuilder builder)
+    {
+
+    }
+
     public BaseUI(BaseActivity activity, int contentLayout)
     {
         this.baseActivity = activity;
         uiType = baseActivity.getPreferencesHelper().getUIType();
-        baseActivity.setContentView(contentLayout);
+        baseActivity.setContentView(R.layout.base_ui);
+
         drawerList = (ListView) activity.findViewById(R.id.drawer_list);
         bottomLayout = (ViewGroup) baseActivity.findViewById(R.id.bottom);
         isLandScape = Configuration.ORIENTATION_LANDSCAPE == baseActivity.getResources().getConfiguration().orientation;
@@ -74,10 +83,5 @@ public abstract class BaseUI {
         );
 
         drawerList.setDivider(navDrawerSeparatorColorDrawable);
-    }
-
-    public void loadStub()
-    {
-
     }
 }

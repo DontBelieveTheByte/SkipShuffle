@@ -148,7 +148,6 @@ public class PlayerUI extends AbstractPlayerUI {
 
             }
         });
-
         flipLeftAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation)
@@ -198,6 +197,7 @@ public class PlayerUI extends AbstractPlayerUI {
         super.setUpDrawables();
         playlistBtn.setImageDrawable(playlistDrawable);
     }
+
     protected void setUpDimensions()
     {
         super.setUpDimensions();
@@ -327,6 +327,7 @@ public class PlayerUI extends AbstractPlayerUI {
         songLabel.setTextSize((int) songLabelTextHeight);
 
     }
+
     protected void setUpColors()
     {
         super.setUpColors();

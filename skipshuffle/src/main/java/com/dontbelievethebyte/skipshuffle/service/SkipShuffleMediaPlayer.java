@@ -110,7 +110,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         try {
             doSkip();
         } catch (PlaylistEmptyException playlistEmptyException) {
-            handlePlaylistEmptyException();
+            preferencesHelper.handlePlaylistEmptyException(playlistEmptyException);
         }
     }
 
@@ -182,12 +182,6 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     public PlaylistInterface getPlaylist()
     {
         return null;
-    }
-
-    public void handlePlaylistEmptyException()
-    {
-        preferencesHelper.setLastPlaylist(0);
-        preferencesHelper.setLastPlaylistPosition(0);
     }
 
     private void resetSeekPosition()

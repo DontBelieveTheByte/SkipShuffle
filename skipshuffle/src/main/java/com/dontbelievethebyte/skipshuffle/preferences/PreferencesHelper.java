@@ -9,6 +9,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.ui.UITypes;
 
 import java.io.File;
@@ -292,5 +293,11 @@ public class PreferencesHelper {
                     (PlaylistChangedCallback) context
             );
         }
+    }
+
+    public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
+    {
+        setLastPlaylist(0);
+        setLastPlaylistPosition(0);
     }
 }

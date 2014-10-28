@@ -29,12 +29,6 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
 
     }
 
-    @Override
-    protected int getViewStub()
-    {
-        return 0;
-    }
-
     protected void loadPlaylist(PlaylistInterface playlist)
     {
         playlist.setPosition(preferencesHelper.getLastPlaylistPosition());

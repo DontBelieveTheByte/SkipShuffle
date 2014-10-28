@@ -13,7 +13,7 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
 
     public CommandsBroadcastReceiver(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
-
+        this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
     }
 
     public void register()
