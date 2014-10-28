@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.service.wrapper;
+package com.dontbelievethebyte.skipshuffle.service.proxy;
 
 import android.media.MediaPlayer;
 
@@ -8,13 +8,13 @@ import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
 import java.io.IOException;
 
-public class AndroidPlayerWrapper implements MediaPlayer.OnPreparedListener,
+public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
                                              MediaPlayer.OnCompletionListener,
                                              MediaPlayer.OnSeekCompleteListener {
     private MediaPlayer mp;
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
 
-    public AndroidPlayerWrapper(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
+    public AndroidPlayer(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
         this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
         mp = new MediaPlayer();
