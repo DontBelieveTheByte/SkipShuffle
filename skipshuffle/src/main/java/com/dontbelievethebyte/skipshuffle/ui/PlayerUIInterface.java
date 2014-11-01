@@ -18,5 +18,4 @@ public interface PlayerUIInterface {
 
     public void setSongLabel(String title);
 
-    public Typeface getTypeFace();
 }
