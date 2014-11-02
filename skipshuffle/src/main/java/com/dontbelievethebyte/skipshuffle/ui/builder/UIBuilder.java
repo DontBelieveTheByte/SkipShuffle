@@ -1,31 +1,33 @@
 package com.dontbelievethebyte.skipshuffle.ui.builder;
 
-import android.app.Activity;
+import android.graphics.Typeface;
 
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
-import com.dontbelievethebyte.skipshuffle.ui.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.NavigationDrawerProxy;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
-import com.dontbelievethebyte.skipshuffle.ui.Drawables;
 
 public class UIBuilder {
 
-    private Activity activity;
-    private NavigationDrawerProxy navigationDrawerProxy;
+    private BaseActivity baseActivity;
+    private MusicPlayerDrawer musicPlayerDrawer;
     private Colors colors;
     private Drawables drawables;
     private PlayerUIInterface playerUIInterface;
     private ContentArea contentArea;
+    private Typeface typeface;
 
-    public void setActivity(Activity activity)
+    public void setActivity(BaseActivity baseActivity)
     {
-        this.activity = activity;
+        this.baseActivity = baseActivity;
     }
 
-    public void setNavigationDrawerProxy(NavigationDrawerProxy navigationDrawerProxy)
+    public void setNavigationDrawer(MusicPlayerDrawer musicPlayerDrawer)
     {
-        this.navigationDrawerProxy = navigationDrawerProxy;
+        this.musicPlayerDrawer = musicPlayerDrawer;
     }
 
     public void setPlayerUIInterface(PlayerUIInterface playerUIInterface)
@@ -46,6 +48,11 @@ public class UIBuilder {
     public void setColors(Colors colors)
     {
         this.colors = colors;
+    }
+
+    public void setTypeFace(Typeface typeFace)
+    {
+
     }
 
     public BaseUI build()

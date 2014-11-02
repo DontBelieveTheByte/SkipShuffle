@@ -133,7 +133,7 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
                 }
             });
 
-            setNavigationDrawerContent();
+            buildNavigationDrawer();
         } catch (NoMediaPlayerException noMediaPlayerException) {
             handleNoMediaPlayerException(noMediaPlayerException);
         }

@@ -1,35 +1,39 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.TypeFaceMapper;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.visitor.ColorVisitor;
+
+import java.util.ArrayList;
 
 public class BaseUI {
-    protected int uiType;
 
-    protected boolean isLandScape;
-    protected int computedScreenHeight;
-    protected int computedScreenWidth;
-    protected BaseActivity baseActivity;
-    protected ListView drawerList;
-    protected Typeface typeface;
+    private int uiType;
+    private Colors colors;
+    private BaseActivity baseActivity;
+    private ListView drawerList;
+    private Typeface typeface;
+    private PlayerUI playerUI;
+
     protected ViewGroup bottomLayout;
-
-
+    private ArrayList<UIElement> uiElements;
 
     public BaseUI(UIBuilder builder)
     {
 
+
+    }
+
+    public BaseActivity getBaseActivity()
+    {
+        return baseActivity;
     }
 
     public BaseUI(BaseActivity activity, int contentLayout)
@@ -40,9 +44,7 @@ public class BaseUI {
 
         drawerList = (ListView) activity.findViewById(R.id.drawer_list);
         bottomLayout = (ViewGroup) baseActivity.findViewById(R.id.bottom);
-        isLandScape = Configuration.ORIENTATION_LANDSCAPE == baseActivity.getResources().getConfiguration().orientation;
-        computedScreenHeight = baseActivity.getResources().getDisplayMetrics().heightPixels;
-        computedScreenWidth = baseActivity.getResources().getDisplayMetrics().widthPixels;
+
     }
 
     public Typeface getTypeFace()
@@ -56,32 +58,17 @@ public class BaseUI {
         return typeface;
     }
 
-    protected void setUpDimensions()
+    public ViewGroup getBottomLayout()
     {
-        DrawerLayout.LayoutParams params = (android.support.v4.widget.DrawerLayout.LayoutParams) drawerList.getLayoutParams();
-        params.width = (int) (computedScreenWidth * ( isLandScape ? DimensionsMapper.Drawer.Landscape.width : DimensionsMapper.Drawer.Portrait.width));
-        drawerList.setLayoutParams(params);
-        int listDividerHeight = (int)baseActivity.getResources().getDimension(R.dimen.list_divider_height);
-        drawerList.setDividerHeight(33);
+        return bottomLayout;
     }
 
     protected void setUpColors()
     {
+        ColorVisitor colorVisitor = new ColorVisitor(colors);
 
-        bottomLayout.setBackgroundResource(
-                ColorMapper.getBackground(uiType)
-        );
-
-        drawerList.setBackgroundResource(
-                ColorMapper.getNavDrawerBackground(uiType)
-        );
-
-        ColorDrawable navDrawerSeparatorColorDrawable = new ColorDrawable(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getListDivider(uiType)
-                )
-        );
-
-        drawerList.setDivider(navDrawerSeparatorColorDrawable);
+        for (UIElement element : uiElements) {
+            colorVisitor.visit(element);
+        }
     }
 }

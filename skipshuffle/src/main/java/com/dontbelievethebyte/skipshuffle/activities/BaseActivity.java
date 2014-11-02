@@ -61,8 +61,8 @@ public abstract class BaseActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
 
-        startMediaPlayerService();
-        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
+//        startMediaPlayerService();
+//        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -202,7 +202,7 @@ public abstract class BaseActivity extends ActionBarActivity
         mediaScannerHelper.showMediaScannerDialog();
     }
 
-    protected void setNavigationDrawerContent()
+    protected MusicPlayerDrawer buildNavigationDrawer()
     {
         MusicPlayerDrawer musicPlayerDrawer = new MusicPlayerDrawer(this, R.id.drawer_list);
         musicPlayerDrawer.setClickListener(
@@ -221,6 +221,7 @@ public abstract class BaseActivity extends ActionBarActivity
                         playerUIInterface.getTypeFace()
                 )
         );
+        return musicPlayerDrawer;
     }
 
     @Override

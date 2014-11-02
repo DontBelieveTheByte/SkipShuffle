@@ -1,7 +1,8 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.structured;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
@@ -14,6 +15,11 @@ public class Colors {
     public int navDrawerHeaderText;
     public int navDrawerText;
     public int songLabel;
+
+    public static ColorDrawable toColorDrawable(Integer color)
+    {
+        return new ColorDrawable(color);
+    }
 
     public Colors(int uiType)
     {
@@ -30,4 +36,5 @@ public class Colors {
     {
         return new Color();
     }
+
 }

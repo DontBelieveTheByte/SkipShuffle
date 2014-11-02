@@ -18,7 +18,7 @@ import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
-import com.dontbelievethebyte.skipshuffle.service.wrapper.AndroidPlayerWrapper;
+import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
 
 public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCallback,
                                                                HeadsetPluggedStateCallback,
@@ -26,7 +26,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
                                                                TrackCompleteCallback{
 
     private CommandsBroadcastReceiver clientCommandsBroadcastReceiver;
-    private AndroidPlayerWrapper playerWrapper;
+    private AndroidPlayer playerWrapper;
     private PreferencesHelper preferencesHelper;
     private PlayerNotification notification;
     private int lastSeekPosition = 0;
@@ -72,7 +72,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         clientCommandsBroadcastReceiver.register();
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         notification = new PlayerNotification(this);
-        playerWrapper = new AndroidPlayerWrapper(this);
+        playerWrapper = new AndroidPlayer(this);
     }
 
     @Override
