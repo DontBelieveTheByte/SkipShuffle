@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.ui.click.listener;
 
-import android.util.Log;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -23,7 +22,7 @@ public class Shuffle extends Custom {
             mediaPlayer.doShuffle();
             baseActivity.ui.player.doShuffle();
         } catch (NoMediaPlayerException n) {
-            Log.d(BaseActivity.TAG, "No media player");
+            baseActivity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
             baseActivity.getPreferencesHelper().handlePlaylistEmptyException(playlistEmptyException);
         }

@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.ui.click.listener;
 
-import android.util.Log;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -23,7 +22,7 @@ public class Skip extends Custom {
             mediaPlayer.doSkip();
             baseActivity.ui.player.doSkip();
         } catch (NoMediaPlayerException n) {
-            Log.d(BaseActivity.TAG, "No media player");
+            baseActivity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
             baseActivity.getPreferencesHelper().handlePlaylistEmptyException(playlistEmptyException);
         }
