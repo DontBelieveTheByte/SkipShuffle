@@ -16,7 +16,8 @@ public class Shuffle extends Custom {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         try {
             SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
             mediaPlayer.doShuffle();

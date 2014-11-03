@@ -15,7 +15,8 @@ public class Play extends Custom {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         try {
             SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
             if (mediaPlayer.isPlaying()) {

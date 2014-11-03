@@ -14,7 +14,8 @@ public class Playlist extends Custom {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View view)
+    {
         Intent playlistActivity = new Intent(baseActivity, PlaylistActivity.class);
         baseActivity.startActivity(playlistActivity);
     }
