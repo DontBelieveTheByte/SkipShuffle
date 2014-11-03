@@ -5,6 +5,11 @@ import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
 import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.click.listener.Play;
+import com.dontbelievethebyte.skipshuffle.ui.click.listener.Playlist;
+import com.dontbelievethebyte.skipshuffle.ui.click.listener.Prev;
+import com.dontbelievethebyte.skipshuffle.ui.click.listener.Shuffle;
+import com.dontbelievethebyte.skipshuffle.ui.click.listener.Skip;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
@@ -35,82 +40,29 @@ public class PlayerActivity extends BaseActivity {
     protected void setUI(Integer type)
     {
         CustomTypeface customTypeface = new CustomTypeface(this, type);
+        Drawables drawables = new Drawables(this, type);
+        PlayerUI player = new PlayerUI(
+            this,
+            customTypeface,
+            drawables
+        );
+
         BaseUI.UIBuilder uiBuilder = new BaseUI.UIBuilder();
-        uiBuilder.setUiType(preferencesHelper.getUIType());
         uiBuilder.setActivity(this);
-        uiBuilder.setContentArea(new ContentArea(R.layout.main_activity));
-        uiBuilder.setPlayerUIInterface(new PlayerUI(this, customTypeface));
+        uiBuilder.setContentArea(new ContentArea(this, R.layout.main_activity));
+        uiBuilder.setPlayer(player);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer());
         uiBuilder.setColors(new Colors(type));
-        uiBuilder.setDrawables(new Drawables(this, type));
+        uiBuilder.setDrawables(drawables);
         uiBuilder.setCustomTypeFace(customTypeface);
         ui = uiBuilder.build();
-//        try {
-//            mediaPlayer = getMediaPlayer();
-//
-//            ui = UIFactory.createPlayerUI(this, type);
-//
-//            ui.play.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    if (mediaPlayer.isPlaying()) {
-//                        ui.doPause();
-//                    } else {
-//                        ui.doPlay();
-//                    }
-//                }
-//            });
-//
-//            ui.skip.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doSkip();
-//                        ui.doSkip();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        preferencesHelper.handlePlaylistEmptyException(playlistEmptyException);
-//                    }
-//                }
-//            });
-//
-//            ui.prev.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doPrev();
-//                        ui.doPrev();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        preferencesHelper.handlePlaylistEmptyException(playlistEmptyException);
-//                    }
-//                }
-//            });
-//
-//            ui.shuffle.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doShuffle();
-//                        ui.doShuffle();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        preferencesHelper.handlePlaylistEmptyException(playlistEmptyException);
-//                    }
-//                }
-//            });
-//
-//            ui.playlist.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent playlistActivity = new Intent(getApplicationContext(), PlaylistActivity.class);
-//                    startActivity(playlistActivity);
-//                }
-//            });
-//            ui.reboot();
-//
-//            //Set up navigation drawer for selecting playlist.
-//            buildNavigationDrawer();
-//        } catch (NoMediaPlayerException noMediaPlayerException){
-//            Log.d(BaseActivity.TAG, "NO MEDIA PLAYER FOUNDS NOW");
-//            handleNoMediaPlayerException(noMediaPlayerException);
-//        }
+
+        ui.player.buttons.play.setOnClickListener(new Play(this));
+        ui.player.buttons.skip.setOnClickListener(new Skip(this));
+        ui.player.buttons.prev.setOnClickListener(new Prev(this));
+        ui.player.buttons.shuffle.setOnClickListener(new Shuffle(this));
+        ui.player.buttons.playlist.setOnClickListener(new Playlist(this));
+
+        ui.player.reboot();
     }
 }
