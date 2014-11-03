@@ -1,19 +1,20 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
+import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class PlayerActivity extends BaseActivity {
 
-    private PlayerUI ui;
-
     @Override
     protected void onPause()
     {
         //Give a break to GPU when hidden
-        ui.playBtn.clearAnimation();
+        ui.player.buttons.play.clearAnimation();
         super.onPause();
     }
 
@@ -21,27 +22,33 @@ public class PlayerActivity extends BaseActivity {
     protected void onResume()
     {
         super.onResume();
-        ui.reboot();
+        ui.player.reboot();
+    }
+
+    @Override
+    protected void handleBackPressed()
+    {
+
     }
 
     @Override
     protected void setUI(Integer type)
     {
-        UIBuilder uiBuilder = new UIBuilder();
+        CustomTypeface customTypeface = new CustomTypeface(this, type);
+        BaseUI.UIBuilder uiBuilder = new BaseUI.UIBuilder();
+        uiBuilder.setUiType(preferencesHelper.getUIType());
         uiBuilder.setActivity(this);
+        uiBuilder.setContentArea(new ContentArea(R.layout.main_activity));
+        uiBuilder.setPlayerUIInterface(new PlayerUI(this, customTypeface));
         uiBuilder.setNavigationDrawer(buildNavigationDrawer());
         uiBuilder.setColors(new Colors(type));
-        uiBuilder.setDrawables(new Drawables());
-//        uiBuilder.setContentArea();
-//        uiBuilder.setPlayerUIInterface();
-        uiBuilder.build();
+        uiBuilder.setDrawables(new Drawables(this, type));
+        uiBuilder.setCustomTypeFace(customTypeface);
+        ui = uiBuilder.build();
 //        try {
 //            mediaPlayer = getMediaPlayer();
 //
 //            ui = UIFactory.createPlayerUI(this, type);
-//
-//            //Useful for parent class.
-//            playerUIInterface = ui;
 //
 //            ui.play.setOnClickListener(new View.OnClickListener() {
 //                @Override
