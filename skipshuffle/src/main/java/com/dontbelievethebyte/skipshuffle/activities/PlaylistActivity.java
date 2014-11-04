@@ -16,6 +16,16 @@ import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 
 public class PlaylistActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
+    public static class Types {
+
+        public static final String TYPE = "Type";
+        public static final int SONGS = 0;
+        public static final int ARTISTS = 1;
+        public static final int ALBUMS = 2;
+        public static final int GENRES = 3;
+        public static final int PLAYLIST = 4;
+    }
+
     private PlaylistAdapter playlistAdapter;
     private PlaylistInterface playlist;
     private ListView listView;

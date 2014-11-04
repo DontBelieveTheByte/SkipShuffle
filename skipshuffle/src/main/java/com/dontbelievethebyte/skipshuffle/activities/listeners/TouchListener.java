@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.listeners;
+package com.dontbelievethebyte.skipshuffle.activities.listeners;
 
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
