@@ -45,10 +45,10 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
                 type = PlaylistActivity.Types.SONGS;
         }
         drawer.closeDrawer(Gravity.START);
-        startWithIntent(type);
+        startPlaylistActivity(type);
     }
 
-    private void startWithIntent(int type)
+    private void startPlaylistActivity(int type)
     {
         Intent intent = new Intent(
                 context,
