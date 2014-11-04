@@ -2,7 +2,7 @@ package com.dontbelievethebyte.skipshuffle.ui;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
-import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
+import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
@@ -26,7 +26,7 @@ public class UIComposition {
     private CustomTypeface typeface;
 
 
-    public UIComposition(UIBuilder builder)
+    public UIComposition(UICompositionBuilder builder)
     {
         baseActivity = builder.baseActivity;
         contentArea = builder.contentArea;
