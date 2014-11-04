@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
@@ -35,7 +36,7 @@ import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-public abstract class BaseActivity extends ActionBarActivity implements ThemeChangedCallback,
+public abstract class Activity extends ActionBarActivity implements ThemeChangedCallback,
                                                                         HapticFeedBackChangedCallback,
                                                                         View.OnTouchListener,
                                                                         MenuItemSelectedCallback {
@@ -54,10 +55,10 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     protected abstract void handleBackPressed();
     protected abstract void setUI(Integer type);
 
-    public PreferencesHelper getPreferencesHelper()
-    {
-        return preferencesHelper;
-    }
+//    public PreferencesHelper getPreferencesHelper()
+//    {
+//        return preferencesHelper;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -173,7 +174,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     @Override
     public boolean onTouch(View view, MotionEvent event)
     {
-        TouchListener touchHandler = new TouchListener(this);
+        TouchListener touchHandler = new TouchListener(preferencesHelper);
         return touchHandler.handleTouch(view, event);
     }
 
@@ -197,7 +198,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     public void showThemeSelectionDialog()
     {
         ThemeSelectionDialog themeSelectionDialog = new ThemeSelectionDialog(this);
-        themeSelectionDialog.build();
+        themeSelectionDialog.build(preferencesHelper);
         themeSelectionDialog.show();
     }
 
@@ -221,7 +222,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
                         this,
                         R.layout.drawer_list_item,
                         getResources().getStringArray(R.array.drawer_menu),
-                        getPreferencesHelper(),
+                        preferencesHelper,
                         customTypeface.getTypeFace()
                 )
         );
@@ -270,5 +271,11 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     {
         showThemeSelectionDialog();
         return true;
+    }
+
+    public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
+    {
+        preferencesHelper.setLastPlaylist(0);
+        preferencesHelper.setLastPlaylistPosition(0);
     }
 }

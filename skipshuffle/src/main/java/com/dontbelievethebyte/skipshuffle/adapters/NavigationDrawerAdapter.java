@@ -46,7 +46,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
     {
         this.selectedItem = selectedItem;
         notifyDataSetChanged();
-        //Trigger from baseActivity.
+        //Trigger from activity.
         //private NavigationDrawerAdapter mAdapter;
         //...
         //private void selectItem(int position) {

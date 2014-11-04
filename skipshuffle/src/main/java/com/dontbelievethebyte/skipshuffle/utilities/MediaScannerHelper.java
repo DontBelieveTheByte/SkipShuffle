@@ -3,7 +3,7 @@ package com.dontbelievethebyte.skipshuffle.utilities;
 
 import android.content.DialogInterface;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.MediaScannerProgressDialog;
 
@@ -11,12 +11,12 @@ public class MediaScannerHelper {
 
     public static final String IS_SCANNING_MEDIA = "IS_SCANNING_MEDIA";
 
-    private BaseActivity baseActivity;
+    private Activity baseActivity;
     private DialogInterface.OnClickListener positive;
     private MediaScannerClient mediaScannerClient;
     private MediaScannerProgressDialog mediaScannerProgressDialog;
 
-    public MediaScannerHelper(BaseActivity baseActivity)
+    public MediaScannerHelper(Activity baseActivity)
     {
         this.baseActivity = baseActivity;
         positive = new DialogInterface.OnClickListener() {

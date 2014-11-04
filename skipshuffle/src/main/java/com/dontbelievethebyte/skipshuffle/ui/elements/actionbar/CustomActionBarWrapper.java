@@ -3,17 +3,17 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.actionbar;
 import android.support.v7.app.ActionBar;
 import android.view.ViewConfiguration;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 
 public class CustomActionBarWrapper {
 
-    private BaseActivity baseActivity;
+    private Activity baseActivity;
     private ActionBar actionBar;
     private boolean hasHardWareMenuKey;
     private boolean isOptionsMenuOpen;
 
-    public CustomActionBarWrapper(BaseActivity baseActivity)
+    public CustomActionBarWrapper(Activity baseActivity)
     {
         this.baseActivity = baseActivity;
         actionBar = baseActivity.getSupportActionBar();

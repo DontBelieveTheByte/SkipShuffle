@@ -3,12 +3,12 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners;
 import android.content.Intent;
 import android.view.View;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
 
 public class PlaylistClick extends CustomAbstractClick {
 
-    public PlaylistClick(BaseActivity baseActivity)
+    public PlaylistClick(Activity baseActivity)
     {
         super(baseActivity);
     }
@@ -16,7 +16,7 @@ public class PlaylistClick extends CustomAbstractClick {
     @Override
     public void onClick(View view)
     {
-        Intent playlistActivity = new Intent(baseActivity, PlaylistActivity.class);
-        baseActivity.startActivity(playlistActivity);
+        Intent playlistActivity = new Intent(activity, PlaylistActivity.class);
+        activity.startActivity(playlistActivity);
     }
 }

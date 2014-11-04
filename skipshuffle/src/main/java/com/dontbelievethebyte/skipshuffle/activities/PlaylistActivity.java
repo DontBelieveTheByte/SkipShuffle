@@ -14,7 +14,7 @@ import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 
-public class PlaylistActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class PlaylistActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private PlaylistAdapter playlistAdapter;
     private PlaylistInterface playlist;
@@ -31,6 +31,7 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
         playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
         playlistAdapter = new PlaylistAdapter(
                 this,
+                ui.player.buttons.drawables,
                 playlist
         );
 

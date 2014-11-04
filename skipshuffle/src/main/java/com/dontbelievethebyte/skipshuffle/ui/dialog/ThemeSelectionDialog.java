@@ -6,23 +6,22 @@ import android.content.DialogInterface;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 public class ThemeSelectionDialog {
 
-    private BaseActivity baseActivity;
+    private Activity baseActivity;
     private Dialog themeSelectionDialog;
 
-    public ThemeSelectionDialog(BaseActivity baseActivity)
+    public ThemeSelectionDialog(Activity activity)
     {
-        this.baseActivity = baseActivity;
+        this.baseActivity = activity;
     }
 
-    public void build()
+    public void build(final PreferencesHelper preferencesHelper)
     {
-        final PreferencesHelper preferencesHelper = baseActivity.getPreferencesHelper();
         AlertDialog.Builder builder = new AlertDialog.Builder(baseActivity);
 
         builder.setTitle(baseActivity.getString(R.string.dialog_theme_title));

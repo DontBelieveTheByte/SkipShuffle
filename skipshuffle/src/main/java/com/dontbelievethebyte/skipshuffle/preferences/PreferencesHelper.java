@@ -9,7 +9,6 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 import java.io.File;
@@ -20,13 +19,10 @@ import java.util.Set;
 
 public class PreferencesHelper {
 
-    private static final String TAG = "SkipShufflePrefsHelper";
-
     private Boolean isHapticFeedback;
     private Long currentPlaylist;
     private Integer currentPlaylistPosition;
     private Integer currentUIType;
-    private ArrayList<File> directories;
     private SharedPreferences sharedPreferences;
     private Context context;
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
@@ -63,41 +59,6 @@ public class PreferencesHelper {
             );
         }
         return currentPlaylistPosition;
-    }
-
-    public ArrayList<File> getMediaDirectories()
-    {
-        if (null == directories) {
-            directories = new ArrayList<File>();
-
-            String directoriesString = sharedPreferences.getString(
-                    context.getString(R.string.pref_media_directories),
-                    null
-            );
-            if (null != directoriesString) {
-                ArrayList <String> directoryBuilder = new ArrayList<String>();
-                directoryBuilder.addAll(
-                        Arrays.asList(
-                                directoriesString.split(
-                                        context.getString(R.string.pref_media_directories_separator)
-                                )
-                        )
-                );
-                //Cleanup the last path because it won't split.
-                directoryBuilder.set(
-                        directoryBuilder.size()-1,
-                        directoryBuilder.get(
-                                directoryBuilder.size() -1).replace(
-                                context.getString(R.string.pref_media_directories_separator),
-                                ""
-                        )
-                );
-                for (String directoryName : directoryBuilder) {
-                    directories.add(new File(directoryName));
-                }
-            }
-        }
-        return directories;
     }
 
     public Integer getUIType()
@@ -236,23 +197,6 @@ public class PreferencesHelper {
                 ).apply();
     }
 
-    public void setMediaDirectories(ArrayList<File> newDirectories)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(File directory : newDirectories){
-            stringBuilder.append(directory)
-                         .append(
-                             context.getString(R.string.pref_media_directories_separator)
-                         );
-        }
-        sharedPreferences.edit()
-                .putString(
-                        context.getString(R.string.pref_media_directories),
-                        stringBuilder.toString()
-                ).apply();
-        directories = newDirectories;
-    }
-
     public void setUIType(int UIType)
     {
         currentUIType = UIType;
@@ -293,11 +237,5 @@ public class PreferencesHelper {
                     (PlaylistChangedCallback) context
             );
         }
-    }
-
-    public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
-    {
-        setLastPlaylist(0);
-        setLastPlaylistPosition(0);
     }
 }

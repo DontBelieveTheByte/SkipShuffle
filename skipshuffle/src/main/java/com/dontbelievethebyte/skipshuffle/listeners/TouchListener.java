@@ -4,16 +4,15 @@ import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 
 public class TouchListener {
 
-    BaseActivity baseActivity;
+    private PreferencesHelper preferencesHelper;
 
-    public TouchListener(BaseActivity baseActivity)
+    public TouchListener(PreferencesHelper preferencesHelper)
     {
-        this.baseActivity = baseActivity;
+        this.preferencesHelper = preferencesHelper;
     }
 
     public boolean handleTouch(View view, MotionEvent motionEvent)
@@ -25,7 +24,6 @@ public class TouchListener {
 
     private void handleHapticFeedback(View view)
     {
-        PreferencesHelper preferencesHelper = baseActivity.getPreferencesHelper();
         if (preferencesHelper.isHapticFeedback()) {
             view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
         }

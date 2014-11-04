@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DimensionsVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
@@ -15,7 +15,7 @@ public class MusicPlayerDrawer implements UIElementCompositeInterface,
 
     private ListView drawerList;
 
-    public MusicPlayerDrawer(BaseActivity baseActivity, int drawerId)
+    public MusicPlayerDrawer(Activity baseActivity, int drawerId)
     {
         drawerList = (ListView) baseActivity.findViewById(drawerId);
     }

@@ -1,5 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.adapters;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class PlaylistAdapter extends BaseAdapter {
 
@@ -27,16 +26,15 @@ public class PlaylistAdapter extends BaseAdapter {
 
     private PlaylistInterface playlist;
     private LayoutInflater layoutInflater;
-    private BaseActivity baseActivity;
-    private PreferencesHelper preferencesHelper;
+    private Activity activity;
+    private Drawables drawables;
 
-    public PlaylistAdapter(BaseActivity baseActivity,
-                           PlaylistInterface playlist)
+    public PlaylistAdapter(Activity activity, Drawables drawables ,PlaylistInterface playlist)
     {
-        this.baseActivity = baseActivity;
+        this.activity = activity;
+        this.drawables = drawables;
         this.playlist = playlist;
-        this.preferencesHelper = baseActivity.getPreferencesHelper();
-        layoutInflater = LayoutInflater.from(baseActivity);
+        layoutInflater = LayoutInflater.from(activity);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class PlaylistAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private ImageView setImage(View view, int resourceId, Track track, boolean isPlay)
+    private ImageView setImage(View view, int resourceId, Track track, boolean isPlayButton)
     {
         ImageView iv = (ImageView) view.findViewById(resourceId);
         LayoutParams params = iv.getLayoutParams();
@@ -99,10 +97,8 @@ public class PlaylistAdapter extends BaseAdapter {
             if (track.getId() == playlist.getCurrent().getId()) {
                 params.width = params.height;
                 iv.setImageDrawable(
-                        baseActivity.getResources().getDrawable(
-                                isPlay ? DrawableMapper.getPlay(preferencesHelper.getUIType())
-                                        : DrawableMapper.getPause(preferencesHelper.getUIType())
-                        )
+                        isPlayButton ? drawables.getPlay()
+                                     : drawables.getPause()
                 );
             } else {
                 iv.setImageDrawable(null);
@@ -132,7 +128,7 @@ public class PlaylistAdapter extends BaseAdapter {
         String artist = track.getArtist();
         TextView tv = (TextView) view.findViewById(resourceId);
         if (artist == null) {
-            artist = baseActivity.getString(R.string.meta_data_unknown_artist);
+            artist = activity.getString(R.string.meta_data_unknown_artist);
         }
         tv.setText(artist);
         return tv;

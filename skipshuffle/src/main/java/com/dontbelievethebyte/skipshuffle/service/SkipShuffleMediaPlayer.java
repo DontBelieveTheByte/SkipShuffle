@@ -6,7 +6,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.callbacks.HeadsetPluggedStateCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.MediaPlayerCommandsCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
@@ -48,7 +48,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
 
     private void handleCommandException(Exception exception)
     {
-        Log.d(BaseActivity.TAG, exception.getMessage());
+        Log.d(Activity.TAG, exception.getMessage());
     }
 
     public class MediaPlayerBinder extends Binder
@@ -110,7 +110,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         try {
             doSkip();
         } catch (PlaylistEmptyException playlistEmptyException) {
-            preferencesHelper.handlePlaylistEmptyException(playlistEmptyException);
+            handlePlaylistEmptyException(playlistEmptyException);
         }
     }
 
@@ -187,5 +187,11 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     private void resetSeekPosition()
     {
         lastSeekPosition = 0;
+    }
+
+    public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
+    {
+        preferencesHelper.setLastPlaylist(0);
+        preferencesHelper.setLastPlaylistPosition(0);
     }
 }
