@@ -4,11 +4,12 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
-public class Play extends Custom {
+public class PrevClick extends CustomAbstractClick {
 
-    public Play(BaseActivity baseActivity)
+    public PrevClick(BaseActivity baseActivity)
     {
         super(baseActivity);
     }
@@ -18,13 +19,12 @@ public class Play extends Custom {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
-            if (mediaPlayer.isPlaying()) {
-                baseActivity.ui.player.doPause();
-            } else {
-                baseActivity.ui.player.doPlay();
-            }
-        } catch (NoMediaPlayerException n){
+            mediaPlayer.doPrev();
+            baseActivity.ui.player.doPrev();
+        } catch (NoMediaPlayerException n) {
             baseActivity.handleNoMediaPlayerException(n);
+        } catch (PlaylistEmptyException playlistEmptyException) {
+            baseActivity.getPreferencesHelper().handlePlaylistEmptyException(playlistEmptyException);
         }
     }
 }

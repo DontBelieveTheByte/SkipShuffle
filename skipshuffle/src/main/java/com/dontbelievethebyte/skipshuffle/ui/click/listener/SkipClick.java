@@ -7,9 +7,9 @@ import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
-public class Shuffle extends Custom {
+public class SkipClick extends CustomAbstractClick {
 
-    public Shuffle(BaseActivity baseActivity)
+    public SkipClick(BaseActivity baseActivity)
     {
         super(baseActivity);
     }
@@ -19,8 +19,8 @@ public class Shuffle extends Custom {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
-            mediaPlayer.doShuffle();
-            baseActivity.ui.player.doShuffle();
+            mediaPlayer.doSkip();
+            baseActivity.ui.player.doSkip();
         } catch (NoMediaPlayerException n) {
             baseActivity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
