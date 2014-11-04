@@ -21,8 +21,16 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.PlaylistActivity"
+            android:theme="@style/CustomActionBarTheme"
+            android:label="@string/label_playlist" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <service android:name=".service.SkipShuffleMediaPlayer" />
-        <service android:name=".service.MediaScannerService" />
     </application>
 
 </manifest>
