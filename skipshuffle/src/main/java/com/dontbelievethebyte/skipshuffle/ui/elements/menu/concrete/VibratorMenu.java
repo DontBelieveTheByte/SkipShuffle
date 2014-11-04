@@ -9,7 +9,6 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.menu.AbstractMenu;
 
 public class VibratorMenu extends AbstractMenu {
 
-
     public VibratorMenu(Activity activity, Menu menu, MenuItemSelectedCallback menuItemSelectedCallback)
     {
         super(activity, menu, menuItemSelectedCallback);

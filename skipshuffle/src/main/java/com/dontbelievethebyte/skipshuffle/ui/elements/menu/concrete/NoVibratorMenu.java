@@ -17,12 +17,10 @@ public class NoVibratorMenu extends AbstractMenu implements CustomOptionsMenuInt
         super(activity, menu, menuItemSelectedCallback);
     }
 
-
     @Override
     protected int getMenuResourceId()
     {
         return R.menu.main_no_vibrator;
     }
-
 
 }
