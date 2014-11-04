@@ -1,63 +1,69 @@
 package com.dontbelievethebyte.skipshuffle.ui.builder;
 
-import android.graphics.Typeface;
-
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
+import com.dontbelievethebyte.skipshuffle.ui.AbstractPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
 
 public class UIBuilder {
 
-    private BaseActivity baseActivity;
-    private MusicPlayerDrawer musicPlayerDrawer;
-    private Colors colors;
-    private Drawables drawables;
-    private PlayerUIInterface playerUIInterface;
-    private ContentArea contentArea;
-    private Typeface typeface;
+    public AbstractPlayer player;
+    public MusicPlayerDrawer musicPlayerDrawer;
 
-    public void setActivity(BaseActivity baseActivity)
+    public BaseActivity baseActivity;
+    public ContentArea contentArea;
+    public Colors colors;
+    public Drawables drawables;
+    public CustomTypeface customTypeface;
+
+    public UIBuilder setActivity(BaseActivity baseActivity)
     {
         this.baseActivity = baseActivity;
+        return this;
     }
 
-    public void setNavigationDrawer(MusicPlayerDrawer musicPlayerDrawer)
+    public UIBuilder setNavigationDrawer(MusicPlayerDrawer musicPlayerDrawer)
     {
         this.musicPlayerDrawer = musicPlayerDrawer;
+        return this;
     }
 
-    public void setPlayerUIInterface(PlayerUIInterface playerUIInterface)
+    public UIBuilder setPlayer(AbstractPlayer playerUIInterface)
     {
-        this.playerUIInterface = playerUIInterface;
+        this.player = playerUIInterface;
+        return this;
     }
 
-    public void setContentArea(ContentArea contentArea)
+    public UIBuilder setLayout(ContentArea contentArea)
     {
         this.contentArea = contentArea;
+        return this;
     }
 
-    public void setDrawables(Drawables drawables)
+    public UIBuilder setDrawables(Drawables drawables)
     {
         this.drawables = drawables;
+        return this;
     }
 
-    public void setColors(Colors colors)
+    public UIBuilder setColors(Colors colors)
     {
         this.colors = colors;
+        return this;
     }
 
-    public void setTypeFace(Typeface typeFace)
+    public UIBuilder setCustomTypeFace(CustomTypeface customTypeface)
     {
-
+        this.customTypeface = customTypeface;
+        return this;
     }
 
     public BaseUI build()
     {
         return new BaseUI(this);
     }
-
 }
