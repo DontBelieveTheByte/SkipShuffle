@@ -1,11 +1,11 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
-import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
@@ -54,11 +54,10 @@ public class PlayerActivity extends BaseActivity {
             songLabel
         );
 
-        UIBuilder uiBuilder = new UIBuilder();
+        UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(this);
         uiBuilder.setContentArea(contentArea);
-        uiBuilder.setNavigationDrawer(buildNavigationDrawer());
-        uiBuilder.setCustomTypeFace(customTypeface);
+        uiBuilder.setNavigationDrawer(buildNavigationDrawer(customTypeface));
         uiBuilder.setColors(new Colors(type));
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);

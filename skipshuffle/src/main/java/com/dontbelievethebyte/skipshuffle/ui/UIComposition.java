@@ -23,8 +23,6 @@ public class UIComposition {
     private ContentArea contentArea;
     private Colors colors;
     private Drawables drawables;
-    private CustomTypeface typeface;
-
 
     public UIComposition(UICompositionBuilder builder)
     {
@@ -34,11 +32,8 @@ public class UIComposition {
         musicPlayerDrawer = builder.musicPlayerDrawer;
         player = builder.player;
         drawables = builder.drawables;
-        typeface = builder.customTypeface;
         visitElements();
     }
-
-
 
     private void visitElements()
     {
@@ -69,7 +64,6 @@ public class UIComposition {
             dimensionsVisitor.visit(element);
         }
     }
-
 
     private void drawablesVisit(ArrayList<UIElementCompositeInterface> uiElements)
     {

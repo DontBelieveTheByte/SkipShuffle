@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,12 +14,14 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBarWrapper;
+import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.menu.builder.OptionsMenuBuilder;
@@ -26,6 +29,7 @@ import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
@@ -198,26 +202,25 @@ public abstract class BaseActivity extends ActionBarActivity
         mediaScannerHelper.showMediaScannerDialog();
     }
 
-    protected MusicPlayerDrawer buildNavigationDrawer()
+    protected MusicPlayerDrawer buildNavigationDrawer(CustomTypeface customTypeface)
     {
         MusicPlayerDrawer musicPlayerDrawer = new MusicPlayerDrawer(this, R.id.drawer_list);
-//        musicPlayerDrawer.setClickListener(
-//                new NavDrawerClickListener(
-//                        this,
-//                        (DrawerLayout) findViewById(R.id.drawer_layout)
-//                )
-//        );
-//        musicPlayerDrawer.setTouchListener(this);
-//        musicPlayerDrawer.setAdapter(
-//                new NavigationDrawerAdapter(
-//                        this,
-//                        R.layout.drawer_list_item,
-//                        getResources().getStringArray(R.array.drawer_menu),
-//                        getPreferencesHelper(),
-//                        playerUIInterface.getTypeFace(),
-//                        null
-//                )
-//        );
+        musicPlayerDrawer.setClickListener(
+                new NavDrawerClickListener(
+                        this,
+                        (DrawerLayout) findViewById(R.id.drawer_layout)
+                )
+        );
+        musicPlayerDrawer.setTouchListener(this);
+        musicPlayerDrawer.setAdapter(
+                new NavigationDrawerAdapter(
+                        this,
+                        R.layout.drawer_list_item,
+                        getResources().getStringArray(R.array.drawer_menu),
+                        getPreferencesHelper(),
+                        customTypeface.getTypeFace()
+                )
+        );
         return musicPlayerDrawer;
     }
 

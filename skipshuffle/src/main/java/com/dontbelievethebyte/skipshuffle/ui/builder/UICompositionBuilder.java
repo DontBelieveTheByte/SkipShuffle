@@ -5,7 +5,6 @@ import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
@@ -18,7 +17,6 @@ public class UICompositionBuilder {
     public ContentArea contentArea;
     public Colors colors;
     public Drawables drawables;
-    public CustomTypeface customTypeface;
 
     public UICompositionBuilder setActivity(BaseActivity baseActivity)
     {
@@ -53,12 +51,6 @@ public class UICompositionBuilder {
     public UICompositionBuilder setColors(Colors colors)
     {
         this.colors = colors;
-        return this;
-    }
-
-    public UICompositionBuilder setCustomTypeFace(CustomTypeface customTypeface)
-    {
-        this.customTypeface = customTypeface;
         return this;
     }
 
