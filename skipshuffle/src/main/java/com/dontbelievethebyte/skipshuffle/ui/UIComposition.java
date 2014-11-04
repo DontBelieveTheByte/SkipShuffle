@@ -1,16 +1,16 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.ColorVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.DimensionsVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.DrawablesVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.ColorVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DimensionsVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
 
 import java.util.ArrayList;
 

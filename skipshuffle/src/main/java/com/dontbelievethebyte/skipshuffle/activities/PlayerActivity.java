@@ -9,7 +9,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtonsAnimations;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 
 public class PlayerActivity extends BaseActivity {
 

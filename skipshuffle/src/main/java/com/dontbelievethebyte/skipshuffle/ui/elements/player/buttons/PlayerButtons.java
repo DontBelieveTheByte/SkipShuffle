@@ -6,8 +6,9 @@ import android.widget.ImageButton;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.DrawablesVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
 
 public class PlayerButtons implements UIElementCompositeInterface, DrawablesVisitor.Visitable {
 

@@ -4,8 +4,8 @@ package com.dontbelievethebyte.skipshuffle.utilities;
 import android.content.DialogInterface;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.dialog.MediaScannerDialog;
-import com.dontbelievethebyte.skipshuffle.dialog.MediaScannerProgressDialog;
+import com.dontbelievethebyte.skipshuffle.ui.dialog.MediaScannerDialog;
+import com.dontbelievethebyte.skipshuffle.ui.dialog.MediaScannerProgressDialog;
 
 public class MediaScannerHelper {
 

@@ -13,7 +13,7 @@ import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.notification.PlayerNotification;
+import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;

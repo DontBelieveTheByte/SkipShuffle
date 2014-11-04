@@ -1,7 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.ui.builder;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
