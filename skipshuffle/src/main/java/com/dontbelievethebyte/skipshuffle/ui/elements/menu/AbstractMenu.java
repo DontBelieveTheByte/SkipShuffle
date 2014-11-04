@@ -1,12 +1,14 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.menu;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.BackPressedNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
@@ -16,12 +18,13 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarW
 public abstract class AbstractMenu implements CustomOptionsMenuInterface {
 
     private MenuItemSelectedCallback menuItemSelectedCallback;
-    protected Activity baseActivity;
+    protected Activity activity;
     protected boolean isOptionsMenuOpen = false;
     protected CustomActionBarWrapper customActionBarWrapper;
 
     public AbstractMenu(Activity activity, Menu menu, MenuItemSelectedCallback menuItemSelectedCallback)
     {
+        this.activity = activity;
         this.menuItemSelectedCallback = menuItemSelectedCallback;
         MenuInflater menuInflater = activity.getMenuInflater();
         menuInflater.inflate(getMenuResourceId(), menu);
@@ -57,6 +60,7 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
     @Override
     public boolean handleMenuKeyDown(int keyCode, KeyEvent event)
     {
+        Log.d(BaseActivity.TAG, "PRESSED!!!");
         boolean returnValue = false;
 
         if (isOptionsMenuOpen) {
@@ -67,9 +71,9 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
                 } catch (NoHardwareMenuKeyException noHardWareMenuKeyException) {
                     returnValue = true;
                 }
-        }
+            }
         } else {
-            baseActivity.closeOptionsMenu();
+            activity.closeOptionsMenu();
         }
         isOptionsMenuOpen = !isOptionsMenuOpen;
         return returnValue;

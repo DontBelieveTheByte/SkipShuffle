@@ -1,7 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.Activity;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
@@ -18,9 +18,9 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 
 public class PlayerUI extends AbstractPlayerUI implements UIElementCompositeInterface {
 
-    private Activity baseActivity;
+    private BaseActivity baseActivity;
 
-    public PlayerUI(Activity baseActivity, PlayerButtons playerButtons, SongLabel songLabel)
+    public PlayerUI(BaseActivity baseActivity, PlayerButtons playerButtons, SongLabel songLabel)
     {
         this.baseActivity = baseActivity;
         this.songLabel = songLabel;

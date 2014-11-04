@@ -1,6 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.ui.builder;
 
-import com.dontbelievethebyte.skipshuffle.activities.Activity;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
@@ -13,12 +13,12 @@ public class UICompositionBuilder {
     public AbstractPlayerUI player;
     public MusicPlayerDrawer musicPlayerDrawer;
 
-    public Activity baseActivity;
+    public BaseActivity baseActivity;
     public ContentArea contentArea;
     public Colors colors;
     public Drawables drawables;
 
-    public UICompositionBuilder setActivity(Activity baseActivity)
+    public UICompositionBuilder setActivity(BaseActivity baseActivity)
     {
         this.baseActivity = baseActivity;
         return this;

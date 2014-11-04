@@ -11,7 +11,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class PlayerActivity extends Activity {
+public class PlayerActivity extends BaseActivity {
 
     @Override
     protected void onPause()

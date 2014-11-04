@@ -6,16 +6,16 @@ import android.content.DialogInterface;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.Activity;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 public class ThemeSelectionDialog {
 
-    private Activity baseActivity;
+    private BaseActivity baseActivity;
     private Dialog themeSelectionDialog;
 
-    public ThemeSelectionDialog(Activity activity)
+    public ThemeSelectionDialog(BaseActivity activity)
     {
         this.baseActivity = activity;
     }

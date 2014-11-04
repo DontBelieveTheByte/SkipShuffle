@@ -6,7 +6,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.dontbelievethebyte.skipshuffle.activities.Activity;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.callbacks.HeadsetPluggedStateCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.MediaPlayerCommandsCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
@@ -48,7 +48,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
 
     private void handleCommandException(Exception exception)
     {
-        Log.d(Activity.TAG, exception.getMessage());
+        Log.d(BaseActivity.TAG, exception.getMessage());
     }
 
     public class MediaPlayerBinder extends Binder

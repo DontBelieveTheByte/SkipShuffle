@@ -36,12 +36,35 @@ import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-public abstract class Activity extends ActionBarActivity implements ThemeChangedCallback,
+public abstract class BaseActivity extends ActionBarActivity implements ThemeChangedCallback,
                                                                         HapticFeedBackChangedCallback,
-                                                                        View.OnTouchListener,
-                                                                        MenuItemSelectedCallback {
+                                                                        View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
+
+    private class MenuCallBacks implements MenuItemSelectedCallback {
+        @Override
+        public boolean handleMenuRefreshMedia()
+        {
+            showMediaScannerDialog();
+            return true;
+        }
+
+        @Override
+        public boolean handleMenuHapticFeedBack()
+        {
+            preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
+            return true;
+        }
+
+        @Override
+        public boolean handleMenuThemeSelection()
+        {
+            showThemeSelectionDialog();
+            return true;
+        }
+    }
+
     public UIComposition ui;
 
     protected PreferencesHelper preferencesHelper;
@@ -54,11 +77,6 @@ public abstract class Activity extends ActionBarActivity implements ThemeChanged
 
     protected abstract void handleBackPressed();
     protected abstract void setUI(Integer type);
-
-//    public PreferencesHelper getPreferencesHelper()
-//    {
-//        return preferencesHelper;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -103,7 +121,8 @@ public abstract class Activity extends ActionBarActivity implements ThemeChanged
     {
         OptionsMenuBuilder optionsMenuCreator = new OptionsMenuBuilder(this);
         optionsMenuCreator.setCustomActionBarWrapper(customActionBar);
-        optionsMenuCreator.setMenuItemSelectedCallback(this);
+        optionsMenuCreator.setMenuItemSelectedCallback(new MenuCallBacks());
+        optionsMenuCreator.setCustomActionBarWrapper(customActionBar);
         customOptionsMenu = optionsMenuCreator.build(menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -250,27 +269,6 @@ public abstract class Activity extends ActionBarActivity implements ThemeChanged
         toastHelper.showLongToast(
                 getString(R.string.no_media_player)
         );
-    }
-
-    @Override
-    public boolean handleMenuRefreshMedia()
-    {
-        showMediaScannerDialog();
-        return true;
-    }
-
-    @Override
-    public boolean handleMenuHapticFeedBack()
-    {
-        preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
-        return true;
-    }
-
-    @Override
-    public boolean handleMenuThemeSelection()
-    {
-        showThemeSelectionDialog();
-        return true;
     }
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)

@@ -1,28 +1,28 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.actionbar;
 
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ViewConfiguration;
 
-import com.dontbelievethebyte.skipshuffle.activities.Activity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 
 public class CustomActionBarWrapper {
 
-    private Activity baseActivity;
+    private ActionBarActivity activity;
     private ActionBar actionBar;
     private boolean hasHardWareMenuKey;
     private boolean isOptionsMenuOpen;
 
-    public CustomActionBarWrapper(Activity baseActivity)
+    public CustomActionBarWrapper(ActionBarActivity activity)
     {
-        this.baseActivity = baseActivity;
-        actionBar = baseActivity.getSupportActionBar();
-        hasHardWareMenuKey = ViewConfiguration.get(baseActivity).hasPermanentMenuKey();
+        this.activity = activity;
+        actionBar = activity.getSupportActionBar();
+        hasHardWareMenuKey = ViewConfiguration.get(activity).hasPermanentMenuKey();
     }
 
     public void setUp()
     {
-        if (ViewConfiguration.get(baseActivity).hasPermanentMenuKey())
+        if (ViewConfiguration.get(activity).hasPermanentMenuKey())
             actionBar.hide();
 
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -51,11 +51,11 @@ public class CustomActionBarWrapper {
     {
         if (actionBar.isShowing()) {
             if (isOptionsMenuOpen) {
-                baseActivity.closeOptionsMenu();
+                activity.closeOptionsMenu();
                 actionBar.hide();
                 isOptionsMenuOpen = false;
             } else {
-                baseActivity.openOptionsMenu();
+                activity.openOptionsMenu();
                 isOptionsMenuOpen = true;
             }
         } else {
