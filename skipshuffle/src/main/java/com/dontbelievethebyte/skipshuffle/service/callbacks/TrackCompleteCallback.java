@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.callbacks;
+package com.dontbelievethebyte.skipshuffle.service.callbacks;
 
 public interface TrackCompleteCallback {
     public void onTrackComplete();

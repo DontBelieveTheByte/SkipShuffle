@@ -1,26 +1,23 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.menu;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
-import com.dontbelievethebyte.skipshuffle.exceptions.BackPressedNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
-import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
+import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
 
 public abstract class AbstractMenu implements CustomOptionsMenuInterface {
 
     private MenuItemSelectedCallback menuItemSelectedCallback;
     protected Activity activity;
-    protected boolean isOptionsMenuOpen = false;
     protected CustomActionBarWrapper customActionBarWrapper;
+    private MenuStateMachine menuStateMachine;
 
     public AbstractMenu(Activity activity, Menu menu, MenuItemSelectedCallback menuItemSelectedCallback)
     {
@@ -28,6 +25,36 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
         this.menuItemSelectedCallback = menuItemSelectedCallback;
         MenuInflater menuInflater = activity.getMenuInflater();
         menuInflater.inflate(getMenuResourceId(), menu);
+        menuStateMachine = new MenuStateMachine();
+    }
+
+    private class MenuStateMachine
+    {
+        private boolean isOptionsMenuOpen = false;
+        private boolean hasHardWareMenuKey;
+
+        public MenuStateMachine()
+        {
+            hasHardWareMenuKey = ViewConfiguration.get(activity).hasPermanentMenuKey();
+        }
+
+        public void tick()
+        {
+            if (isOptionsMenuOpen) {
+                activity.closeOptionsMenu();
+                isOptionsMenuOpen = false;
+            } else if (customActionBarWrapper.isShowing()) {
+                if (hasHardWareMenuKey){
+                    customActionBarWrapper.showToggle();
+                }
+            } else if (!customActionBarWrapper.isShowing()){
+                if (hasHardWareMenuKey){
+                    customActionBarWrapper.showToggle();
+                }
+            } else {
+                activity.openOptionsMenu();
+            }
+        }
     }
 
     public void setCustomActionBarWrapper(CustomActionBarWrapper customActionBarWrapper)
@@ -38,7 +65,8 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
     protected abstract int getMenuResourceId();
 
     @Override
-    public boolean handleSelection(MenuItem menuItem) throws MenuOptionNotHandledException {
+    public boolean handleSelection(MenuItem menuItem) throws MenuOptionNotHandledException
+    {
         switch (menuItem.getItemId()) {
             case R.id.refresh_media:
                 return menuItemSelectedCallback.handleMenuRefreshMedia();
@@ -52,41 +80,15 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
     }
 
     @Override
-    public boolean isShowing()
-    {
-        return false;
-    }
-
-    @Override
     public boolean handleMenuKeyDown(int keyCode, KeyEvent event)
     {
-        Log.d(BaseActivity.TAG, "PRESSED!!!");
-        boolean returnValue = false;
-
-        if (isOptionsMenuOpen) {
-            if (customActionBarWrapper.isShowing()) {
-                try {
-                    customActionBarWrapper.showToggle();
-                    returnValue = true;
-                } catch (NoHardwareMenuKeyException noHardWareMenuKeyException) {
-                    returnValue = true;
-                }
-            }
-        } else {
-            activity.closeOptionsMenu();
-        }
-        isOptionsMenuOpen = !isOptionsMenuOpen;
-        return returnValue;
+        menuStateMachine.tick();
+        return true;
     }
 
     @Override
-    public void showToggle()
+    public void handleBackPressed()
     {
-
-    }
-
-    @Override
-    public boolean handleBackPressed() throws BackPressedNotHandledException {
-        return false;
+        menuStateMachine.tick();
     }
 }

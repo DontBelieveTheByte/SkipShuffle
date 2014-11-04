@@ -8,9 +8,9 @@ import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.callbacks.HeadsetPluggedStateCallback;
-import com.dontbelievethebyte.skipshuffle.callbacks.MediaPlayerCommandsCallback;
-import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
-import com.dontbelievethebyte.skipshuffle.callbacks.TrackCompleteCallback;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.MediaPlayerCommandsCallback;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PlaylistChangedCallback;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;

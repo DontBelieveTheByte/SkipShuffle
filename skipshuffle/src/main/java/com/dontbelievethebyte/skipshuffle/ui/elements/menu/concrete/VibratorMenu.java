@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.Menu;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.AbstractMenu;
 
 public class VibratorMenu extends AbstractMenu {

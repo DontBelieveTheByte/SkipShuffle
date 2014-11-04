@@ -13,26 +13,25 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
-import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
-import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
-import com.dontbelievethebyte.skipshuffle.ui.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
-import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.listeners.TouchListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.HapticFeedBackChangedCallback;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
+import com.dontbelievethebyte.skipshuffle.ui.dialog.ThemeSelectionDialog;
+import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
+import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
+import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
@@ -140,14 +139,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     @Override
     public void onBackPressed()
     {
-        try {
-            if (!customActionBar.isShowing())
-                handleBackPressed();
-
-            customActionBar.showToggle();
-        } catch (NoHardwareMenuKeyException noHardwareMenuKeyException) {
-            handleBackPressed();
-        }
+        customOptionsMenu.handleBackPressed();
     }
 
     @Override
@@ -208,7 +200,8 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
         if (keyCode == KeyEvent.KEYCODE_MENU )
             return customOptionsMenu.handleMenuKeyDown(keyCode, event);
         return super.onKeyDown(keyCode, event);

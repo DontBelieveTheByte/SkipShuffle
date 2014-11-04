@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.callbacks;
+package com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks;
 
 public interface MenuItemSelectedCallback {
 

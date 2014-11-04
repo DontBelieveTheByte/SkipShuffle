@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.view.Menu;
 
-import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.concrete.NoVibratorMenu;

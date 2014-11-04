@@ -6,14 +6,11 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
-import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
-import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.HapticFeedBackChangedCallback;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PlaylistChangedCallback;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
