@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
-import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
-import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.UIElement;
+import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
+import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 
 public class DimensionsVisitor {
@@ -42,12 +42,12 @@ public class DimensionsVisitor {
         computedScreenWidth = activity.getResources().getDisplayMetrics().widthPixels;
     }
 
-    public void visit(UIElement uiElement)
+    public void visit(UIElementCompositeInterface uiElement)
     {
         if (uiElement instanceof MusicPlayerDrawer)
             visitMusicPlayerDrawer((MusicPlayerDrawer) uiElement);
-        else if (uiElement instanceof BaseUI)
-            visitBaseUI((BaseUI) uiElement);
+        else if (uiElement instanceof UIComposition)
+            visitBaseUI((UIComposition) uiElement);
         else if (uiElement instanceof PlayerUI)
             visitPlayerUI((PlayerUI) uiElement);
         else if (uiElement instanceof ContentArea)
@@ -60,7 +60,7 @@ public class DimensionsVisitor {
         setNavDrawerSize();
     }
 
-    private void visitBaseUI(BaseUI baseUI)
+    private void visitBaseUI(UIComposition baseUI)
     {
         setActionBarHeight();
     }

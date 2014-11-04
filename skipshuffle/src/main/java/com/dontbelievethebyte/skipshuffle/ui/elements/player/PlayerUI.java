@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -12,12 +12,11 @@ import com.dontbelievethebyte.skipshuffle.ui.click.listener.PlaylistClick;
 import com.dontbelievethebyte.skipshuffle.ui.click.listener.PrevClick;
 import com.dontbelievethebyte.skipshuffle.ui.click.listener.ShuffleClick;
 import com.dontbelievethebyte.skipshuffle.ui.click.listener.SkipClick;
-import com.dontbelievethebyte.skipshuffle.ui.structured.PlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.ColorVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.DimensionsVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.DrawablesVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 
-public class PlayerUI extends AbstractPlayer implements UIElement {
+public class PlayerUI extends AbstractPlayerUI implements UIElementCompositeInterface {
 
     private BaseActivity baseActivity;
 
@@ -143,23 +142,5 @@ public class PlayerUI extends AbstractPlayer implements UIElement {
             handlePlaylistEmptyException(playListEmptyException);
         }
         doPause();
-    }
-
-    @Override
-    public void acceptColorVisitor(ColorVisitor colorVisitor)
-    {
-        colorVisitor.visit(this);
-    }
-
-    @Override
-    public void acceptDimensionsVisitor(DimensionsVisitor dimensionsVisitor)
-    {
-        dimensionsVisitor.visit(this);
-    }
-
-    @Override
-    public void acceptDrawablesVisitor(DrawablesVisitor drawablesVisitor)
-    {
-        drawablesVisitor.visit(this);
     }
 }

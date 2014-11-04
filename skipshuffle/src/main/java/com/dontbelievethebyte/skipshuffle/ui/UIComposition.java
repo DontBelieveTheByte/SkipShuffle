@@ -3,6 +3,9 @@ package com.dontbelievethebyte.skipshuffle.ui;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
+import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.visitor.ColorVisitor;
@@ -11,9 +14,9 @@ import com.dontbelievethebyte.skipshuffle.ui.visitor.DrawablesVisitor;
 
 import java.util.ArrayList;
 
-public class BaseUI {
+public class UIComposition {
 
-    public AbstractPlayer player;
+    public AbstractPlayerUI player;
 
     private BaseActivity baseActivity;
     private MusicPlayerDrawer musicPlayerDrawer;
@@ -23,7 +26,7 @@ public class BaseUI {
     private CustomTypeface typeface;
 
 
-    public BaseUI(UIBuilder builder)
+    public UIComposition(UIBuilder builder)
     {
         baseActivity = builder.baseActivity;
         contentArea = builder.contentArea;
@@ -39,7 +42,7 @@ public class BaseUI {
 
     private void visitElements()
     {
-        ArrayList<UIElement> uiElements = new ArrayList<UIElement>();
+        ArrayList<UIElementCompositeInterface> uiElements = new ArrayList<UIElementCompositeInterface>();
         uiElements.add(musicPlayerDrawer);
         uiElements.add(player);
         uiElements.add(player.buttons);
@@ -49,30 +52,30 @@ public class BaseUI {
         drawablesVisit(uiElements);
     }
 
-    private void colorVisit(ArrayList<UIElement> uiElements)
+    private void colorVisit(ArrayList<UIElementCompositeInterface> uiElements)
     {
         ColorVisitor colorVisitor = new ColorVisitor(colors);
 
-        for (UIElement element : uiElements) {
+        for (UIElementCompositeInterface element : uiElements) {
             colorVisitor.visit(element);
         }
     }
 
-    private void dimensionsVisit(ArrayList<UIElement> uiElements)
+    private void dimensionsVisit(ArrayList<UIElementCompositeInterface> uiElements)
     {
         DimensionsVisitor dimensionsVisitor = new DimensionsVisitor(baseActivity);
 
-        for (UIElement element : uiElements) {
+        for (UIElementCompositeInterface element : uiElements) {
             dimensionsVisitor.visit(element);
         }
     }
 
 
-    private void drawablesVisit(ArrayList<UIElement> uiElements)
+    private void drawablesVisit(ArrayList<UIElementCompositeInterface> uiElements)
     {
         DrawablesVisitor drawablesVisitor = new DrawablesVisitor(drawables);
 
-        for (UIElement element : uiElements) {
+        for (UIElementCompositeInterface element : uiElements) {
             drawablesVisitor.visit(element);
         }
     }

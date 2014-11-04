@@ -10,7 +10,7 @@ import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallbac
 import com.dontbelievethebyte.skipshuffle.callbacks.PlaylistChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.ui.UITypes;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 import java.io.File;
 import java.util.ArrayList;

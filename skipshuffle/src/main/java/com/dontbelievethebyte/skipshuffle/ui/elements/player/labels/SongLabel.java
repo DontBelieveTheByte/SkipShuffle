@@ -1,9 +1,13 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.labels;
 
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class SongLabel {
+import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+
+public class SongLabel implements UIElementCompositeInterface {
 
     private TextView label;
 

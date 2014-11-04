@@ -1,7 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.ui.mapper;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.UITypes;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 public class ColorMapper {
     public static int getBackground(Integer uiType)

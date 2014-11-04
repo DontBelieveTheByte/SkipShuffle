@@ -1,11 +1,11 @@
-package com.dontbelievethebyte.skipshuffle.ui.structured;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons;
 
 import android.app.Activity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.animation.listener.FlipDown;
 import com.dontbelievethebyte.skipshuffle.ui.animation.listener.FlipLeft;
 import com.dontbelievethebyte.skipshuffle.ui.animation.listener.FlipRight;

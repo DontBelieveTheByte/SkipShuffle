@@ -5,9 +5,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
-import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.UIElement;
+import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 
 public class ColorVisitor {
@@ -23,7 +23,7 @@ public class ColorVisitor {
         this.colors = colors;
     }
 
-    public void visit(UIElement uiElement)
+    public void visit(UIElementCompositeInterface uiElement)
     {
         if (uiElement instanceof MusicPlayerDrawer)
             visitMusicPlayerDrawer((MusicPlayerDrawer) uiElement);

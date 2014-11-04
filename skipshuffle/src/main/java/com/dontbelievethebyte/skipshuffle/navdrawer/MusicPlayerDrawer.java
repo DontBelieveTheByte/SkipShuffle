@@ -5,12 +5,13 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.ui.UIElement;
-import com.dontbelievethebyte.skipshuffle.ui.visitor.ColorVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.visitor.DimensionsVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.visitor.DrawablesVisitor;
 
-public class MusicPlayerDrawer implements UIElement {
+public class MusicPlayerDrawer implements UIElementCompositeInterface,
+                                          DimensionsVisitor.Visitable,
+                                          DrawablesVisitor.Visitable {
 
     private ListView drawerList;
 
@@ -38,11 +39,6 @@ public class MusicPlayerDrawer implements UIElement {
         drawerList.setAdapter(baseAdapter);
     }
 
-    @Override
-    public void acceptColorVisitor(ColorVisitor colorVisitor)
-    {
-        colorVisitor.visit(this);
-    }
 
     @Override
     public void acceptDimensionsVisitor(DimensionsVisitor dimensionsVisitor)

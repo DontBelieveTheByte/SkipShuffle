@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.mapper.types;
 
 public class UITypes {
     public static final int MONO_LIGHT = 0;

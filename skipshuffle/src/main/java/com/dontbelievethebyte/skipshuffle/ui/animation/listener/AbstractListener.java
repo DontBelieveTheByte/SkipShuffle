@@ -2,7 +2,7 @@ package com.dontbelievethebyte.skipshuffle.ui.animation.listener;
 
 import android.view.animation.Animation;
 
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
 
 public abstract class AbstractListener implements Animation.AnimationListener{
 

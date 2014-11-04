@@ -1,6 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.ui.mapper;
 
-import com.dontbelievethebyte.skipshuffle.ui.UITypes;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 public class TypeFaceMapper {
     public static String getTypeFace(Integer uiType)
