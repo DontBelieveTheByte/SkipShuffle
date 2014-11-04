@@ -1,28 +1,29 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.menu;
 
+import android.app.Activity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.BackPressedNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 
 public abstract class AbstractMenu implements CustomOptionsMenuInterface {
 
-    protected BaseActivity baseActivity;
+    private MenuItemSelectedCallback menuItemSelectedCallback;
+    protected Activity baseActivity;
     protected boolean isOptionsMenuOpen = false;
     protected CustomActionBarWrapper customActionBarWrapper;
 
-    public AbstractMenu(BaseActivity baseActivity, Menu menu)
+    public AbstractMenu(Activity activity, Menu menu, MenuItemSelectedCallback menuItemSelectedCallback)
     {
-        this.baseActivity = baseActivity;
-        MenuInflater menuInflater = baseActivity.getMenuInflater();
+        this.menuItemSelectedCallback = menuItemSelectedCallback;
+        MenuInflater menuInflater = activity.getMenuInflater();
         menuInflater.inflate(getMenuResourceId(), menu);
     }
 
@@ -37,29 +38,20 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
     public boolean handleSelection(MenuItem menuItem) throws MenuOptionNotHandledException {
         switch (menuItem.getItemId()) {
             case R.id.refresh_media:
-                return handleRefreshMedia();
+                return menuItemSelectedCallback.handleMenuRefreshMedia();
             case R.id.haptic_feedback_toggle:
-                return handleHapticFeedBack();
+                return menuItemSelectedCallback.handleMenuHapticFeedBack();
             case R.id.theme:
-                return handleThemeSelection();
+                return menuItemSelectedCallback.handleMenuThemeSelection();
             default:
                 throw new MenuOptionNotHandledException();
         }
     }
 
-    protected void handleNoHardwareMenuKeyException()
+    @Override
+    public boolean isShowing()
     {
-
-    }
-
-    @Override
-    public boolean isShowing() {
         return false;
-    }
-
-    @Override
-    public void showToggle() {
-
     }
 
     @Override
@@ -83,27 +75,14 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
         return returnValue;
     }
 
-    public boolean handleBackPressed() throws BackPressedNotHandledException
+    @Override
+    public void showToggle()
     {
-        throw new BackPressedNotHandledException();
+
     }
 
-    private boolean handleRefreshMedia()
-    {
-        baseActivity.showMediaScannerDialog();
-        return true;
-    }
-
-    protected boolean handleHapticFeedBack()
-    {
-        PreferencesHelper preferencesHelper = baseActivity.getPreferencesHelper();
-        preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
-        return true;
-    }
-
-    protected boolean handleThemeSelection()
-    {
-        baseActivity.showThemeSelectionDialog();
-        return true;
+    @Override
+    public boolean handleBackPressed() throws BackPressedNotHandledException {
+        return false;
     }
 }

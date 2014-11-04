@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
@@ -34,8 +35,10 @@ import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-public abstract class BaseActivity extends ActionBarActivity
-        implements ThemeChangedCallback, HapticFeedBackChangedCallback, View.OnTouchListener {
+public abstract class BaseActivity extends ActionBarActivity implements ThemeChangedCallback,
+                                                                        HapticFeedBackChangedCallback,
+                                                                        View.OnTouchListener,
+                                                                        MenuItemSelectedCallback {
 
     public static final String TAG = "SkipShuffle";
     public UIComposition ui;
@@ -99,7 +102,8 @@ public abstract class BaseActivity extends ActionBarActivity
     {
         OptionsMenuBuilder optionsMenuCreator = new OptionsMenuBuilder(this);
         optionsMenuCreator.setCustomActionBarWrapper(customActionBar);
-        optionsMenuCreator.build(menu);
+        optionsMenuCreator.setMenuItemSelectedCallback(this);
+        customOptionsMenu = optionsMenuCreator.build(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -245,5 +249,26 @@ public abstract class BaseActivity extends ActionBarActivity
         toastHelper.showLongToast(
                 getString(R.string.no_media_player)
         );
+    }
+
+    @Override
+    public boolean handleMenuRefreshMedia()
+    {
+        showMediaScannerDialog();
+        return true;
+    }
+
+    @Override
+    public boolean handleMenuHapticFeedBack()
+    {
+        preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
+        return true;
+    }
+
+    @Override
+    public boolean handleMenuThemeSelection()
+    {
+        showThemeSelectionDialog();
+        return true;
     }
 }

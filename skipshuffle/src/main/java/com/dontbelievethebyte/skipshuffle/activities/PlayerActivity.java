@@ -1,15 +1,15 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 
 public class PlayerActivity extends BaseActivity {
 
@@ -64,4 +64,6 @@ public class PlayerActivity extends BaseActivity {
         ui = uiBuilder.build();
         ui.player.reboot();
     }
+
+
 }

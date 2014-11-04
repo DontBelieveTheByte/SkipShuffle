@@ -1,17 +1,18 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.menu.concrete;
 
+import android.app.Activity;
 import android.view.Menu;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.AbstractMenu;
 
 public class VibratorMenu extends AbstractMenu {
 
 
-    public VibratorMenu(BaseActivity baseActivity, Menu menu)
+    public VibratorMenu(Activity activity, Menu menu, MenuItemSelectedCallback menuItemSelectedCallback)
     {
-        super(baseActivity, menu);
+        super(activity, menu, menuItemSelectedCallback);
     }
 
     @Override
