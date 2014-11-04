@@ -38,7 +38,7 @@ public class UIBuilder {
         return this;
     }
 
-    public UIBuilder setLayout(ContentArea contentArea)
+    public UIBuilder setContentArea(ContentArea contentArea)
     {
         this.contentArea = contentArea;
         return this;
