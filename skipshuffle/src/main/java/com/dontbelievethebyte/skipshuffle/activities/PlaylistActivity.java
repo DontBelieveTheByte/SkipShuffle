@@ -13,11 +13,8 @@ import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
-import com.dontbelievethebyte.skipshuffle.ui.PlaylistUI;
-import com.dontbelievethebyte.skipshuffle.ui.UIFactory;
 
 public class PlaylistActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-    protected PlaylistUI ui;
 
     private PlaylistAdapter playlistAdapter;
     private PlaylistInterface playlist;
@@ -65,10 +62,10 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
                         )
                 );
                 mediaPlayer.doPause();
-                ui.doPause();
+//                ui.doPause();
             } else {
                 mediaPlayer.doPlay(playlist.getPosition());
-                ui.doPlay();
+//                ui.doPlay();
             }
         } catch (NoMediaPlayerException noMediaPlayerException) {
             handleNoMediaPlayerException(noMediaPlayerException);
@@ -86,56 +83,56 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     @Override
     protected void setUI(Integer type)
     {
-        try {
-            final SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
-            ui = UIFactory.createPlaylistUI(this, type);
-            ui.playBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        mediaPlayer.doPlay();
-                    } catch (PlaylistEmptyException playlistEmptyException) {
-                        handlePlaylistEmptyException();
-                    }
-                }
-            });
-
-            ui.prevBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        mediaPlayer.doPrev();
-                    } catch (PlaylistEmptyException playlistEmptyException) {
-                        handlePlaylistEmptyException();
-                    }
-                }
-            });
-
-            ui.skipBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        mediaPlayer.doSkip();
-                    } catch (PlaylistEmptyException playlistEmptyException) {
-                        handlePlaylistEmptyException();
-                    }
-                }
-            });
-
-            ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        mediaPlayer.doShuffle();
-                    } catch (PlaylistEmptyException playlistEmptyException) {
-                        handlePlaylistEmptyException();
-                    }
-                }
-            });
-
-            buildNavigationDrawer();
-        } catch (NoMediaPlayerException noMediaPlayerException) {
-            handleNoMediaPlayerException(noMediaPlayerException);
-        }
+//        try {
+//            final SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
+//            ui = UIFactory.createPlaylistUI(this, type);
+//            ui.playBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    try {
+//                        mediaPlayer.doPlay();
+//                    } catch (PlaylistEmptyException playlistEmptyException) {
+//                        handlePlaylistEmptyException();
+//                    }
+//                }
+//            });
+//
+//            ui.prevBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    try {
+//                        mediaPlayer.doPrev();
+//                    } catch (PlaylistEmptyException playlistEmptyException) {
+//                        handlePlaylistEmptyException();
+//                    }
+//                }
+//            });
+//
+//            ui.skipBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    try {
+//                        mediaPlayer.doSkip();
+//                    } catch (PlaylistEmptyException playlistEmptyException) {
+//                        handlePlaylistEmptyException();
+//                    }
+//                }
+//            });
+//
+//            ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    try {
+//                        mediaPlayer.doShuffle();
+//                    } catch (PlaylistEmptyException playlistEmptyException) {
+//                        handlePlaylistEmptyException();
+//                    }
+//                }
+//            });
+//
+//            buildNavigationDrawer();
+//        } catch (NoMediaPlayerException noMediaPlayerException) {
+//            handleNoMediaPlayerException(noMediaPlayerException);
+//        }
     }
 }

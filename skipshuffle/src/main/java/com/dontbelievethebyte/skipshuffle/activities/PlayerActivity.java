@@ -1,17 +1,15 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
 import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.click.listener.Play;
-import com.dontbelievethebyte.skipshuffle.ui.click.listener.Playlist;
-import com.dontbelievethebyte.skipshuffle.ui.click.listener.Prev;
-import com.dontbelievethebyte.skipshuffle.ui.click.listener.Shuffle;
-import com.dontbelievethebyte.skipshuffle.ui.click.listener.Skip;
+import com.dontbelievethebyte.skipshuffle.ui.SongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.builder.UIBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structured.PlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.structured.PlayerButtonsAnimations;
 
 public class PlayerActivity extends BaseActivity {
 
@@ -39,30 +37,32 @@ public class PlayerActivity extends BaseActivity {
     @Override
     protected void setUI(Integer type)
     {
+        ContentArea contentArea = new ContentArea(this, R.layout.main_activity);
         CustomTypeface customTypeface = new CustomTypeface(this, type);
         Drawables drawables = new Drawables(this, type);
+
+        PlayerButtons buttons = new PlayerButtons(contentArea);
+        buttons.animations = new PlayerButtonsAnimations(this);
+        buttons.drawables = drawables;
+
+        SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
+        songLabel.setTypeFace(customTypeface);
+
         PlayerUI player = new PlayerUI(
             this,
-            customTypeface,
-            drawables
+            buttons,
+            songLabel
         );
 
-        BaseUI.UIBuilder uiBuilder = new BaseUI.UIBuilder();
+        UIBuilder uiBuilder = new UIBuilder();
         uiBuilder.setActivity(this);
-        uiBuilder.setContentArea(new ContentArea(this, R.layout.main_activity));
-        uiBuilder.setPlayer(player);
+        uiBuilder.setContentArea(contentArea);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer());
+        uiBuilder.setCustomTypeFace(customTypeface);
         uiBuilder.setColors(new Colors(type));
         uiBuilder.setDrawables(drawables);
-        uiBuilder.setCustomTypeFace(customTypeface);
+        uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
-
-        ui.player.buttons.play.setOnClickListener(new Play(this));
-        ui.player.buttons.skip.setOnClickListener(new Skip(this));
-        ui.player.buttons.prev.setOnClickListener(new Prev(this));
-        ui.player.buttons.shuffle.setOnClickListener(new Shuffle(this));
-        ui.player.buttons.playlist.setOnClickListener(new Playlist(this));
-
         ui.player.reboot();
     }
 }

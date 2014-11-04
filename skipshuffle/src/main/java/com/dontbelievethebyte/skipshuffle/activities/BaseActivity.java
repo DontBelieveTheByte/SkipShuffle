@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -14,14 +13,12 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.actionbar.CustomActionBarWrapper;
-import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.callbacks.ThemeChangedCallback;
 import com.dontbelievethebyte.skipshuffle.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoHardwareMenuKeyException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.menu.builder.OptionsMenuBuilder;
@@ -29,7 +26,7 @@ import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUIInterface;
+import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
@@ -37,12 +34,11 @@ public abstract class BaseActivity extends ActionBarActivity
         implements ThemeChangedCallback, HapticFeedBackChangedCallback, View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
+    public BaseUI ui;
 
-    protected PlayerUIInterface playerUIInterface;
     protected PreferencesHelper preferencesHelper;
     protected CustomActionBarWrapper customActionBar;
     protected ToastHelper toastHelper;
-
 
     private MediaScannerHelper mediaScannerHelper;
     private CustomOptionsMenuInterface customOptionsMenu;
@@ -61,8 +57,8 @@ public abstract class BaseActivity extends ActionBarActivity
     {
         super.onCreate(savedInstanceState);
 
-//        startMediaPlayerService();
-//        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
+        startMediaPlayerService();
+        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -109,8 +105,8 @@ public abstract class BaseActivity extends ActionBarActivity
         super.onRestoreInstanceState(savedInstanceState);
 
         //Check if we're scanning media beforehand and.
-//        if (savedInstanceState.getBoolean(MediaScannerHelper.IS_SCANNING_MEDIA))
-//            mediaScannerHelper.startMediaScan();
+        if (savedInstanceState.getBoolean(MediaScannerHelper.IS_SCANNING_MEDIA))
+            mediaScannerHelper.startMediaScan();
     }
 
     @Override
@@ -150,8 +146,8 @@ public abstract class BaseActivity extends ActionBarActivity
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
-//        outState.putBoolean(MediaScannerHelper.IS_SCANNING_MEDIA, mediaScannerHelper.isScanningMedia());
-//        super.onSaveInstanceState(outState);
+        outState.putBoolean(MediaScannerHelper.IS_SCANNING_MEDIA, mediaScannerHelper.isScanningMedia());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -205,22 +201,23 @@ public abstract class BaseActivity extends ActionBarActivity
     protected MusicPlayerDrawer buildNavigationDrawer()
     {
         MusicPlayerDrawer musicPlayerDrawer = new MusicPlayerDrawer(this, R.id.drawer_list);
-        musicPlayerDrawer.setClickListener(
-                new NavDrawerClickListener(
-                        this,
-                        (DrawerLayout) findViewById(R.id.drawer_layout)
-                )
-        );
-        musicPlayerDrawer.setTouchListener(this);
-        musicPlayerDrawer.setAdapter(
-                new NavigationDrawerAdapter(
-                        this,
-                        R.layout.drawer_list_item,
-                        getResources().getStringArray(R.array.drawer_menu),
-                        getPreferencesHelper(),
-                        playerUIInterface.getTypeFace()
-                )
-        );
+//        musicPlayerDrawer.setClickListener(
+//                new NavDrawerClickListener(
+//                        this,
+//                        (DrawerLayout) findViewById(R.id.drawer_layout)
+//                )
+//        );
+//        musicPlayerDrawer.setTouchListener(this);
+//        musicPlayerDrawer.setAdapter(
+//                new NavigationDrawerAdapter(
+//                        this,
+//                        R.layout.drawer_list_item,
+//                        getResources().getStringArray(R.array.drawer_menu),
+//                        getPreferencesHelper(),
+//                        playerUIInterface.getTypeFace(),
+//                        null
+//                )
+//        );
         return musicPlayerDrawer;
     }
 
@@ -240,7 +237,7 @@ public abstract class BaseActivity extends ActionBarActivity
         setUI(uiType);
     }
 
-    protected void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
+    public void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
     {
         toastHelper.showLongToast(
                 getString(R.string.no_media_player)
