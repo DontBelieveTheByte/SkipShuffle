@@ -12,6 +12,10 @@ import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 
 public class ColorVisitor {
 
+    public static interface Visitable {
+        public void acceptColorVisitor(ColorVisitor colorVisitor);
+    }
+
     Colors colors;
 
     public ColorVisitor(Colors colors)

@@ -20,6 +20,10 @@ import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 
 public class DimensionsVisitor {
 
+    public static interface Visitable {
+        public void acceptDimensionsVisitor(DimensionsVisitor dimensionsVisitor);
+    }
+
     protected boolean isLandScape;
     protected int computedScreenHeight;
     protected int computedScreenWidth;

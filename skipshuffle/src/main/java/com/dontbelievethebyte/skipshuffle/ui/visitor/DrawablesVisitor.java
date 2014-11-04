@@ -1,13 +1,15 @@
 package com.dontbelievethebyte.skipshuffle.ui.visitor;
 
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
-import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
-import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIElement;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.structured.PlayerButtons;
 
 public class DrawablesVisitor {
+
+    public static interface Visitable {
+        public void acceptDrawablesVisitor(DrawablesVisitor drawablesVisitor);
+    }
 
     Drawables drawables;
 
@@ -20,10 +22,6 @@ public class DrawablesVisitor {
     {
         if (uiElement instanceof MusicPlayerDrawer)
             visitMusicPlayerDrawer((MusicPlayerDrawer) uiElement);
-        else if (uiElement instanceof BaseUI)
-            visitBaseUI((BaseUI) uiElement);
-        else if (uiElement instanceof PlayerUI)
-            visitPlayerUI((PlayerUI) uiElement);
         else if (uiElement instanceof PlayerButtons)
             visitPlayerUI((PlayerButtons) uiElement);
     }
@@ -33,15 +31,6 @@ public class DrawablesVisitor {
 
     }
 
-    private void visitBaseUI(BaseUI baseUI)
-    {
-
-    }
-
-    private void visitPlayerUI(PlayerUI playerUI)
-    {
-
-    }
 
     private void visitPlayerUI(PlayerButtons buttons)
     {
