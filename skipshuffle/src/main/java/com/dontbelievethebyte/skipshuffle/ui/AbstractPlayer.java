@@ -1,14 +1,10 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.structured.PlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.structured.PlayerButtonsAnimations;
 
-public abstract class AbstractPlayer {
+public abstract class AbstractPlayer implements UIElement {
 
     public PlayerButtons buttons;
-    public PlayerButtonsAnimations animations;
-    public Drawables drawables;
     public SongLabel songLabel;
 
     public abstract void doPlay();
@@ -23,6 +19,6 @@ public abstract class AbstractPlayer {
 
     public abstract void reboot();
 
-    public abstract void setSongLabel(String title);
+    public abstract void setTitle(String title);
 
 }

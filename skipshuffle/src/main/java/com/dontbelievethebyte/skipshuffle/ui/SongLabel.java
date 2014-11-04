@@ -1,16 +1,17 @@
 package com.dontbelievethebyte.skipshuffle.ui;
 
-import android.app.Activity;
-import android.graphics.Typeface;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class SongLabel {
 
     private TextView label;
 
-    public SongLabel(Activity activity, int labelId)
+    public SongLabel(ContentArea contentArea, int labelId)
     {
-        label = (TextView) activity.findViewById(labelId);
+        ViewGroup bottomLayout = contentArea.getBottomLayout();
+
+        label = (TextView) bottomLayout.findViewById(labelId);
     }
 
     public void setContent(String content)
@@ -19,8 +20,14 @@ public class SongLabel {
         label.setSelected(true);
     }
 
-    public void setTypeFace(Typeface typeFace)
+    public void setTypeFace(CustomTypeface typeFace)
     {
-        label.setTypeface(typeFace);
+        if (null != typeFace.getTypeFace())
+            label.setTypeface(typeFace.getTypeFace());
+    }
+
+    public TextView getLabel()
+    {
+        return label;
     }
 }

@@ -2,9 +2,10 @@ package com.dontbelievethebyte.skipshuffle.ui.visitor;
 
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.navdrawer.MusicPlayerDrawer;
-import com.dontbelievethebyte.skipshuffle.ui.BaseUI;
+import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.UIElement;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
@@ -22,8 +23,8 @@ public class ColorVisitor {
     {
         if (uiElement instanceof MusicPlayerDrawer)
             visitMusicPlayerDrawer((MusicPlayerDrawer) uiElement);
-        else if (uiElement instanceof BaseUI)
-            visitBaseUI((BaseUI) uiElement);
+        else if (uiElement instanceof ContentArea)
+            visitContentArea((ContentArea) uiElement);
         else if (uiElement instanceof PlayerUI)
             visitPlayerUI((PlayerUI) uiElement);
     }
@@ -31,28 +32,26 @@ public class ColorVisitor {
     private void visitMusicPlayerDrawer(MusicPlayerDrawer musicPlayerDrawer)
     {
         ListView drawerList = musicPlayerDrawer.getDrawerList();
+        if (null != drawerList) {
+            drawerList.setBackgroundResource(colors.navDrawerBackground);
 
-        drawerList.setBackgroundResource(colors.navDrawerBackground);
-
-        drawerList.setDivider(
-                Colors.toColorDrawable(colors.listDivider)
-        );
-
+            drawerList.setDivider(
+                    Colors.toColorDrawable(colors.listDivider)
+            );
+        }
     }
 
-    private void visitBaseUI(BaseUI baseUI)
+    private void visitContentArea(ContentArea contentArea)
     {
-        ViewGroup bottomLayout = baseUI.getBottomLayout();
+        ViewGroup bottomLayout = contentArea.getBottomLayout();
         bottomLayout.setBackgroundResource(colors.background);
     }
 
     private void visitPlayerUI(PlayerUI playerUI)
     {
-//        songLabel.setTextColor(
-//                baseActivity.getResources().getColor(
-//                        ColorMapper.getSongLabel(uiType)
-//                )
-//        );
+        TextView songLabel = playerUI.songLabel.getLabel();
+        if (null != songLabel)
+            songLabel.setTextColor(colors.songLabel);
     }
 
 }

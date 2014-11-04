@@ -15,13 +15,13 @@ public class FlipDown extends AbstractListener{
     public void onAnimationStart(Animation animation)
     {
         playerUI.doPause();
-        playerUI.buttons.shuffle.setImageDrawable(playerUI.drawables.getShufflePressed());
+        playerUI.buttons.shuffle.setImageDrawable(playerUI.buttons.drawables.getShufflePressed());
     }
 
     @Override
     public void onAnimationEnd(Animation animation)
     {
-        playerUI.buttons.shuffle.setImageDrawable(playerUI.drawables.getShuffle());
+        playerUI.buttons.shuffle.setImageDrawable(playerUI.buttons.drawables.getShuffle());
         playerUI.doPlay();
     }
 }

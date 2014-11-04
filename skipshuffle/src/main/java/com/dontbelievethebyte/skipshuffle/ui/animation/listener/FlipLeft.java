@@ -15,13 +15,13 @@ public class FlipLeft extends AbstractListener{
     public void onAnimationStart(Animation animation)
     {
         playerUI.doPause();
-        playerUI.buttons.prev.setImageDrawable(playerUI.drawables.getPrevPressed());
+        playerUI.buttons.prev.setImageDrawable(playerUI.buttons.drawables.getPrevPressed());
     }
 
     @Override
     public void onAnimationEnd(Animation animation)
     {
-        playerUI.buttons.prev.setImageDrawable(playerUI.drawables.getPrev());
+        playerUI.buttons.prev.setImageDrawable(playerUI.buttons.drawables.getPrev());
         playerUI.doPlay();
     }
 }

@@ -1,28 +1,51 @@
 package com.dontbelievethebyte.skipshuffle.ui.structured;
 
-import android.app.Activity;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.ui.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.UIElement;
+import com.dontbelievethebyte.skipshuffle.ui.visitor.ColorVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.visitor.DimensionsVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.visitor.DrawablesVisitor;
 
-public class PlayerButtons {
+public class PlayerButtons implements UIElement {
 
     public ImageButton playlist;
     public ImageButton prev;
     public ImageButton play;
     public ImageButton shuffle;
     public ImageButton skip;
+    public Drawables drawables;
+    public PlayerButtonsAnimations animations;
 
-    private PlayerButtonsAnimations animations;
-
-    public PlayerButtons(Activity activity)
+    public PlayerButtons(ContentArea contentArea)
     {
-        playlist = (ImageButton) activity.findViewById(R.id.playlistBtn);
+        ViewGroup bottomLayout = contentArea.getBottomLayout();
+
+        playlist = (ImageButton) bottomLayout.findViewById(R.id.playlistBtn);
+        prev = (ImageButton) bottomLayout.findViewById(R.id.prevBtn);
+        play = (ImageButton) bottomLayout.findViewById(R.id.playBtn);
+        shuffle = (ImageButton) bottomLayout.findViewById(R.id.shuffleBtn);
+        skip = (ImageButton) bottomLayout.findViewById(R.id.skipBtn);
     }
 
-    public void setAnimations(PlayerButtonsAnimations animations)
+    @Override
+    public void acceptColorVisitor(ColorVisitor colorVisitor)
     {
-        this.animations = animations;
+
     }
 
+    @Override
+    public void acceptDimensionsVisitor(DimensionsVisitor dimensionsVisitor)
+    {
+
+    }
+
+    @Override
+    public void acceptDrawablesVisitor(DrawablesVisitor drawablesVisitor)
+    {
+        drawablesVisitor.visit(this);
+    }
 }

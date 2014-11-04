@@ -135,7 +135,7 @@ public class Drawables {
         return toDrawable(playlist);
     }
 
-    public Drawable toDrawable(int drawableId)
+    private Drawable toDrawable(int drawableId)
     {
         return context.getResources().getDrawable(drawableId);
     }

@@ -6,6 +6,8 @@ import android.view.animation.AnimationUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.animation.listener.FlipDown;
+import com.dontbelievethebyte.skipshuffle.ui.animation.listener.FlipLeft;
 import com.dontbelievethebyte.skipshuffle.ui.animation.listener.FlipRight;
 
 public class PlayerButtonsAnimations {
@@ -16,27 +18,40 @@ public class PlayerButtonsAnimations {
     public Animation flipLeftAnimation;
     public Animation blinkAnimation;
 
+
     public PlayerButtonsAnimations(Activity activity)
     {
+        loadAnimations(activity);
+    }
+
+    private void loadAnimations(Activity baseActivity)
+    {
         ltr = AnimationUtils.loadAnimation(
-                activity.getApplicationContext(),
+                baseActivity.getApplicationContext(),
                 R.anim.common_ltr
         );
         flipRightAnimation  = AnimationUtils.loadAnimation(
-                activity.getApplicationContext(),
+                baseActivity.getApplicationContext(),
                 R.anim.common_flip_right
         );
         flipDownAnimation = AnimationUtils.loadAnimation(
-                activity.getApplicationContext(),
+                baseActivity.getApplicationContext(),
                 R.anim.common_flip_down
         );
         flipLeftAnimation = AnimationUtils.loadAnimation(
-                activity.getApplicationContext(),
+                baseActivity.getApplicationContext(),
                 R.anim.common_flip_left
         );
         blinkAnimation = AnimationUtils.loadAnimation(
-                activity.getApplicationContext(),
+                baseActivity.getApplicationContext(),
                 R.anim.common_blink
         );
+    }
+
+    public void setPlayerUIListeners(PlayerUI playerUI)
+    {
+        flipRightAnimation.setAnimationListener(new FlipRight(playerUI));
+        flipLeftAnimation.setAnimationListener(new FlipLeft(playerUI));
+        flipDownAnimation.setAnimationListener(new FlipDown(playerUI));
     }
 }
