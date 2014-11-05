@@ -14,7 +14,7 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 
@@ -48,8 +48,8 @@ public class DimensionsVisitor {
             visitMusicPlayerDrawer((MusicPlayerDrawer) uiElement);
         else if (uiElement instanceof UIComposition)
             visitBaseUI((UIComposition) uiElement);
-        else if (uiElement instanceof PlayerUI)
-            visitPlayerUI((PlayerUI) uiElement);
+        else if (uiElement instanceof MainPlayer)
+            visitPlayerUI((MainPlayer) uiElement);
         else if (uiElement instanceof ContentArea)
             visitContentArea((ContentArea) uiElement);
 
@@ -65,7 +65,7 @@ public class DimensionsVisitor {
         setActionBarHeight();
     }
 
-    private void visitPlayerUI(PlayerUI playerUI)
+    private void visitPlayerUI(MainPlayer playerUI)
     {
         setPlayButtonSize();
         setPrevButtonSize();

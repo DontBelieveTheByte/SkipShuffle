@@ -17,8 +17,8 @@ import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
@@ -41,20 +41,6 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     private PlaylistInterface playlist;
     private ListView listView;
     private int listType;
-
-    @Override
-    protected void handleBackPressed()
-    {
-        if (customOptionsMenu.isShowing())
-            customOptionsMenu.handleBackPressed();
-        else
-            popTaskStack();
-    }
-
-    private void popTaskStack()
-    {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -151,14 +137,14 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
         CustomTypeface customTypeface = new CustomTypeface(this, type);
         Drawables drawables = new Drawables(this, type);
 
-        PlayerButtons buttons = new PlayerButtons(contentArea);
+        MainPlayerButtons buttons = new MainPlayerButtons(contentArea);
         buttons.animations = new PlayerButtonsAnimations(this);
         buttons.drawables = drawables;
 
         SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
-        PlayerUI player = new PlayerUI(
+        ListPlayer player = new ListPlayer(
                 this,
                 buttons,
                 songLabel

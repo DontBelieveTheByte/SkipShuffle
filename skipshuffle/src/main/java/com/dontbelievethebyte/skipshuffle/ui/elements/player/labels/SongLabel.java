@@ -20,13 +20,15 @@ public class SongLabel implements UIElementCompositeInterface {
 
     public void setContent(String content)
     {
-        label.setText(content);
-        label.setSelected(true);
+        if (null != label) {
+            label.setText(content);
+            label.setSelected(true);
+        }
     }
 
     public void setTypeFace(CustomTypeface typeFace)
     {
-        if (null != typeFace.getTypeFace())
+        if (null != label && null != typeFace.getTypeFace())
             label.setTypeface(typeFace.getTypeFace());
     }
 

@@ -5,7 +5,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.FlipDown;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.FlipLeft;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.FlipRight;
@@ -48,7 +48,7 @@ public class PlayerButtonsAnimations {
         );
     }
 
-    public void setPlayerUIListeners(PlayerUI playerUI)
+    public void setPlayerUIListeners(AbstractPlayerUI playerUI)
     {
         flipRightAnimation.setAnimationListener(new FlipRight(playerUI));
         flipLeftAnimation.setAnimationListener(new FlipLeft(playerUI));

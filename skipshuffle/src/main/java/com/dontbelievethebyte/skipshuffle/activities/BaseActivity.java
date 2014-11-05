@@ -74,7 +74,6 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     private MediaScannerHelper mediaScannerHelper;
     private MediaPlayerServiceConnection mediaPlayerServiceConnection;
 
-    protected abstract void handleBackPressed();
     protected abstract void setUI(Integer type);
 
     @Override
@@ -139,7 +138,11 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     @Override
     public void onBackPressed()
     {
-        handleBackPressed();
+        if (customOptionsMenu.isShowing()){
+            customOptionsMenu.handleBackPressed();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/background_neon"
-        android:id="@+id/background_layout">
+        android:id="@+id/bottom">
 
         <include layout="@layout/content_list"/>
 

@@ -7,20 +7,20 @@ import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClick;
-import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 
-public class PlayerUI extends AbstractPlayerUI implements UIElementCompositeInterface {
+public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
     private BaseActivity baseActivity;
 
-    public PlayerUI(BaseActivity baseActivity, PlayerButtons playerButtons, SongLabel songLabel)
+    public ListPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, SongLabel songLabel)
     {
         this.baseActivity = baseActivity;
         this.songLabel = songLabel;

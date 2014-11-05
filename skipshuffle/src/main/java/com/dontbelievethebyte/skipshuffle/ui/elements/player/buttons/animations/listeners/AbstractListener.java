@@ -2,13 +2,13 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations
 
 import android.view.animation.Animation;
 
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 
 public abstract class AbstractListener implements Animation.AnimationListener{
 
-    protected PlayerUI playerUI;
+    protected AbstractPlayerUI playerUI;
 
-    public AbstractListener(PlayerUI playerUI)
+    public AbstractListener(AbstractPlayerUI playerUI)
     {
         this.playerUI = playerUI;
     }

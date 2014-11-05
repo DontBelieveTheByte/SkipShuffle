@@ -3,14 +3,13 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class PlayerButtons implements UIElementCompositeInterface, DrawablesVisitor.Visitable {
+public abstract class AbstractPlayerButtons implements UIElementCompositeInterface, DrawablesVisitor.Visitable {
 
     public ImageButton playlist;
     public ImageButton prev;
@@ -20,15 +19,11 @@ public class PlayerButtons implements UIElementCompositeInterface, DrawablesVisi
     public Drawables drawables;
     public PlayerButtonsAnimations animations;
 
-    public PlayerButtons(ContentArea contentArea)
-    {
-        ViewGroup bottomLayout = contentArea.getBottomLayout();
+    protected ViewGroup bottomLayout;
 
-        playlist = (ImageButton) bottomLayout.findViewById(R.id.playlistBtn);
-        prev = (ImageButton) bottomLayout.findViewById(R.id.prevBtn);
-        play = (ImageButton) bottomLayout.findViewById(R.id.playBtn);
-        shuffle = (ImageButton) bottomLayout.findViewById(R.id.shuffleBtn);
-        skip = (ImageButton) bottomLayout.findViewById(R.id.skipBtn);
+    public AbstractPlayerButtons(ContentArea contentArea)
+    {
+        bottomLayout = contentArea.getBottomLayout();
     }
 
     @Override

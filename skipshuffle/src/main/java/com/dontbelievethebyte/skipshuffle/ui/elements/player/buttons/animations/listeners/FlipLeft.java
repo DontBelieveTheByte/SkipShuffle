@@ -2,11 +2,11 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations
 
 import android.view.animation.Animation;
 
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 
 public class FlipLeft extends AbstractListener{
 
-    public FlipLeft(PlayerUI playerUI)
+    public FlipLeft(AbstractPlayerUI playerUI)
     {
         super(playerUI);
     }
