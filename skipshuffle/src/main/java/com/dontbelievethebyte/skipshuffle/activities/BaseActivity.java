@@ -69,9 +69,9 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     protected PreferencesHelper preferencesHelper;
     protected CustomActionBarWrapper customActionBar;
     protected ToastHelper toastHelper;
+    protected CustomOptionsMenuInterface customOptionsMenu;
 
     private MediaScannerHelper mediaScannerHelper;
-    private CustomOptionsMenuInterface customOptionsMenu;
     private MediaPlayerServiceConnection mediaPlayerServiceConnection;
 
     protected abstract void handleBackPressed();
@@ -139,7 +139,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     @Override
     public void onBackPressed()
     {
-        customOptionsMenu.handleBackPressed();
+        handleBackPressed();
     }
 
     @Override
