@@ -1,6 +1,8 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.visitor;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
@@ -21,9 +23,11 @@ public class DrawablesVisitor {
     {
         if (uiElement instanceof MainPlayerButtons)
             visitPlayerUI((MainPlayerButtons) uiElement);
+        if (uiElement instanceof ListPlayerButtons)
+            visitPlayerUI((ListPlayerButtons) uiElement);
     }
 
-    private void visitPlayerUI(MainPlayerButtons buttons)
+    private void visitPlayerUI(AbstractPlayerButtons buttons)
     {
         buttons.prev.setImageDrawable(buttons.drawables.getPrev());
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
