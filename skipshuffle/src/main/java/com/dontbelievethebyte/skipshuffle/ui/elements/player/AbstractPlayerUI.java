@@ -1,12 +1,12 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
-    public MainPlayerButtons buttons;
+    public AbstractPlayerButtons buttons;
     public SongLabel songLabel;
 
     public abstract void doPlay();

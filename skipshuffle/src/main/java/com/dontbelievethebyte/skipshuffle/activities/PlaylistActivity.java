@@ -18,6 +18,7 @@ import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
@@ -137,7 +138,7 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
         CustomTypeface customTypeface = new CustomTypeface(this, type);
         Drawables drawables = new Drawables(this, type);
 
-        MainPlayerButtons buttons = new MainPlayerButtons(contentArea);
+        ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
         buttons.animations = new PlayerButtonsAnimations(this);
         buttons.drawables = drawables;
 

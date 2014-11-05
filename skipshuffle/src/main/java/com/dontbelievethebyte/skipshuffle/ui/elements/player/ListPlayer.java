@@ -8,7 +8,7 @@ import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClick;
@@ -20,7 +20,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
 
     private BaseActivity baseActivity;
 
-    public ListPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, SongLabel songLabel)
+    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, SongLabel songLabel)
     {
         this.baseActivity = baseActivity;
         this.songLabel = songLabel;
