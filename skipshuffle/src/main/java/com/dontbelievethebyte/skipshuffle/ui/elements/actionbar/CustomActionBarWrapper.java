@@ -31,6 +31,12 @@ public class CustomActionBarWrapper {
             actionBar.show();
     }
 
+    public void setTitle(String title)
+    {
+        if (null != title)
+            actionBar.setTitle(title);
+    }
+
     public boolean isShowing()
     {
         return actionBar.isShowing();
