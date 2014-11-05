@@ -75,7 +75,7 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         customActionBar.setTitle(actionBarTitle);
     }
 
-    protected void loadPlaylist(PlaylistInterface playlist)
+    protected void loadList(PlaylistInterface playlist)
     {
         playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
         playlistAdapter = new PlaylistAdapter(
@@ -96,7 +96,12 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
     {
         super.onResume();
         preferencesHelper.registerCallBack(this);
-//        loadPlaylist(mediaPlayer.getPlaylist());
+    }
+
+    @Override
+    public void onMediaPlayerAvailable()
+    {
+        ui.player.reboot();
     }
 
     @Override

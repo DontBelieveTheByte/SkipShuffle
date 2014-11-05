@@ -25,7 +25,6 @@ public class PlayerActivity extends BaseActivity {
     protected void onResume()
     {
         super.onResume();
-        ui.player.reboot();
     }
 
     @Override
@@ -56,7 +55,11 @@ public class PlayerActivity extends BaseActivity {
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
-        ui.player.reboot();
     }
 
+    @Override
+    public void onMediaPlayerAvailable()
+    {
+        ui.player.reboot();
+    }
 }

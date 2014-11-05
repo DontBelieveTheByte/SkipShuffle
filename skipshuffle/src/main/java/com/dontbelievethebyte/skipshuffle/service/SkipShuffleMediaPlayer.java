@@ -31,6 +31,15 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     private PlayerNotification notification;
     private int lastSeekPosition = 0;
     private Track currentTrack;
+    private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
+
+    public class MediaPlayerBinder extends Binder
+    {
+        public SkipShuffleMediaPlayer getService()
+        {
+            return SkipShuffleMediaPlayer.this;
+        }
+    }
 
     @Override
     public void onCommand(String command, Integer newCursorPosition) {
@@ -51,18 +60,10 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         Log.d(BaseActivity.TAG, exception.getMessage());
     }
 
-    public class MediaPlayerBinder extends Binder
-    {
-        public SkipShuffleMediaPlayer getService()
-        {
-            return SkipShuffleMediaPlayer.this;
-        }
-    }
-
     @Override
     public IBinder onBind(Intent intent)
     {
-        return null;
+        return mediaPlayerBinder;
     }
 
     @Override

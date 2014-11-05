@@ -7,9 +7,28 @@ import android.os.IBinder;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class MediaPlayerServiceConnection implements ServiceConnection {
 
+    public static interface MediaPlayerConnectedCallback
+    {
+        public void onMediaPlayerAvailable();
+    }
+
+    private Set<MediaPlayerConnectedCallback> mediaPlayerConnectedCallbacks;
     private SkipShuffleMediaPlayer mediaPlayer;
+
+    public MediaPlayerServiceConnection()
+    {
+        mediaPlayerConnectedCallbacks = new HashSet<MediaPlayerConnectedCallback>();
+    }
+
+    public void registerCallback(MediaPlayerConnectedCallback mediaPlayerConnectedCallback)
+    {
+        mediaPlayerConnectedCallbacks.add(mediaPlayerConnectedCallback);
+    }
 
     public SkipShuffleMediaPlayer getMediaPlayer() throws NoMediaPlayerException
     {
@@ -21,13 +40,21 @@ public class MediaPlayerServiceConnection implements ServiceConnection {
     @Override
     public void onServiceConnected(ComponentName className, IBinder service)
     {
-        // We've bound to LocalService, cast the IBinder and get LocalService instance
         SkipShuffleMediaPlayer.MediaPlayerBinder binder = (SkipShuffleMediaPlayer.MediaPlayerBinder) service;
         mediaPlayer = binder.getService();
+        doCallbacks();
     }
 
     @Override
-    public void onServiceDisconnected(ComponentName arg0) {
+    public void onServiceDisconnected(ComponentName arg0)
+    {
         mediaPlayer = null;
+    }
+
+    private void doCallbacks()
+    {
+        for (MediaPlayerConnectedCallback member: mediaPlayerConnectedCallbacks) {
+            member.onMediaPlayerAvailable();
+        }
     }
 }

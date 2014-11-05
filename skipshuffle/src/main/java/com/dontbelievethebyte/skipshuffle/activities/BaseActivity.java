@@ -37,6 +37,7 @@ import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
 public abstract class BaseActivity extends ActionBarActivity implements ThemeChangedCallback,
                                                                         HapticFeedBackChangedCallback,
+                                                                        MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
                                                                         View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
@@ -83,6 +84,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
 
         startMediaPlayerService();
         mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
+        mediaPlayerServiceConnection.registerCallback(this);
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
