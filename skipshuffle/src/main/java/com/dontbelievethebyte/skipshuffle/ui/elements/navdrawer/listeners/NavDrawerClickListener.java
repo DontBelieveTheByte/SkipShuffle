@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.dontbelievethebyte.skipshuffle.activities.PlaylistActivity;
+import com.dontbelievethebyte.skipshuffle.activities.ListActivity;
 
 public class NavDrawerClickListener implements ListView.OnItemClickListener {
 
@@ -26,23 +26,23 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
     {
         int type;
         switch (position) {
-            case PlaylistActivity.Types.SONGS:
-                type = PlaylistActivity.Types.SONGS;
+            case ListActivity.Types.SONGS:
+                type = ListActivity.Types.SONGS;
                 break;
-            case PlaylistActivity.Types.ARTISTS:
-                type = PlaylistActivity.Types.ARTISTS;
+            case ListActivity.Types.ARTISTS:
+                type = ListActivity.Types.ARTISTS;
                 break;
-            case PlaylistActivity.Types.ALBUMS:
-                type = PlaylistActivity.Types.ALBUMS;
+            case ListActivity.Types.ALBUMS:
+                type = ListActivity.Types.ALBUMS;
                 break;
-            case PlaylistActivity.Types.GENRES:
-                type = PlaylistActivity.Types.GENRES;
+            case ListActivity.Types.GENRES:
+                type = ListActivity.Types.GENRES;
                 break;
-            case PlaylistActivity.Types.PLAYLIST:
-                type = PlaylistActivity.Types.PLAYLIST;
+            case ListActivity.Types.PLAYLIST:
+                type = ListActivity.Types.PLAYLIST;
                 break;
             default:
-                type = PlaylistActivity.Types.SONGS;
+                type = ListActivity.Types.SONGS;
         }
         drawer.closeDrawer(Gravity.START);
         startPlaylistActivity(type);
@@ -52,10 +52,10 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
     {
         Intent intent = new Intent(
                 context,
-                PlaylistActivity.class
+                ListActivity.class
         );
         intent.putExtra(
-                PlaylistActivity.Types.TYPE,
+                ListActivity.Types.TYPE,
                 type
         );
         context.startActivity(intent);

@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PlaylistActivity"
+            android:name=".activities.ListActivity"
             android:theme="@style/CustomActionBarTheme"
             android:label="@string/label_playlist" >
             <intent-filter>

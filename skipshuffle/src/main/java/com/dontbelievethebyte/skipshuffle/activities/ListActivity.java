@@ -19,14 +19,13 @@ import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class PlaylistActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class ListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     public static class Types {
 

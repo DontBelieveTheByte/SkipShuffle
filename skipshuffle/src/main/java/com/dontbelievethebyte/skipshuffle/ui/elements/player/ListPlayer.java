@@ -24,7 +24,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     {
         this.baseActivity = baseActivity;
         this.songLabel = songLabel;
-
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
         setButtonsOnClickListeners();
