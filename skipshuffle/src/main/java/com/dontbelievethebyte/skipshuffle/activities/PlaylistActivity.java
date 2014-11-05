@@ -1,5 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -12,7 +14,16 @@ import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
+import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
+import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.PlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.PlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class PlaylistActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
@@ -29,11 +40,53 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     private PlaylistAdapter playlistAdapter;
     private PlaylistInterface playlist;
     private ListView listView;
+    private int listType;
 
     @Override
     protected void handleBackPressed()
     {
+        if (customOptionsMenu.isShowing())
+            customOptionsMenu.handleBackPressed();
+        else
+            popTaskStack();
+    }
 
+    private void popTaskStack()
+    {
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        parseIntent();
+        setListTitle();
+    }
+
+    private void parseIntent()
+    {
+        Intent intent = getIntent();
+        listType = intent.getIntExtra(Types.TYPE, 0);
+    }
+
+    private void setListTitle()
+    {
+        String actionBarTitle = "";
+        switch (listType) {
+            case Types.SONGS:
+                actionBarTitle = "Songs";
+            case Types.ARTISTS:
+                actionBarTitle = "Artists";
+            case Types.ALBUMS:
+                actionBarTitle = "Albums";
+            case Types.GENRES:
+                actionBarTitle = "Genres";
+            case Types.PLAYLIST:
+                actionBarTitle = "Playlists";
+            default:
+        }
+        customActionBar.setTitle(actionBarTitle);
     }
 
     protected void loadPlaylist(PlaylistInterface playlist)
@@ -73,10 +126,10 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
                         )
                 );
                 mediaPlayer.doPause();
-//                ui.doPause();
+                ui.player.doPause();
             } else {
                 mediaPlayer.doPlay(playlist.getPosition());
-//                ui.doPlay();
+                ui.player.doPlay();
             }
         } catch (NoMediaPlayerException noMediaPlayerException) {
             handleNoMediaPlayerException(noMediaPlayerException);
@@ -94,56 +147,31 @@ public class PlaylistActivity extends BaseActivity implements AdapterView.OnItem
     @Override
     protected void setUI(Integer type)
     {
-//        try {
-//            final SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
-//            ui = UIFactory.createPlaylistUI(this, type);
-//            ui.playBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doPlay();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        handlePlaylistEmptyException();
-//                    }
-//                }
-//            });
-//
-//            ui.prevBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doPrev();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        handlePlaylistEmptyException();
-//                    }
-//                }
-//            });
-//
-//            ui.skipBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doSkip();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        handlePlaylistEmptyException();
-//                    }
-//                }
-//            });
-//
-//            ui.shuffleBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    try {
-//                        mediaPlayer.doShuffle();
-//                    } catch (PlaylistEmptyException playlistEmptyException) {
-//                        handlePlaylistEmptyException();
-//                    }
-//                }
-//            });
-//
-//            buildNavigationDrawer();
-//        } catch (NoMediaPlayerException noMediaPlayerException) {
-//            handleNoMediaPlayerException(noMediaPlayerException);
-//        }
+        ContentArea contentArea = new ContentArea(this, R.layout.playlist_activity);
+        CustomTypeface customTypeface = new CustomTypeface(this, type);
+        Drawables drawables = new Drawables(this, type);
+
+        PlayerButtons buttons = new PlayerButtons(contentArea);
+        buttons.animations = new PlayerButtonsAnimations(this);
+        buttons.drawables = drawables;
+
+        SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
+        songLabel.setTypeFace(customTypeface);
+
+        PlayerUI player = new PlayerUI(
+                this,
+                buttons,
+                songLabel
+        );
+
+        UICompositionBuilder uiBuilder = new UICompositionBuilder();
+        uiBuilder.setActivity(this);
+        uiBuilder.setContentArea(contentArea);
+        uiBuilder.setNavigationDrawer(buildNavigationDrawer(customTypeface));
+        uiBuilder.setColors(new Colors(type));
+        uiBuilder.setDrawables(drawables);
+        uiBuilder.setPlayer(player);
+        ui = uiBuilder.build();
+        ui.player.reboot();
     }
 }

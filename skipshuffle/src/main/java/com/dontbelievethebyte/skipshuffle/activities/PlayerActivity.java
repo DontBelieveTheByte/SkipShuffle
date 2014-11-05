@@ -31,7 +31,7 @@ public class PlayerActivity extends BaseActivity {
     @Override
     protected void handleBackPressed()
     {
-
+        customOptionsMenu.handleBackPressed();
     }
 
     @Override

@@ -55,6 +55,11 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
                 activity.openOptionsMenu();
             }
         }
+
+        public boolean isOptionsMenuOpen()
+        {
+            return isOptionsMenuOpen;
+        }
     }
 
     public void setCustomActionBarWrapper(CustomActionBarWrapper customActionBarWrapper)
@@ -88,6 +93,18 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
 
     @Override
     public void handleBackPressed()
+    {
+        menuStateMachine.tick();
+    }
+
+    @Override
+    public boolean isShowing()
+    {
+        return menuStateMachine.isOptionsMenuOpen();
+    }
+
+    @Override
+    public void showToggle()
     {
         menuStateMachine.tick();
     }

@@ -9,6 +9,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarW
 
 public interface CustomOptionsMenuInterface {
 
+    public boolean isShowing();
+    public void showToggle();
     public void setCustomActionBarWrapper(CustomActionBarWrapper customActionBarWrapper);
     public boolean handleSelection(MenuItem menuItem) throws MenuOptionNotHandledException;
     public boolean handleMenuKeyDown(int keyCode, KeyEvent event);
