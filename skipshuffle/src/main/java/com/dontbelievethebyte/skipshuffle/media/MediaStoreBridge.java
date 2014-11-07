@@ -2,17 +2,20 @@ package com.dontbelievethebyte.skipshuffle.media;
 
 
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
 public class MediaStoreBridge {
     private ContentResolver contentResolver;
+    private Context context;
     private String[] currentProjection;
     private Cursor currentCursor;
 
-    public MediaStoreBridge(ContentResolver contentResolver)
+    public MediaStoreBridge(Context context)
     {
-        this.contentResolver = contentResolver;
+        this.context = context;
     }
 
     public String getSummary()
@@ -110,17 +113,16 @@ public class MediaStoreBridge {
         return currentCursor;
     }
 
-    public Cursor getSongs()
+    public CursorLoader getSongs()
     {
-        currentProjection = Projections.songs;
-        currentCursor = contentResolver.query(
+        return  new CursorLoader(
+                context,
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                currentProjection,
+                Projections.songs,
                 MediaStore.Audio.Media.IS_MUSIC,
                 null, // SelectionArgs
                 MediaStore.Audio.Media.TITLE //Sort order
         );
-        return currentCursor;
     }
 
     public Cursor getSong(String id)

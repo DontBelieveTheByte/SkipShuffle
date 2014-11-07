@@ -1,19 +1,19 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.adapters.PlaylistAdapter;
-import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.adapters.AbstractCustomAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
+import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
@@ -21,11 +21,12 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class ListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class ListActivity extends BaseActivity implements AdapterView.OnItemClickListener,
+                                                          LoaderManager.LoaderCallbacks<Cursor>{
+
 
     public static class Types {
 
@@ -37,18 +38,19 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         public static final int PLAYLIST = 4;
     }
 
-    private PlaylistAdapter playlistAdapter;
-    private PlaylistInterface playlist;
     private ListView listView;
     private int listType;
+    private MediaStoreBridge mediaStoreBridge;
+    private AbstractCustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         parseIntent();
-        setListTitle();
+        mediaStoreBridge = new MediaStoreBridge(this);
     }
+
 
     private void parseIntent()
     {
@@ -56,39 +58,46 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         listType = intent.getIntExtra(Types.TYPE, 0);
     }
 
-    private void setListTitle()
+    private void setListTitle(AbstractCustomAdapter adapter)
     {
-        String actionBarTitle = "";
-        switch (listType) {
-            case Types.SONGS:
-                actionBarTitle = "Songs";
-            case Types.ARTISTS:
-                actionBarTitle = "Artists";
-            case Types.ALBUMS:
-                actionBarTitle = "Albums";
-            case Types.GENRES:
-                actionBarTitle = "Genres";
-            case Types.PLAYLIST:
-                actionBarTitle = "Playlists";
-            default:
-        }
+        String actionBarTitle;
+        if (adapter instanceof SongsAdapter)
+            actionBarTitle = "Songs";
+        else
+            actionBarTitle = "NOT Songs";
         customActionBar.setTitle(actionBarTitle);
     }
 
-    protected void loadList(PlaylistInterface playlist)
+    @Override
+    public Loader<Cursor> onCreateLoader(int loaderType, Bundle bundle)
     {
-        playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-        playlistAdapter = new PlaylistAdapter(
-                this,
-                ui.player.buttons.drawables,
-                playlist
-        );
+        switch (loaderType) {
+            case Types.SONGS:
+                resetAdapter(new SongsAdapter(this, null));
+                return mediaStoreBridge.getSongs();
+            default:
+                return null;
+        }
+    }
 
-        listView = (ListView) findViewById(R.id.current_list);
-        listView.setOnItemClickListener(this);
-        listView.setAdapter(playlistAdapter);
-        TextView emptyText = (TextView)findViewById(android.R.id.empty);
-        listView.setEmptyView(emptyText);
+    private void resetAdapter(AbstractCustomAdapter newAdapter)
+    {
+        adapter = newAdapter;
+        adapter.setDrawables(ui.player.buttons.drawables);
+        setListTitle(adapter);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
+    {
+        adapter.changeCursor(cursor);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader)
+    {
+        adapter.changeCursor(null);
     }
 
     @Override
@@ -96,6 +105,7 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
     {
         super.onResume();
         preferencesHelper.registerCallBack(this);
+        initList();
     }
 
     @Override
@@ -107,26 +117,28 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-        try {
-            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
-            if ( (playlist.getPosition() == position) && ((mediaPlayer.isPlaying())) ) {
-                ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(
-                                DrawableMapper.getPause(preferencesHelper.getUIType())
-                        )
-                );
-                mediaPlayer.doPause();
-                ui.player.doPause();
-            } else {
-                mediaPlayer.doPlay(playlist.getPosition());
-                ui.player.doPlay();
-            }
-        } catch (NoMediaPlayerException noMediaPlayerException) {
-            handleNoMediaPlayerException(noMediaPlayerException);
-        } catch (PlaylistEmptyException playlistEmptyException) {
-            handlePlaylistEmptyException();
-        }
+        Cursor c = adapter.getCursor();
+        c.moveToPosition(position);
+//        try {
+//            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
+//            if ( (playlist.getPosition() == position) && ((mediaPlayer.isPlaying())) ) {
+//                ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
+//                imageView.setImageDrawable(
+//                        getResources().getDrawable(
+//                                DrawableMapper.getPause(preferencesHelper.getUIType())
+//                        )
+//                );
+//                mediaPlayer.doPause();
+//                ui.player.doPause();
+//            } else {
+//                mediaPlayer.doPlay(playlist.getPosition());
+//                ui.player.doPlay();
+//            }
+//        } catch (NoMediaPlayerException noMediaPlayerException) {
+//            handleNoMediaPlayerException(noMediaPlayerException);
+//        } catch (PlaylistEmptyException playlistEmptyException) {
+//            handlePlaylistEmptyException();
+//        }
     }
 
     public void handlePlaylistEmptyException()
@@ -164,5 +176,21 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
         ui.player.reboot();
+        initList();
+    }
+
+    private void initList()
+    {
+        listView = (ListView) findViewById(R.id.current_list);
+        listView.setOnItemClickListener(this);
+        listView.setAdapter(null);
+        TextView emptyText = (TextView)findViewById(android.R.id.empty);
+        listView.setEmptyView(emptyText);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(
+                listType,
+                null,
+                this
+        );
     }
 }

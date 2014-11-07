@@ -13,12 +13,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.NavDrawerClickListener;
-import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.HapticFeedBackChangedCallback;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.ThemeChangedCallback;
@@ -32,6 +31,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInte
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.NavDrawerClickListener;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 

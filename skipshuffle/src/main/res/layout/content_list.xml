@@ -15,5 +15,6 @@
     android:paddingLeft="@dimen/list_padding_left_right"
     android:paddingRight="@dimen/list_padding_left_right"
     android:divider="@color/list_divider_neon"
-    android:drawSelectorOnTop="false" />
+    android:drawSelectorOnTop="false"
+    android:background="#a8273d00" />
 
