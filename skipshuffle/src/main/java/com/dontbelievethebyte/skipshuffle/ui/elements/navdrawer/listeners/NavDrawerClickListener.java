@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.activities.ListActivity;
+import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 
 public class NavDrawerClickListener implements ListView.OnItemClickListener {
 
@@ -26,23 +27,15 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
     {
         int type;
         switch (position) {
-            case ListActivity.Types.SONGS:
-                type = ListActivity.Types.SONGS;
-                break;
-            case ListActivity.Types.ARTISTS:
-                type = ListActivity.Types.ARTISTS;
-                break;
-            case ListActivity.Types.ALBUMS:
-                type = ListActivity.Types.ALBUMS;
-                break;
-            case ListActivity.Types.GENRES:
-                type = ListActivity.Types.GENRES;
-                break;
-            case ListActivity.Types.PLAYLIST:
-                type = ListActivity.Types.PLAYLIST;
+            case MediaStoreBridge.Types.SONGS:
+            case MediaStoreBridge.Types.ARTISTS:
+            case MediaStoreBridge.Types.ALBUMS:
+            case MediaStoreBridge.Types.GENRES:
+            case MediaStoreBridge.Types.PLAYLIST:
+            type = position;
                 break;
             default:
-                type = ListActivity.Types.SONGS;
+                type = MediaStoreBridge.Types.SONGS;
         }
         drawer.closeDrawer(Gravity.START);
         startPlaylistActivity(type);
@@ -55,7 +48,7 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
                 ListActivity.class
         );
         intent.putExtra(
-                ListActivity.Types.TYPE,
+                MediaStoreBridge.Types.TYPE,
                 type
         );
         context.startActivity(intent);
