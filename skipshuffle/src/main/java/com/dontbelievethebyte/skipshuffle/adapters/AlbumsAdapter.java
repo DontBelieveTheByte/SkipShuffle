@@ -10,9 +10,9 @@ import com.dontbelievethebyte.skipshuffle.R;
 
 public class AlbumsAdapter extends AbstractCustomAdapter {
 
-    public AlbumsAdapter(Context context, Cursor cursor)
+    public AlbumsAdapter(Context context)
     {
-        super(context, cursor);
+        super(context);
     }
 
     @Override

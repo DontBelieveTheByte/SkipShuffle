@@ -19,9 +19,9 @@ public abstract class AbstractCustomAdapter extends CursorAdapter {
     protected LayoutInflater layoutInflater;
     protected String[] adapterTypes;
 
-    public AbstractCustomAdapter(Context context, Cursor cursor)
+    public AbstractCustomAdapter(Context context)
     {
-        super(context, cursor, FLAG_REGISTER_CONTENT_OBSERVER);
+        super(context, null, FLAG_REGISTER_CONTENT_OBSERVER);
         layoutInflater = LayoutInflater.from(context);
         adapterTypes = context.getResources().getStringArray(R.array.adapter_types);
     }

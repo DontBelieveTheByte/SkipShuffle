@@ -10,9 +10,9 @@ import com.dontbelievethebyte.skipshuffle.R;
 
 public class ArtistsAdapter extends AbstractCustomAdapter {
 
-    public ArtistsAdapter(Context context, Cursor cursor)
+    public ArtistsAdapter(Context context)
     {
-        super(context, cursor);
+        super(context);
     }
 
     @Override

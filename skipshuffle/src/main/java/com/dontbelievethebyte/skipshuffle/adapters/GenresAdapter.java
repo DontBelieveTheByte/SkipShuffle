@@ -11,9 +11,9 @@ import com.dontbelievethebyte.skipshuffle.R;
 public class GenresAdapter extends AbstractCustomAdapter {
 
 
-    public GenresAdapter(Context context, Cursor cursor)
+    public GenresAdapter(Context context)
     {
-        super(context, cursor);
+        super(context);
     }
 
     @Override
