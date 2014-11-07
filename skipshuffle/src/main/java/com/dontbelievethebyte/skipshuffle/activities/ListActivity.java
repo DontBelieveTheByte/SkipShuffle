@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.adapters.AbstractCustomAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.AlbumsAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.ArtistsAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.GenresAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
@@ -27,17 +30,6 @@ import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 public class ListActivity extends BaseActivity implements AdapterView.OnItemClickListener,
                                                           LoaderManager.LoaderCallbacks<Cursor>{
 
-
-    public static class Types {
-
-        public static final String TYPE = "Type";
-        public static final int SONGS = 0;
-        public static final int ARTISTS = 1;
-        public static final int ALBUMS = 2;
-        public static final int GENRES = 3;
-        public static final int PLAYLIST = 4;
-    }
-
     private ListView listView;
     private int listType;
     private MediaStoreBridge mediaStoreBridge;
@@ -51,30 +43,28 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         mediaStoreBridge = new MediaStoreBridge(this);
     }
 
-
     private void parseIntent()
     {
         Intent intent = getIntent();
-        listType = intent.getIntExtra(Types.TYPE, 0);
-    }
-
-    private void setListTitle(AbstractCustomAdapter adapter)
-    {
-        String actionBarTitle;
-        if (adapter instanceof SongsAdapter)
-            actionBarTitle = "Songs";
-        else
-            actionBarTitle = "NOT Songs";
-        customActionBar.setTitle(actionBarTitle);
+        listType = intent.getIntExtra(MediaStoreBridge.Types.TYPE, 0);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int loaderType, Bundle bundle)
     {
         switch (loaderType) {
-            case Types.SONGS:
+            case MediaStoreBridge.Types.SONGS:
                 resetAdapter(new SongsAdapter(this, null));
                 return mediaStoreBridge.getSongs();
+            case MediaStoreBridge.Types.ALBUMS:
+                resetAdapter(new AlbumsAdapter(this, null));
+                return mediaStoreBridge.getAlbums();
+            case MediaStoreBridge.Types.ARTISTS:
+                resetAdapter(new ArtistsAdapter(this, null));
+                return mediaStoreBridge.getArtists();
+            case MediaStoreBridge.Types.GENRES:
+                resetAdapter(new GenresAdapter(this, null));
+                return mediaStoreBridge.getGenres();
             default:
                 return null;
         }
@@ -84,7 +74,7 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
     {
         adapter = newAdapter;
         adapter.setDrawables(ui.player.buttons.drawables);
-        setListTitle(adapter);
+        customActionBar.setTitle(adapter.getTitle());
     }
 
     @Override

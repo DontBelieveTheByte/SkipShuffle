@@ -68,6 +68,14 @@
         <item>Playlists</item>
     </string-array>
 
+    <string-array name="adapter_types">
+        <item>Songs</item>
+        <item>Artists</item>
+        <item>Albums</item>
+        <item>Genres</item>
+        <item>Playlists</item>
+    </string-array>
+
     <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>
     <string name="accessibility_skip">Skip</string>

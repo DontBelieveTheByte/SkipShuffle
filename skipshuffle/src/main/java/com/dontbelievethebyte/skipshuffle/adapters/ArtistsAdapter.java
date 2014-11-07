@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.dontbelievethebyte.skipshuffle.R;
 
-public class SongsAdapter extends AbstractCustomAdapter {
+public class ArtistsAdapter extends AbstractCustomAdapter {
 
-    public SongsAdapter(Context context, Cursor cursor)
+    public ArtistsAdapter(Context context, Cursor cursor)
     {
         super(context, cursor);
     }
@@ -18,14 +18,14 @@ public class SongsAdapter extends AbstractCustomAdapter {
     @Override
     public String getTitle()
     {
-        return adapterTypes[0];
+        return adapterTypes[1];
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup)
     {
         return layoutInflater.inflate(
-                R.layout.list_item_song,
+                R.layout.list_item_artist,
                 viewGroup,
                 false
         );
@@ -34,8 +34,8 @@ public class SongsAdapter extends AbstractCustomAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
-        setImage(view, R.id.track_image, false);
-        setTextField(view, R.id.track_title, cursor, MediaStore.Audio.Media.TITLE);
-        setTextField(view, R.id.track_artist, cursor, MediaStore.Audio.Media.ARTIST);
+        setImage(view, R.id.artist_image, false);
+        setTextField(view, R.id.artist_name, cursor, MediaStore.Audio.Media.TITLE);
+        setTextField(view, R.id.artist_number_of_albums, cursor, MediaStore.Audio.Media.ARTIST);
     }
 }
