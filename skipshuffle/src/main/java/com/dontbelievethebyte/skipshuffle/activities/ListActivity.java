@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +15,10 @@ import com.dontbelievethebyte.skipshuffle.adapters.AlbumsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.ArtistsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.GenresAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
+import com.dontbelievethebyte.skipshuffle.listeners.AlbumsClick;
+import com.dontbelievethebyte.skipshuffle.listeners.ArtistsClick;
+import com.dontbelievethebyte.skipshuffle.listeners.GenresClick;
+import com.dontbelievethebyte.skipshuffle.listeners.SongsClick;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
@@ -27,13 +30,13 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class ListActivity extends BaseActivity implements AdapterView.OnItemClickListener,
-                                                          LoaderManager.LoaderCallbacks<Cursor>{
+public class ListActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private ListView listView;
     private int listType;
     private MediaStoreBridge mediaStoreBridge;
     private AbstractCustomAdapter adapter;
+    private AdapterView.OnItemClickListener clickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,27 +57,32 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
     {
         switch (loaderType) {
             case MediaStoreBridge.Types.SONGS:
-                resetAdapter(new SongsAdapter(this, null));
+                resetContentList(new SongsAdapter(this));
+                clickListener = new SongsClick();
                 return mediaStoreBridge.getSongs();
             case MediaStoreBridge.Types.ALBUMS:
-                resetAdapter(new AlbumsAdapter(this, null));
+                resetContentList(new AlbumsAdapter(this));
+                clickListener = new AlbumsClick();
                 return mediaStoreBridge.getAlbums();
             case MediaStoreBridge.Types.ARTISTS:
-                resetAdapter(new ArtistsAdapter(this, null));
+                resetContentList(new ArtistsAdapter(this));
+                clickListener = new ArtistsClick();
                 return mediaStoreBridge.getArtists();
             case MediaStoreBridge.Types.GENRES:
-                resetAdapter(new GenresAdapter(this, null));
+                resetContentList(new GenresAdapter(this));
+                clickListener = new GenresClick();
                 return mediaStoreBridge.getGenres();
             default:
                 return null;
         }
     }
 
-    private void resetAdapter(AbstractCustomAdapter newAdapter)
+    private void resetContentList(AbstractCustomAdapter newAdapter)
     {
         adapter = newAdapter;
         adapter.setDrawables(ui.player.buttons.drawables);
         customActionBar.setTitle(adapter.getTitle());
+        listView.setOnItemClickListener(clickListener);
     }
 
     @Override
@@ -96,45 +104,13 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         super.onResume();
         preferencesHelper.registerCallBack(this);
         initList();
+        loadType(listType);
     }
 
     @Override
     public void onMediaPlayerAvailable()
     {
         ui.player.reboot();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
-    {
-        Cursor c = adapter.getCursor();
-        c.moveToPosition(position);
-//        try {
-//            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
-//            if ( (playlist.getPosition() == position) && ((mediaPlayer.isPlaying())) ) {
-//                ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
-//                imageView.setImageDrawable(
-//                        getResources().getDrawable(
-//                                DrawableMapper.getPause(preferencesHelper.getUIType())
-//                        )
-//                );
-//                mediaPlayer.doPause();
-//                ui.player.doPause();
-//            } else {
-//                mediaPlayer.doPlay(playlist.getPosition());
-//                ui.player.doPlay();
-//            }
-//        } catch (NoMediaPlayerException noMediaPlayerException) {
-//            handleNoMediaPlayerException(noMediaPlayerException);
-//        } catch (PlaylistEmptyException playlistEmptyException) {
-//            handlePlaylistEmptyException();
-//        }
-    }
-
-    public void handlePlaylistEmptyException()
-    {
-        preferencesHelper.setLastPlaylist(0);
-        preferencesHelper.setLastPlaylistPosition(0);
     }
 
     @Override
@@ -166,19 +142,22 @@ public class ListActivity extends BaseActivity implements AdapterView.OnItemClic
         uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
         ui.player.reboot();
-        initList();
     }
 
     private void initList()
     {
         listView = (ListView) findViewById(R.id.current_list);
-        listView.setOnItemClickListener(this);
         listView.setAdapter(null);
         TextView emptyText = (TextView)findViewById(android.R.id.empty);
         listView.setEmptyView(emptyText);
+
+    }
+
+    private void loadType(int contentType)
+    {
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(
-                listType,
+                contentType,
                 null,
                 this
         );

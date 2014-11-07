@@ -1,5 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.playlists;
 
+import android.database.Cursor;
+
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ public class RandomPlaylist implements PlaylistInterface {
 
     private Long playlistId;
 
+    private Cursor cursor;
 
     private int playlistPosition = 0;
 
