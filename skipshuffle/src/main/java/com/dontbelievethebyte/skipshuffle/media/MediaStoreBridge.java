@@ -1,116 +1,106 @@
 package com.dontbelievethebyte.skipshuffle.media;
 
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
 public class MediaStoreBridge {
-    private ContentResolver contentResolver;
+
     private Context context;
-    private String[] currentProjection;
-    private Cursor currentCursor;
+
+    public static class Types {
+
+        public static final String TYPE = "Type";
+        public static final int SONG = 0;
+        public static final int SONGS = 1;
+        public static final int ARTIST = 2;
+        public static final int ARTISTS = 3;
+        public static final int ALBUM = 4;
+        public static final int ALBUMS = 5;
+        public static final int GENRE= 6;
+        public static final int GENRES = 7;
+        public static final int PLAYLIST = 8;
+        public static final int PLAYLISTS = 9;
+    }
 
     public MediaStoreBridge(Context context)
     {
         this.context = context;
     }
 
-    public String getSummary()
+    public CursorLoader getAlbums()
     {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String column : currentProjection){
-            String stringColumnResult = currentCursor.getString(currentCursor.getColumnIndex(column));
-            if(stringColumnResult.equals(MediaStore.UNKNOWN_STRING)) {
-                stringColumnResult = "UNKNOWN sHIT";
-            }
-            stringBuilder.append(" *** ");
-            stringBuilder.append(column);
-            stringBuilder.append(" : ");
-            stringBuilder.append(stringColumnResult);
-        }
-        return stringBuilder.toString();
-    }
-
-    public Cursor getAlbums()
-    {
-        currentProjection = Projections.albums;
-        currentCursor = contentResolver.query(
-                MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, //URI
-                currentProjection, //Projection
-                null, // Selection
+        return  new CursorLoader(
+                context,
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Projections.albums,
+                MediaStore.Audio.Media.IS_MUSIC,
                 null, // SelectionArgs
-                MediaStore.Audio.Albums.ALBUM//Sort order
+                MediaStore.Audio.Albums.ALBUM //Sort order
         );
-        return currentCursor;
     }
 
-    public Cursor getSongsFromAlbum(String id)
+    public CursorLoader getSongsFromAlbum(String id)
     {
-        currentProjection = Projections.album;
-        currentCursor = contentResolver.query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, //URI
-                currentProjection, //Projection
-                null, // Selection
+        return  new CursorLoader(
+                context,
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Projections.album,
+                null,
                 null, // SelectionArgs
-                MediaStore.Audio.Albums.ALBUM//Sort order
+                MediaStore.Audio.Albums.ALBUM///Sort order
         );
-        return currentCursor;
     }
 
-    public Cursor getGenres()
+    public CursorLoader getGenres()
     {
-        currentProjection = Projections.genres;
-        currentCursor = contentResolver.query(
-                MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI, //URI
-                currentProjection, //Projection
-                null, // Selection
+        return  new CursorLoader(
+                context,
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Projections.genres,
+                MediaStore.Audio.Media.IS_MUSIC,
                 null, // SelectionArgs
                 null//Sort order
         );
-        return currentCursor;
     }
 
-    public Cursor getSongsFromGenre(String id) {
+    public CursorLoader getSongsFromGenre(String id) {
         Long genreToGetSongsFrom = Long.valueOf(id);
-        currentProjection = Projections.genre;
-        currentCursor = contentResolver.query(
+        return  new CursorLoader(
+                context,
                 MediaStore.Audio.Genres.Members.getContentUri("external", genreToGetSongsFrom), //URI
-                currentProjection, //Projection
-                null, // Selection
+                Projections.genre,
+                null,
                 null, // SelectionArgs
                 MediaStore.Audio.Genres.NAME//Sort order
         );
-        return currentCursor;
     }
 
-    public Cursor getArtists()
+    public CursorLoader getArtists()
     {
-        currentProjection = Projections.artists;
-        currentCursor = contentResolver.query(
-                MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, //URI
-                currentProjection, //Projection
-                null, // Selection
+        return  new CursorLoader(
+                context,
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Projections.artists,
+                MediaStore.Audio.Media.IS_MUSIC,
                 null, // SelectionArgs
-                MediaStore.Audio.Artists.ARTIST//Sort order
+                null//Sort order
         );
-        return currentCursor;
     }
 
-    public Cursor getAlbumsFromArtist(String id)
+    public CursorLoader getAlbumsFromArtist(String id)
     {
         Long artistToGetAlbumsFrom = Long.valueOf(id);
-        currentProjection = Projections.artist;
-        currentCursor = contentResolver.query(
+        return  new CursorLoader(
+                context,
                 MediaStore.Audio.Artists.Albums.getContentUri("external", artistToGetAlbumsFrom), //URI
-                Projections.artist, //Projection
-                null, // Selection
+                Projections.artist,
+                null,
                 null, // SelectionArgs
                 MediaStore.Audio.Albums.ALBUM//Sort order
-        );
-        return currentCursor;
+         );
     }
 
     public CursorLoader getSongs()
@@ -125,16 +115,31 @@ public class MediaStoreBridge {
         );
     }
 
-    public Cursor getSong(String id)
+    public CursorLoader getSong(String id)
     {
-        currentProjection = Projections.song;
-        currentCursor = contentResolver.query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, //URI
-                currentProjection, //Projection
+        return  new CursorLoader(
+                context,
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Projections.song,
                 MediaStore.Audio.Media._ID + " = ? ", // Selection
                 new String[]{id}, // SelectionArgs
                 MediaStore.Audio.Media.TITLE //Sort order
         );
-        return currentCursor;
+    }
+
+    public String getSummary(String[] currentProjection, Cursor currentCursor)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String column : currentProjection){
+            String stringColumnResult = currentCursor.getString(currentCursor.getColumnIndex(column));
+            if(stringColumnResult.equals(MediaStore.UNKNOWN_STRING)) {
+                stringColumnResult = "UNKNOWN sHIT";
+            }
+            stringBuilder.append(" *** ");
+            stringBuilder.append(column);
+            stringBuilder.append(" : ");
+            stringBuilder.append(stringColumnResult);
+        }
+        return stringBuilder.toString();
     }
 }
