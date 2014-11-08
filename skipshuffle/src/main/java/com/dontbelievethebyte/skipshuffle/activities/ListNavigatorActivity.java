@@ -15,11 +15,14 @@ import com.dontbelievethebyte.skipshuffle.adapters.AlbumsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.ArtistsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.GenresAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.AlbumsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.ArtistsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.GenresClick;
 import com.dontbelievethebyte.skipshuffle.listeners.SongsClick;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
@@ -30,7 +33,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class ListActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class ListNavigatorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private ListView listView;
     private int listType;
@@ -58,7 +61,7 @@ public class ListActivity extends BaseActivity implements LoaderManager.LoaderCa
         switch (loaderType) {
             case MediaStoreBridge.Types.SONGS:
                 resetContentList(new SongsAdapter(this));
-                clickListener = new SongsClick();
+                clickListener = new SongsClick(this);
                 return mediaStoreBridge.getSongs();
             case MediaStoreBridge.Types.ALBUMS:
                 resetContentList(new AlbumsAdapter(this));
@@ -88,6 +91,12 @@ public class ListActivity extends BaseActivity implements LoaderManager.LoaderCa
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
     {
+        try {
+            SkipShuffleMediaPlayer mp = getMediaPlayer();
+            mp.setPlaylist(new RandomPlaylist(cursor));
+        } catch (NoMediaPlayerException e) {
+            e.printStackTrace();
+        }
         adapter.changeCursor(cursor);
         listView.setAdapter(adapter);
     }

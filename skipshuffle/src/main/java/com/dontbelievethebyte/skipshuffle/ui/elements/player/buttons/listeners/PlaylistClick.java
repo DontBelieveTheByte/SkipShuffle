@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.activities.ListActivity;
+import com.dontbelievethebyte.skipshuffle.activities.ListNavigatorActivity;
 
 public class PlaylistClick extends CustomAbstractClick {
 
@@ -16,7 +16,7 @@ public class PlaylistClick extends CustomAbstractClick {
     @Override
     public void onClick(View view)
     {
-        Intent playlistActivity = new Intent(activity, ListActivity.class);
+        Intent playlistActivity = new Intent(activity, ListNavigatorActivity.class);
         activity.startActivity(playlistActivity);
     }
 }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.dontbelievethebyte.skipshuffle.activities.ListActivity;
+import com.dontbelievethebyte.skipshuffle.activities.ListNavigatorActivity;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 
 public class NavDrawerClickListener implements ListView.OnItemClickListener {
@@ -45,7 +45,7 @@ public class NavDrawerClickListener implements ListView.OnItemClickListener {
     {
         Intent intent = new Intent(
                 context,
-                ListActivity.class
+                ListNavigatorActivity.class
         );
         intent.putExtra(
                 MediaStoreBridge.Types.TYPE,

@@ -2,11 +2,11 @@ package com.dontbelievethebyte.skipshuffle.playlists;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 
-import java.util.List;
-
 public interface PlaylistInterface {
 
     public Track getFirst () throws PlaylistEmptyException;
+
+    public Track getLast () throws PlaylistEmptyException;
 
     public Track getCurrent() throws PlaylistEmptyException;
 
@@ -20,21 +20,9 @@ public interface PlaylistInterface {
 
     public int getSize();
 
-    public List<Long> getList();
-
     public int getPosition();
 
     public void setPosition(int position);
 
-    public void addTrack(Track track);
-
-    public void removeTrack(Track track);
-
     public void shuffle();
-
-    public void save();
-
-    public Long getPlaylistId();
-
-    public void setPlaylistId(Long playlistId);
 }

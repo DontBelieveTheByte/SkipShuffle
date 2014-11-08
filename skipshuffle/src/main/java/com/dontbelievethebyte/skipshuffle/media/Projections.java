@@ -18,6 +18,7 @@ public class Projections {
                 MediaStore.Audio.Media.ALBUM,
                 MediaStore.Audio.Media.ARTIST,
                 MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.DATA
     };
 
     public final static String[] artists = {
@@ -43,6 +44,7 @@ public class Projections {
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.TRACK
     };
+
     public final static String[] artist = {
             MediaStore.Audio.Artists.Albums.ALBUM,
             MediaStore.Audio.Artists.Albums.ALBUM_KEY,

@@ -8,17 +8,16 @@ import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.callbacks.HeadsetPluggedStateCallback;
-import com.dontbelievethebyte.skipshuffle.service.callbacks.MediaPlayerCommandsCallback;
-import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PlaylistChangedCallback;
-import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
-import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PlaylistChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.MediaPlayerCommandsCallback;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
 
 public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCallback,
                                                                HeadsetPluggedStateCallback,
@@ -27,10 +26,11 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
 
     private CommandsBroadcastReceiver clientCommandsBroadcastReceiver;
     private AndroidPlayer playerWrapper;
+
     private PreferencesHelper preferencesHelper;
     private PlayerNotification notification;
     private int lastSeekPosition = 0;
-    private Track currentTrack;
+    private PlaylistInterface playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
 
     public class MediaPlayerBinder extends Binder
@@ -122,7 +122,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         else {
             try {
                 resetSeekPosition();
-                playerWrapper.loadAudioFile(currentTrack);
+                playerWrapper.loadAudioFile(playlist.getCurrent());
             } catch (AudioTrackLoadingException audioLoadingTrackException) {
                 handleAudioLoadingTrackException(audioLoadingTrackException);
             }
@@ -175,15 +175,6 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         return lastSeekPosition;
     }
 
-    public PreferencesHelper getPreferencesHelper()
-    {
-        return preferencesHelper;
-    }
-
-    public PlaylistInterface getPlaylist()
-    {
-        return null;
-    }
 
     private void resetSeekPosition()
     {
@@ -194,5 +185,20 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     {
         preferencesHelper.setLastPlaylist(0);
         preferencesHelper.setLastPlaylistPosition(0);
+    }
+
+    public PlaylistInterface getPlaylist()
+    {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistInterface playlist)
+    {
+        this.playlist = playlist;
+    }
+
+    public PreferencesHelper getPreferencesHelper()
+    {
+        return preferencesHelper;
     }
 }
