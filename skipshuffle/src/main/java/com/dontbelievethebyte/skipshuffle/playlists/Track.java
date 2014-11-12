@@ -1,5 +1,8 @@
 package com.dontbelievethebyte.skipshuffle.playlists;
 
+import android.database.Cursor;
+import android.provider.MediaStore;
+
 public class Track {
     private long id;
     private String path;
@@ -7,8 +10,19 @@ public class Track {
     private String artist;
     private String album;
     private String genre;
+    private String duration;
 
     public Track(){}
+
+    public Track(Cursor cursor)
+    {
+        id = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
+        path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+        title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+        album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+        artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+        duration = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
+    }
 
     public long getId()
     {
@@ -68,5 +82,10 @@ public class Track {
     public void setGenre(String genre)
     {
         this.genre = genre;
+    }
+
+    public String getDuration()
+    {
+        return duration;
     }
 }

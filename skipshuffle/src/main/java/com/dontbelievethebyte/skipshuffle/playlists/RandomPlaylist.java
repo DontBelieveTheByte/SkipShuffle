@@ -12,11 +12,13 @@ public class RandomPlaylist implements PlaylistInterface {
 
     private Long playlistId;
 
+    private boolean shuffle;
+
     private Cursor cursor;
 
     private int cursorPosition = 0;
 
-    private List<Long> tracksIds = new ArrayList<Long>();
+    private List<Integer> shuffleIndex;
 
     public RandomPlaylist(Cursor cursor)
     {
@@ -26,40 +28,45 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public Track getFirst() throws PlaylistEmptyException
     {
-        return null;
+        cursor.moveToFirst();
+        return new Track(cursor);
     }
 
     @Override
-    public Track getLast() throws PlaylistEmptyException {
-        return null;
+    public Track getLast() throws PlaylistEmptyException
+    {
+        cursor.moveToLast();
+        return new Track(cursor);
     }
 
     @Override
     public Track getCurrent() throws PlaylistEmptyException
     {
-        if (0 == tracksIds.size())
+        if (0 == cursor.getCount())
             throw new PlaylistEmptyException(playlistId);
-        return null;
+        return new Track(cursor);
     }
 
     @Override
     public Track getAtPosition(int position) throws IndexOutOfBoundsException
     {
-        if (position > tracksIds.size())
-            position = tracksIds.size();
+        if (position > cursor.getCount())
+            position = cursor.getCount();
 
-        return null;
+        cursor.moveToPosition(position);
+        return new Track(cursor);
     }
 
     @Override
     public Track getNext()
     {
-        if (cursorPosition >= tracksIds.size())
+        if (cursorPosition >= cursor.getCount())
             cursorPosition = 0;
         else
             cursorPosition++;
 
-        return null;
+        cursor.moveToPosition(cursorPosition);
+        return new Track(cursor);
     }
 
     @Override
@@ -69,14 +76,8 @@ public class RandomPlaylist implements PlaylistInterface {
             cursorPosition = 0;
         else
             cursorPosition--;
-
-        return null;
-    }
-
-    @Override
-    public long getId()
-    {
-        return playlistId;
+        cursor.moveToPosition(cursorPosition);
+        return new Track(cursor);
     }
 
     @Override
@@ -88,8 +89,8 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void setPosition(int position)
     {
-        if (position > tracksIds.size())
-            cursorPosition = tracksIds.size();
+        if (position > cursor.getCount())
+            cursorPosition = cursor.getCount();
         else if (position < 0)
             cursorPosition = 0;
         else
@@ -99,18 +100,28 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void shuffle()
     {
-        Collections.shuffle(tracksIds);
-        cursorPosition = 0;
+        shuffleIndex = new ArrayList<Integer>();
+        for (int i = 0; i<cursor.getCount(); i++ )
+        {
+            shuffleIndex.add(i);
+        }
+        Collections.shuffle(shuffleIndex);
     }
 
     @Override
     public int getSize()
     {
-        return tracksIds.size();
+        return cursor.getCount();
     }
 
-    public List<Track> getAllTracks()
+
+    public boolean isShuffle()
     {
-        return null;
+        return shuffle;
+    }
+
+    public void setShuffle(boolean shuffle)
+    {
+        this.shuffle = shuffle;
     }
 }

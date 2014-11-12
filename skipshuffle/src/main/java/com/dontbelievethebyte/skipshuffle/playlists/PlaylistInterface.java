@@ -16,8 +16,6 @@ public interface PlaylistInterface {
 
     public Track getPrev();
 
-    public long getId();
-
     public int getSize();
 
     public int getPosition();
