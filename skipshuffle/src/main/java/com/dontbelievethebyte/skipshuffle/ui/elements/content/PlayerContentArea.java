@@ -9,7 +9,7 @@ public class PlayerContentArea extends AbstractContentArea {
 
     public PlayerContentArea(Activity activity)
     {
-        super(activity, R.layout.main_activity);
+        super(activity, R.layout.player_activity);
     }
 
     public ViewGroup getBottomLayout()
