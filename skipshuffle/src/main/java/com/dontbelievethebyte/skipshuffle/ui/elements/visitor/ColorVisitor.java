@@ -4,8 +4,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
-import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
@@ -27,8 +27,8 @@ public class ColorVisitor {
     {
         if (uiElement instanceof MusicPlayerDrawer)
             visitMusicPlayerDrawer((MusicPlayerDrawer) uiElement);
-        else if (uiElement instanceof ContentArea)
-            visitContentArea((ContentArea) uiElement);
+        else if (uiElement instanceof AbstractContentArea)
+            visitContentArea((AbstractContentArea) uiElement);
         else if (uiElement instanceof MainPlayer)
             visitPlayerUI((MainPlayer) uiElement);
     }
@@ -45,7 +45,7 @@ public class ColorVisitor {
         }
     }
 
-    private void visitContentArea(ContentArea contentArea)
+    private void visitContentArea(AbstractContentArea contentArea)
     {
         ViewGroup bottomLayout = contentArea.getBottomLayout();
         bottomLayout.setBackgroundResource(colors.background);

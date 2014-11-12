@@ -3,7 +3,7 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
@@ -21,7 +21,7 @@ public abstract class AbstractPlayerButtons implements UIElementCompositeInterfa
 
     protected ViewGroup bottomLayout;
 
-    public AbstractPlayerButtons(ContentArea contentArea)
+    public AbstractPlayerButtons(AbstractContentArea contentArea)
     {
         bottomLayout = contentArea.getBottomLayout();
     }

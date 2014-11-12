@@ -11,9 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.content.PlayerContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicPlayerDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
-import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
@@ -50,8 +51,8 @@ public class DimensionsVisitor {
             visitBaseUI((UIComposition) uiElement);
         else if (uiElement instanceof MainPlayer)
             visitPlayerUI((MainPlayer) uiElement);
-        else if (uiElement instanceof ContentArea)
-            visitContentArea((ContentArea) uiElement);
+        else if (uiElement instanceof PlayerContentArea)
+            visitContentArea((AbstractContentArea) uiElement);
 
     }
 
@@ -75,7 +76,7 @@ public class DimensionsVisitor {
         setSongLabelSize();
     }
 
-    private void visitContentArea(ContentArea contentArea)
+    private void visitContentArea(AbstractContentArea contentArea)
     {
         setBottomLayoutSize(contentArea);
     }
@@ -149,7 +150,7 @@ public class DimensionsVisitor {
         }
     }
 
-    private void setBottomLayoutSize(ContentArea contentArea)
+    private void setBottomLayoutSize(AbstractContentArea contentArea)
     {
         ViewGroup bottomLayout = contentArea.getBottomLayout();
 
