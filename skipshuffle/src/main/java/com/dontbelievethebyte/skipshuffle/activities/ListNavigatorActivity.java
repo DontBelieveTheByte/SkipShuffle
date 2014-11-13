@@ -15,17 +15,14 @@ import com.dontbelievethebyte.skipshuffle.adapters.AlbumsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.ArtistsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.GenresAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
-import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.AlbumsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.ArtistsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.GenresClick;
 import com.dontbelievethebyte.skipshuffle.listeners.SongsClick;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
-import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
-import com.dontbelievethebyte.skipshuffle.ui.elements.ContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.content.ListContentArea;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
@@ -91,12 +88,12 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
     {
-        try {
-            SkipShuffleMediaPlayer mp = getMediaPlayer();
-            mp.setPlaylist(new RandomPlaylist(cursor));
-        } catch (NoMediaPlayerException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            SkipShuffleMediaPlayer mp = getMediaPlayer();
+//            mp.setPlaylist(new RandomPlaylist(cursor));
+//        } catch (NoMediaPlayerException e) {
+//            e.printStackTrace();
+//        }
         adapter.changeCursor(cursor);
         listView.setAdapter(adapter);
     }
@@ -111,7 +108,6 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
     public void onResume()
     {
         super.onResume();
-        preferencesHelper.registerCallBack(this);
         initList();
         loadType(listType);
     }
@@ -122,10 +118,15 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
         ui.player.reboot();
     }
 
+    public AbstractCustomAdapter getAdapter()
+    {
+        return adapter;
+    }
+
     @Override
     protected void setUI(Integer type)
     {
-        ContentArea contentArea = new ContentArea(this, R.layout.playlist_activity);
+        ListContentArea contentArea = new ListContentArea(this);
         CustomTypeface customTypeface = new CustomTypeface(this, type);
         Drawables drawables = new Drawables(this, type);
 
@@ -170,5 +171,11 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
                 null,
                 this
         );
+    }
+
+    @Override
+    public void onViewModeChanged()
+    {
+
     }
 }

@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,13 +15,13 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
+import com.dontbelievethebyte.skipshuffle.adapters.AbstractCustomAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.preferences.callbacks.HapticFeedBackChangedCallback;
-import com.dontbelievethebyte.skipshuffle.preferences.callbacks.ThemeChangedCallback;
+import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
@@ -35,8 +36,9 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.NavDra
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
-public abstract class BaseActivity extends ActionBarActivity implements ThemeChangedCallback,
-                                                                        HapticFeedBackChangedCallback,
+public abstract class BaseActivity extends ActionBarActivity implements PrefsCallbacksManager.ThemeChangedCallback,
+                                                                        PrefsCallbacksManager.HapticFeedBackChangedCallback,
+                                                                        PrefsCallbacksManager.ViewModeChangedCallback,
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
                                                                         View.OnTouchListener {
 
@@ -71,6 +73,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     protected CustomActionBarWrapper customActionBar;
     protected ToastHelper toastHelper;
     protected CustomOptionsMenuInterface customOptionsMenu;
+    protected AbstractCustomAdapter adapter;
 
     private MediaScannerHelper mediaScannerHelper;
     private MediaPlayerServiceConnection mediaPlayerServiceConnection;
@@ -93,6 +96,11 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
 
         toastHelper = new ToastHelper(getApplicationContext());
         mediaScannerHelper = new MediaScannerHelper(this);
+    }
+
+    public PreferencesHelper getPreferencesHelper()
+    {
+        return preferencesHelper;
     }
 
     private void startMediaPlayerService()
@@ -152,6 +160,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     {
         preferencesHelper.unRegisterPrefsChangedListener();
         unbindService(mediaPlayerServiceConnection);
+        ui.player.buttons.play.clearAnimation();
         super.onPause();
     }
 
@@ -159,13 +168,25 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     protected void onResume()
     {
         super.onResume();
-        preferencesHelper = new PreferencesHelper(this);
-
-        //Set up preferences and listener but callback are implemented by child classes.
-        preferencesHelper.registerPrefsChangedListener();
-        preferencesHelper.registerCallBack(this);
-
+        setUpPreferencesHelper();
+        setUpMediaPlayerBinding();
         setUI(preferencesHelper.getUIType());
+    }
+
+    private void setUpPreferencesHelper()
+    {
+        preferencesHelper = new PreferencesHelper(this);
+        preferencesHelper.registerPrefsChangedListener();
+    }
+
+    private void setUpMediaPlayerBinding()
+    {
+        Intent intent = new Intent(this, SkipShuffleMediaPlayer.class);
+        bindService(
+                intent,
+                mediaPlayerServiceConnection,
+                Context.BIND_AUTO_CREATE
+        );
     }
 
     @Override
@@ -173,18 +194,6 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     {
         outState.putBoolean(MediaScannerHelper.IS_SCANNING_MEDIA, mediaScannerHelper.isScanningMedia());
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        Intent intent = new Intent(this, SkipShuffleMediaPlayer.class);
-        bindService(
-                intent,
-                mediaPlayerServiceConnection,
-                Context.BIND_AUTO_CREATE
-        );
     }
 
     @Override
@@ -247,19 +256,19 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     }
 
     @Override
-    public void onHapticFeedBackChanged(boolean isHapticFeedback)
+    public void onHapticFeedBackChanged()
     {
         toastHelper.showShortToast(
-                isHapticFeedback ?
+                preferencesHelper.isHapticFeedback() ?
                         getString(R.string.haptic_feedback_off) :
                         getString(R.string.haptic_feedback_on)
         );
     }
 
     @Override
-    public void onThemeChanged(int uiType)
+    public void onThemeChanged()
     {
-        setUI(uiType);
+        setUI(preferencesHelper.getUIType());
     }
 
     public void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
@@ -271,7 +280,14 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
     {
-        preferencesHelper.setLastPlaylist(0);
-        preferencesHelper.setLastPlaylistPosition(0);
+//        preferencesHelper.setLastPlaylist(0);
+//        preferencesHelper.setLastPlaylistPosition(0);
+    }
+
+    @Override
+    public void onViewModeChanged()
+    {
+        Log.d(BaseActivity.TAG, "I WAS RAND");
+        setUI(preferencesHelper.getUIType());
     }
 }

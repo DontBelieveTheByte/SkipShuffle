@@ -1,8 +1,10 @@
 package com.dontbelievethebyte.skipshuffle.playlists;
 
 import android.database.Cursor;
+import android.provider.MediaStore;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,110 +12,124 @@ import java.util.List;
 
 public class RandomPlaylist implements PlaylistInterface {
 
-    private Long playlistId;
-
+    private MediaStoreBridge mediaStoreBridge;
     private boolean shuffle;
+    private int currentPosition = 0;
+    private List<String> tracksIds;
+    private List<String> shuffledIds;
 
-    private Cursor cursor;
-
-    private int cursorPosition = 0;
-
-    private List<Integer> shuffleIndex;
-
-    public RandomPlaylist(Cursor cursor)
+    public RandomPlaylist(List trackIds, MediaStoreBridge mediaStoreBridge)
     {
-        this.cursor = cursor;
+        this.tracksIds = trackIds;
+        this.mediaStoreBridge = mediaStoreBridge;
+    }
+
+    public RandomPlaylist(List trackIds, int initialPosition, MediaStoreBridge mediaStoreBridge)
+    {
+        this.tracksIds = trackIds;
+        this.mediaStoreBridge = mediaStoreBridge;
+        setPosition(initialPosition);
+    }
+
+    public List<String> getTracksIds()
+    {
+        return tracksIds;
     }
 
     @Override
     public Track getFirst() throws PlaylistEmptyException
     {
-        cursor.moveToFirst();
-        return new Track(cursor);
+        return makeTrackFromId(tracksIds.get(0));
     }
 
     @Override
     public Track getLast() throws PlaylistEmptyException
     {
-        cursor.moveToLast();
-        return new Track(cursor);
+        return makeTrackFromId(tracksIds.get(tracksIds.size()-1));
     }
 
     @Override
     public Track getCurrent() throws PlaylistEmptyException
     {
-        if (0 == cursor.getCount())
-            throw new PlaylistEmptyException(playlistId);
-        return new Track(cursor);
+        if (0 == tracksIds.size())
+            throw new PlaylistEmptyException(0);
+        return makeTrackFromId(tracksIds.get(currentPosition));
     }
 
     @Override
     public Track getAtPosition(int position) throws IndexOutOfBoundsException
     {
-        if (position > cursor.getCount())
-            position = cursor.getCount();
-
-        cursor.moveToPosition(position);
-        return new Track(cursor);
+        return makeTrackFromId(tracksIds.get(position));
     }
 
     @Override
     public Track getNext()
     {
-        if (cursorPosition >= cursor.getCount())
-            cursorPosition = 0;
+        if (currentPosition >= tracksIds.size())
+            currentPosition = 0;
         else
-            cursorPosition++;
+            currentPosition++;
 
-        cursor.moveToPosition(cursorPosition);
-        return new Track(cursor);
+        return makeTrackFromId(tracksIds.get(currentPosition));
     }
 
     @Override
     public Track getPrev()
     {
-        if (cursorPosition <= 0)
-            cursorPosition = 0;
+        if (currentPosition <= 0)
+            currentPosition = 0;
         else
-            cursorPosition--;
-        cursor.moveToPosition(cursorPosition);
-        return new Track(cursor);
+            currentPosition--;
+
+        return makeTrackFromId(tracksIds.get(currentPosition));
     }
 
     @Override
     public int getPosition()
     {
-        return cursorPosition;
+        return currentPosition;
     }
 
     @Override
     public void setPosition(int position)
     {
-        if (position > cursor.getCount())
-            cursorPosition = cursor.getCount();
+        if (position > currentPosition)
+            currentPosition = position;
         else if (position < 0)
-            cursorPosition = 0;
+            currentPosition = 0;
         else
-            cursorPosition = position;
+            currentPosition = position;
     }
 
     @Override
     public void shuffle()
     {
-        shuffleIndex = new ArrayList<Integer>();
-        for (int i = 0; i<cursor.getCount(); i++ )
+        shuffledIds = new ArrayList<String>();
+        for (String id : tracksIds)
         {
-            shuffleIndex.add(i);
+            shuffledIds.add(id);
         }
-        Collections.shuffle(shuffleIndex);
+        Collections.shuffle(shuffledIds);
     }
 
     @Override
     public int getSize()
     {
-        return cursor.getCount();
+        return tracksIds.size();
     }
 
+    private Track makeTrackFromId(String id)
+    {
+        Track track = new Track();
+        Cursor cursor = mediaStoreBridge.getSong(id);
+        cursor.moveToFirst();
+        track.setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+        track.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+        track.setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+        track.setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
+        track.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        return track;
+    }
 
     public boolean isShuffle()
     {

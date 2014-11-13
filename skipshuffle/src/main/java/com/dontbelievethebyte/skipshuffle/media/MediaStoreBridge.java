@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.media;
 
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.provider.MediaStore;
 public class MediaStoreBridge {
 
     private Context context;
+    private ContentResolver contentResolver;
 
     public static class Types {
 
@@ -28,6 +30,7 @@ public class MediaStoreBridge {
     public MediaStoreBridge(Context context)
     {
         this.context = context;
+        contentResolver = context.getContentResolver();
     }
 
     public CursorLoader getAlbums()
@@ -115,15 +118,25 @@ public class MediaStoreBridge {
         );
     }
 
-    public CursorLoader getSong(String id)
+    public Cursor getAllSongs()
     {
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Projections.songs,
+                MediaStore.Audio.Media.IS_MUSIC,
+                null, // SelectionArgs
+                MediaStore.Audio.Media.TITLE //Sort order
+        );
+    }
+
+    public Cursor getSong(String id)
+    {
+        return  contentResolver.query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 Projections.song,
                 MediaStore.Audio.Media._ID + " = ? ", // Selection
                 new String[]{id}, // SelectionArgs
-                MediaStore.Audio.Media.TITLE //Sort order
+                null //Sort order
         );
     }
 

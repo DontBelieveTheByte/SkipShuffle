@@ -1,17 +1,24 @@
 package com.dontbelievethebyte.skipshuffle.listeners;
 
+import android.database.Cursor;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.ListNavigatorActivity;
+import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
+import java.util.ArrayList;
+
 public class SongsClick extends AbstractListClick {
+
+    private boolean isPlaylistSet = false;
 
     public SongsClick(ListNavigatorActivity listActivity)
     {
@@ -23,6 +30,19 @@ public class SongsClick extends AbstractListClick {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = listActivity.getMediaPlayer();
+            if (!isPlaylistSet) {
+                SongsAdapter adapter = (SongsAdapter) listActivity.getAdapter();
+                Cursor cursor = adapter.getCursor();
+                ArrayList<String> trackIds = new ArrayList<String>();
+                while (cursor.moveToNext()){
+                    trackIds.add(
+                            cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID))
+                    );
+                }
+                mediaPlayer.setPlaylist(trackIds);
+                isPlaylistSet = true;
+
+            }
             mediaPlayer.doPlay();
             PlaylistInterface playlist = mediaPlayer.getPlaylist();
             if ( (playlist.getPosition() == position) && ((mediaPlayer.isPlaying())) ) {
