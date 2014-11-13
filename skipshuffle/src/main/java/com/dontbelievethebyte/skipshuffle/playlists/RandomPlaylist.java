@@ -128,6 +128,7 @@ public class RandomPlaylist implements PlaylistInterface {
         track.setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
         track.setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
         track.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        cursor.close();
         return track;
     }
 

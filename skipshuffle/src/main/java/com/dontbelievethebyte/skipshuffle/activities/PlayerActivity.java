@@ -1,6 +1,14 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.adapters.PlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.listeners.PlaylistClick;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
@@ -16,13 +24,6 @@ import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class PlayerActivity extends BaseActivity {
-
-//    @Override
-//    protected void onResume()
-//    {
-//        super.onResume();
-//        preferencesHelper.re
-//    }
 
     @Override
     protected void setUI(Integer type)
@@ -90,6 +91,26 @@ public class PlayerActivity extends BaseActivity {
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
+
+        ListView listView = (ListView) findViewById(R.id.current_list);
+        listView.setAdapter(null);
+        TextView emptyText = (TextView)findViewById(android.R.id.empty);
+        listView.setEmptyView(emptyText);
+
+        try {
+            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
+            RandomPlaylist randomPlaylist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            PlaylistAdapter playlistAdapter = new PlaylistAdapter(
+                    getApplicationContext(),
+                    randomPlaylist,
+                    mediaPlayer
+            );
+            playlistAdapter.setDrawables(ui.player.buttons.drawables);
+            listView.setAdapter(playlistAdapter);
+            listView.setOnItemClickListener(new PlaylistClick(this));
+        } catch (NoMediaPlayerException e) {
+            e.printStackTrace();
+        }
         ui.player.reboot();
     }
 
