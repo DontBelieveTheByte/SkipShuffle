@@ -14,7 +14,7 @@ import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
-public class PlaylistAdapter extends BaseAdapter {
+public class CurrentPlaylistAdapter extends BaseAdapter {
 
     static class ViewHolder {
         ImageView image;
@@ -27,7 +27,7 @@ public class PlaylistAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private SkipShuffleMediaPlayer mediaPlayer;
 
-    public PlaylistAdapter(Context context, RandomPlaylist randomPlaylist, SkipShuffleMediaPlayer mediaPlayer)
+    public CurrentPlaylistAdapter(Context context, RandomPlaylist randomPlaylist, SkipShuffleMediaPlayer mediaPlayer)
     {
         this.randomPlaylist = randomPlaylist;
         layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );

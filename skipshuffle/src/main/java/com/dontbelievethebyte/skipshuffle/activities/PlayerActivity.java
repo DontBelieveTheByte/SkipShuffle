@@ -4,9 +4,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.adapters.PlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.listeners.PlaylistClick;
+import com.dontbelievethebyte.skipshuffle.listeners.CurrentPlaylistClick;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
@@ -100,14 +100,14 @@ public class PlayerActivity extends BaseActivity {
         try {
             SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
             RandomPlaylist randomPlaylist = (RandomPlaylist) mediaPlayer.getPlaylist();
-            PlaylistAdapter playlistAdapter = new PlaylistAdapter(
+            CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
                     getApplicationContext(),
                     randomPlaylist,
                     mediaPlayer
             );
             playlistAdapter.setDrawables(ui.player.buttons.drawables);
             listView.setAdapter(playlistAdapter);
-            listView.setOnItemClickListener(new PlaylistClick(this));
+            listView.setOnItemClickListener(new CurrentPlaylistClick(this));
         } catch (NoMediaPlayerException e) {
             e.printStackTrace();
         }

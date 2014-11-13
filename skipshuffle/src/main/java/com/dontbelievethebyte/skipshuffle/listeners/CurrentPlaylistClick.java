@@ -6,17 +6,17 @@ import android.widget.ImageView;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
-import com.dontbelievethebyte.skipshuffle.adapters.PlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
-public class PlaylistClick implements AdapterView.OnItemClickListener {
+public class CurrentPlaylistClick implements AdapterView.OnItemClickListener {
 
     private PlayerActivity playerActivity;
 
-    public PlaylistClick(PlayerActivity playerActivity)
+    public CurrentPlaylistClick(PlayerActivity playerActivity)
     {
         this.playerActivity = playerActivity;
     }
@@ -44,7 +44,7 @@ public class PlaylistClick implements AdapterView.OnItemClickListener {
                 playerActivity.ui.player.doPlay();
             }
 
-            PlaylistAdapter adapter = (PlaylistAdapter)adapterView.getAdapter();
+            CurrentPlaylistAdapter adapter = (CurrentPlaylistAdapter)adapterView.getAdapter();
             adapter.notifyDataSetChanged();
 
         } catch (NoMediaPlayerException noMediaPlayerException) {

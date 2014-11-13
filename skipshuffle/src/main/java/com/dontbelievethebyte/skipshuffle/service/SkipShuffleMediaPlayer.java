@@ -88,6 +88,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
         if (null != trackIds) {
             playlist = new RandomPlaylist(trackIds, new MediaStoreBridge(getApplicationContext()));
+            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
         } else {
             MediaStoreBridge mediaStoreBridge = new MediaStoreBridge(getApplicationContext());
             trackIds = new ArrayList<String>();
