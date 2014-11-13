@@ -13,6 +13,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
                                              MediaPlayer.OnSeekCompleteListener {
     private MediaPlayer mp;
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
+    private int seekPosition = 0;
 
     public AndroidPlayer(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
@@ -26,7 +27,6 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
     @Override
     public void onPrepared(MediaPlayer mediaPlayer)
     {
-        int seekPosition = skipShuffleMediaPlayer.getLastSeekPosition();
         if (seekPosition > 0)
             mp.seekTo(seekPosition);
         else
@@ -45,11 +45,15 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
         mp.start();
     }
 
-    public int pausePlayingTrack()
+    public void pausePlayingTrack()
     {
-        int currentPosition = mp.getCurrentPosition();
+        seekPosition = mp.getCurrentPosition();
         mp.pause();
-        return currentPosition;
+    }
+
+    public void resetSeekPosition()
+    {
+        seekPosition = 0;
     }
 
     public boolean isPlaying()

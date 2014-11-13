@@ -33,10 +33,8 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     private CommandsBroadcastReceiver clientCommandsBroadcastReceiver;
     private AndroidPlayer playerWrapper;
-
     private PreferencesHelper preferencesHelper;
     private PlayerNotification notification;
-    private int lastSeekPosition = 0;
     private RandomPlaylist playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
 
@@ -156,7 +154,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void doPlay(int playlistPosition) throws PlaylistEmptyException
     {
-        resetSeekPosition();
+        playerWrapper.resetSeekPosition();
         playlist.setPosition(playlistPosition);
         doPlay();
     }
@@ -169,7 +167,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public void doPause()
     {
         if (playerWrapper.isPlaying())
-            lastSeekPosition = playerWrapper.pausePlayingTrack();
+            playerWrapper.pausePlayingTrack();
     }
 
     public void doSkip() throws PlaylistEmptyException
@@ -192,16 +190,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public boolean isPlaying()
     {
         return playerWrapper.isPlaying();
-    }
-
-    public int getLastSeekPosition()
-    {
-        return lastSeekPosition;
-    }
-
-    private void resetSeekPosition()
-    {
-        lastSeekPosition = 0;
     }
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
