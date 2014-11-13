@@ -287,7 +287,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public void onViewModeChanged()
     {
-        Log.d(BaseActivity.TAG, "I WAS RAND");
         setUI(preferencesHelper.getUIType());
     }
 }

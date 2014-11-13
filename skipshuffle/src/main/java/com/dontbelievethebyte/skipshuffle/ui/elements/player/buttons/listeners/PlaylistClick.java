@@ -18,6 +18,5 @@ public class PlaylistClick extends CustomAbstractClick {
     {
         PreferencesHelper preferencesHelper = activity.getPreferencesHelper();
         preferencesHelper.setListViewMode(!preferencesHelper.getListViewMode());
-        Log.d(BaseActivity.TAG, "I WAS CLICKED");
     }
 }
