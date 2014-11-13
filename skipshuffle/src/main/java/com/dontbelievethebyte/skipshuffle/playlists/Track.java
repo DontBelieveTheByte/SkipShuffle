@@ -11,10 +11,11 @@ public class Track {
     private String album;
     private String genre;
     private String duration;
+    private int position;
 
     public Track(){}
 
-    public Track(Cursor cursor)
+    public Track(Cursor cursor, int position)
     {
         id = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
         path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
@@ -87,5 +88,15 @@ public class Track {
     public String getDuration()
     {
         return duration;
+    }
+
+    public int getPosition()
+    {
+        return position;
+    }
+
+    public void setPosition(int position)
+    {
+        this.position = position;
     }
 }

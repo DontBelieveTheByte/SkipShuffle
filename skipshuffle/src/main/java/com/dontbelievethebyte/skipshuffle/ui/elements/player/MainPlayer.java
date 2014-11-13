@@ -1,9 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
@@ -82,27 +80,9 @@ public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     }
 
     @Override
-    public void reboot()
+    public void setTrack(Track track)
     {
-        try {
-            SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
-            if (mediaPlayer.isPlaying())
-                doPlay();
-            else
-                doPause();
-
-            setTitle(buildFormattedTitle());
-        } catch (NoMediaPlayerException noMediaPlayerException) {
-            handleNoMediaPlayerException(noMediaPlayerException);
-        } catch (PlaylistEmptyException playlistEmptyException) {
-            handlePlaylistEmptyException(playlistEmptyException);
-        }
-    }
-
-    @Override
-    public void setTitle(String title)
-    {
-        songLabel.setContent(title);
+        songLabel.setContent(track);
     }
 
 }

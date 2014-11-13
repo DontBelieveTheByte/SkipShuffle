@@ -178,4 +178,10 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
     {
 
     }
+
+    @Override
+    public void onPlayerStateChanged()
+    {
+
+    }
 }

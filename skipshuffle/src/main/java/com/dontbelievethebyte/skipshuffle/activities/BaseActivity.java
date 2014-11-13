@@ -14,14 +14,16 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
-import com.dontbelievethebyte.skipshuffle.adapters.AbstractCustomAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
@@ -39,6 +41,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                                                                         PrefsCallbacksManager.HapticFeedBackChangedCallback,
                                                                         PrefsCallbacksManager.ViewModeChangedCallback,
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
+                                                                        PlayerStateChangedCallback,
                                                                         View.OnTouchListener {
 
     public static final String TAG = "SkipShuffle";
@@ -72,7 +75,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     protected CustomActionBarWrapper customActionBar;
     protected ToastHelper toastHelper;
     protected CustomOptionsMenuInterface customOptionsMenu;
-    protected AbstractCustomAdapter adapter;
 
     private MediaScannerHelper mediaScannerHelper;
     private MediaPlayerServiceConnection mediaPlayerServiceConnection;
@@ -86,7 +88,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
 
         startMediaPlayerService();
         mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
-        mediaPlayerServiceConnection.registerCallback(this);
+        mediaPlayerServiceConnection.registerConnectedCallback(this);
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -270,6 +272,40 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         setUI(preferencesHelper.getUIType());
     }
 
+    @Override
+    public void onViewModeChanged()
+    {
+        setUI(preferencesHelper.getUIType());
+    }
+
+    @Override
+    public void onMediaPlayerAvailable()
+    {
+        mediaPlayerServiceConnection.registerPlayerStateChanged(this);
+        ui.player.reboot();
+    }
+
+    @Override
+    public void onPlayerStateChanged()
+    {
+        try {
+            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
+            if(mediaPlayer.isPlaying())
+                ui.player.doPlay();
+            else
+                ui.player.doPause();
+
+            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            Track track = playlist.getCurrent();
+            ui.player.setTrack(track);
+            toastHelper.showLongToast("STATE CHANGED ");
+        } catch (NoMediaPlayerException e) {
+            e.printStackTrace();
+        } catch (PlaylistEmptyException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
     {
         toastHelper.showLongToast(
@@ -279,13 +315,5 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
     {
-//        preferencesHelper.setLastPlaylist(0);
-//        preferencesHelper.setLastPlaylistPosition(0);
-    }
-
-    @Override
-    public void onViewModeChanged()
-    {
-        setUI(preferencesHelper.getUIType());
     }
 }

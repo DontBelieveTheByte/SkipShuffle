@@ -39,13 +39,14 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public Track getFirst() throws PlaylistEmptyException
     {
-        return makeTrackFromId(tracksIds.get(0));
+        return makeTrackFromId(tracksIds.get(0), 0);
     }
 
     @Override
     public Track getLast() throws PlaylistEmptyException
     {
-        return makeTrackFromId(tracksIds.get(tracksIds.size()-1));
+        int last = tracksIds.size() - 1;
+        return makeTrackFromId(tracksIds.get(last), last);
     }
 
     @Override
@@ -53,35 +54,37 @@ public class RandomPlaylist implements PlaylistInterface {
     {
         if (0 == tracksIds.size())
             throw new PlaylistEmptyException(0);
-        return makeTrackFromId(tracksIds.get(currentPosition));
+        return makeTrackFromId(tracksIds.get(currentPosition), currentPosition);
     }
 
     @Override
     public Track getAtPosition(int position) throws IndexOutOfBoundsException
     {
-        return makeTrackFromId(tracksIds.get(position));
+        return makeTrackFromId(tracksIds.get(position), position);
     }
 
     @Override
     public Track getNext()
     {
+        int next;
         if (currentPosition >= tracksIds.size())
-            currentPosition = 0;
+            next = 0;
         else
-            currentPosition++;
+            next = currentPosition + 1;
 
-        return makeTrackFromId(tracksIds.get(currentPosition));
+        return makeTrackFromId(tracksIds.get(next), next);
     }
 
     @Override
     public Track getPrev()
     {
+        int prev;
         if (currentPosition <= 0)
-            currentPosition = 0;
+            prev = 0;
         else
-            currentPosition--;
+            prev = currentPosition - 1;
 
-        return makeTrackFromId(tracksIds.get(currentPosition));
+        return makeTrackFromId(tracksIds.get(prev), prev);
     }
 
     @Override
@@ -118,7 +121,7 @@ public class RandomPlaylist implements PlaylistInterface {
         return tracksIds.size();
     }
 
-    private Track makeTrackFromId(String id)
+    private Track makeTrackFromId(String id, int trackPosition)
     {
         Track track = new Track();
         Cursor cursor = mediaStoreBridge.getSong(id);
@@ -128,6 +131,7 @@ public class RandomPlaylist implements PlaylistInterface {
         track.setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
         track.setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
         track.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        track.setPosition(trackPosition);
         cursor.close();
         return track;
     }

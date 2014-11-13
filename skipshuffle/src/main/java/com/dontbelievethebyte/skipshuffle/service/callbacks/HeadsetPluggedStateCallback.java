@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.callbacks;
+package com.dontbelievethebyte.skipshuffle.service.callbacks;
 
 public interface HeadsetPluggedStateCallback {
     public void onHeadsetStateChanged(boolean isHeadsetPluggedIn);

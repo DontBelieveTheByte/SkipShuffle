@@ -3,9 +3,10 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.labels;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
 
 public class SongLabel implements UIElementCompositeInterface {
 
@@ -18,10 +19,10 @@ public class SongLabel implements UIElementCompositeInterface {
         label = (TextView) bottomLayout.findViewById(labelId);
     }
 
-    public void setContent(String content)
+    public void setContent(Track track)
     {
         if (null != label) {
-            label.setText(content);
+            label.setText(track.getTitle());
             label.setSelected(true);
         }
     }
@@ -36,4 +37,23 @@ public class SongLabel implements UIElementCompositeInterface {
     {
         return label;
     }
+
+//    protected String buildFormattedTitle(Track track)
+//    {
+//        try {
+//            SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
+//            PlaylistInterface playlist = skipShuffleMediaPlayer.getPlaylist();
+//            Track currentTrack = playlist.getCurrent();
+//            if (null == currentTrack.getArtist() || null == currentTrack.getTitle()) {
+//                return (null == currentTrack.getPath()) ?
+//                        baseActivity.getString(R.string.meta_data_unknown_current_song_title) :
+//                        currentTrack.getPath().substring(currentTrack.getPath().lastIndexOf("/") + 1);
+//            } else {
+//                return currentTrack.getArtist() + " - " + currentTrack.getTitle();
+//            }
+//        return baseActivity.getString(R.string.meta_data_unknown_current_song_title);
+//        } catch (NoMediaPlayerException noMediaPlayerException){
+//            throw new PlaylistEmptyException(0L);
+//        }
+//    }
 }

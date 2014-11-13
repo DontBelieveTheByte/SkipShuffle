@@ -6,8 +6,10 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.listeners.CurrentPlaylistClick;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
@@ -25,6 +27,8 @@ import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class PlayerActivity extends BaseActivity {
 
+    private ListView listView;
+
     @Override
     protected void setUI(Integer type)
     {
@@ -36,6 +40,7 @@ public class PlayerActivity extends BaseActivity {
 
     private void setPlayerUI(Integer type)
     {
+        listView = null;
         AbstractContentArea contentArea = new PlayerContentArea(this);
         CustomTypeface customTypeface = new CustomTypeface(this, type);
         Drawables drawables = new Drawables(this, type);
@@ -92,10 +97,11 @@ public class PlayerActivity extends BaseActivity {
         uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
 
-        ListView listView = (ListView) findViewById(R.id.current_list);
+        listView = (ListView) findViewById(R.id.current_list);
         listView.setAdapter(null);
         TextView emptyText = (TextView)findViewById(android.R.id.empty);
         listView.setEmptyView(emptyText);
+        player.setListView(listView);
 
         try {
             SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
@@ -108,6 +114,7 @@ public class PlayerActivity extends BaseActivity {
             playlistAdapter.setDrawables(ui.player.buttons.drawables);
             listView.setAdapter(playlistAdapter);
             listView.setOnItemClickListener(new CurrentPlaylistClick(this));
+            listView.smoothScrollToPosition(randomPlaylist.getPosition());
         } catch (NoMediaPlayerException e) {
             e.printStackTrace();
         }
@@ -115,9 +122,19 @@ public class PlayerActivity extends BaseActivity {
     }
 
     @Override
-    public void onMediaPlayerAvailable()
+    public void onPlayerStateChanged()
     {
-        ui.player.reboot();
+        super.onPlayerStateChanged();
+        try {
+            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
+            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            Track track = playlist.getCurrent();
+            ui.player.setTrack(track);
+        } catch (NoMediaPlayerException e) {
+            e.printStackTrace();
+        } catch (PlaylistEmptyException e) {
+            e.printStackTrace();
+        }
     }
 
 }

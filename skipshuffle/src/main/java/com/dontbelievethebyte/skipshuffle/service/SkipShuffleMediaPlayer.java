@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.callbacks.HeadsetPluggedStateCallback;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
@@ -18,13 +17,17 @@ import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.HeadsetPluggedStateCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.MediaPlayerCommandsCallback;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksManager.PlaylistChangedCallback,
                                                                HeadsetPluggedStateCallback,
@@ -37,6 +40,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private PlayerNotification notification;
     private RandomPlaylist playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
+    private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
 
     public class MediaPlayerBinder extends Binder
     {
@@ -74,6 +78,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     @Override
     public void onCreate()
     {
+        playerStateChangedCallbacks = new HashSet<PlayerStateChangedCallback>();
         clientCommandsBroadcastReceiver = new CommandsBroadcastReceiver(this);
         clientCommandsBroadcastReceiver.register();
         preferencesHelper = new PreferencesHelper(getApplicationContext());
@@ -148,6 +153,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         try {
             playerWrapper.loadAudioFile(playlist.getCurrent());
+            onPlayerStateChanged();
         } catch (AudioTrackLoadingException audioLoadingTrackException) {
             handleAudioLoadingTrackException(audioLoadingTrackException);
         }
@@ -169,6 +175,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         if (playerWrapper.isPlaying())
             playerWrapper.pausePlayingTrack();
+        onPlayerStateChanged();
     }
 
     public void doSkip() throws PlaylistEmptyException
@@ -214,5 +221,22 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public PreferencesHelper getPreferencesHelper()
     {
         return preferencesHelper;
+    }
+
+    public void registerPlayerStateChanged(PlayerStateChangedCallback playerStateChangedCallback)
+    {
+        playerStateChangedCallbacks.add(playerStateChangedCallback);
+    }
+
+    public void onPlayerStateChanged()
+    {
+        for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
+            playerStateChangedCallback.onPlayerStateChanged();
+        }
+    }
+
+    public void unRegisterPlayerStateChanged(PlayerStateChangedCallback playerStateChangedCallback)
+    {
+        playerStateChangedCallbacks.remove(playerStateChangedCallback);
     }
 }

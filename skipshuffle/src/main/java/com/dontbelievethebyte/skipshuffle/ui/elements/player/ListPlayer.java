@@ -1,9 +1,10 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
+import android.widget.ListView;
+
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
@@ -16,6 +17,9 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
 
+
+    private ListView listView;
+
     public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, SongLabel songLabel)
     {
         this.baseActivity = baseActivity;
@@ -23,6 +27,11 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
         setButtonsOnClickListeners();
+    }
+
+    public void setListView(ListView listView)
+    {
+        this.listView = listView;
     }
 
     private void setButtonsOnClickListeners()
@@ -37,6 +46,8 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doPlay()
     {
+        CurrentPlaylistAdapter adapter = (CurrentPlaylistAdapter)listView.getAdapter();
+        adapter.notifyDataSetChanged();
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.ltr);
     }
@@ -44,6 +55,8 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doPause()
     {
+        CurrentPlaylistAdapter adapter = (CurrentPlaylistAdapter)listView.getAdapter();
+        adapter.notifyDataSetChanged();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);
     }
@@ -82,26 +95,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     }
 
     @Override
-    public void reboot()
+    public void setTrack(Track track)
     {
-        try {
-            SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
-            if (mediaPlayer.isPlaying())
-                doPlay();
-            else
-                doPause();
-
-            setTitle(buildFormattedTitle());
-        } catch (NoMediaPlayerException noMediaPlayerException) {
-            handleNoMediaPlayerException(noMediaPlayerException);
-        } catch (PlaylistEmptyException playlistEmptyException) {
-            handlePlaylistEmptyException(playlistEmptyException);
-        }
-    }
-
-    @Override
-    public void setTitle(String title)
-    {
+        listView.smoothScrollToPosition(track.getPosition() + 2);
     }
 
 }

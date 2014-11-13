@@ -1,9 +1,11 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
-import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
@@ -24,43 +26,23 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public abstract void doShuffle();
 
-    public abstract void reboot();
+    public abstract void setTrack(Track track);
 
-    public abstract void setTitle(String title);
-
-    protected String buildFormattedTitle() throws PlaylistEmptyException
-    {
-//        try {
-//            SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
-//            PlaylistInterface playlist = skipShuffleMediaPlayer.getPlaylist();
-//            Track currentTrack = playlist.getCurrent();
-//            if (null == currentTrack.getArtist() || null == currentTrack.getTitle()) {
-//                return (null == currentTrack.getPath()) ?
-//                        baseActivity.getString(R.string.meta_data_unknown_current_song_title) :
-//                        currentTrack.getPath().substring(currentTrack.getPath().lastIndexOf("/") + 1);
-//            } else {
-//                return currentTrack.getArtist() + " - " + currentTrack.getTitle();
-//            }
-            return baseActivity.getString(R.string.meta_data_unknown_current_song_title);
-//        } catch (NoMediaPlayerException noMediaPlayerException){
-//            throw new PlaylistEmptyException(0L);
-//        }
-    }
-
-    protected void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
-    {
-        String label = baseActivity.getString(R.string.meta_data_unknown_current_song_title);
-        setTitle(label);
-    }
-
-    protected void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
+    public void reboot()
     {
         try {
-            buildFormattedTitle();
-        } catch (PlaylistEmptyException playListEmptyException) {
-            handlePlaylistEmptyException(playListEmptyException);
+            SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
+            if (mediaPlayer.isPlaying())
+                doPlay();
+            else
+                doPause();
+            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            setTrack(playlist.getCurrent());
+        } catch (NoMediaPlayerException noMediaPlayerException) {
+            noMediaPlayerException.printStackTrace();
+        } catch (PlaylistEmptyException playlistEmptyException) {
+            playlistEmptyException.printStackTrace();
         }
-        doPause();
     }
 
 }

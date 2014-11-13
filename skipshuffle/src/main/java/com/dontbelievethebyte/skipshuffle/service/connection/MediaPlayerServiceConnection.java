@@ -6,11 +6,12 @@ import android.os.IBinder;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class MediaPlayerServiceConnection implements ServiceConnection {
+public class MediaPlayerServiceConnection implements ServiceConnection, PlayerStateChangedCallback {
 
     public static interface MediaPlayerConnectedCallback
     {
@@ -18,14 +19,16 @@ public class MediaPlayerServiceConnection implements ServiceConnection {
     }
 
     private Set<MediaPlayerConnectedCallback> mediaPlayerConnectedCallbacks;
+    private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
     private SkipShuffleMediaPlayer mediaPlayer;
 
     public MediaPlayerServiceConnection()
     {
         mediaPlayerConnectedCallbacks = new HashSet<MediaPlayerConnectedCallback>();
+        playerStateChangedCallbacks = new HashSet<PlayerStateChangedCallback>();
     }
 
-    public void registerCallback(MediaPlayerConnectedCallback mediaPlayerConnectedCallback)
+    public void registerConnectedCallback(MediaPlayerConnectedCallback mediaPlayerConnectedCallback)
     {
         mediaPlayerConnectedCallbacks.add(mediaPlayerConnectedCallback);
     }
@@ -42,7 +45,8 @@ public class MediaPlayerServiceConnection implements ServiceConnection {
     {
         SkipShuffleMediaPlayer.MediaPlayerBinder binder = (SkipShuffleMediaPlayer.MediaPlayerBinder) service;
         mediaPlayer = binder.getService();
-        doCallbacks();
+        mediaPlayer.registerPlayerStateChanged(this);
+        doConnectedCallbacks();
     }
 
     @Override
@@ -51,10 +55,28 @@ public class MediaPlayerServiceConnection implements ServiceConnection {
         mediaPlayer = null;
     }
 
-    private void doCallbacks()
+    private void doConnectedCallbacks()
     {
         for (MediaPlayerConnectedCallback member: mediaPlayerConnectedCallbacks) {
             member.onMediaPlayerAvailable();
         }
+    }
+
+    @Override
+    public void onPlayerStateChanged()
+    {
+        for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
+            playerStateChangedCallback.onPlayerStateChanged();
+        }
+    }
+
+    public void registerPlayerStateChanged(PlayerStateChangedCallback playerStateChangedCallback)
+    {
+        playerStateChangedCallbacks.add(playerStateChangedCallback);
+    }
+
+    public void unRegisterPlayerStateChanged(PlayerStateChangedCallback playerStateChangedCallback)
+    {
+        playerStateChangedCallbacks.remove(playerStateChangedCallback);
     }
 }
