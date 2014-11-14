@@ -40,8 +40,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     {
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.ltr);
-        CurrentPlaylistAdapter adapter = (CurrentPlaylistAdapter)listView.getAdapter();
-        adapter.notifyDataSetChanged();
+        notifyAdapter();
     }
 
     @Override
@@ -49,8 +48,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     {
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        CurrentPlaylistAdapter adapter = (CurrentPlaylistAdapter)listView.getAdapter();
-        adapter.notifyDataSetChanged();
+        notifyAdapter();
     }
 
     @Override
@@ -90,6 +88,16 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void setTrack(Track track)
     {
         listView.smoothScrollToPosition(track.getPosition() + calculateScrollOffset());
+    }
+
+    private void notifyAdapter()
+    {
+        CurrentPlaylistAdapter adapter;
+        if (null != listView) {
+            adapter = (CurrentPlaylistAdapter)listView.getAdapter();
+            if (null != adapter)
+                adapter.notifyDataSetChanged();
+        }
     }
 
     private int calculateScrollOffset()

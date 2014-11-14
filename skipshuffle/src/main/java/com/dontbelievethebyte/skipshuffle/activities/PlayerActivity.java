@@ -19,7 +19,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
@@ -45,7 +45,7 @@ public class PlayerActivity extends BaseActivity {
         buttons.animations = new PlayerButtonsAnimations(this);
         buttons.drawables = drawables;
 
-        SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
+        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
         MainPlayer player = new MainPlayer(
@@ -76,7 +76,7 @@ public class PlayerActivity extends BaseActivity {
         buttons.animations = new PlayerButtonsAnimations(this);
         buttons.drawables = drawables;
 
-        SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
+        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
         ListView listView = (ListView) findViewById(R.id.current_list);
@@ -104,7 +104,6 @@ public class PlayerActivity extends BaseActivity {
         ListPlayer player = new ListPlayer(
                 this,
                 buttons,
-                songLabel,
                 listView
         );
 

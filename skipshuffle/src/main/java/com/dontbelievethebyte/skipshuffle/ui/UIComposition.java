@@ -54,11 +54,11 @@ public class UIComposition {
     {
         for (UIElementCompositeInterface element : uiElements) {
             try {
-                AbstractColorVisitor colorVisitor = ColorVisitorFactory.make(element);
+                AbstractColorVisitor colorVisitor = ColorVisitorFactory.make(element, baseActivity);
                 colorVisitor.setColors(colors);
                 colorVisitor.visit(element);
             } catch (NoSuchVisitorException e) {
-                e.printStackTrace();
+                continue;
             }
         }
     }
@@ -70,7 +70,7 @@ public class UIComposition {
                 AbstractDimensionsVisitor dimensionsVisitor = DimensionsVisitorFactory.make(element, baseActivity);
                 dimensionsVisitor.visit(element);
             } catch (NoSuchVisitorException e) {
-                e.printStackTrace();
+                continue;
             }
         }
     }

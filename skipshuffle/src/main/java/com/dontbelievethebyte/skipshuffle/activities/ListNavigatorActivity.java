@@ -25,7 +25,7 @@ import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
@@ -133,7 +133,7 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
         buttons.animations = new PlayerButtonsAnimations(this);
         buttons.drawables = drawables;
 
-        SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
+        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
 //        ListPlayer player = new ListPlayer(

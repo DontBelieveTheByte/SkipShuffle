@@ -8,12 +8,10 @@ import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public AbstractPlayerButtons buttons;
-    public SongLabel songLabel;
     protected BaseActivity baseActivity;
 
     public abstract void doPlay();

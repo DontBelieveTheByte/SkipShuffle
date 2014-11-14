@@ -9,15 +9,16 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.P
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClick;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 
 public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
-    public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, SongLabel songLabel)
+    private MainPlayerSongLabel songLabel;
+
+    public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel)
     {
         this.baseActivity = baseActivity;
         this.songLabel = songLabel;
-
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
         setButtonsOnClickListeners();
@@ -85,4 +86,9 @@ public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         songLabel.setContent(track);
     }
 
+
+    public MainPlayerSongLabel getSongLabel()
+    {
+        return songLabel;
+    }
 }

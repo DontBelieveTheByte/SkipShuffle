@@ -1,5 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete;
 
+import android.app.Activity;
 import android.view.ViewGroup;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
@@ -7,6 +8,11 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.AbstractColorVisitor;
 
 public class MainPlayerLayoutColorVisitor extends AbstractColorVisitor {
+
+    public MainPlayerLayoutColorVisitor(Activity activity)
+    {
+        super(activity);
+    }
 
     @Override
     public void visit(UIElementCompositeInterface uiElement)

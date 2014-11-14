@@ -8,14 +8,13 @@ import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 
-public class SongLabel implements UIElementCompositeInterface {
+public class MainPlayerSongLabel implements UIElementCompositeInterface {
 
     private TextView label;
 
-    public SongLabel(AbstractLayout contentArea, int labelId)
+    public MainPlayerSongLabel(AbstractLayout contentArea, int labelId)
     {
         ViewGroup bottomLayout = contentArea.getBottomLayout();
-
         label = (TextView) bottomLayout.findViewById(labelId);
     }
 
@@ -31,6 +30,11 @@ public class SongLabel implements UIElementCompositeInterface {
     {
         if (null != label && null != typeFace.getTypeFace())
             label.setTypeface(typeFace.getTypeFace());
+    }
+
+    public void setColor(int color)
+    {
+        label.setTextColor(color);
     }
 
     public TextView getLabel()
