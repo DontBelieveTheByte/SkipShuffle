@@ -31,10 +31,4 @@ public class Colors {
         navDrawerText = ColorMapper.getNavDrawerText(uiType);
         songLabel = ColorMapper.getSongLabel(uiType);
     }
-
-    public Color toColor(Context context)
-    {
-        return new Color();
-    }
-
 }
