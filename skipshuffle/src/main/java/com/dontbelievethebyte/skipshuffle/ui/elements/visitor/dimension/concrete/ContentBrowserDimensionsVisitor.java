@@ -33,7 +33,6 @@ public class ContentBrowserDimensionsVisitor extends AbstractDimensionsVisitor {
 
     private void adjustDividerHeight(ListView drawerList)
     {
-        int listDividerHeight = (int) activity.getResources().getDimension(R.dimen.list_divider_height);
-        drawerList.setDividerHeight(listDividerHeight);
+        drawerList.setDividerHeight(DimensionsMapper.List.dividerHeight);
     }
 }
