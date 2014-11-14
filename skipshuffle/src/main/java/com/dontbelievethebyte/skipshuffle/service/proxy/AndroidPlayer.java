@@ -47,8 +47,10 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
 
     public void pausePlayingTrack()
     {
-        seekPosition = mp.getCurrentPosition();
-        mp.pause();
+        if (mp.isPlaying()) {
+            seekPosition = mp.getCurrentPosition();
+            mp.pause();
+        }
     }
 
     public void resetSeekPosition()

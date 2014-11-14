@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui.elements.visitor;
+package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;

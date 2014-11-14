@@ -19,12 +19,24 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
     @Override
     public void visit(UIElementCompositeInterface uiElement)
     {
+        adjustButtonDimensions();
+        adjustSongLabelDimensions();
+    }
+
+    private void adjustButtonDimensions()
+    {
         setPlayButtonSize();
         setPrevButtonSize();
         setPlaylistButtonSize();
         setShuffleButtonSize();
         setSkipButtonSize();
-        setSongLabelSize();
+    }
+
+    private void adjustSongLabelDimensions()
+    {
+        TextView songLabel = (TextView) activity.findViewById(R.id.song_label);
+        setSongLabelContainerSize(songLabel);
+        setSongLabelFontSize(songLabel);
     }
 
     private void setPlayButtonSize()
@@ -67,20 +79,13 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
         setSquareImageButtonSize(R.id.shuffleBtn, shuffleButtonDimension);
     }
 
-    private void setSongLabelSize()
+    private void setSongLabelContainerSize(TextView songLabel)
     {
-        TextView songLabel = (TextView) activity.findViewById(R.id.song_label);
 
         LinearLayout.LayoutParams songLabelLayoutParams = createLinearLayoutParams();
 
         double songLabelTextSize = (computedScreenHeight * (isLandScape ? DimensionsMapper.Player.Center.Landscape.textSize : DimensionsMapper.Player.Center.Portrait.textSize));
         double songLabelTextHeight = (songLabelTextSize * (isLandScape ? DimensionsMapper.Player.Center.Landscape.textHeight : DimensionsMapper.Player.Center.Portrait.textHeight));
-        double totalHeight = 55;
-
-//        while ( computeTotalHeight() > computedScreenHeight) {//@TODO Fix song label size.
-//            songLabelTextHeight = songLabelTextHeight - 1 ;
-//        }
-
         double songLabelWidth = isLandScape ?
                 computedScreenWidth * DimensionsMapper.Player.Center.Landscape.width:
                 computedScreenWidth * DimensionsMapper.Player.Center.Portrait.width;
@@ -89,6 +94,13 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
         songLabelLayoutParams.height = (int) songLabelTextHeight;
 
         songLabel.setLayoutParams(songLabelLayoutParams);
-        songLabel.setTextSize((int) songLabelTextHeight);
+    }
+
+    private void setSongLabelFontSize(TextView songLabel)
+    {
+        int textSize = isLandScape ?
+                DimensionsMapper.Player.SongLabel.Landscape.textSize :
+                DimensionsMapper.Player.SongLabel.Portrait.textSize;
+        songLabel.setTextSize(textSize);
     }
 }

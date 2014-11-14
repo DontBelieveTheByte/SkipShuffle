@@ -6,13 +6,13 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
+import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 
 public class SongLabel implements UIElementCompositeInterface {
 
     private TextView label;
 
-    public SongLabel(AbstractContentArea contentArea, int labelId)
+    public SongLabel(AbstractLayout contentArea, int labelId)
     {
         ViewGroup bottomLayout = contentArea.getBottomLayout();
 

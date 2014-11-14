@@ -63,5 +63,13 @@ public final class DimensionsMapper {
                 public final static double buttonCenterSize = Top.Portrait.buttonSize * .4;
             }
         }
+
+        public final static class SongLabel {
+            public final static class Landscape {
+                public final static int textSize = 34;
+            }
+            public final static class Portrait {
+                public final static int textSize = 44;            }
+        }
     }
 }

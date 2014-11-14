@@ -1,13 +1,13 @@
-package com.dontbelievethebyte.skipshuffle.ui.elements.content;
+package com.dontbelievethebyte.skipshuffle.ui.elements.layout;
 
 import android.app.Activity;
 import android.view.ViewGroup;
 
 import com.dontbelievethebyte.skipshuffle.R;
 
-public class PlayerContentArea extends AbstractContentArea {
+public class PlayerLayout extends AbstractLayout {
 
-    public PlayerContentArea(Activity activity)
+    public PlayerLayout(Activity activity)
     {
         super(activity, R.layout.player_activity);
     }

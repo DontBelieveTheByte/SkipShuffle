@@ -3,12 +3,12 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons;
 import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.elements.content.AbstractContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
 public class MainPlayerButtons extends AbstractPlayerButtons implements DrawablesVisitor.Visitable {
 
-    public MainPlayerButtons(AbstractContentArea contentArea)
+    public MainPlayerButtons(AbstractLayout contentArea)
     {
         super(contentArea);
 

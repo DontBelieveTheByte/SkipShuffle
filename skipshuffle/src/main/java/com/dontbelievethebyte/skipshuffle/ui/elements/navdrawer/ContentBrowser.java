@@ -6,16 +6,16 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DimensionsVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.DrawablesVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
-public class MusicPlayerDrawer implements UIElementCompositeInterface,
-                                          DimensionsVisitor.Visitable,
+public class ContentBrowser implements UIElementCompositeInterface,
+                                          AbstractDimensionsVisitor.Visitable,
                                           DrawablesVisitor.Visitable {
 
     private ListView drawerList;
 
-    public MusicPlayerDrawer(BaseActivity baseActivity, int drawerId)
+    public ContentBrowser(BaseActivity baseActivity, int drawerId)
     {
         drawerList = (ListView) baseActivity.findViewById(drawerId);
     }
@@ -41,7 +41,7 @@ public class MusicPlayerDrawer implements UIElementCompositeInterface,
 
 
     @Override
-    public void acceptDimensionsVisitor(DimensionsVisitor dimensionsVisitor)
+    public void acceptDimensionsVisitor(AbstractDimensionsVisitor dimensionsVisitor)
     {
         dimensionsVisitor.visit(this);
     }
