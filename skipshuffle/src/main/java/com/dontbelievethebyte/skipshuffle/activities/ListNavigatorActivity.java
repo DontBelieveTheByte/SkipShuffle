@@ -22,8 +22,7 @@ import com.dontbelievethebyte.skipshuffle.listeners.SongsClick;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
-import com.dontbelievethebyte.skipshuffle.ui.elements.content.ListContentArea;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.SongLabel;
@@ -126,7 +125,7 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
     @Override
     protected void setUI(Integer type)
     {
-        ListContentArea contentArea = new ListContentArea(this);
+        ListLayout contentArea = new ListLayout(this);
         CustomTypeface customTypeface = new CustomTypeface(this, type);
         Drawables drawables = new Drawables(this, type);
 
@@ -137,11 +136,11 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
         SongLabel songLabel = new SongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
-        ListPlayer player = new ListPlayer(
-                this,
-                buttons,
-                songLabel
-        );
+//        ListPlayer player = new ListPlayer(
+//                this,
+//                buttons,
+//                songLabel
+//        );
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(this);
@@ -149,7 +148,7 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(customTypeface));
         uiBuilder.setColors(new Colors(type));
         uiBuilder.setDrawables(drawables);
-        uiBuilder.setPlayer(player);
+//        uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
         ui.player.reboot();
     }

@@ -12,9 +12,12 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class CurrentPlaylistAdapter extends BaseAdapter {
+
+    private com.dontbelievethebyte.skipshuffle.ui.structured.Colors colors;
 
     static class ViewHolder {
         ImageView image;
@@ -65,8 +68,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
         Track track = randomPlaylist.getAtPosition(i);
         setImage(viewHolder.image, i);
-        setTextField(viewHolder.title, track.getTitle());
-        setTextField(viewHolder.artist, track.getArtist());
+        setTitle(viewHolder.title, track.getTitle());
+        setArtist(viewHolder.artist, track.getArtist());
         return convertView;
     }
 
@@ -75,19 +78,37 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         this.drawables = drawables;
     }
 
+    public void setColors(Colors colors)
+    {
+        this.colors = colors;
+    }
+
     private void setImage(ImageView imageLabel, int position)
     {
         ViewGroup.LayoutParams params = imageLabel.getLayoutParams();
-        if (randomPlaylist.getPosition() == position)
-            imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? drawables.getPlay() : drawables.getPause());
-        else
-            imageLabel.setImageDrawable(null);
+        int height = params.height;
 
+        if (randomPlaylist.getPosition() == position) {
+            imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? drawables.getPlay() : drawables.getPause());
+            params.width = mediaPlayer.isPlaying() ? height : height / 2;
+        } else {
+            imageLabel.setImageDrawable(null);
+            params.width = height /2;
+        }
         imageLabel.setLayoutParams(params);
     }
 
-    private void setTextField(TextView textView, String string)
+    private void setTitle(TextView textView, String string)
     {
         textView.setText(string);
+        if (null != colors)
+            textView.setTextColor(colors.songLabel);
+    }
+
+    private void setArtist(TextView textView, String string)
+    {
+        textView.setText(string);
+        if (null != colors)
+            textView.setTextColor(colors.emptyListText);
     }
 }
