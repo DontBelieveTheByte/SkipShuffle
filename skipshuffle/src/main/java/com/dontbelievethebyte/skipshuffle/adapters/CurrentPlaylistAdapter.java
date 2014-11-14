@@ -100,7 +100,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
             params.width = height;
         } else {
             imageLabel.setImageDrawable(null);
-            params.width = height /2;
+            params.width = (int) (height * 0.66);
         }
         imageLabel.setLayoutParams(params);
     }
