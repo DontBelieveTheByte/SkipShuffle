@@ -8,7 +8,7 @@
     android:headerDividersEnabled="true"
     android:focusable="false"
     android:layout_weight="1"
-    android:dividerHeight="@dimen/list_divider_height"
+    android:dividerHeight="@dimen/null_size"
     android:fastScrollEnabled="true"
     android:smoothScrollbar="true"
     android:paddingTop="@dimen/list_padding_top"

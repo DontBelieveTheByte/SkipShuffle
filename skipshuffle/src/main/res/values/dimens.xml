@@ -1,45 +1,5 @@
 <resources>
     <dimen name="null_size">0dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
-    <dimen name="large_land_outmost_layout_padding_top">5dp</dimen>
-    <dimen name="large_port_outmost_layout_padding_top">5dp</dimen>
-    <dimen name="normal_land_outmost_layout_padding_top">20dp</dimen>
-    <dimen name="normal_port_outmost_layout_padding_top">5dp</dimen>
-    <dimen name="small_land_outmost_layout_padding_top">10dp</dimen>
-    <dimen name="small_port_outmost_layout_padding_top">5dp</dimen>
-    <dimen name="xlarge_land_outmost_layout_padding_top">5dp</dimen>
-    <dimen name="xlarge_port_outmost_layout_padding_top">5dp</dimen>
-
-    <dimen name="large_land_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="large_port_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="normal_land_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="normal_port_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="small_land_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="small_port_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="xlarge_land_outmost_layout_padding_right">5dp</dimen>
-    <dimen name="xlarge_port_outmost_layout_padding_right">5dp</dimen>
-
-    <dimen name="large_land_outmost_layout_padding_bottom">5dp</dimen>
-    <dimen name="large_port_outmost_layout_padding_bottom">5dp</dimen>
-    <dimen name="normal_land_outmost_layout_padding_bottom">15dp</dimen>
-    <dimen name="normal_port_outmost_layout_padding_bottom">5dp</dimen>
-    <dimen name="small_land_outmost_layout_padding_bottom">5dp</dimen>
-    <dimen name="small_port_outmost_layout_padding_bottom">5dp</dimen>
-    <dimen name="xlarge_land_outmost_layout_padding_bottom">5dp</dimen>
-    <dimen name="xlarge_port_outmost_layout_padding_bottom">5dp</dimen>
-
-    <dimen name="large_land_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="large_port_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="normal_land_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="normal_port_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="small_land_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="small_port_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="xlarge_land_outmost_layout_padding_left">5dp</dimen>
-    <dimen name="xlarge_port_outmost_layout_padding_left">5dp</dimen>
-
     <!--Navigation drawer stuff-->
     <dimen name="navdrawer_padding_top">12dp</dimen>
     <dimen name="navdrawer_divider_height">1dp</dimen>
@@ -49,14 +9,12 @@
     <dimen name="navdrawer_item_text_padding_bottom">8dp</dimen>
 
     <!--List stuff-->
-    <dimen name="list_divider_height">1dp</dimen>
     <dimen name="list_padding_top">12dp</dimen>
     <dimen name="list_padding_left_right">4dp</dimen>
     <dimen name="list_footer_height">64dp</dimen>
     <dimen name="list_buttons_w_h">48dp</dimen>
 
     <!--Single list items layout-->
-
     <dimen name="common_single_list_item_w_h">72dp</dimen>
     <dimen name="file_picker_empty_view_text_size">28sp</dimen>
     <dimen name="single_playlist_item_image_padding">12dp</dimen>
