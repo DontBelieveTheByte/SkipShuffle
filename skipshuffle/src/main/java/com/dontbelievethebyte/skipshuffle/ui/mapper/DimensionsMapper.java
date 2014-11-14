@@ -11,6 +11,10 @@ public final class DimensionsMapper {
         }
     }
 
+    public final static class List {
+        public final static int dividerHeight = 1;
+    }
+
     public final static class Player {
 
         public final static class Padding {
