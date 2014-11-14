@@ -32,6 +32,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarW
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowser;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
@@ -233,9 +234,9 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         mediaScannerHelper.showMediaScannerDialog();
     }
 
-    protected com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowser buildNavigationDrawer(CustomTypeface customTypeface)
+    protected MusicContentBrowser buildNavigationDrawer(CustomTypeface customTypeface)
     {
-        com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowser musicPlayerDrawer = new com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowser(this, R.id.drawer_list);
+        MusicContentBrowser musicPlayerDrawer = new MusicContentBrowser(this, R.id.drawer_list);
         musicPlayerDrawer.setClickListener(
                 new ContentBrowser(
                         this,

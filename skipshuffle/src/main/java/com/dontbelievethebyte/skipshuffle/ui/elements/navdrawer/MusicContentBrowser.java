@@ -9,13 +9,13 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterfac
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
-public class ContentBrowser implements UIElementCompositeInterface,
+public class MusicContentBrowser implements UIElementCompositeInterface,
                                           AbstractDimensionsVisitor.Visitable,
                                           DrawablesVisitor.Visitable {
 
     private ListView drawerList;
 
-    public ContentBrowser(BaseActivity baseActivity, int drawerId)
+    public MusicContentBrowser(BaseActivity baseActivity, int drawerId)
     {
         drawerList = (ListView) baseActivity.findViewById(drawerId);
     }
