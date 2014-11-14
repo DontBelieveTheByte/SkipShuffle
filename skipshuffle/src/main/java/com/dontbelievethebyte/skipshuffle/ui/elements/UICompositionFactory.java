@@ -1,11 +1,15 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements;
 
+import android.support.v4.widget.DrawerLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.MusicContentBrowserActivity;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.CurrentPlaylistClick;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
@@ -15,6 +19,8 @@ import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
@@ -107,4 +113,53 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
+    public static UIComposition makeMusicContentBrowser(MusicContentBrowserActivity musicContentBrowserActivity, int uiType)
+    {
+        ListLayout contentArea = new ListLayout(musicContentBrowserActivity);
+        CustomTypeface customTypeface = new CustomTypeface(musicContentBrowserActivity, uiType);
+        Drawables drawables = new Drawables(musicContentBrowserActivity, uiType);
+
+        ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
+        buttons.animations = new PlayerButtonsAnimations(musicContentBrowserActivity);
+        buttons.drawables = drawables;
+
+        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
+        songLabel.setTypeFace(customTypeface);
+
+//        ListPlayer player = new ListPlayer(
+//                this,
+//                buttons,
+//                songLabel
+//        );
+
+        UICompositionBuilder uiBuilder = new UICompositionBuilder();
+        uiBuilder.setActivity(musicContentBrowserActivity);
+        uiBuilder.setContentArea(contentArea);
+        uiBuilder.setNavigationDrawer(buildNavigationDrawer(musicContentBrowserActivity, customTypeface));
+        uiBuilder.setColors(new Colors(uiType));
+        uiBuilder.setDrawables(drawables);
+        return uiBuilder.build();
+    }
+
+    private static MusicContentBrowser buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)
+    {
+        MusicContentBrowser musicPlayerDrawer = new MusicContentBrowser(baseActivity, R.id.drawer_list);
+        musicPlayerDrawer.setClickListener(
+                new ContentBrowser(
+                        baseActivity,
+                        (DrawerLayout) baseActivity.findViewById(R.id.drawer_layout)
+                )
+        );
+        musicPlayerDrawer.setTouchListener(baseActivity);
+        musicPlayerDrawer.setAdapter(
+                new NavigationDrawerAdapter(
+                        baseActivity,
+                        R.layout.drawer_list_item,
+                        baseActivity.getResources().getStringArray(R.array.drawer_menu),
+                        baseActivity.getPreferencesHelper(),
+                        customTypeface.getTypeFace()
+                )
+        );
+        return musicPlayerDrawer;
+    }
 }

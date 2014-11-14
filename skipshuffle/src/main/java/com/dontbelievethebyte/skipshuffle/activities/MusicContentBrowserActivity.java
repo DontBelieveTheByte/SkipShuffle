@@ -20,16 +20,9 @@ import com.dontbelievethebyte.skipshuffle.listeners.ArtistsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.GenresClick;
 import com.dontbelievethebyte.skipshuffle.listeners.SongsClick;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
-import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
-import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
-import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UICompositionFactory;
 
-public class ListNavigatorActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MusicContentBrowserActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private ListView listView;
     private int listType;
@@ -125,31 +118,7 @@ public class ListNavigatorActivity extends BaseActivity implements LoaderManager
     @Override
     protected void setUI(Integer type)
     {
-        ListLayout contentArea = new ListLayout(this);
-        CustomTypeface customTypeface = new CustomTypeface(this, type);
-        Drawables drawables = new Drawables(this, type);
-
-        ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
-        buttons.animations = new PlayerButtonsAnimations(this);
-        buttons.drawables = drawables;
-
-        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
-        songLabel.setTypeFace(customTypeface);
-
-//        ListPlayer player = new ListPlayer(
-//                this,
-//                buttons,
-//                songLabel
-//        );
-
-        UICompositionBuilder uiBuilder = new UICompositionBuilder();
-        uiBuilder.setActivity(this);
-        uiBuilder.setContentArea(contentArea);
-        uiBuilder.setNavigationDrawer(buildNavigationDrawer(customTypeface));
-        uiBuilder.setColors(new Colors(type));
-        uiBuilder.setDrawables(drawables);
-//        uiBuilder.setPlayer(player);
-        ui = uiBuilder.build();
+        ui = UICompositionFactory.makeMusicContentBrowser(this, type);
         ui.player.reboot();
     }
 

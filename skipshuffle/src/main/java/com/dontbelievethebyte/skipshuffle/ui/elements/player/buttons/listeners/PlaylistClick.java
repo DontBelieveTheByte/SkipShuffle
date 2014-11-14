@@ -1,6 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners;
 
-import android.util.Log;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -17,6 +16,10 @@ public class PlaylistClick extends CustomAbstractClick {
     public void onClick(View view)
     {
         PreferencesHelper preferencesHelper = activity.getPreferencesHelper();
-        preferencesHelper.setListViewMode(!preferencesHelper.getListViewMode());
+
+        boolean valur = preferencesHelper.getListViewMode();
+
+        preferencesHelper.setListViewMode(!valur);
+
     }
 }

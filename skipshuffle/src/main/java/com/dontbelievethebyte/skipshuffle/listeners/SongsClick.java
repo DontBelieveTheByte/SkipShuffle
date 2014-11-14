@@ -7,7 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.ListNavigatorActivity;
+import com.dontbelievethebyte.skipshuffle.activities.MusicContentBrowserActivity;
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -20,7 +20,7 @@ public class SongsClick extends AbstractListClick {
 
     private boolean isPlaylistSet = false;
 
-    public SongsClick(ListNavigatorActivity listActivity)
+    public SongsClick(MusicContentBrowserActivity listActivity)
     {
         super(listActivity);
     }

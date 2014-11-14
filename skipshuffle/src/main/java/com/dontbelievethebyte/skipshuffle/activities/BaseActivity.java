@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -14,7 +13,6 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
-import com.dontbelievethebyte.skipshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -25,15 +23,12 @@ import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksMa
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
-import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.ThemeSelectionDialog;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowser;
 import com.dontbelievethebyte.skipshuffle.utilities.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
@@ -232,28 +227,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     public void showMediaScannerDialog()
     {
         mediaScannerHelper.showMediaScannerDialog();
-    }
-
-    protected MusicContentBrowser buildNavigationDrawer(CustomTypeface customTypeface)
-    {
-        MusicContentBrowser musicPlayerDrawer = new MusicContentBrowser(this, R.id.drawer_list);
-        musicPlayerDrawer.setClickListener(
-                new ContentBrowser(
-                        this,
-                        (DrawerLayout) findViewById(R.id.drawer_layout)
-                )
-        );
-        musicPlayerDrawer.setTouchListener(this);
-        musicPlayerDrawer.setAdapter(
-                new NavigationDrawerAdapter(
-                        this,
-                        R.layout.drawer_list_item,
-                        getResources().getStringArray(R.array.drawer_menu),
-                        preferencesHelper,
-                        customTypeface.getTypeFace()
-                )
-        );
-        return musicPlayerDrawer;
     }
 
     @Override
