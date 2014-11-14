@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
     private RandomPlaylist randomPlaylist;
     private Drawables drawables;
+    private Typeface typeface;
     private LayoutInflater layoutInflater;
     private SkipShuffleMediaPlayer mediaPlayer;
 
@@ -73,14 +75,19 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void setColors(Colors colors)
+    {
+        this.colors = colors;
+    }
+
     public void setDrawables(Drawables drawables)
     {
         this.drawables = drawables;
     }
 
-    public void setColors(Colors colors)
+    public void setTypeface(Typeface typeface)
     {
-        this.colors = colors;
+        this.typeface = typeface;
     }
 
     private void setImage(ImageView imageLabel, int position)
@@ -90,7 +97,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
         if (randomPlaylist.getPosition() == position) {
             imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? drawables.getPlay() : drawables.getPause());
-            params.width = mediaPlayer.isPlaying() ? height : height / 2;
+            params.width = height;
         } else {
             imageLabel.setImageDrawable(null);
             params.width = height /2;
@@ -98,17 +105,21 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         imageLabel.setLayoutParams(params);
     }
 
-    private void setTitle(TextView textView, String string)
+    private void setTitle(TextView trackTitle, String string)
     {
-        textView.setText(string);
+        trackTitle.setText(string);
         if (null != colors)
-            textView.setTextColor(colors.songLabel);
+            trackTitle.setTextColor(colors.songLabel);
+        if (null != typeface)
+            trackTitle.setTypeface(typeface);
     }
 
-    private void setArtist(TextView textView, String string)
+    private void setArtist(TextView trackArtist, String string)
     {
-        textView.setText(string);
+        trackArtist.setText(string);
         if (null != colors)
-            textView.setTextColor(colors.emptyListText);
+            trackArtist.setTextColor(colors.emptyListText);
+        if (null != typeface)
+            trackArtist.setTypeface(typeface);
     }
 }

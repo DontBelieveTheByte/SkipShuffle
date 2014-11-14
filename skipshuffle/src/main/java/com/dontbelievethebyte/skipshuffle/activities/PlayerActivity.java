@@ -93,6 +93,7 @@ public class PlayerActivity extends BaseActivity {
             );
             playlistAdapter.setDrawables(drawables);
             playlistAdapter.setColors(colors);
+            playlistAdapter.setTypeface(customTypeface.getTypeFace());
             listView.setAdapter(playlistAdapter);
             listView.setOnItemClickListener(new CurrentPlaylistClick(this));
             listView.smoothScrollToPosition(randomPlaylist.getPosition());
@@ -115,8 +116,6 @@ public class PlayerActivity extends BaseActivity {
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
         ui = uiBuilder.build();
-
-
         ui.player.reboot();
     }
 }
