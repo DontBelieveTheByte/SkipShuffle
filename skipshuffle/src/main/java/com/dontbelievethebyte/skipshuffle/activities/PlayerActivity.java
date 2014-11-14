@@ -1,6 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
-import com.dontbelievethebyte.skipshuffle.ui.UICompositionFactory;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UICompositionFactory;
 
 public class PlayerActivity extends BaseActivity {
 

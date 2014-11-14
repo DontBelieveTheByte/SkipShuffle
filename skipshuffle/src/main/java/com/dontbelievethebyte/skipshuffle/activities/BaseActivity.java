@@ -26,7 +26,7 @@ import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
-import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;

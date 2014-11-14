@@ -3,7 +3,7 @@ package com.dontbelievethebyte.skipshuffle.ui.builder;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowser;
-import com.dontbelievethebyte.skipshuffle.ui.UIComposition;
+import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;

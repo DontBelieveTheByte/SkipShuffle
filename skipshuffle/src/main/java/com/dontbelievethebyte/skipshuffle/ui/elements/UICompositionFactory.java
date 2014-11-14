@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.elements;
 
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,6 +10,7 @@ import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.CurrentPlaylistClick;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;

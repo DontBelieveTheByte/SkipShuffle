@@ -1,7 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.ui.structured;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
@@ -15,6 +13,8 @@ public class Colors {
     public int navDrawerHeaderText;
     public int navDrawerText;
     public int songLabel;
+    public int playlistTitle;
+    public int playlistArtist;
 
     public static ColorDrawable toColorDrawable(Integer color)
     {
@@ -30,5 +30,7 @@ public class Colors {
         navDrawerHeaderText = ColorMapper.getNavHeaderText(uiType);
         navDrawerText = ColorMapper.getNavDrawerText(uiType);
         songLabel = ColorMapper.getSongLabel(uiType);
+        playlistTitle = ColorMapper.getPlaylistTitle(uiType);
+        playlistArtist = ColorMapper.getPlaylistArtist(uiType);
     }
 }

@@ -107,5 +107,4 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         int numberOfTotalElements = lastSeeing - firstSeeing;
         return (numberOfTotalElements > 1) ? numberOfTotalElements / 2 : 2;
     }
-
 }

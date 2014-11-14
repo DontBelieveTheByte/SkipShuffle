@@ -27,6 +27,10 @@ public class ListPlayerColorVisitor extends AbstractColorVisitor {
     private void colorListView(ListPlayer listPlayer)
     {
         ListView listView = listPlayer.listView;
-        listView.setDivider(Colors.toColorDrawable(colors.listDivider));
+        listView.setDivider(
+                Colors.toColorDrawable(
+                    activity.getResources().getColor(colors.listDivider)
+                )
+        );
     }
 }

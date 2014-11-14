@@ -18,7 +18,10 @@ import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class CurrentPlaylistAdapter extends BaseAdapter {
 
-    private com.dontbelievethebyte.skipshuffle.ui.structured.Colors colors;
+    private Context context;
+
+    private Integer titleColor;
+    private Integer artistColor;
 
     static class ViewHolder {
         ImageView image;
@@ -34,6 +37,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
     public CurrentPlaylistAdapter(Context context, RandomPlaylist randomPlaylist, SkipShuffleMediaPlayer mediaPlayer)
     {
+        this.context = context;
         this.randomPlaylist = randomPlaylist;
         layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         this.mediaPlayer = mediaPlayer;
@@ -77,7 +81,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
     public void setColors(Colors colors)
     {
-        this.colors = colors;
+        titleColor = context.getResources().getColor(colors.playlistTitle);
+        artistColor = context.getResources().getColor(colors.playlistArtist);
     }
 
     public void setDrawables(Drawables drawables)
@@ -108,8 +113,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     private void setTitle(TextView trackTitle, String string)
     {
         trackTitle.setText(string);
-        if (null != colors)
-            trackTitle.setTextColor(colors.songLabel);
+        if (null != titleColor)
+            trackTitle.setTextColor(titleColor);
         if (null != typeface)
             trackTitle.setTypeface(typeface);
     }
@@ -117,8 +122,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     private void setArtist(TextView trackArtist, String string)
     {
         trackArtist.setText(string);
-        if (null != colors)
-            trackArtist.setTextColor(colors.emptyListText);
+        if (null != artistColor)
+            trackArtist.setTextColor(artistColor);
         if (null != typeface)
             trackArtist.setTypeface(typeface);
     }

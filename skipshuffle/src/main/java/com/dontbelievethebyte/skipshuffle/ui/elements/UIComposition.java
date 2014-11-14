@@ -1,4 +1,4 @@
-package com.dontbelievethebyte.skipshuffle.ui;
+package com.dontbelievethebyte.skipshuffle.ui.elements;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;

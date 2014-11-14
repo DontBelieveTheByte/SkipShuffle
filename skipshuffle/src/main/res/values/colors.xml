@@ -32,9 +32,9 @@
     <color name="playlist_item_track_title_mono_light">#ff1a1a1a</color>
     <color name="playlist_item_track_title_mono_dark">#ffc5c5c5</color>
 
-    <color name="single_playlist_item_artist_title_neon">#ffffb100</color>
-    <color name="playlist_item_artist_title_mono_light">#ff2f2f2f</color>
-    <color name="playlist_item_artist_title_mono_dark">#ffaeaeae</color>
+    <color name="playlist_item_track_artist_neon">#ffffb100</color>
+    <color name="playlist_item_track_artist_mono_light">#ff2f2f2f</color>
+    <color name="playlist_item_track_artist_mono_dark">#ffaeaeae</color>
 
     <!--Action bar specific colors-->
     <color name="actionbar_background">#b4c5c5c5</color>
