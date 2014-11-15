@@ -29,6 +29,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class UICompositionFactory {
 
@@ -92,7 +93,7 @@ public class UICompositionFactory {
             playlistAdapter.setTypeface(customTypeface.getTypeFace());
             listView.setAdapter(playlistAdapter);
             listView.setOnItemClickListener(new CurrentPlaylistClick(playerActivity));
-            listView.smoothScrollToPosition(randomPlaylist.getPosition());
+            listView.smoothScrollToPosition(randomPlaylist.getPosition() + ScrollOffsetCalculator.compute(listView));
         } catch (NoMediaPlayerException e) {
             e.printStackTrace();
         }

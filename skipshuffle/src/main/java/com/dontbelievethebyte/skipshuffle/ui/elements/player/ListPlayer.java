@@ -13,6 +13,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.P
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClick;
+import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
@@ -89,7 +90,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void setTrack(Track track)
     {
-        listView.smoothScrollToPosition(track.getPosition() + calculateScrollOffset());
+        listView.smoothScrollToPosition(track.getPosition() + ScrollOffsetCalculator.compute(listView));
     }
 
     private void notifyAdapter()
@@ -102,11 +103,4 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         }
     }
 
-    private int calculateScrollOffset()
-    {
-        int firstSeeing = listView.getFirstVisiblePosition();
-        int lastSeeing = listView.getLastVisiblePosition();
-        int numberOfTotalElements = lastSeeing - firstSeeing;
-        return (numberOfTotalElements > 1) ? numberOfTotalElements / 2 : 2;
-    }
 }
