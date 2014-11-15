@@ -142,12 +142,6 @@ public class MusicContentBrowserActivity extends BaseActivity implements LoaderM
     }
 
     @Override
-    public void onViewModeChanged()
-    {
-
-    }
-
-    @Override
     public void onPlayerStateChanged()
     {
 

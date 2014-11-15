@@ -1,6 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
@@ -30,7 +31,7 @@ public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons.skip.setOnClickListener(new SkipClick(baseActivity));
         buttons.prev.setOnClickListener(new PrevClick(baseActivity));
         buttons.shuffle.setOnClickListener(new ShuffleClick(baseActivity));
-        buttons.playlist.setOnClickListener(new PlaylistClick(baseActivity));
+        buttons.playlist.setOnClickListener(new PlaylistClick((PlayerActivity)baseActivity));
     }
 
     @Override

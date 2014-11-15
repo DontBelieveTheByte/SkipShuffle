@@ -34,7 +34,6 @@ import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 
 public abstract class BaseActivity extends ActionBarActivity implements PrefsCallbacksManager.ThemeChangedCallback,
                                                                         PrefsCallbacksManager.HapticFeedBackChangedCallback,
-                                                                        PrefsCallbacksManager.ViewModeChangedCallback,
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
                                                                         PlayerStateChangedCallback,
                                                                         View.OnTouchListener {
@@ -166,6 +165,12 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         super.onResume();
         setUpPreferencesHelper();
         setUpMediaPlayerServiceBinding();
+    }
+
+    @Override
+    public void onMediaPlayerAvailable()
+    {
+        mediaPlayerServiceConnection.registerPlayerStateChanged(this);
         setUI(preferencesHelper.getUIType());
     }
 
@@ -244,20 +249,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     public void onThemeChanged()
     {
         setUI(preferencesHelper.getUIType());
-    }
-
-    @Override
-    public void onViewModeChanged()
-    {
-        setUI(preferencesHelper.getUIType());
-        toastHelper.showLongToast("Mode is card ? : " + Boolean.toString(preferencesHelper.getListViewMode()));
-    }
-
-    @Override
-    public void onMediaPlayerAvailable()
-    {
-        mediaPlayerServiceConnection.registerPlayerStateChanged(this);
-        ui.player.reboot();
     }
 
     @Override
