@@ -27,11 +27,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
     @Override
     public void onPrepared(MediaPlayer mediaPlayer)
     {
-        if (seekPosition > 0)
-            mp.seekTo(seekPosition);
-        else
-            mp.start();
-            skipShuffleMediaPlayer.onPlayerStateChanged();
+        mp.seekTo(seekPosition);
     }
 
     @Override
@@ -68,10 +64,11 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
 
     public void loadAudioFile(Track track) throws AudioTrackLoadingException
     {
+        seekPosition = 0;
         try {
             mp.reset();
             mp.setDataSource(track.getPath());
-            mp.prepare();
+            mp.prepareAsync();
         } catch (IOException e) {
             throw new AudioTrackLoadingException();
         } catch (IllegalArgumentException e) {
