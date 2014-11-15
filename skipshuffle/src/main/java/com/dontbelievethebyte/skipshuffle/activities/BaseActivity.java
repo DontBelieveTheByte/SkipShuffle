@@ -165,7 +165,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     {
         super.onResume();
         setUpPreferencesHelper();
-        setUpMediaPlayerBinding();
+        setUpMediaPlayerServiceBinding();
         setUI(preferencesHelper.getUIType());
     }
 
@@ -173,9 +173,10 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     {
         preferencesHelper = new PreferencesHelper(this);
         preferencesHelper.registerPrefsChangedListener();
+        toastHelper.showLongToast("Mode RESUME is card ? : " + Boolean.toString(preferencesHelper.getListViewMode()));
     }
 
-    private void setUpMediaPlayerBinding()
+    private void setUpMediaPlayerServiceBinding()
     {
         Intent intent = new Intent(this, SkipShuffleMediaPlayer.class);
         bindService(
@@ -249,6 +250,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     public void onViewModeChanged()
     {
         setUI(preferencesHelper.getUIType());
+        toastHelper.showLongToast("Mode is card ? : " + Boolean.toString(preferencesHelper.getListViewMode()));
     }
 
     @Override

@@ -84,6 +84,7 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
 
         LinearLayout.LayoutParams songLabelLayoutParams = createLinearLayoutParams();
 
+
         double songLabelTextSize = (computedScreenHeight * (isLandScape ? DimensionsMapper.Player.Center.Landscape.textSize : DimensionsMapper.Player.Center.Portrait.textSize));
         double songLabelTextHeight = (songLabelTextSize * (isLandScape ? DimensionsMapper.Player.Center.Landscape.textHeight : DimensionsMapper.Player.Center.Portrait.textHeight));
         double songLabelWidth = isLandScape ?

@@ -1,7 +1,7 @@
 package com.dontbelievethebyte.skipshuffle.ui.mapper;
 
 public final class DimensionsMapper {
-    //Drawer
+
     public final static class Drawer {
         public final static class Landscape {
             public final static double width = .4;
