@@ -33,6 +33,8 @@
     <dimen name="notification_icon_holder_width">48dp</dimen>
     <dimen name="notification_icon_w_h">24dp</dimen>
     <dimen name="notification_buttons_w_h">48dp</dimen>
-    <dimen name="notification_buttons_separator">8dp</dimen>
+    <dimen name="notification_track_title">18sp</dimen>
+    <dimen name="notification_track_artist">14sp</dimen>
+    <dimen name="notification_track_labels_padding_left">4dp</dimen>
 
 </resources>
