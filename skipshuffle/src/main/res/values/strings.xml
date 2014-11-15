@@ -84,6 +84,6 @@
     <string name="accessibility_shuffle">Shuffle</string>
     <string name="accessibility_skipshuffle">SkipShuffle</string>
     <string name="accessibility_playlist">Playlist</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="accessibility_background">background</string>
 
 </resources>
