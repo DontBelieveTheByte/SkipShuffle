@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:padding="@dimen/notification_padding"
     android:id="@+id/notif_all"
     android:orientation="horizontal">
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="@dimen/notification_icon_holder_width"
         android:layout_height="fill_parent"
@@ -20,10 +19,10 @@
             android:src="@drawable/ic_notification"
             android:layout_gravity="center" />
     </LinearLayout>
-
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:id="@+id/buttons_holder">
 
         <ImageView
             android:layout_width="fill_parent"
@@ -32,14 +31,58 @@
             android:layout_centerInParent="true"
             android:src="#ff003d01" />
 
+        <!--<TextView-->
+            <!--android:layout_width="220dp"-->
+            <!--android:layout_height="@dimen/single_playlist_item_track_title_height"-->
+            <!--android:text="@string/meta_data_unknown_current_song_title"-->
+            <!--android:marqueeRepeatLimit="marquee_forever"-->
+            <!--android:singleLine="true"-->
+            <!--android:id="@+id/track_title"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:ellipsize="end"-->
+            <!--android:lines="1"-->
+            <!--android:textSize="@dimen/single_playlist_item_track_title_text_size"-->
+            <!--android:textColor="@color/playlist_item_track_title_neon"-->
+            <!--android:paddingTop="@dimen/single_playlist_item_track_title_padding_top"-->
+            <!--android:paddingRight="@dimen/single_playlist_item_track_title_padding_right"-->
+            <!--android:paddingEnd="@dimen/null_size"-->
+            <!--android:paddingLeft="@dimen/null_size"-->
+            <!--android:paddingStart="@dimen/null_size"-->
+            <!--android:longClickable="false"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_alignParentLeft="true" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="220dp"-->
+            <!--android:layout_height="@dimen/single_playlist_item_track_artist_height"-->
+            <!--android:text="@string/meta_data_unknown_artist"-->
+            <!--android:id="@+id/track_artist"-->
+            <!--android:layout_below="@+id/track_title"-->
+            <!--android:textSize="@dimen/single_playlist_item_track_artist_text_size"-->
+            <!--android:ellipsize="end"-->
+            <!--android:lines="1"-->
+            <!--android:textStyle="italic"-->
+            <!--android:textColor="@color/playlist_item_track_artist_neon"-->
+            <!--android:paddingRight="@dimen/single_playlist_item_track_artist_padding_right"-->
+            <!--android:paddingEnd="@dimen/null_size"-->
+            <!--android:paddingLeft="@dimen/null_size"-->
+            <!--android:paddingStart="@dimen/null_size"-->
+            <!--android:paddingBottom="@dimen/single_playlist_item_track_artist_padding_bottom"-->
+            <!--android:gravity="center_vertical" />-->
+
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="300dp"
             android:layout_height="fill_parent"
             android:orientation="horizontal"
             android:gravity="center|center_horizontal"
             android:id="@+id/buttons"
-            android:layout_centerInParent="true">
-
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="false">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1" />
             <ImageButton
                 android:contentDescription="@string/accessibility_prev"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -50,7 +93,10 @@
                 android:scaleType="fitCenter"
                 android:layout_marginRight="@dimen/notification_buttons_separator"
                 android:layout_marginEnd="@dimen/null_size"/>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1" />
             <ImageButton
                 android:contentDescription="@string/accessibility_shuffle"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -62,7 +108,10 @@
                 android:background="@android:color/transparent"
                 android:layout_marginLeft="@dimen/notification_buttons_separator"
                 android:layout_marginRight="@dimen/notification_buttons_separator" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1" />
             <ImageButton
                 android:contentDescription="@string/accessibility_play_pause"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -73,7 +122,10 @@
                 android:scaleType="fitCenter"
                 android:layout_marginLeft="@dimen/notification_buttons_separator"
                 android:layout_marginRight="@dimen/notification_buttons_separator" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1" />
             <ImageButton
                 android:contentDescription="@string/accessibility_skip"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -85,7 +137,10 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginStart="@dimen/null_size"
                 android:cropToPadding="false" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1" />
         </LinearLayout>
     </RelativeLayout>
-
 </LinearLayout>
