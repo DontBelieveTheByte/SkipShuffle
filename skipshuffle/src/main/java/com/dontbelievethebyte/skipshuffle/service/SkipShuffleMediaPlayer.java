@@ -58,14 +58,12 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     }
 
     @Override
-    public void onCommand(String command, Integer newCursorPosition) {
+    public void onCommand(String command)
+    {
         java.lang.reflect.Method method;
         try {
             method = this.getClass().getMethod(command);
-            if (null != newCursorPosition)
-                method.invoke(this);
-            else
-                method.invoke(this);
+            method.invoke(this);
         } catch (Exception e) {
             handleCommandException(e);
         }
@@ -132,9 +130,8 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     @Override
     public void onHeadsetStateChanged(boolean isHeadsetPluggedIn) {
-        if (!playerWrapper.isPlaying() && isHeadsetPluggedIn)
+        if (playerWrapper.isPlaying() && isHeadsetPluggedIn)
             doPause();
-        notification.showNotification();
     }
 
     @Override
@@ -179,8 +176,10 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void doPause()
     {
-        if (playerWrapper.isPlaying())
+        if (playerWrapper.isPlaying()) {
             playerWrapper.pausePlayingTrack();
+            notification.showNotification();
+        }
     }
 
     public void doSkip() throws PlaylistEmptyException

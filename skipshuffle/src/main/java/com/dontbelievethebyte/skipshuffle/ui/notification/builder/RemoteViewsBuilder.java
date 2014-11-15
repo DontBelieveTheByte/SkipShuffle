@@ -109,7 +109,7 @@ public class RemoteViewsBuilder {
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_prev,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PREV,
+                        SkipShuflleMediaPlayerCommandsContract.PREV,
                         0
                 )
         );
@@ -117,19 +117,21 @@ public class RemoteViewsBuilder {
 
     private void buildPlay()
     {
-        int imageResource = (skipShuffleMediaPlayer.isPlaying()) ?
-                drawables.play :
-                drawables.pause;
+        int imageResource = (skipShuffleMediaPlayer.isPlaying()) ? drawables.play : drawables.pause;
 
         remoteViews.setImageViewResource(
                 R.id.notif_play,
                 imageResource
         );
 
+        String command = (skipShuffleMediaPlayer.isPlaying()) ?
+                SkipShuflleMediaPlayerCommandsContract.PAUSE :
+                SkipShuflleMediaPlayerCommandsContract.PLAY;
+
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_play,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_PLAY_PAUSE_TOGGLE,
+                        command,
                         2
                 )
         );
@@ -145,7 +147,7 @@ public class RemoteViewsBuilder {
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_shuffle,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SHUFFLE_PLAYLIST,
+                        SkipShuflleMediaPlayerCommandsContract.SHUFFLE,
                         1
                 )
         );
@@ -161,7 +163,7 @@ public class RemoteViewsBuilder {
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_skip,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.CMD_SKIP,
+                        SkipShuflleMediaPlayerCommandsContract.SKIP,
                         3
                 )
         );

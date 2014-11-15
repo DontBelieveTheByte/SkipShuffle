@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 
@@ -39,27 +41,21 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
                     intent
             );
         } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
-            handleHeadsetIntent(intent, isInitialStickyBroadcast());
+            Log.d(BaseActivity.TAG, "UNPLUGGGGEDDDDD!@@!@@!$$$");
+            handleHeadsetIntent(intent);
         }
     }
 
     private void handleCommand(String command, Intent intent)
     {
-        Integer newCursorPosition = null;
-
-        if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION))
-            newCursorPosition = intent.getIntExtra(
-                            SkipShuflleMediaPlayerCommandsContract.CMD_SET_PLAYLIST_CURSOR_POSITION,
-                            0
-            );
-
-        skipShuffleMediaPlayer.onCommand(command, newCursorPosition);
+        skipShuffleMediaPlayer.onCommand(command);
     }
 
-    private void handleHeadsetIntent(Intent intent, boolean isInitialStickBroadCast)
+    private void handleHeadsetIntent(Intent intent)
     {
+        isInitialStickyBroadcast();
         boolean isHeadphonesPlugged = (intent.getIntExtra("state", 0) > 0) ;//Transform state to boolean
-        boolean isValidDespiteInitialStickBroadCast = isHeadphonesPlugged && !isInitialStickBroadCast;//Filter out sticky broadcast on service start.
+        boolean isValidDespiteInitialStickBroadCast = isHeadphonesPlugged && !isInitialStickyBroadcast();//Filter out sticky broadcast on service start.
         skipShuffleMediaPlayer.onHeadsetStateChanged(isValidDespiteInitialStickBroadCast);
     }
 }
