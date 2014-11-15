@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -178,7 +179,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     {
         preferencesHelper = new PreferencesHelper(this);
         preferencesHelper.registerPrefsChangedListener();
-        toastHelper.showLongToast("Mode RESUME is card ? : " + Boolean.toString(preferencesHelper.getListViewMode()));
     }
 
     private void setUpMediaPlayerServiceBinding()
@@ -264,7 +264,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
             RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
             Track track = playlist.getCurrent();
             ui.player.setTrack(track);
-            toastHelper.showLongToast("STATE CHANGED ");
         } catch (NoMediaPlayerException e) {
             e.printStackTrace();
         } catch (PlaylistEmptyException e) {

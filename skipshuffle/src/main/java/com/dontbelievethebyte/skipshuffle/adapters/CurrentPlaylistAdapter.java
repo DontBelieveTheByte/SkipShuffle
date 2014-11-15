@@ -19,7 +19,6 @@ import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 public class CurrentPlaylistAdapter extends BaseAdapter {
 
     private Context context;
-
     private Integer titleColor;
     private Integer artistColor;
 

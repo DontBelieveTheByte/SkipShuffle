@@ -97,7 +97,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         if (null != listView) {
             adapter = (CurrentPlaylistAdapter)listView.getAdapter();
             if (null != adapter)
-                adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         }
     }
 

@@ -31,6 +31,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
             mp.seekTo(seekPosition);
         else
             mp.start();
+            skipShuffleMediaPlayer.onPlayerStateChanged();
     }
 
     @Override
@@ -43,6 +44,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
     public void onSeekComplete(MediaPlayer mediaPlayer)
     {
         mp.start();
+        skipShuffleMediaPlayer.onPlayerStateChanged();
     }
 
     public void pausePlayingTrack()
@@ -50,6 +52,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
         if (mp.isPlaying()) {
             seekPosition = mp.getCurrentPosition();
             mp.pause();
+            skipShuffleMediaPlayer.onPlayerStateChanged();
         }
     }
 

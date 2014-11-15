@@ -153,7 +153,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         try {
             playerWrapper.loadAudioFile(playlist.getCurrent());
-            onPlayerStateChanged();
         } catch (AudioTrackLoadingException audioLoadingTrackException) {
             handleAudioLoadingTrackException(audioLoadingTrackException);
         }
@@ -175,7 +174,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         if (playerWrapper.isPlaying())
             playerWrapper.pausePlayingTrack();
-        onPlayerStateChanged();
     }
 
     public void doSkip() throws PlaylistEmptyException
