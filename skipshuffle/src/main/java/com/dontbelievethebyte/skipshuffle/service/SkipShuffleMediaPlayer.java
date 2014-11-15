@@ -129,8 +129,9 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     }
 
     @Override
-    public void onHeadsetStateChanged(boolean isHeadsetPluggedIn) {
-        if (playerWrapper.isPlaying() && isHeadsetPluggedIn)
+    public void onHeadsetStateChanged(boolean isHeadsetPluggedIn)
+    {
+        if (isPlaying() && !isHeadsetPluggedIn)
             doPause();
     }
 
@@ -153,6 +154,14 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         }
     }
 
+    public void onPlayerStateChanged()
+    {
+        notification.showNotification();
+        for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
+            playerStateChangedCallback.onPlayerStateChanged();
+        }
+    }
+
     public void doPlay() throws PlaylistEmptyException
     {
         try {
@@ -167,11 +176,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         playerWrapper.resetSeekPosition();
         playlist.setPosition(playlistPosition);
         doPlay();
-    }
-
-    private void handleAudioLoadingTrackException(AudioTrackLoadingException audioTrackLoadingException) throws PlaylistEmptyException
-    {
-        doSkip();
     }
 
     public void doPause()
@@ -234,11 +238,10 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         playerStateChangedCallbacks.add(playerStateChangedCallback);
     }
 
-    public void onPlayerStateChanged()
+
+
+    private void handleAudioLoadingTrackException(AudioTrackLoadingException audioTrackLoadingException) throws PlaylistEmptyException
     {
-        notification.showNotification();
-        for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
-            playerStateChangedCallback.onPlayerStateChanged();
-        }
+        doSkip();
     }
 }

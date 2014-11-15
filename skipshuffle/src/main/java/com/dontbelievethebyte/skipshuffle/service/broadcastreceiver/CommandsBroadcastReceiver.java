@@ -41,7 +41,6 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
                     intent
             );
         } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
-            Log.d(BaseActivity.TAG, "UNPLUGGGGEDDDDD!@@!@@!$$$");
             handleHeadsetIntent(intent);
         }
     }
