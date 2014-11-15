@@ -2,6 +2,7 @@ package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder;
 
         if (null == convertView) {
@@ -71,9 +72,9 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         } else
             viewHolder = (ViewHolder) convertView.getTag();
 
-        Track track = randomPlaylist.getAtPosition(i);
-        setImage(viewHolder.image, i);
-        setTitle(viewHolder.title, track.getTitle());
+        Track track = randomPlaylist.getAtPosition(position);
+        setImage(viewHolder.image, position);
+        setTitle(viewHolder.title, track.getTitle(), position);
         setArtist(viewHolder.artist, track.getArtist());
         return convertView;
     }
@@ -109,9 +110,16 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         imageLabel.setLayoutParams(params);
     }
 
-    private void setTitle(TextView trackTitle, String string)
+    private void setTitle(TextView trackTitle, String string, int position)
     {
         trackTitle.setText(string);
+        if(randomPlaylist.getPosition() == position) {
+            trackTitle.setSelected(true);
+            trackTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        } else {
+            trackTitle.setSelected(false);
+            trackTitle.setEllipsize(TextUtils.TruncateAt.END);
+        }
         if (null != titleColor)
             trackTitle.setTextColor(titleColor);
         if (null != typeface)
