@@ -242,4 +242,18 @@ public class DrawableMapper {
                 return R.drawable.playlist_states_neon;
         }
     }
+
+    public static int getNotificationBackgroun(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.drawable.notification_background_mono_light;
+            case UITypes.MONO_DARK :
+                return R.drawable.notification_background_mono_dark;
+            case UITypes.NEON :
+                return R.drawable.notification_background_neon;
+            default:
+                return R.drawable.notification_background_neon;
+        }
+    }
 }
