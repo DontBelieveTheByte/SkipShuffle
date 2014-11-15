@@ -1,5 +1,6 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UICompositionFactory;
 
@@ -24,10 +25,14 @@ public class PlayerActivity extends BaseActivity implements PrefsCallbacksManage
     @Override
     protected void setUI(Integer type)
     {
-        ui = (viewMode) ?
-                UICompositionFactory.makeListPlayer(this, type):
-                UICompositionFactory.makeMainPlayer(this, type);
-        ui.player.reboot();
+        try {
+            ui = (viewMode) ?
+                    UICompositionFactory.makeListPlayer(this, type):
+                    UICompositionFactory.makeMainPlayer(this, type);
+            ui.player.reboot();
+        } catch (NoMediaPlayerException e) {
+            handleNoMediaPlayerException(e);
+        }
     }
 
     @Override

@@ -62,7 +62,7 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    public static UIComposition makeListPlayer(PlayerActivity playerActivity, int uiType)
+    public static UIComposition makeListPlayer(PlayerActivity playerActivity, int uiType) throws NoMediaPlayerException
     {
         ListLayout contentArea = new ListLayout(playerActivity);
         CustomTypeface customTypeface = new CustomTypeface(playerActivity, uiType);
@@ -80,29 +80,26 @@ public class UICompositionFactory {
         TextView emptyText = (TextView) playerActivity.findViewById(android.R.id.empty);
         listView.setEmptyView(emptyText);
 
-        try {
-            SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
-            RandomPlaylist randomPlaylist = (RandomPlaylist) mediaPlayer.getPlaylist();
-            CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
-                    playerActivity,
-                    randomPlaylist,
-                    mediaPlayer
-            );
-            playlistAdapter.setDrawables(drawables);
-            playlistAdapter.setColors(colors);
-            playlistAdapter.setTypeface(customTypeface.getTypeFace());
-            listView.setAdapter(playlistAdapter);
-            listView.setOnItemClickListener(new CurrentPlaylistClick(playerActivity));
-            listView.smoothScrollToPosition(randomPlaylist.getPosition() + ScrollOffsetCalculator.compute(listView));
-        } catch (NoMediaPlayerException e) {
-            e.printStackTrace();
-        }
+        SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
+        RandomPlaylist randomPlaylist = (RandomPlaylist) mediaPlayer.getPlaylist();
+        CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
+                playerActivity,
+                randomPlaylist,
+                mediaPlayer
+        );
+        playlistAdapter.setDrawables(drawables);
+        playlistAdapter.setColors(colors);
+        playlistAdapter.setTypeface(customTypeface.getTypeFace());
+        listView.setAdapter(playlistAdapter);
+        listView.setOnItemClickListener(new CurrentPlaylistClick(playerActivity));
 
         ListPlayer player = new ListPlayer(
                 playerActivity,
                 buttons,
                 listView
         );
+
+        listView.smoothScrollToPosition(randomPlaylist.getPosition() + ScrollOffsetCalculator.compute(listView));
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);
@@ -114,7 +111,7 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    public static UIComposition makeMusicContentBrowser(MusicContentBrowserActivity musicContentBrowserActivity, int uiType)
+    public static UIComposition makeMusicContentBrowser(MusicContentBrowserActivity musicContentBrowserActivity, int uiType) throws NoMediaPlayerException
     {
         ListLayout contentArea = new ListLayout(musicContentBrowserActivity);
         CustomTypeface customTypeface = new CustomTypeface(musicContentBrowserActivity, uiType);
@@ -142,7 +139,7 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    private static MusicContentBrowser buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)
+    private static MusicContentBrowser buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface) throws NoMediaPlayerException
     {
         MusicContentBrowser musicPlayerDrawer = new MusicContentBrowser(baseActivity, R.id.drawer_list);
         musicPlayerDrawer.setClickListener(

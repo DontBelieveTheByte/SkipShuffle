@@ -79,8 +79,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         super.onCreate(savedInstanceState);
 
         startMediaPlayerService();
-        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
-        mediaPlayerServiceConnection.registerConnectedCallback(this);
 
         //Make sure we adjust the volume of the media player and not something else
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -104,6 +102,8 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                         SkipShuffleMediaPlayer.class
                 )
         );
+        mediaPlayerServiceConnection = new MediaPlayerServiceConnection();
+        mediaPlayerServiceConnection.registerConnectedCallback(this);
     }
 
     public SkipShuffleMediaPlayer getMediaPlayer() throws NoMediaPlayerException

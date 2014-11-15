@@ -5,7 +5,11 @@ import android.widget.ListView;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
@@ -100,6 +104,24 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
             adapter = (CurrentPlaylistAdapter)listView.getAdapter();
             if (null != adapter)
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void reboot()
+    {
+        try {
+            SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
+            if (mediaPlayer.isPlaying())
+                doPlay();
+            else
+                doPause();
+            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            setTrack(playlist.getCurrent());
+            checkShuffle(playlist);
+        } catch (NoMediaPlayerException e) {
+            baseActivity.handleNoMediaPlayerException(e);
+        } catch (PlaylistEmptyException e) {
+            baseActivity.handlePlaylistEmptyException(e);
         }
     }
 

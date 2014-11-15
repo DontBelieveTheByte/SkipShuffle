@@ -26,8 +26,6 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public abstract void setTrack(Track track);
 
-
-
     public void reboot()
     {
         try {

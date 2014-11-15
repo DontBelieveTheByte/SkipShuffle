@@ -15,6 +15,7 @@ import com.dontbelievethebyte.skipshuffle.adapters.AlbumsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.ArtistsAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.GenresAdapter;
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
+import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.listeners.AlbumsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.ArtistsClick;
 import com.dontbelievethebyte.skipshuffle.listeners.GenresClick;
@@ -118,8 +119,12 @@ public class MusicContentBrowserActivity extends BaseActivity implements LoaderM
     @Override
     protected void setUI(Integer type)
     {
-        ui = UICompositionFactory.makeMusicContentBrowser(this, type);
-        ui.player.reboot();
+        try {
+            ui = UICompositionFactory.makeMusicContentBrowser(this, type);
+            ui.player.reboot();
+        } catch (NoMediaPlayerException e) {
+            handleNoMediaPlayerException(e);
+        }
     }
 
     private void initList()
