@@ -25,10 +25,6 @@
             android:name=".activities.MusicContentBrowserActivity"
             android:theme="@style/CustomActionBarTheme"
             android:label="@string/label_playlist" >
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <service android:name=".service.SkipShuffleMediaPlayer" />
     </application>
