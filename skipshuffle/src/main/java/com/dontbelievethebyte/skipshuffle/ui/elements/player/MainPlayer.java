@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
-import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClick;
@@ -12,7 +11,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.S
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 
-public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
+public class MainPlayer extends AbstractPlayerUI {
 
     private MainPlayerSongLabel songLabel;
 
@@ -73,6 +72,7 @@ public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doShuffle()
     {
+        buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);
@@ -92,4 +92,5 @@ public class MainPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     {
         return songLabel;
     }
+
 }

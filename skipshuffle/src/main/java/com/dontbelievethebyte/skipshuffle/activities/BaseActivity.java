@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +16,6 @@ import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
@@ -254,21 +251,8 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public void onPlayerStateChanged()
     {
-        try {
-            SkipShuffleMediaPlayer mediaPlayer = getMediaPlayer();
-            if(mediaPlayer.isPlaying())
-                ui.player.doPlay();
-            else
-                ui.player.doPause();
-
-            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
-            Track track = playlist.getCurrent();
-            ui.player.setTrack(track);
-        } catch (NoMediaPlayerException e) {
-            e.printStackTrace();
-        } catch (PlaylistEmptyException e) {
-            e.printStackTrace();
-        }
+        if (null != ui.player)
+            ui.player.reboot();
     }
 
     public void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)

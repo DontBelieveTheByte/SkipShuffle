@@ -77,6 +77,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doShuffle()
     {
+        buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);

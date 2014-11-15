@@ -26,6 +26,8 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public abstract void setTrack(Track track);
 
+
+
     public void reboot()
     {
         try {
@@ -36,11 +38,19 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
                 doPause();
             RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
-        } catch (NoMediaPlayerException noMediaPlayerException) {
-            noMediaPlayerException.printStackTrace();
-        } catch (PlaylistEmptyException playlistEmptyException) {
-            playlistEmptyException.printStackTrace();
+            checkShuffle(playlist);
+        } catch (NoMediaPlayerException e) {
+            baseActivity.handleNoMediaPlayerException(e);
+        } catch (PlaylistEmptyException e) {
+            baseActivity.handlePlaylistEmptyException(e);
         }
     }
 
+    protected void checkShuffle(RandomPlaylist playlist)
+    {
+        if (null != playlist && playlist.isShuffle())
+            buttons.shuffle.setImageDrawable(buttons.drawables.getShufflePressed());
+        else
+            buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
+    }
 }
