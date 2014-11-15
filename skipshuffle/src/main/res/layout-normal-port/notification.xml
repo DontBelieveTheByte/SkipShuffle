@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="72dp"
     android:padding="@dimen/notification_padding"
     android:id="@+id/notif_all"
     android:orientation="horizontal">
@@ -29,21 +29,59 @@
             android:layout_height="fill_parent"
             android:id="@+id/buttons_background_image"
             android:layout_centerInParent="true"
-            android:src="#ff003d01" />
+            android:src="#ff003d01"
+            android:contentDescription="@string/accessibility_background" />
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:paddingRight="@dimen/null_size"
+            android:paddingEnd="@dimen/null_size"
+            android:paddingLeft="@dimen/notification_track_labels_padding_left"
+            android:paddingStart="@dimen/notification_track_labels_padding_left"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/meta_data_unknown_current_song_title"
+                android:singleLine="true"
+                android:id="@+id/track_title"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="@dimen/notification_track_title"
+                android:longClickable="false"
+                android:gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/meta_data_unknown_artist"
+                android:id="@+id/track_artist"
+                android:textSize="@dimen/notification_track_artist"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textStyle="italic"
+                android:textColor="@color/playlist_item_track_artist_neon"
+                android:gravity="center_vertical"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal"
             android:gravity="center|center_horizontal"
             android:id="@+id/buttons"
             android:layout_centerHorizontal="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentLeft="false">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="1" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false">
+
             <ImageButton
                 android:contentDescription="@string/accessibility_prev"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -52,12 +90,8 @@
                 android:src="@drawable/prev_states_neon"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:layout_marginRight="@dimen/notification_buttons_separator"
-                android:layout_marginEnd="@dimen/null_size"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
                 android:layout_weight="1" />
+
             <ImageButton
                 android:contentDescription="@string/accessibility_shuffle"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -67,12 +101,8 @@
                 android:src="@drawable/shuffle_states_neon"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:layout_marginLeft="@dimen/notification_buttons_separator"
-                android:layout_marginRight="@dimen/notification_buttons_separator" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
                 android:layout_weight="1" />
+
             <ImageButton
                 android:contentDescription="@string/accessibility_play_pause"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -81,12 +111,8 @@
                 android:src="@drawable/play_states_neon"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:layout_marginLeft="@dimen/notification_buttons_separator"
-                android:layout_marginRight="@dimen/notification_buttons_separator" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
                 android:layout_weight="1" />
+
             <ImageButton
                 android:contentDescription="@string/accessibility_skip"
                 android:layout_width="@dimen/notification_buttons_w_h"
@@ -95,12 +121,7 @@
                 android:src="@drawable/skip_states_neon"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:layout_marginLeft="4dp"
-                android:layout_marginStart="@dimen/null_size"
-                android:cropToPadding="false" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
+                android:cropToPadding="false"
                 android:layout_weight="1" />
         </LinearLayout>
     </RelativeLayout>

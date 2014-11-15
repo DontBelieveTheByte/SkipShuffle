@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksManager.PlaylistChangedCallback,
+                                                               PrefsCallbacksManager.ThemeChangedCallback,
                                                                HeadsetPluggedStateCallback,
                                                                MediaPlayerCommandsCallback,
                                                                TrackCompleteCallback{
@@ -41,6 +42,12 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private RandomPlaylist playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
+
+    @Override
+    public void onThemeChanged()
+    {
+        Log.d(BaseActivity.TAG, "THEME CHANGED FROM PLAYERS!!!!");
+    }
 
     public class MediaPlayerBinder extends Binder
     {

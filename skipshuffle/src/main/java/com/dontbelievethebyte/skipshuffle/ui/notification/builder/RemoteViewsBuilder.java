@@ -3,14 +3,16 @@ package com.dontbelievethebyte.skipshuffle.ui.notification.builder;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
 
 public class RemoteViewsBuilder {
@@ -18,11 +20,13 @@ public class RemoteViewsBuilder {
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
     private RemoteViews remoteViews;
     private Drawables drawables;
+    private Colors colors;
 
-    public RemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables)
+    public RemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables, Colors colors)
     {
         this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
         this.drawables = drawables;
+        this.colors = colors;
     }
 
     public void setDrawables(Drawables drawables)
@@ -30,32 +34,59 @@ public class RemoteViewsBuilder {
         this.drawables = drawables;
     }
 
+    public void setColors(Colors colors)
+    {
+        this.colors = colors;
+    }
+
     public RemoteViews build()
     {
-        computeDimensions();
-        buildInit();
+        buildContainer();
         buildPrev();
         buildPlay();
         buildShuffle();
         buildSkip();
         buildDefault();
+        buildTextLabelsColor();
+        buildTextLabelsContent();
         return remoteViews;
     }
 
-    private void computeDimensions()
+    private void buildTextLabelsColor()
     {
-        int totalScreenWidth = skipShuffleMediaPlayer.getResources().getDisplayMetrics().widthPixels;
-        int iconWidth = skipShuffleMediaPlayer.getResources().getDimensionPixelSize(R.dimen.notification_icon_holder_width);
-        int availableWidth = totalScreenWidth - iconWidth;
-        Log.d(BaseActivity.TAG, "COMPUTED : " + Integer.toString(availableWidth));
+        int trackTitleLabelColor = skipShuffleMediaPlayer.getResources().getColor(colors.playlistTitle);
+        remoteViews.setTextColor(
+                R.id.track_title,
+                trackTitleLabelColor
+        );
+
+        int trackArtistLabelColor = skipShuffleMediaPlayer.getResources().getColor(colors.playlistArtist);
+        remoteViews.setTextColor(
+                R.id.track_artist,
+                trackArtistLabelColor
+        );
     }
 
-    private float pxFromDp(float dp)
+    private void buildTextLabelsContent()
     {
-        return dp * skipShuffleMediaPlayer.getResources().getDisplayMetrics().density;
+        RandomPlaylist playlist = (RandomPlaylist) skipShuffleMediaPlayer.getPlaylist();
+        try {
+            Track track = playlist.getCurrent();
+            remoteViews.setTextViewText(
+                    R.id.track_title,
+                    track.getTitle()
+            );
+
+            remoteViews.setTextViewText(
+                    R.id.track_artist,
+                    track.getArtist()
+            );
+        } catch (PlaylistEmptyException e) {//@TODO make decorator catch the exception?
+            e.printStackTrace();
+        }
     }
 
-    private void buildInit()
+    private void buildContainer()
     {
         remoteViews = new RemoteViews(
                 skipShuffleMediaPlayer.getPackageName(),
