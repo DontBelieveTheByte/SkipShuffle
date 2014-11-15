@@ -24,6 +24,7 @@ public class Drawables {
     public int shuffle;
     public int shufflePressed;
     public int playlist;
+    public int notificationBackground;
 
     private Context context;
 
@@ -48,6 +49,7 @@ public class Drawables {
         shuffle = DrawableMapper.getShuffle(uiType);
         shufflePressed = DrawableMapper.getShufflePressed(uiType);
         playlist = DrawableMapper.getPlaylist(uiType);
+        notificationBackground = DrawableMapper.getNotificationBackgroun(uiType);
     }
 
     public Drawable getBack()

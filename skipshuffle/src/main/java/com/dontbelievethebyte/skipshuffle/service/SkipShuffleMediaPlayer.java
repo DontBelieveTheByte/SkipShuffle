@@ -230,13 +230,9 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void onPlayerStateChanged()
     {
+        notification.showNotification();
         for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
             playerStateChangedCallback.onPlayerStateChanged();
         }
-    }
-
-    public void unRegisterPlayerStateChanged(PlayerStateChangedCallback playerStateChangedCallback)
-    {
-        playerStateChangedCallbacks.remove(playerStateChangedCallback);
     }
 }

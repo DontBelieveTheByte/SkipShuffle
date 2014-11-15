@@ -21,57 +21,71 @@
             android:layout_gravity="center" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal"
-        android:gravity="center|center_horizontal">
+        android:layout_height="fill_parent">
 
-        <ImageButton
-            android:contentDescription="@string/accessibility_prev"
-            android:layout_width="@dimen/notification_buttons_w_h"
-            android:layout_height="@dimen/notification_buttons_w_h"
-            android:id="@+id/notif_prev"
-            android:src="@drawable/prev_states_neon"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:layout_marginRight="@dimen/notification_buttons_separator"
-            android:layout_marginEnd="@dimen/null_size"/>
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/buttons_background_image"
+            android:layout_centerInParent="true"
+            android:src="#ff003d01" />
 
-        <ImageButton
-            android:contentDescription="@string/accessibility_shuffle"
-            android:layout_width="@dimen/notification_buttons_w_h"
-            android:layout_height="@dimen/notification_buttons_w_h"
-            android:id="@+id/notif_shuffle"
-            android:longClickable="false"
-            android:src="@drawable/shuffle_states_neon"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_marginLeft="@dimen/notification_buttons_separator"
-            android:layout_marginRight="@dimen/notification_buttons_separator" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:gravity="center|center_horizontal"
+            android:id="@+id/buttons"
+            android:layout_centerInParent="true">
 
-        <ImageButton
-            android:contentDescription="@string/accessibility_play_pause"
-            android:layout_width="@dimen/notification_buttons_w_h"
-            android:layout_height="@dimen/notification_buttons_w_h"
-            android:id="@+id/notif_play"
-            android:src="@drawable/play_states_neon"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            android:layout_marginLeft="@dimen/notification_buttons_separator"
-            android:layout_marginRight="@dimen/notification_buttons_separator" />
+            <ImageButton
+                android:contentDescription="@string/accessibility_prev"
+                android:layout_width="@dimen/notification_buttons_w_h"
+                android:layout_height="@dimen/notification_buttons_w_h"
+                android:id="@+id/notif_prev"
+                android:src="@drawable/prev_states_neon"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="@dimen/notification_buttons_separator"
+                android:layout_marginEnd="@dimen/null_size"/>
 
-        <ImageButton
-            android:contentDescription="@string/accessibility_skip"
-            android:layout_width="@dimen/notification_buttons_w_h"
-            android:layout_height="@dimen/notification_buttons_w_h"
-            android:id="@+id/notif_skip"
-            android:src="@drawable/skip_states_neon"
-            android:scaleType="fitCenter"
-            android:background="@android:color/transparent"
-            android:layout_marginLeft="4dp"
-            android:layout_marginStart="@dimen/null_size"
-            android:cropToPadding="false" />
-    </LinearLayout>
+            <ImageButton
+                android:contentDescription="@string/accessibility_shuffle"
+                android:layout_width="@dimen/notification_buttons_w_h"
+                android:layout_height="@dimen/notification_buttons_w_h"
+                android:id="@+id/notif_shuffle"
+                android:longClickable="false"
+                android:src="@drawable/shuffle_states_neon"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="@dimen/notification_buttons_separator"
+                android:layout_marginRight="@dimen/notification_buttons_separator" />
+
+            <ImageButton
+                android:contentDescription="@string/accessibility_play_pause"
+                android:layout_width="@dimen/notification_buttons_w_h"
+                android:layout_height="@dimen/notification_buttons_w_h"
+                android:id="@+id/notif_play"
+                android:src="@drawable/play_states_neon"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="@dimen/notification_buttons_separator"
+                android:layout_marginRight="@dimen/notification_buttons_separator" />
+
+            <ImageButton
+                android:contentDescription="@string/accessibility_skip"
+                android:layout_width="@dimen/notification_buttons_w_h"
+                android:layout_height="@dimen/notification_buttons_w_h"
+                android:id="@+id/notif_skip"
+                android:src="@drawable/skip_states_neon"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="@dimen/null_size"
+                android:cropToPadding="false" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
