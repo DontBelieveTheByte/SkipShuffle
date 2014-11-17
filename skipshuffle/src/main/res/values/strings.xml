@@ -57,6 +57,7 @@
     <string name="empty_playlist">There are no items yet, you may scan for media by selecting a target location from the menu.</string>
     <string name="shuffle">Re-suffling</string>
     <string name="playlist_load_error">Playlist Error, playlist ID : %</string>
+    <string name="empty_list_view">Nothing to show.</string>
 
     <!-- Main navigation drawer -->
     <string name="drawer_header_text">Browse</string>
