@@ -117,7 +117,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         clientCommandsBroadcastReceiver.unregister();
         notification.cancel();
         doPause();
-        preferencesHelper.setLastPlaylist(playlist.getTracksIds());
+        preferencesHelper.setLastPlaylist(playlist.getCurrentTracksIds());
         preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
     }
 
@@ -237,8 +237,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         playerStateChangedCallbacks.add(playerStateChangedCallback);
     }
-
-
 
     private void handleAudioLoadingTrackException(AudioTrackLoadingException audioTrackLoadingException) throws PlaylistEmptyException
     {

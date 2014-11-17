@@ -77,7 +77,7 @@ public class UICompositionFactory {
         songLabel.setTypeFace(customTypeface);
 
         ListView listView = (ListView) playerActivity.findViewById(R.id.current_list);
-        TextView emptyText = (TextView) playerActivity.findViewById(android.R.id.empty);
+        TextView emptyText = (TextView) playerActivity.findViewById(R.id.emptyView);
         listView.setEmptyView(emptyText);
 
         SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
