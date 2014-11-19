@@ -1,5 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1" package="com.coderplus.filepicker">
-
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="16"/>
-
-</manifest>
