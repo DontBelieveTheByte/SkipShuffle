@@ -1,19 +1,19 @@
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "19.1.0"
 
     defaultConfig {
         applicationId "com.dontbelievethebyte.skipshuffle"
         minSdkVersion 14
-        targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 21
+        versionCode 9000
+        versionName "PolPot"
     }
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -21,7 +21,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:appcompat-v7:21.+'
+    compile 'com.android.support:support-v4:21.+'
 }
