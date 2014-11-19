@@ -6,9 +6,7 @@ import android.database.Cursor;
 import android.os.Binder;
 import android.os.IBinder;
 import android.provider.MediaStore;
-import android.util.Log;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
@@ -46,7 +44,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     @Override
     public void onThemeChanged()
     {
-        Log.d(BaseActivity.TAG, "THEME CHANGED FROM PLAYERS!!!!");
+        //@TODO handle exception.
     }
 
     public class MediaPlayerBinder extends Binder
@@ -62,7 +60,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         java.lang.reflect.Method method;
         try {
-            method = this.getClass().getMethod(command);
+            method = ((Object) this).getClass().getMethod(command);
             method.invoke(this);
         } catch (Exception e) {
             handleCommandException(e);
@@ -71,7 +69,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     private void handleCommandException(Exception exception)
     {
-        Log.d(BaseActivity.TAG, exception.getMessage());
+        //@TODO handle exception.
     }
 
     @Override
