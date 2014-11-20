@@ -1,8 +1,5 @@
 package com.dontbelievethebyte.skipshuffle.playlists;
 
-import android.database.Cursor;
-import android.provider.MediaStore;
-
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 
@@ -124,17 +121,7 @@ public class RandomPlaylist implements PlaylistInterface {
 
     private Track makeTrackFromId(String id, int trackPosition)
     {
-        Track track = new Track();
-        Cursor cursor = mediaStoreBridge.getSong(id);
-        cursor.moveToFirst();
-        track.setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
-        track.setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
-        track.setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
-        track.setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
-        track.setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
-        track.setPosition(trackPosition);
-        cursor.close();
-        return track;
+        return new Track(mediaStoreBridge.getSong(id), trackPosition);
     }
 
     public boolean isShuffle()

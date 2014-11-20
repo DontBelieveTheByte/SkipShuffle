@@ -17,12 +17,14 @@ public class Track {
 
     public Track(Cursor cursor, int position)
     {
-        id = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
-        path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
-        title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-        album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-        artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-        duration = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
+        cursor.moveToFirst();
+        setId(cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+        setTitle(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+        setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+        setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
+        setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        setPosition(position);
+        cursor.close();
     }
 
     public long getId()
