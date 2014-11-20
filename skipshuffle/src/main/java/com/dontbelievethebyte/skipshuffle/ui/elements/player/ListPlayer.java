@@ -97,6 +97,8 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         listView.smoothScrollToPosition(track.getPosition() + ScrollOffsetCalculator.compute(listView));
     }
 
+
+
     private void notifyAdapter()
     {
         CurrentPlaylistAdapter adapter;
@@ -125,4 +127,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         }
     }
 
+    @Override
+    protected void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
+    {
+        baseActivity.handlePlaylistEmptyException(playlistEmptyException);
+    }
 }

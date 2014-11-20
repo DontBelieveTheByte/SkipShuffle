@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/meta_data_unknown_current_song_title"
+                android:text="@string/meta_data_unknown_title"
                 android:singleLine="true"
                 android:id="@+id/track_title"
                 android:ellipsize="end"

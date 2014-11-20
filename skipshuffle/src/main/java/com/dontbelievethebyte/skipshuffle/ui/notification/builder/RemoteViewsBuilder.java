@@ -10,6 +10,7 @@ import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
+import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
@@ -21,10 +22,12 @@ public class RemoteViewsBuilder {
     private RemoteViews remoteViews;
     private Drawables drawables;
     private Colors colors;
+    private TrackPrinter trackPrinter;
 
     public RemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables, Colors colors)
     {
         this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
+        trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
         this.drawables = drawables;
         this.colors = colors;
     }
@@ -72,14 +75,15 @@ public class RemoteViewsBuilder {
         RandomPlaylist playlist = (RandomPlaylist) skipShuffleMediaPlayer.getPlaylist();
         try {
             Track track = playlist.getCurrent();
+
             remoteViews.setTextViewText(
                     R.id.track_title,
-                    track.getTitle()
+                    trackPrinter.printTitle(track)
             );
 
             remoteViews.setTextViewText(
                     R.id.track_artist,
-                    track.getArtist()
+                    trackPrinter.printArtist(track)
             );
         } catch (PlaylistEmptyException e) {//@TODO make decorator catch the exception?
             e.printStackTrace();

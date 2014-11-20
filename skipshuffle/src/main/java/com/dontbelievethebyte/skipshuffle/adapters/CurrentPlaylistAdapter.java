@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
+import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
@@ -34,10 +35,12 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     private Typeface typeface;
     private LayoutInflater layoutInflater;
     private SkipShuffleMediaPlayer mediaPlayer;
+    private TrackPrinter trackPrinter;
 
     public CurrentPlaylistAdapter(Context context, RandomPlaylist randomPlaylist, SkipShuffleMediaPlayer mediaPlayer)
     {
         this.context = context;
+        trackPrinter = new TrackPrinter(context);
         this.randomPlaylist = randomPlaylist;
         layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         this.mediaPlayer = mediaPlayer;
@@ -74,8 +77,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
         Track track = randomPlaylist.getAtPosition(position);
         setImage(viewHolder.image, position);
-        setTitle(viewHolder.title, track.getTitle(), position);
-        setArtist(viewHolder.artist, track.getArtist());
+        setTitle(viewHolder.title, trackPrinter.printTitle(track), position);
+        setArtist(viewHolder.artist, trackPrinter.printArtist(track));
         return convertView;
     }
 

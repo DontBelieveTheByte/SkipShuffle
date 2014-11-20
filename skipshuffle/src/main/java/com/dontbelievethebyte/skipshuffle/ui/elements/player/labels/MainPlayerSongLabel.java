@@ -3,7 +3,6 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player.labels;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.ui.CustomTypeface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
@@ -18,10 +17,10 @@ public class MainPlayerSongLabel implements UIElementCompositeInterface {
         label = (TextView) bottomLayout.findViewById(labelId);
     }
 
-    public void setContent(Track track)
+    public void setContent(String content)
     {
         if (null != label) {
-            label.setText(track.getTitle());
+            label.setText(content);
             label.setSelected(true);
         }
     }

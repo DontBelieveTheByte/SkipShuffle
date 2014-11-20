@@ -1,8 +1,11 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
+import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
+import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClick;
@@ -14,10 +17,12 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSo
 public class MainPlayer extends AbstractPlayerUI {
 
     private MainPlayerSongLabel songLabel;
+    private TrackPrinter trackPrinter;
 
     public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel)
     {
         this.baseActivity = baseActivity;
+        trackPrinter = new TrackPrinter(baseActivity);
         this.songLabel = songLabel;
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
@@ -84,13 +89,23 @@ public class MainPlayer extends AbstractPlayerUI {
     @Override
     public void setTrack(Track track)
     {
-        songLabel.setContent(track);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(trackPrinter.printTitle(track));
+        stringBuilder.append(" - ");
+        stringBuilder.append(trackPrinter.printArtist(track));
+        songLabel.setContent(stringBuilder.toString());
     }
-
 
     public MainPlayerSongLabel getSongLabel()
     {
         return songLabel;
+    }
+
+    @Override
+    protected void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
+    {
+        songLabel.setContent(baseActivity.getString(R.string.meta_data_no_playlist));
+        baseActivity.handlePlaylistEmptyException(playlistEmptyException);
     }
 
 }

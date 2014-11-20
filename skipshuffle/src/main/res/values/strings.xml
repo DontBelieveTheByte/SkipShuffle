@@ -2,7 +2,8 @@
 <resources>
 
     <!-- Default meta data -->
-    <string name="meta_data_unknown_current_song_title">Nothing is playing.</string>
+    <string name="meta_data_no_playlist">Nothing is playing.</string>
+    <string name="meta_data_unknown_title">Nothing title.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
 
     <!-- Activities -->

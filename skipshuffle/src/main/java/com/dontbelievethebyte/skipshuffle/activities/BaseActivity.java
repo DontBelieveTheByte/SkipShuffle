@@ -264,5 +264,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
     {
+
     }
 }

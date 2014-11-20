@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/single_playlist_item_track_title_height"
-        android:text="@string/meta_data_unknown_current_song_title"
+        android:text="@string/meta_data_unknown_title"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:id="@+id/track_title"
