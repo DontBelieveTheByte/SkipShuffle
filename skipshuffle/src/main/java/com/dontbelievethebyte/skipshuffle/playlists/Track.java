@@ -99,24 +99,4 @@ public class Track {
     {
         this.position = position;
     }
-
-
-//    protected String buildFormattedTitle(Track track)
-//    {
-//        try {
-//            SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
-//            PlaylistInterface playlist = skipShuffleMediaPlayer.getPlaylist();
-//            Track currentTrack = playlist.getCurrent();
-//            if (null == currentTrack.getArtist() || null == currentTrack.getTitle()) {
-//                return (null == currentTrack.getPath()) ?
-//                        baseActivity.getString(R.string.meta_data_unknown_current_song_title) :
-//                        currentTrack.getPath().substring(currentTrack.getPath().lastIndexOf("/") + 1);
-//            } else {
-//                return currentTrack.getArtist() + " - " + currentTrack.getTitle();
-//            }
-//        return baseActivity.getString(R.string.meta_data_unknown_current_song_title);
-//        } catch (NoMediaPlayerException noMediaPlayerException){
-//            throw new PlaylistEmptyException(0L);
-//        }
-//    }
 }
