@@ -10,12 +10,10 @@ import java.util.List;
 public class RandomPlaylist implements PlaylistInterface {
 
     private MediaStoreBridge mediaStoreBridge;
-    private boolean shuffle;
     private int currentPosition = 0;
     private List<String> currentTracksIds;
     private List<String> trackIds;
     private List<String> shuffledTrackIds;
-
 
     public RandomPlaylist(List<String> trackIds, MediaStoreBridge mediaStoreBridge)
     {
@@ -126,11 +124,17 @@ public class RandomPlaylist implements PlaylistInterface {
 
     public boolean isShuffle()
     {
-        return shuffle;
+        return null != shuffledTrackIds && currentTracksIds == shuffledTrackIds;
     }
 
     public void setShuffle(boolean shuffle)
     {
-        this.shuffle = shuffle;
+        if (shuffle)
+            if (null == shuffledTrackIds)
+                shuffle();
+            else
+                currentTracksIds = shuffledTrackIds;
+        else
+            currentTracksIds = trackIds;
     }
 }
