@@ -94,8 +94,8 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void setPosition(int position)
     {
-        if (position > currentPosition)
-            currentPosition = position;
+        if (position > currentTracksIds.size() - 1)
+            currentPosition = 0;
         else if (position < 0)
             currentPosition = 0;
         else

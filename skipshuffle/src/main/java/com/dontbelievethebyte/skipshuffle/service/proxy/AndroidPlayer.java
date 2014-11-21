@@ -66,7 +66,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
 
     public void loadAudioFile(Track track) throws AudioTrackLoadingException
     {
-        seekPosition = 0;
+//        seekPosition = 0;
         try {
             mp.reset();
             mp.setDataSource(track.getPath());

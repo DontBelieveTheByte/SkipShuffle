@@ -186,12 +186,14 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void doSkip() throws PlaylistEmptyException
     {
-        doPlay(playlist.getPosition() + 1);
+        playlist.setPosition(playlist.getPosition() + 1);
+        doPlay(playlist.getPosition());
     }
 
     public void doPrev() throws PlaylistEmptyException
     {
-        doPlay(playlist.getPosition() - 1);
+        playlist.setPosition(playlist.getPosition() - 1);
+        doPlay(playlist.getPosition());
     }
 
     public void doShuffle() throws PlaylistEmptyException
