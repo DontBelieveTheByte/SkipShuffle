@@ -22,12 +22,10 @@ public class RemoteViewsBuilder {
     private RemoteViews remoteViews;
     private Drawables drawables;
     private Colors colors;
-    private TrackPrinter trackPrinter;
 
     public RemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables, Colors colors)
     {
         this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
-        trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
         this.drawables = drawables;
         this.colors = colors;
     }
@@ -44,14 +42,19 @@ public class RemoteViewsBuilder {
 
     public RemoteViews build()
     {
+        RandomPlaylist playlist = (RandomPlaylist) skipShuffleMediaPlayer.getPlaylist();
         buildContainer();
         buildPrev();
         buildPlay();
-        buildShuffle();
+        buildShuffle(playlist.isShuffle());
         buildSkip();
         buildDefault();
         buildTextLabelsColor();
-        buildTextLabelsContent();
+        try {
+            buildTextLabelsContent(playlist.getCurrent());
+        } catch (PlaylistEmptyException e) {
+            buildTextLabelsContent(null);
+        }
         return remoteViews;
     }
 
@@ -70,24 +73,19 @@ public class RemoteViewsBuilder {
         );
     }
 
-    private void buildTextLabelsContent()
+    private void buildTextLabelsContent(Track track)
     {
-        RandomPlaylist playlist = (RandomPlaylist) skipShuffleMediaPlayer.getPlaylist();
-        try {
-            Track track = playlist.getCurrent();
+        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
 
-            remoteViews.setTextViewText(
-                    R.id.track_title,
-                    trackPrinter.printTitle(track)
-            );
+        remoteViews.setTextViewText(
+                R.id.track_title,
+                trackPrinter.printTitle(track)
+        );
 
-            remoteViews.setTextViewText(
-                    R.id.track_artist,
-                    trackPrinter.printArtist(track)
-            );
-        } catch (PlaylistEmptyException e) {//@TODO make decorator catch the exception?
-            e.printStackTrace();
-        }
+        remoteViews.setTextViewText(
+                R.id.track_artist,
+                trackPrinter.printArtist(track)
+        );
     }
 
     private void buildContainer()
@@ -141,11 +139,11 @@ public class RemoteViewsBuilder {
         );
     }
 
-    private void buildShuffle()
+    private void buildShuffle(boolean isShuffle)
     {
         remoteViews.setImageViewResource(
                 R.id.notif_shuffle,
-                drawables.shuffle
+                isShuffle ? drawables.shufflePressed : drawables.shuffle
         );
 
         remoteViews.setOnClickPendingIntent(

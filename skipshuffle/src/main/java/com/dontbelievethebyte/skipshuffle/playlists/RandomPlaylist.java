@@ -105,9 +105,8 @@ public class RandomPlaylist implements PlaylistInterface {
     @Override
     public void shuffle()
     {
-        shuffledTrackIds = new ArrayList<String>(trackIds);
-        Collections.shuffle(shuffledTrackIds);
-        currentTracksIds = shuffledTrackIds;
+        currentTracksIds = shuffledTrackIds = new ArrayList<String>(trackIds);
+        Collections.shuffle(currentTracksIds);
         setPosition(0);
     }
 
