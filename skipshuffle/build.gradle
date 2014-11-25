@@ -1,22 +1,47 @@
 apply plugin: 'android'
 
 android {
+
     compileSdkVersion 21
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        applicationId "com.dontbelievethebyte.skipshuffle"
+        applicationId "com.dontbelievethebyte.sk1pshuffle"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 9000
+        versionCode 9001
         versionName "PolPot"
     }
+
+    if(project.hasProperty("SKIPSHUFFLE_RELEASE_STORE_FILE")) {
+        signingConfigs {
+            release {
+                storeFile file(SKIPSHUFFLE_RELEASE_STORE_FILE)
+                storePassword SKIPSHUFFLE_RELEASE_STORE_PASSWORD
+                keyAlias SKIPSHUFFLE_RELEASE_KEY_ALIAS
+                keyPassword SKIPSHUFFLE_RELEASE_KEY_PASSWORD
+            }
+        }
+    } else {
+        signingConfigs {
+            release {
+                storeFile file(console.readLine("Enter keystore path: "))
+                storePassword console.readLine("Enter keystore password: ")
+                keyAlias console.readLine("Enter alias key: ")
+                keyPassword console.readLine("Enter key password: ")
+            }
+        }
+    }
+
     buildTypes {
+
         release {
+            signingConfig signingConfigs.release
             debuggable false
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
         debug {
             debuggable true
             applicationIdSuffix ".debug"
