@@ -29,7 +29,6 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
-import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class UICompositionFactory {
 
@@ -99,7 +98,7 @@ public class UICompositionFactory {
                 listView
         );
 
-        listView.smoothScrollToPosition(randomPlaylist.getPosition() + ScrollOffsetCalculator.compute(listView));
+        listView.setSelection(randomPlaylist.getPosition() - 1);
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);

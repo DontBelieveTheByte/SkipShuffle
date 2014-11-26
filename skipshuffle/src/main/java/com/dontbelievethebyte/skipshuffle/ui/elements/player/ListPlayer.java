@@ -45,7 +45,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void doPlay()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.ltr);
+        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
         notifyAdapter();
     }
 
@@ -63,9 +63,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        buttons.skip.startAnimation(buttons.animations.flipRightAnimation);
+        buttons.skip.startAnimation(buttons.animations.spinRightAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.ltr);
+        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
     }
 
     @Override
@@ -74,9 +74,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        buttons.prev.startAnimation(buttons.animations.flipLeftAnimation);
+        buttons.prev.startAnimation(buttons.animations.spinLeftAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.ltr);
+        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
     }
 
     @Override
@@ -86,9 +86,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        buttons.shuffle.startAnimation(buttons.animations.flipDownAnimation);
+        buttons.shuffle.startAnimation(buttons.animations.spinDownAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.ltr);
+        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
     }
 
     @Override
@@ -96,8 +96,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     {
         listView.smoothScrollToPosition(track.getPosition() + ScrollOffsetCalculator.compute(listView));
     }
-
-
 
     private void notifyAdapter()
     {
