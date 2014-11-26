@@ -139,11 +139,12 @@ public class RemoteViewsBuilder {
         );
     }
 
-    private void buildShuffle(boolean isShuffle)
+    private void buildShuffle(Boolean isShuffle)
     {
+        boolean shuffle = (isShuffle == null || isShuffle == false) ? false : true;
         remoteViews.setImageViewResource(
                 R.id.notif_shuffle,
-                isShuffle ? drawables.shufflePressed : drawables.shuffle
+                shuffle ? drawables.shufflePressed : drawables.shuffle
         );
 
         remoteViews.setOnClickPendingIntent(
