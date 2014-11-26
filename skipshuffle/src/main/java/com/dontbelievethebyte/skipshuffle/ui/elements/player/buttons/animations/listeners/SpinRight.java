@@ -4,9 +4,9 @@ import android.view.animation.Animation;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 
-public class FlipRight extends AbstractListener{
+public class SpinRight extends AbstractListener{
 
-    public FlipRight(AbstractPlayerUI playerUI)
+    public SpinRight(AbstractPlayerUI playerUI)
     {
         super(playerUI);
     }

@@ -4,9 +4,9 @@ import android.view.animation.Animation;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 
-public class FlipLeft extends AbstractListener{
+public class SpinDown extends AbstractListener{
 
-    public FlipLeft(AbstractPlayerUI playerUI)
+    public SpinDown(AbstractPlayerUI playerUI)
     {
         super(playerUI);
     }
@@ -15,13 +15,13 @@ public class FlipLeft extends AbstractListener{
     public void onAnimationStart(Animation animation)
     {
         playerUI.doPause();
-        playerUI.buttons.prev.setImageDrawable(playerUI.buttons.drawables.getPrevPressed());
+        playerUI.buttons.shuffle.setImageDrawable(playerUI.buttons.drawables.getShufflePressed());
     }
 
     @Override
     public void onAnimationEnd(Animation animation)
     {
-        playerUI.buttons.prev.setImageDrawable(playerUI.buttons.drawables.getPrev());
+        playerUI.buttons.shuffle.setImageDrawable(playerUI.buttons.drawables.getShuffle());
         playerUI.doPlay();
     }
 }

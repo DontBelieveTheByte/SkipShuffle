@@ -44,8 +44,8 @@ public final class DimensionsMapper {
         public final static class Center {
             public final static class Landscape {
                 public final static double width = .7;
-                public final static double textSize = .06;
-                public final static double textHeight = 2;
+                public final static double textSize = .03;
+                public final static double textHeight = 1.8;
 
             }
             public final static class Portrait {
@@ -59,6 +59,7 @@ public final class DimensionsMapper {
         //Bottom buttons
         public final static class Bottom {
             public final static class Landscape {
+                public final static double MarginTop = .9;
                 public final static double buttonSideSize = Top.Landscape.buttonSize * .9;
                 public final static double buttonCenterSize = Top.Landscape.buttonSize * .8;
             }

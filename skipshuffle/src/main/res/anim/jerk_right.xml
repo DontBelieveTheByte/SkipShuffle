@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <scale
+        android:startOffset="0"
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:fromXScale="1"
+        android:toXScale="1"
+        android:fromYScale="1"
+        android:toYScale=".73"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="3200"
+        android:fillAfter="true"/>
+
+    <translate
+        android:startOffset="100"
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:duration="3600"
+        android:fromXDelta="0%"
+        android:fromYDelta="0%"
+        android:toXDelta="10%"
+        android:toYDelta="0"
+        />
+
+    <rotate
+        android:startOffset="1000"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:fromDegrees="0"
+        android:toDegrees="10"
+        android:duration="1100"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        />
+
+    <rotate
+        android:startOffset="3600"
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:fromDegrees="0"
+        android:toDegrees="-20"
+        android:duration="1000"
+        android:pivotX="50%"
+        android:pivotY="50%" />
+
+    <rotate
+        android:startOffset="4900"
+        android:interpolator="@android:anim/bounce_interpolator"
+        android:fromDegrees="0"
+        android:toDegrees="8"
+        android:duration="1000"
+        android:pivotX="50%"
+        android:pivotY="50%" />
+
+    <translate
+        android:startOffset="6000"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:duration="1800"
+        android:fromXDelta="-5%"
+        android:fromYDelta="0%"
+        android:toXDelta="10%"
+        android:toYDelta="0"
+        />
+
+    <scale
+        android:startOffset="6000"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:fromXScale="1"
+        android:toXScale="1"
+        android:fromYScale="1"
+        android:toYScale="1.20"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="1500"
+        android:fillAfter="true"
+        />
+</set>
+
+

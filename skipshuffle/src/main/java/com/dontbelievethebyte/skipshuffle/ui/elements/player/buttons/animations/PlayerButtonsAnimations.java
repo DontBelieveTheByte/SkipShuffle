@@ -6,16 +6,17 @@ import android.view.animation.AnimationUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.FlipDown;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.FlipLeft;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.FlipRight;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.Jerk;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.SpinDown;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.SpinLeft;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.SpinRight;
 
 public class PlayerButtonsAnimations {
 
-    public Animation ltr;
-    public Animation flipRightAnimation;
-    public Animation flipDownAnimation;
-    public Animation flipLeftAnimation;
+    public Animation jerkRightAnimation;
+    public Animation spinRightAnimation;
+    public Animation spinDownAnimation;
+    public Animation spinLeftAnimation;
     public Animation blinkAnimation;
 
 
@@ -26,32 +27,33 @@ public class PlayerButtonsAnimations {
 
     private void loadAnimations(Activity baseActivity)
     {
-        ltr = AnimationUtils.loadAnimation(
+        jerkRightAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.common_ltr
+                R.anim.jerk_right
         );
-        flipRightAnimation  = AnimationUtils.loadAnimation(
+        spinRightAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.common_flip_right
+                R.anim.spin_right
         );
-        flipDownAnimation = AnimationUtils.loadAnimation(
+        spinDownAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.common_flip_down
+                R.anim.spin_down
         );
-        flipLeftAnimation = AnimationUtils.loadAnimation(
+        spinLeftAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.common_flip_left
+                R.anim.spin_left
         );
         blinkAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.common_blink
+                R.anim.blink
         );
     }
 
     public void setPlayerUIListeners(AbstractPlayerUI playerUI)
     {
-        flipRightAnimation.setAnimationListener(new FlipRight(playerUI));
-        flipLeftAnimation.setAnimationListener(new FlipLeft(playerUI));
-        flipDownAnimation.setAnimationListener(new FlipDown(playerUI));
+        jerkRightAnimation.setAnimationListener(new Jerk(playerUI));
+        spinRightAnimation.setAnimationListener(new SpinRight(playerUI));
+        spinLeftAnimation.setAnimationListener(new SpinLeft(playerUI));
+        spinDownAnimation.setAnimationListener(new SpinDown(playerUI));
     }
 }
