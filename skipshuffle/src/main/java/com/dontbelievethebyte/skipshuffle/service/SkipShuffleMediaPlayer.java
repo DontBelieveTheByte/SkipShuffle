@@ -15,8 +15,10 @@ import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
+import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.OrientationBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.HeadsetPluggedStateCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.MediaPlayerCommandsCallback;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.OrientationChangeCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
@@ -31,6 +33,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
                                                                PrefsCallbacksManager.ThemeChangedCallback,
                                                                HeadsetPluggedStateCallback,
                                                                MediaPlayerCommandsCallback,
+                                                               OrientationChangeCallback,
                                                                TrackCompleteCallback{
 
     private CommandsBroadcastReceiver clientCommandsBroadcastReceiver;
@@ -40,11 +43,19 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private RandomPlaylist playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
+    private OrientationBroadcastReceiver orientationBroadcastReceiver;
+
 
     @Override
     public void onThemeChanged()
     {
         //@TODO handle exception.
+    }
+
+    @Override
+    public void onOrientationChanged()
+    {
+        notification.showNotification();
     }
 
     public class MediaPlayerBinder extends Binder
@@ -84,6 +95,8 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         playerStateChangedCallbacks = new HashSet<PlayerStateChangedCallback>();
         clientCommandsBroadcastReceiver = new CommandsBroadcastReceiver(this);
         clientCommandsBroadcastReceiver.register();
+        orientationBroadcastReceiver = new OrientationBroadcastReceiver(this);
+        orientationBroadcastReceiver.register();
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         notification = new PlayerNotification(this);
         playerWrapper = new AndroidPlayer(this);
@@ -113,6 +126,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public void onDestroy()
     {
         clientCommandsBroadcastReceiver.unregister();
+        orientationBroadcastReceiver.unregister();
         notification.cancel();
         doPause();
         preferencesHelper.setLastPlaylist(playlist.getCurrentTracksIds());

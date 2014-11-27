@@ -46,15 +46,18 @@ public class RemoteViewsBuilder {
         buildContainer();
         buildPrev();
         buildPlay();
-        buildShuffle(playlist.isShuffle());
+        buildShuffle((null != playlist) && playlist.isShuffle());
         buildSkip();
         buildDefault();
         buildTextLabelsColor();
-        try {
-            buildTextLabelsContent(playlist.getCurrent());
-        } catch (PlaylistEmptyException e) {
+        if (null != playlist) {
+            try {
+                buildTextLabelsContent(playlist.getCurrent());
+            } catch (PlaylistEmptyException e) {
+                buildTextLabelsContent(null);
+            }
+        } else
             buildTextLabelsContent(null);
-        }
         return remoteViews;
     }
 
@@ -139,12 +142,11 @@ public class RemoteViewsBuilder {
         );
     }
 
-    private void buildShuffle(Boolean isShuffle)
+    private void buildShuffle(boolean isShuffle)
     {
-        boolean shuffle = (isShuffle == null || isShuffle == false) ? false : true;
         remoteViews.setImageViewResource(
                 R.id.notif_shuffle,
-                shuffle ? drawables.shufflePressed : drawables.shuffle
+                isShuffle ? drawables.shufflePressed : drawables.shuffle
         );
 
         remoteViews.setOnClickPendingIntent(

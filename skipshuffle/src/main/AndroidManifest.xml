@@ -26,7 +26,12 @@
             android:theme="@style/CustomActionBarTheme"
             android:label="@string/label_playlist" >
         </activity>
-        <service android:name=".service.SkipShuffleMediaPlayer" />
+
+        <service android:name=".service.SkipShuffleMediaPlayer" >
+            <intent-filter>
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
