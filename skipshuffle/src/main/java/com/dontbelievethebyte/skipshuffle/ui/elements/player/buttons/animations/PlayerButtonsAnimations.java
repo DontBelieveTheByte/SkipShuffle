@@ -10,19 +10,18 @@ import android.view.animation.AnimationUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.Jerk;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.SpinDown;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.SpinLeft;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.SpinRight;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.PlayAnimationListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.PrevAnimationListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.ShuffleAnimationListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.SkipAnimationListener;
 
 public class PlayerButtonsAnimations {
 
-    public Animation jerkRightAnimation;
-    public Animation spinRightAnimation;
-    public Animation spinDownAnimation;
-    public Animation spinLeftAnimation;
-    public Animation blinkAnimation;
-
+    public Animation playAnimation;
+    public Animation skipAnimation;
+    public Animation shuffleAnimation;
+    public Animation prevAnimation;
+    public Animation pauseAnimation;
 
     public PlayerButtonsAnimations(Activity activity)
     {
@@ -31,33 +30,33 @@ public class PlayerButtonsAnimations {
 
     private void loadAnimations(Activity baseActivity)
     {
-        jerkRightAnimation = AnimationUtils.loadAnimation(
+        playAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.jerk_right
+                R.anim.play_animation
         );
-        spinRightAnimation = AnimationUtils.loadAnimation(
+        skipAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.spin_right
+                R.anim.skip_animation
         );
-        spinDownAnimation = AnimationUtils.loadAnimation(
+        shuffleAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.spin_down
+                R.anim.shuffle_animation
         );
-        spinLeftAnimation = AnimationUtils.loadAnimation(
+        prevAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.spin_left
+                R.anim.prev_animation
         );
-        blinkAnimation = AnimationUtils.loadAnimation(
+        pauseAnimation = AnimationUtils.loadAnimation(
                 baseActivity.getApplicationContext(),
-                R.anim.blink
+                R.anim.pause_animation
         );
     }
 
     public void setPlayerUIListeners(AbstractPlayerUI playerUI)
     {
-        jerkRightAnimation.setAnimationListener(new Jerk(playerUI));
-        spinRightAnimation.setAnimationListener(new SpinRight(playerUI));
-        spinLeftAnimation.setAnimationListener(new SpinLeft(playerUI));
-        spinDownAnimation.setAnimationListener(new SpinDown(playerUI));
+        playAnimation.setAnimationListener(new PlayAnimationListener(playerUI));
+        skipAnimation.setAnimationListener(new SkipAnimationListener(playerUI));
+        prevAnimation.setAnimationListener(new PrevAnimationListener(playerUI));
+        shuffleAnimation.setAnimationListener(new ShuffleAnimationListener(playerUI));
     }
 }

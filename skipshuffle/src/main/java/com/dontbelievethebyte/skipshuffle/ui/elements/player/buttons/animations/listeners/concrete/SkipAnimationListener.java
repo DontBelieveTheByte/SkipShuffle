@@ -2,15 +2,16 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete;
 
 import android.view.animation.Animation;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.AbstractAnimationListener;
 
-public class SpinRight extends AbstractListener{
+public class SkipAnimationListener extends AbstractAnimationListener {
 
-    public SpinRight(AbstractPlayerUI playerUI)
+    public SkipAnimationListener(AbstractPlayerUI playerUI)
     {
         super(playerUI);
     }

@@ -2,12 +2,13 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete;
 
 import android.widget.ImageButton;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
 public class ListPlayerButtons extends AbstractPlayerButtons {

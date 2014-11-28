@@ -11,9 +11,9 @@ import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
-public class SkipClick extends CustomAbstractClick {
+public class SkipClickListener extends CustomAbstractClickListener {
 
-    public SkipClick(BaseActivity baseActivity)
+    public SkipClickListener(BaseActivity baseActivity)
     {
         super(baseActivity);
     }

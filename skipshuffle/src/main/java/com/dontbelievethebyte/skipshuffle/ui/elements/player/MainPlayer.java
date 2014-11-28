@@ -10,12 +10,12 @@ import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClick;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClick;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClick;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClick;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClick;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 
 public class MainPlayer extends AbstractPlayerUI {
@@ -35,25 +35,25 @@ public class MainPlayer extends AbstractPlayerUI {
 
     private void setButtonsOnClickListeners()
     {
-        buttons.play.setOnClickListener(new PlayClick(baseActivity));
-        buttons.skip.setOnClickListener(new SkipClick(baseActivity));
-        buttons.prev.setOnClickListener(new PrevClick(baseActivity));
-        buttons.shuffle.setOnClickListener(new ShuffleClick(baseActivity));
-        buttons.playlist.setOnClickListener(new PlaylistClick((PlayerActivity)baseActivity));
+        buttons.play.setOnClickListener(new PlayClickListener(baseActivity));
+        buttons.skip.setOnClickListener(new SkipClickListener(baseActivity));
+        buttons.prev.setOnClickListener(new PrevClickListener(baseActivity));
+        buttons.shuffle.setOnClickListener(new ShuffleClickListener(baseActivity));
+        buttons.playlist.setOnClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
     }
 
     @Override
     public void doPlay()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
+        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doPause()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.blinkAnimation);
+        buttons.play.startAnimation(buttons.animations.pauseAnimation);
     }
 
     @Override
@@ -61,10 +61,10 @@ public class MainPlayer extends AbstractPlayerUI {
     {
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        buttons.skip.startAnimation(buttons.animations.spinRightAnimation);
+        buttons.play.startAnimation(buttons.animations.pauseAnimation);
+        buttons.skip.startAnimation(buttons.animations.skipAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
+        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
@@ -72,10 +72,10 @@ public class MainPlayer extends AbstractPlayerUI {
     {
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        buttons.prev.startAnimation(buttons.animations.spinLeftAnimation);
+        buttons.play.startAnimation(buttons.animations.pauseAnimation);
+        buttons.prev.startAnimation(buttons.animations.prevAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
+        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
@@ -84,10 +84,10 @@ public class MainPlayer extends AbstractPlayerUI {
         buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
         buttons.play.clearAnimation();
         buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.blinkAnimation);
-        buttons.shuffle.startAnimation(buttons.animations.spinDownAnimation);
+        buttons.play.startAnimation(buttons.animations.pauseAnimation);
+        buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.jerkRightAnimation);
+        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override

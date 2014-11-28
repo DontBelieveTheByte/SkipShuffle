@@ -8,9 +8,9 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 
-public class PlaylistClick extends CustomAbstractClick {
+public class PlaylistClickListener extends CustomAbstractClickListener {
 
-    public PlaylistClick(PlayerActivity baseActivity)
+    public PlaylistClickListener(PlayerActivity baseActivity)
     {
         super(baseActivity);
     }

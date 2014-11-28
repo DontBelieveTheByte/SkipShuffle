@@ -27,8 +27,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrow
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;

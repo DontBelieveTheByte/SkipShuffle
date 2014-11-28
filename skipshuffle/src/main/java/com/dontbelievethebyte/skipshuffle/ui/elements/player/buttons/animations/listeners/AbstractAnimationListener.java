@@ -8,11 +8,11 @@ import android.view.animation.Animation;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 
-public abstract class AbstractListener implements Animation.AnimationListener{
+public abstract class AbstractAnimationListener implements Animation.AnimationListener{
 
     protected AbstractPlayerUI playerUI;
 
-    public AbstractListener(AbstractPlayerUI playerUI)
+    public AbstractAnimationListener(AbstractPlayerUI playerUI)
     {
         this.playerUI = playerUI;
     }

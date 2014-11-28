@@ -8,11 +8,11 @@ import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
-public abstract class CustomAbstractClick implements View.OnClickListener {
+public abstract class CustomAbstractClickListener implements View.OnClickListener {
 
     protected BaseActivity activity;
 
-    public CustomAbstractClick(BaseActivity activity)
+    public CustomAbstractClickListener(BaseActivity activity)
     {
         this.activity = activity;
     }
