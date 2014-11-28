@@ -15,7 +15,7 @@ import com.dontbelievethebyte.skipshuffle.activities.MusicContentBrowserActivity
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
 import java.util.ArrayList;

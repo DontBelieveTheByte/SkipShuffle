@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlists.Track;
-import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
+import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
+import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;

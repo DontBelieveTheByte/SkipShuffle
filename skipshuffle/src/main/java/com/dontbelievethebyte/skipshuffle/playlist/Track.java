@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.playlists;
+package com.dontbelievethebyte.skipshuffle.playlist;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
