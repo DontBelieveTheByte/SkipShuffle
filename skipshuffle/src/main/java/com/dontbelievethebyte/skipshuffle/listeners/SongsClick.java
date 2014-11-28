@@ -15,7 +15,7 @@ import com.dontbelievethebyte.skipshuffle.activities.MusicContentBrowserActivity
 import com.dontbelievethebyte.skipshuffle.adapters.SongsAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
+import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class SongsClick extends AbstractListClick {
 
             }
             mediaPlayer.doPlay();
-            PlaylistInterface playlist = mediaPlayer.getPlaylist();
+            RandomPlaylist playlist = mediaPlayer.getPlaylist();
             if ( (playlist.getPosition() == position) && ((mediaPlayer.isPlaying())) ) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
                 imageView.setImageDrawable(listActivity.ui.player.buttons.drawables.getPause());

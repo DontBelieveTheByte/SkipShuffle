@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RandomPlaylist implements PlaylistInterface {
+public class RandomPlaylist {
 
     private MediaStoreBridge mediaStoreBridge;
     private int currentPosition = 0;
@@ -38,20 +38,17 @@ public class RandomPlaylist implements PlaylistInterface {
         return currentTracksIds;
     }
 
-    @Override
     public Track getFirst() throws PlaylistEmptyException
     {
         return makeTrackFromId(currentTracksIds.get(0), 0);
     }
 
-    @Override
     public Track getLast() throws PlaylistEmptyException
     {
         int last = currentTracksIds.size() - 1;
         return makeTrackFromId(currentTracksIds.get(last), last);
     }
 
-    @Override
     public Track getCurrent() throws PlaylistEmptyException
     {
         if (0 == currentTracksIds.size())
@@ -59,13 +56,11 @@ public class RandomPlaylist implements PlaylistInterface {
         return makeTrackFromId(currentTracksIds.get(currentPosition), currentPosition);
     }
 
-    @Override
     public Track getAtPosition(int position) throws IndexOutOfBoundsException
     {
         return makeTrackFromId(currentTracksIds.get(position), position);
     }
 
-    @Override
     public Track getNext()
     {
         int next;
@@ -77,7 +72,6 @@ public class RandomPlaylist implements PlaylistInterface {
         return makeTrackFromId(currentTracksIds.get(next), next);
     }
 
-    @Override
     public Track getPrev()
     {
         int prev;
@@ -89,13 +83,11 @@ public class RandomPlaylist implements PlaylistInterface {
         return makeTrackFromId(currentTracksIds.get(prev), prev);
     }
 
-    @Override
     public int getPosition()
     {
         return currentPosition;
     }
 
-    @Override
     public void setPosition(int position)
     {
         if (position > currentTracksIds.size() - 1)
@@ -106,7 +98,6 @@ public class RandomPlaylist implements PlaylistInterface {
             currentPosition = position;
     }
 
-    @Override
     public void shuffle()
     {
         currentTracksIds = shuffledTrackIds = new ArrayList<String>(trackIds);
@@ -114,7 +105,6 @@ public class RandomPlaylist implements PlaylistInterface {
         setPosition(0);
     }
 
-    @Override
     public int getSize()
     {
         return currentTracksIds.size();

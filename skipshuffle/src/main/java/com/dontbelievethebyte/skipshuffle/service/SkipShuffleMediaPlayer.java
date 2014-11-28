@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
-import com.dontbelievethebyte.skipshuffle.playlists.PlaylistInterface;
 import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
@@ -233,7 +232,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         initPlaylist();
     }
 
-    public PlaylistInterface getPlaylist()
+    public RandomPlaylist getPlaylist()
     {
         return playlist;
     }
