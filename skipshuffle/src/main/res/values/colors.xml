@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
 <resources>
     <color name="background_neon">#1E2C56</color>
     <color name="background_mono_light">#ffc5c5c5</color>

@@ -1,3 +1,7 @@
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
 <resources>
     <dimen name="null_size">0dp</dimen>
     <!--Navigation drawer stuff-->

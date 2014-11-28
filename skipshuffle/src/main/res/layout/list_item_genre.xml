@@ -1,3 +1,7 @@
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="@dimen/common_single_list_item_w_h"
