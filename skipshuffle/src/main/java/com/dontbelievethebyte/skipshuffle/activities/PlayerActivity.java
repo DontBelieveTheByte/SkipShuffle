@@ -5,7 +5,7 @@
 package com.dontbelievethebyte.skipshuffle.activities;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UICompositionFactory;
 
 public class PlayerActivity extends BaseActivity implements PrefsCallbacksManager.ViewModeChangedCallback {

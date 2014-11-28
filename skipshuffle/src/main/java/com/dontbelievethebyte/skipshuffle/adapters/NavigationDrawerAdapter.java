@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
 public class NavigationDrawerAdapter extends ArrayAdapter<String> {

@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.preferences.callbacks;
+package com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks;
 
 import android.content.Context;
 import android.content.SharedPreferences;

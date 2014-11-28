@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.preferences;
+package com.dontbelievethebyte.skipshuffle.utilities.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.preferences.callbacks.PrefsCallbacksManager;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 import java.util.Arrays;

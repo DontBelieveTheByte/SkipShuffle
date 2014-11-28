@@ -2,13 +2,14 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.utilities;
+package com.dontbelievethebyte.skipshuffle.utilities.media;
 
 import android.content.DialogInterface;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.MediaScannerDialog;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.MediaScannerProgressDialog;
+import com.dontbelievethebyte.skipshuffle.utilities.media.MediaScannerClient;
 
 public class MediaScannerHelper {
 
