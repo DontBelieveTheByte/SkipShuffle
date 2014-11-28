@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.notification;
 
 import android.app.Notification;
@@ -9,8 +13,8 @@ import android.widget.RemoteViews;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.notification.builder.RemoteViewsBuilder;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class PlayerNotification {
 

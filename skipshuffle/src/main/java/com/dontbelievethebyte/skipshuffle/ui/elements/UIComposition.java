@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.elements;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -10,8 +14,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.ColorVisitor
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.DimensionsVisitorFactory;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.exception.NoSuchVisitorException;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
 import java.util.ArrayList;

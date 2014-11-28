@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.content.Context;
@@ -10,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public abstract class AbstractCustomAdapter extends CursorAdapter {
 

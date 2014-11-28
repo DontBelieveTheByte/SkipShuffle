@@ -1,10 +1,14 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class DrawablesVisitor {
 

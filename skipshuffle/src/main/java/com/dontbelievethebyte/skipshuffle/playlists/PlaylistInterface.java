@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.playlists;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;

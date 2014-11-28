@@ -1,9 +1,13 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color;
 
 import android.app.Activity;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 
 public abstract class AbstractColorVisitor {
 

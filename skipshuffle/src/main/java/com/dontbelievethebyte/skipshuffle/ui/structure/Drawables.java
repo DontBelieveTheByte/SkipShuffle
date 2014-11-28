@@ -1,4 +1,8 @@
-package com.dontbelievethebyte.skipshuffle.ui.structured;
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
+package com.dontbelievethebyte.skipshuffle.ui.structure;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

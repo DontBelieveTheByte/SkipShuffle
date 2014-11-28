@@ -1,5 +1,8 @@
-package com.dontbelievethebyte.skipshuffle.ui.notification.builder;
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
 
+package com.dontbelievethebyte.skipshuffle.ui.notification.builder;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -13,8 +16,8 @@ import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class RemoteViewsBuilder {
 

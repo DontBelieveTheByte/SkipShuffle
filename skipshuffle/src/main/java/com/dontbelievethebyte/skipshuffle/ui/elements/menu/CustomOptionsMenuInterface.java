@@ -1,5 +1,8 @@
-package com.dontbelievethebyte.skipshuffle.ui.elements.menu;
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
 
+package com.dontbelievethebyte.skipshuffle.ui.elements.menu;
 
 import android.view.KeyEvent;
 import android.view.MenuItem;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons;
 
 import android.view.ViewGroup;
@@ -7,7 +11,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public abstract class AbstractPlayerButtons implements UIElementCompositeInterface, DrawablesVisitor.Visitable {
 

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.elements;
 
 import android.support.v4.widget.DrawerLayout;
@@ -27,8 +31,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.ListPlayerB
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class UICompositionFactory {
 

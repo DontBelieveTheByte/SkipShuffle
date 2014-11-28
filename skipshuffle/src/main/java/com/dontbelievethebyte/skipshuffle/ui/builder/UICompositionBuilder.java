@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.ui.builder;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -5,8 +9,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class UICompositionBuilder {
 

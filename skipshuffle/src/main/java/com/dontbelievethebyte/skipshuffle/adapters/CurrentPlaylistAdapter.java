@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ */
+
 package com.dontbelievethebyte.skipshuffle.adapters;
 
 import android.content.Context;
@@ -15,8 +19,8 @@ import com.dontbelievethebyte.skipshuffle.playlists.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlists.Track;
 import com.dontbelievethebyte.skipshuffle.playlists.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structured.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class CurrentPlaylistAdapter extends BaseAdapter {
 
