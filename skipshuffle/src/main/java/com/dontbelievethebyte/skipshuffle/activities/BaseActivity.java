@@ -256,12 +256,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     public void onThemeChanged()
     {
         setUI(preferencesHelper.getUIType());
-//        try {
-//            SkipShuffleMediaPlayer skipShuffleMediaPlayer = getMediaPlayer();
-//            skipShuffleMediaPlayer.onThemeChanged();
-//        } catch (NoMediaPlayerException e) {
-//            handleNoMediaPlayerException(e);
-//        }
     }
 
     @Override
