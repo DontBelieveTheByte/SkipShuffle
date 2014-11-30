@@ -45,7 +45,7 @@ public class RemoteViewsBuilder {
 
     public RemoteViews build()
     {
-        RandomPlaylist playlist = (RandomPlaylist) skipShuffleMediaPlayer.getPlaylist();
+        RandomPlaylist playlist = skipShuffleMediaPlayer.getPlaylist();
         buildContainer();
         buildPrev();
         buildPlay();
@@ -103,6 +103,11 @@ public class RemoteViewsBuilder {
 
         remoteViews.setImageViewResource(
                 R.id.buttons_background_image,
+                drawables.notificationBackground
+        );
+
+        remoteViews.setImageViewResource(
+                R.id.buttons_background_image_overflow_protection,
                 drawables.notificationBackground
         );
     }
@@ -202,7 +207,7 @@ public class RemoteViewsBuilder {
                 skipShuffleMediaPlayer,
                 requestCode,
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT
         );
     }
 }
