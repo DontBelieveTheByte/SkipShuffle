@@ -13,101 +13,75 @@ import java.util.List;
 
 public class RandomPlaylist {
 
+
+    private PlaylistData playlistData;
     private MediaStoreBridge mediaStoreBridge;
-    private int currentPosition = 0;
-    private List<String> currentTracksIds;
-    private List<String> trackIds;
-    private List<String> shuffledTrackIds;
 
     public RandomPlaylist(List<String> trackIds, MediaStoreBridge mediaStoreBridge)
     {
-        this.trackIds = trackIds;
-        this.currentTracksIds = this.trackIds;
+        playlistData = new PlaylistData();
+        playlistData.trackIds = trackIds;
+        shuffle();
+        setPosition(0);
         this.mediaStoreBridge = mediaStoreBridge;
     }
 
-    public RandomPlaylist(List trackIds, int initialPosition, MediaStoreBridge mediaStoreBridge)
+    public RandomPlaylist(PlaylistData playlistData, MediaStoreBridge mediaStoreBridge)
     {
-        this.currentTracksIds = trackIds;
+        this.playlistData = playlistData;
+        shuffle();
         this.mediaStoreBridge = mediaStoreBridge;
-        setPosition(initialPosition);
     }
 
-    public List<String> getCurrentTracksIds()
+    public PlaylistData getPlaylistData()
     {
-        return currentTracksIds;
-    }
-
-    public Track getFirst() throws PlaylistEmptyException
-    {
-        return makeTrackFromId(currentTracksIds.get(0), 0);
-    }
-
-    public Track getLast() throws PlaylistEmptyException
-    {
-        int last = currentTracksIds.size() - 1;
-        return makeTrackFromId(currentTracksIds.get(last), last);
+        return playlistData;
     }
 
     public Track getCurrent() throws PlaylistEmptyException
     {
-        if (0 == currentTracksIds.size())
+        List<String> currentTrackIds = (playlistData.isShuffleOn) ? playlistData.shuffledTrackIds : playlistData.trackIds;
+        if (0 == currentTrackIds.size())
             throw new PlaylistEmptyException(0);
-        return makeTrackFromId(currentTracksIds.get(currentPosition), currentPosition);
+        return makeTrackFromId(
+                playlistData.trackIds.get(playlistData.currentPosition),
+                playlistData.currentPosition
+        );
     }
 
     public Track getAtPosition(int position) throws IndexOutOfBoundsException
     {
-        return makeTrackFromId(currentTracksIds.get(position), position);
+        return makeTrackFromId(
+                (playlistData.isShuffleOn) ? playlistData.shuffledTrackIds.get(position) : playlistData.trackIds.get(position),
+                position
+        );
     }
 
-    public Track getNext()
+    public int getCurrentPosition()
     {
-        int next;
-        if (currentPosition >= currentTracksIds.size())
-            next = 0;
-        else
-            next = currentPosition + 1;
-
-        return makeTrackFromId(currentTracksIds.get(next), next);
-    }
-
-    public Track getPrev()
-    {
-        int prev;
-        if (currentPosition <= 0)
-            prev = 0;
-        else
-            prev = currentPosition - 1;
-
-        return makeTrackFromId(currentTracksIds.get(prev), prev);
-    }
-
-    public int getPosition()
-    {
-        return currentPosition;
+        return playlistData.currentPosition;
     }
 
     public void setPosition(int position)
     {
-        if (position > currentTracksIds.size() - 1)
-            currentPosition = 0;
-        else if (position < 0)
-            currentPosition = 0;
+        List<String> currentTrackIds = (playlistData.isShuffleOn) ? playlistData.shuffledTrackIds : playlistData.trackIds;
+        if (position > currentTrackIds.size() - 1 || position < 0)
+            playlistData.currentPosition = 0;
         else
-            currentPosition = position;
+            playlistData.currentPosition = position;
     }
 
     public void shuffle()
     {
-        currentTracksIds = shuffledTrackIds = new ArrayList<String>(trackIds);
-        Collections.shuffle(currentTracksIds);
+        if (null == playlistData.shuffledTrackIds)
+            playlistData.shuffledTrackIds = new ArrayList<String>(playlistData.trackIds);
+        Collections.shuffle(playlistData.shuffledTrackIds);
         setPosition(0);
     }
 
     public int getSize()
     {
-        return currentTracksIds.size();
+        return (playlistData.isShuffleOn) ? playlistData.shuffledTrackIds.size() : playlistData.trackIds.size();
     }
 
     private Track makeTrackFromId(String id, int trackPosition)
@@ -117,17 +91,11 @@ public class RandomPlaylist {
 
     public boolean isShuffle()
     {
-        return null != shuffledTrackIds && currentTracksIds == shuffledTrackIds;
+        return playlistData.isShuffleOn;
     }
 
     public void setShuffle(boolean shuffle)
     {
-        if (shuffle)
-            if (null == shuffledTrackIds)
-                shuffle();
-            else
-                currentTracksIds = shuffledTrackIds;
-        else
-            currentTracksIds = trackIds;
+        playlistData.isShuffleOn = shuffle;
     }
 }

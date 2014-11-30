@@ -49,13 +49,13 @@ public class SongsClick extends AbstractListClick {
             }
             mediaPlayer.doPlay();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
-            if ( (playlist.getPosition() == position) && ((mediaPlayer.isPlaying())) ) {
+            if ( (playlist.getCurrentPosition() == position) && ((mediaPlayer.isPlaying())) ) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.track_image);
                 imageView.setImageDrawable(listActivity.ui.player.buttons.drawables.getPause());
                 mediaPlayer.doPause();
                 listActivity.ui.player.doPause();
             } else {
-                mediaPlayer.doPlay(playlist.getPosition());
+                mediaPlayer.doPlay(playlist.getCurrentPosition());
                 listActivity.ui.player.doPlay();
             }
         } catch (NoMediaPlayerException noMediaPlayerException) {

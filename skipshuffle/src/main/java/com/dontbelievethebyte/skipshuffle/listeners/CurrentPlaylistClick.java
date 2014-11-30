@@ -27,9 +27,9 @@ public class CurrentPlaylistClick implements AdapterView.OnItemClickListener {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
-            RandomPlaylist randomPlaylist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
 
-            if (position == randomPlaylist.getPosition()) {
+            if (position == randomPlaylist.getCurrentPosition()) {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.doPause();
                 } else

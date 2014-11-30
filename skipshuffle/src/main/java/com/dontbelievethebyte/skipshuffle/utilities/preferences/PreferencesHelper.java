@@ -8,22 +8,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
+import com.dontbelievethebyte.skipshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
-
-import java.util.Arrays;
-import java.util.List;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
+import com.google.gson.Gson;
 
 public class PreferencesHelper {
 
+    private Context context;
     private Boolean isHapticFeedback;
-    private Integer currentPlaylistPosition;
     private Integer currentUIType;
     private SharedPreferences sharedPreferences;
-    private Context context;
     private Boolean isListViewMode;
     private PrefsCallbacksManager callbacksManager;
 
@@ -34,31 +31,23 @@ public class PreferencesHelper {
         callbacksManager = new PrefsCallbacksManager(context);
     }
 
-    public List<String> getLastPlaylist()
+    public PlaylistData getLastPlaylist()
     {
         String serialized = sharedPreferences.getString(context.getString(R.string.pref_current_playlist_id), null);
         if (null != serialized) {
-            return Arrays.asList(TextUtils.split(serialized, ","));
+            Gson gson = new Gson();
+            return gson.fromJson(serialized, PlaylistData.class);
         } else
-        return null;
+            return null;
     }
 
-    public void setLastPlaylist(List<String> trackIds)
+    public void setLastPlaylist(PlaylistData playlistData)
     {
+        Gson gson = new Gson();
+        String json = gson.toJson(playlistData);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-        prefsEditor.putString(context.getString(R.string.pref_current_playlist_id), TextUtils.join(",", trackIds));
+        prefsEditor.putString(context.getString(R.string.pref_current_playlist_id), json);
         prefsEditor.apply();
-    }
-
-    public Integer getLastPlaylistPosition()
-    {
-        if (null == currentPlaylistPosition) {
-            currentPlaylistPosition = sharedPreferences.getInt(
-                    context.getString(R.string.pref_current_playlist_position),
-                    0
-            );
-        }
-        return currentPlaylistPosition;
     }
 
     public void setListViewMode(boolean isListMode)
@@ -75,16 +64,6 @@ public class PreferencesHelper {
             isListViewMode = sharedPreferences.getBoolean(context.getString(R.string.pref_current_ui_view_mode), false);
         }
         return isListViewMode;
-    }
-
-    public void setLastPlaylistPosition(int lastPlaylistPosition)
-    {
-        currentPlaylistPosition = lastPlaylistPosition;
-        sharedPreferences.edit()
-                .putInt(
-                        context.getString(R.string.pref_current_playlist_position),
-                        currentPlaylistPosition
-                ).apply();
     }
 
     public Integer getUIType()

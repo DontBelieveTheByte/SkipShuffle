@@ -27,9 +27,9 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrow
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
@@ -84,7 +84,7 @@ public class UICompositionFactory {
         listView.setEmptyView(emptyText);
 
         SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
-        RandomPlaylist randomPlaylist = (RandomPlaylist) mediaPlayer.getPlaylist();
+        RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
         CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
                 playerActivity,
                 randomPlaylist,
@@ -102,7 +102,7 @@ public class UICompositionFactory {
                 listView
         );
 
-        listView.setSelection(randomPlaylist.getPosition() - 1);
+        listView.setSelection(randomPlaylist.getCurrentPosition() - 1);
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);

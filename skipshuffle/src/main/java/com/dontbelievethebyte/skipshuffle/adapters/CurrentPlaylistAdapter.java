@@ -102,12 +102,13 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         this.typeface = typeface;
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     private void setImage(ImageView imageLabel, int position)
     {
         ViewGroup.LayoutParams params = imageLabel.getLayoutParams();
         int height = params.height;
 
-        if (randomPlaylist.getPosition() == position) {
+        if (randomPlaylist.getCurrentPosition() == position) {
             imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? drawables.getPlay() : drawables.getPause());
             params.width = height;
         } else {
@@ -120,7 +121,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     private void setTitle(TextView trackTitle, String string, int position)
     {
         trackTitle.setText(string);
-        if(randomPlaylist.getPosition() == position) {
+        if(randomPlaylist.getCurrentPosition() == position) {
             trackTitle.setSelected(true);
             trackTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         } else {

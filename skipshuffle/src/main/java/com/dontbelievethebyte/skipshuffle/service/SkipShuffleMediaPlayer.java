@@ -14,9 +14,8 @@ import android.provider.MediaStore;
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
+import com.dontbelievethebyte.skipshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.OrientationBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.HeadsetPluggedStateCallback;
@@ -26,6 +25,8 @@ import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCa
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -108,21 +109,17 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     private void initPlaylist()
     {
-        List<String> trackIds = preferencesHelper.getLastPlaylist();
-
-        if (null != trackIds) {
-            playlist = new RandomPlaylist(trackIds, new MediaStoreBridge(getApplicationContext()));
-            playlist.setPosition(preferencesHelper.getLastPlaylistPosition());
-        } else {
+        PlaylistData playlistData = preferencesHelper.getLastPlaylist();
+        if (null == playlistData) {
+            playlistData = new PlaylistData();
             MediaStoreBridge mediaStoreBridge = new MediaStoreBridge(getApplicationContext());
-            trackIds = new ArrayList<String>();
+            playlistData.trackIds = new ArrayList<String>();
             Cursor cursor = mediaStoreBridge.getAllSongs();
             while (cursor.moveToNext()) {
-                trackIds.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+                playlistData.trackIds.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
             }
-            preferencesHelper.setLastPlaylist(trackIds);
-            preferencesHelper.setLastPlaylistPosition(0);
         }
+        playlist = new RandomPlaylist(playlistData, new MediaStoreBridge(getApplicationContext()));
     }
 
     @Override
@@ -132,8 +129,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         orientationBroadcastReceiver.unregister();
         notification.cancel();
         doPause();
-        preferencesHelper.setLastPlaylist(playlist.getCurrentTracksIds());
-        preferencesHelper.setLastPlaylistPosition(playlist.getPosition());
+        preferencesHelper.setLastPlaylist(playlist.getPlaylistData());
     }
 
     @Override
@@ -203,14 +199,14 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void doSkip() throws PlaylistEmptyException
     {
-        playlist.setPosition(playlist.getPosition() + 1);
-        doPlay(playlist.getPosition());
+        playlist.setPosition(playlist.getCurrentPosition() + 1);
+        doPlay(playlist.getCurrentPosition());
     }
 
     public void doPrev() throws PlaylistEmptyException
     {
-        playlist.setPosition(playlist.getPosition() - 1);
-        doPlay(playlist.getPosition());
+        playlist.setPosition(playlist.getCurrentPosition() - 1);
+        doPlay(playlist.getCurrentPosition());
     }
 
     public void doShuffle() throws PlaylistEmptyException

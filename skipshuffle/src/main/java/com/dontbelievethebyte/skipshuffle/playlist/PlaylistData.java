@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PlaylistData {
     public int currentPosition = 0;
-    public List<String> currentTracksIds;
+    public boolean isShuffleOn = false;
     public List<String> trackIds;
     public List<String> shuffledTrackIds;
 }
