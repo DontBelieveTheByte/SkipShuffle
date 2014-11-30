@@ -49,11 +49,10 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
     private OrientationBroadcastReceiver orientationBroadcastReceiver;
 
-
     @Override
     public void onThemeChanged()
     {
-        //@TODO handle exception.
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
     }
 
     @Override

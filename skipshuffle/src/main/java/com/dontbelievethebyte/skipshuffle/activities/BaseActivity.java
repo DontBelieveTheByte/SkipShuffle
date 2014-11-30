@@ -20,8 +20,6 @@ import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
@@ -31,8 +29,10 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarW
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
-import com.dontbelievethebyte.skipshuffle.utilities.media.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
+import com.dontbelievethebyte.skipshuffle.utilities.media.MediaScannerHelper;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
+import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 
 public abstract class BaseActivity extends ActionBarActivity implements PrefsCallbacksManager.ThemeChangedCallback,
                                                                         PrefsCallbacksManager.HapticFeedBackChangedCallback,
@@ -250,6 +250,12 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     public void onThemeChanged()
     {
         setUI(preferencesHelper.getUIType());
+        try {
+            SkipShuffleMediaPlayer skipShuffleMediaPlayer = getMediaPlayer();
+            skipShuffleMediaPlayer.onThemeChanged();
+        } catch (NoMediaPlayerException e) {
+            handleNoMediaPlayerException(e);
+        }
     }
 
     @Override
