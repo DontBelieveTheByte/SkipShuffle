@@ -22,22 +22,22 @@ public class PreferencesHelper {
     private Integer currentUIType;
     private SharedPreferences sharedPreferences;
     private Boolean isListViewMode;
+
     private PrefsCallbacksManager callbacksManager;
 
     public PreferencesHelper(Context context)
     {
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        callbacksManager = new PrefsCallbacksManager(context);
     }
 
     public PlaylistData getLastPlaylist()
     {
-        String serialized = sharedPreferences.getString(context.getString(R.string.pref_current_playlist_id), null);
-        if (null != serialized) {
-            Gson gson = new Gson();
-            return gson.fromJson(serialized, PlaylistData.class);
-        } else
+//        String serialized = sharedPreferences.getString(context.getString(R.string.pref_current_playlist_id), null);
+//        if (null != serialized) {
+//            Gson gson = new Gson();
+//            return gson.fromJson(serialized, PlaylistData.class);
+//        } else
             return null;
     }
 
@@ -138,6 +138,11 @@ public class PreferencesHelper {
                                context.getString(R.string.pref_haptic_feedback),
                                this.isHapticFeedback
                          ).apply();
+    }
+
+    public void setCallbacksManager(PrefsCallbacksManager callbacksManager)
+    {
+        this.callbacksManager = callbacksManager;
     }
 
     public void registerPrefsChangedListener()

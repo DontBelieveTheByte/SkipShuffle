@@ -45,30 +45,21 @@ public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferen
         hapticFeedbackChangedCallbacks = new HashSet<HapticFeedBackChangedCallback>();
         playlistChangedCallbacks = new HashSet<PlaylistChangedCallback>();
         viewModeChangedCallbacks = new HashSet<ViewModeChangedCallback>();
-        registerCallBack(context);
     }
 
-    private void registerCallBack(Context context)
-    {
-        registerHapticFeedBackChanged(context);
-        registerPlaylistChanged(context);
-        registerThemeChanged(context);
-        registerViewModeChanged(context);
-    }
-
-    private void registerHapticFeedBackChanged(Context context)
+    public void registerHapticFeedBackChanged(Context context)
     {
         if (context instanceof HapticFeedBackChangedCallback)
             hapticFeedbackChangedCallbacks.add((HapticFeedBackChangedCallback) context);
     }
 
-    private void registerThemeChanged(Context context)
+    public void registerThemeChanged(Context context)
     {
         if (context instanceof ThemeChangedCallback)
             themeChangedCallbacks.add((ThemeChangedCallback) context);
     }
 
-    private void registerPlaylistChanged(Context context)
+    public void registerPlaylistChanged(Context context)
     {
         if (context instanceof PlaylistChangedCallback) {
             playlistChangedCallbacks.add(
@@ -77,7 +68,7 @@ public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferen
         }
     }
 
-    private void registerViewModeChanged(Context context)
+    public void registerViewModeChanged(Context context)
     {
         if (context instanceof ViewModeChangedCallback)
             viewModeChangedCallbacks.add((ViewModeChangedCallback) context);

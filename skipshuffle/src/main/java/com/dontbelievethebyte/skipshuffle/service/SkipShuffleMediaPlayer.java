@@ -52,7 +52,8 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     @Override
     public void onThemeChanged()
     {
-        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        initPrefsHelper();
+        notification.showNotification();
     }
 
     @Override
@@ -100,10 +101,19 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         clientCommandsBroadcastReceiver.register();
         orientationBroadcastReceiver = new OrientationBroadcastReceiver(this);
         orientationBroadcastReceiver.register();
-        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        initPrefsHelper();
         notification = new PlayerNotification(this);
         playerWrapper = new AndroidPlayer(this);
         initPlaylist();
+    }
+
+    private void initPrefsHelper()
+    {
+        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        PrefsCallbacksManager prefsCallbacksManager = new PrefsCallbacksManager(this);
+        prefsCallbacksManager.registerThemeChanged(this);
+        preferencesHelper.setCallbacksManager(prefsCallbacksManager);
+        preferencesHelper.registerPrefsChangedListener();
     }
 
     private void initPlaylist()

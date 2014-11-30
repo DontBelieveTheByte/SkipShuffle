@@ -49,7 +49,6 @@ public class PlayerNotification {
     public Notification buildNotification()
     {
         RemoteViews remoteViews = getRemoteViews();
-
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(skipShuffleMediaPlayer);
         notificationBuilder.setSmallIcon(R.drawable.ic_notification);
         notificationBuilder.setContent(remoteViews);
