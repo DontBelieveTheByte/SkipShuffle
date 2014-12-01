@@ -16,11 +16,11 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.PlayClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.PlaylistClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.PrevClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.ShuffleClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.SkipClickListener;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {

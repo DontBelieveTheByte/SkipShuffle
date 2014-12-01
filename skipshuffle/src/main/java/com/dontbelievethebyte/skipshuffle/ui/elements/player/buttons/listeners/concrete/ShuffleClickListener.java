@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete;
 
 import android.view.View;
 
@@ -10,6 +10,7 @@ import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.CustomAbstractClickListener;
 
 public class ShuffleClickListener extends CustomAbstractClickListener {
 

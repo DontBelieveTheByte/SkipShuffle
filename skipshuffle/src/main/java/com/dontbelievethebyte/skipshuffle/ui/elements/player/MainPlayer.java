@@ -11,11 +11,11 @@ import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.PlayClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.PlaylistClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.PrevClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.ShuffleClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete.SkipClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 
 public class MainPlayer extends AbstractPlayerUI {
