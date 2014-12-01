@@ -10,5 +10,5 @@ public class SkipShuflleMediaPlayerCommandsContract {
     public static final String PAUSE = "doPause";
     public static final String SKIP = "doSkip";
     public static final String PREV = "doPrev";
-    public static final String SHUFFLE = "doShuffle";
+    public static final String SHUFFLE = "shuffleToggle";
 }
