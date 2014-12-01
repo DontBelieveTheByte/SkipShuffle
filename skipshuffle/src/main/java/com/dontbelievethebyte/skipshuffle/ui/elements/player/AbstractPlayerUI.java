@@ -40,7 +40,7 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
                 doPlay();
             else
                 doPause();
-            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
             checkShuffle(playlist);
         } catch (NoMediaPlayerException e) {
