@@ -88,6 +88,7 @@ public class MainPlayer extends AbstractPlayerUI {
         buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
+        reboot();
     }
 
     @Override

@@ -24,8 +24,8 @@ public class PrevClickListener extends CustomAbstractClickListener {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
-            mediaPlayer.doPrev();
             activity.ui.player.doPrev();
+            mediaPlayer.doPrev();
         } catch (NoMediaPlayerException n) {
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {

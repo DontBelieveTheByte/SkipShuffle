@@ -4,6 +4,8 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
+import android.graphics.drawable.Drawable;
+
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -42,7 +44,7 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
-            checkShuffle(playlist);
+            buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);
         } catch (PlaylistEmptyException e) {
@@ -50,12 +52,16 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
         }
     }
 
-    protected void checkShuffle(RandomPlaylist playlist)
+    public Drawable getShuffleDrawable()
     {
-        if (null != playlist && playlist.isShuffle())
-            buttons.shuffle.setImageDrawable(buttons.drawables.getShufflePressed());
-        else
-            buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
+        try {
+            SkipShuffleMediaPlayer mediaPlayer = baseActivity.getMediaPlayer();
+            RandomPlaylist playlist = mediaPlayer.getPlaylist();
+            return (null != playlist && playlist.isShuffle()) ? buttons.drawables.getShufflePressed() :
+                                                                buttons.drawables.getShuffle();
+        } catch (NoMediaPlayerException e) {
+            return buttons.drawables.getShuffle();
+        }
     }
 
 }

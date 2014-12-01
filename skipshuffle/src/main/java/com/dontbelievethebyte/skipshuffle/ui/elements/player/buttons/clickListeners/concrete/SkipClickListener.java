@@ -24,8 +24,8 @@ public class SkipClickListener extends CustomAbstractClickListener {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
-            mediaPlayer.doSkip();
             activity.ui.player.doSkip();
+            mediaPlayer.doSkip();
         } catch (NoMediaPlayerException n) {
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {

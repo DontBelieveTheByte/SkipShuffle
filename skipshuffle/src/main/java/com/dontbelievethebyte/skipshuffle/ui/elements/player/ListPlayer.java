@@ -119,9 +119,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
                 doPlay();
             else
                 doPause();
-            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
-            checkShuffle(playlist);
+            buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);
         } catch (PlaylistEmptyException e) {

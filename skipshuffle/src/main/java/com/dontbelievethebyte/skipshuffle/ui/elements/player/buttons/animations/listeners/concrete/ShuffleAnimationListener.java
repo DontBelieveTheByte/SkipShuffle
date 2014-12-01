@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete;
 
+import android.graphics.drawable.Drawable;
 import android.view.animation.Animation;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
@@ -26,7 +27,8 @@ public class ShuffleAnimationListener extends AbstractAnimationListener {
     @Override
     public void onAnimationEnd(Animation animation)
     {
-        playerUI.buttons.shuffle.setImageDrawable(playerUI.buttons.drawables.getShuffle());
+        Drawable shuffleDrawable = playerUI.getShuffleDrawable();
+        playerUI.buttons.shuffle.setImageDrawable(shuffleDrawable);
         playerUI.doPlay();
     }
 }
