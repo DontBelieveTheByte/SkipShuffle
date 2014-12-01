@@ -2,12 +2,12 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete;
 
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.CustomAbstractClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.CustomAbstractClickListener;
 
 public class PlaylistClickListener extends CustomAbstractClickListener {
 

@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners;
 
 import android.view.View;
 

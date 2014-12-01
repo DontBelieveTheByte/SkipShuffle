@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.concrete;
+package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete;
 
 import android.view.View;
 
@@ -10,11 +10,11 @@ import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.CustomAbstractClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.CustomAbstractClickListener;
 
-public class SkipClickListener extends CustomAbstractClickListener {
+public class ShuffleClickListener extends CustomAbstractClickListener {
 
-    public SkipClickListener(BaseActivity baseActivity)
+    public ShuffleClickListener(BaseActivity baseActivity)
     {
         super(baseActivity);
     }
@@ -24,8 +24,8 @@ public class SkipClickListener extends CustomAbstractClickListener {
     {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
-            mediaPlayer.doSkip();
-            activity.ui.player.doSkip();
+            mediaPlayer.doShuffle();
+            activity.ui.player.doShuffle();
         } catch (NoMediaPlayerException n) {
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
