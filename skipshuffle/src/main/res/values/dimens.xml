@@ -41,4 +41,8 @@
     <dimen name="notification_track_artist">14sp</dimen>
     <dimen name="notification_track_labels_padding_left">4dp</dimen>
 
+    <dimen name="player_layout_padding_row1">10dp</dimen>
+    <dimen name="player_layout_padding_row2">4dp</dimen>
+    <dimen name="player_layout_padding_row3">20dp</dimen>
+
 </resources>

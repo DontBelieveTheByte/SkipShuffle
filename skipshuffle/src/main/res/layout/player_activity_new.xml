@@ -15,13 +15,13 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/topRow"
             android:layout_weight="1"
             android:background="#ffff320b"
-            android:layout_gravity="center"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:padding="@dimen/player_layout_padding_row1">
             <ImageButton
                 android:contentDescription="@string/accessibility_play_pause"
                 android:layout_width="wrap_content"
@@ -48,19 +48,17 @@
             android:layout_width="fill_parent"
             android:orientation="horizontal"
             android:id="@+id/centerRow"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#ff14ff44"
-            android:layout_gravity="center">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="1" />
+            android:padding="@dimen/player_layout_padding_row2"
+            android:gravity="center">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:textSize="36sp"
                 android:background="@android:color/transparent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:text="@string/meta_data_unknown_title"
                 android:id="@+id/song_label"
                 android:typeface="monospace"
@@ -68,20 +66,20 @@
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
-                android:layout_weight="1" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ff000000"
+                android:layout_gravity="center"
+                android:enabled="true" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/bottomRow"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_weight="1"
-            android:background="#64c9ff0f">
+            android:background="#64c9ff0f"
+            android:padding="@dimen/player_layout_padding_row3">
 
             <ImageButton
                 android:contentDescription="@string/accessibility_shuffle"
@@ -91,7 +89,7 @@
                 android:src="@drawable/shuffle_states_neon"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
 
             <ImageButton
                 android:contentDescription="@string/accessibility_playlist"
@@ -111,7 +109,7 @@
                 android:src="@drawable/prev_states_neon"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:layout_weight="1" />
+                android:layout_weight="2" />
         </LinearLayout>
 
         <ProgressBar
