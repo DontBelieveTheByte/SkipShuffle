@@ -51,7 +51,7 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
                 if (hasHardWareMenuKey){
                     customActionBarWrapper.showToggle();
                 }
-            } else if (!customActionBarWrapper.isShowing()){
+            } else if (!customActionBarWrapper.isShowing()){//@TODO Fix this.
                 if (hasHardWareMenuKey){
                     customActionBarWrapper.showToggle();
                 }
