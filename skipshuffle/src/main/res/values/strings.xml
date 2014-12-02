@@ -34,6 +34,7 @@
     <string name="menu_set_music_dir">Set music directories</string>
     <string name="menu_haptic_feedback">Haptic feedback toggle (vibration)</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="nothing_in_playlist">Empty playlist</string>
 
     <!-- Dialogs -->
     <string name="dialog_theme_title">Pick a theme</string>

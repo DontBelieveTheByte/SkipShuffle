@@ -274,6 +274,8 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
     {
-
+        toastHelper.showLongToast(
+                getString(R.string.nothing_in_playlist)
+        );
     }
 }
