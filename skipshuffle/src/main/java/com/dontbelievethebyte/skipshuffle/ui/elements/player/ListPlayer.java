@@ -7,7 +7,6 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -16,11 +15,6 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClickListener;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
@@ -34,15 +28,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
         setButtonsOnClickListeners();
-    }
-
-    private void setButtonsOnClickListeners()
-    {
-        buttons.play.setOnClickListener(new PlayClickListener(baseActivity));
-        buttons.skip.setOnClickListener(new SkipClickListener(baseActivity));
-        buttons.prev.setOnClickListener(new PrevClickListener(baseActivity));
-        buttons.shuffle.setOnClickListener(new ShuffleClickListener(baseActivity));
-        buttons.playlist.setOnClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
     }
 
     @Override
@@ -119,9 +104,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
                 doPlay();
             else
                 doPause();
-            RandomPlaylist playlist = (RandomPlaylist) mediaPlayer.getPlaylist();
+            RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
-            checkShuffle(playlist);
+            buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);
         } catch (PlaylistEmptyException e) {

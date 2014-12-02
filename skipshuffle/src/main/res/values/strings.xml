@@ -20,18 +20,13 @@
     <string name="media_scan_done">Done scanning media.</string>
 
     <!-- Toasts -->
-    <string name="haptic_feedback_not_available">Your device doesn\'t support haptic feedback.</string>
     <string name="haptic_feedback_off">Haptic feedback turned off.</string>
     <string name="haptic_feedback_on">Haptic feedback turned on.</string>
-    <string name="shuffle_empty_playlist">Cannot shuffle empty playlist.</string>
-    <string name="playlist_error">Playlist error.</string>
-    <string name="player_wrapper_song_error">Error playing file : </string>
-    <string name="no_access">Unable to access.</string>
     <string name="no_media_player">No media player connected.</string>
+    <string name="empty_playlist">Empty playlist</string>
 
     <!-- Main menu -->
     <string name="menu_theme">Theme</string>
-    <string name="menu_set_music_dir">Set music directories</string>
     <string name="menu_haptic_feedback">Haptic feedback toggle (vibration)</string>
     <string name="menu_refresh">Refresh</string>
 
@@ -51,17 +46,11 @@
     <!-- Preferences -->
     <string name="pref_haptic_feedback">PREF_HAPTIC_FEEDBACK</string>
     <string name="pref_media_directories">PREF_MEDIA_DIRECTORIES</string>
-    <string name="pref_media_directories_separator">☃ಠ_ಠ☃</string>
-    <string name="pref_current_playlist_id">PREF_PLAYLIST_ID</string>
-    <string name="pref_current_playlist_position">PREF_PLAYLIST_POSITION</string>
+    <string name="pref_current_playlist_id">PREF_CURRENT_PLAYLIST</string>
     <string name="pref_current_ui_type">PREF_CURRENT_UI_TYPE</string>
     <string name="pref_current_ui_view_mode">PREF_CURRENT_UI_VIEW_MODE</string>
 
     <!-- State info -->
-    <string name="media_player_unkown_command">Unknown command.</string>
-    <string name="empty_playlist">There are no items yet, you may scan for media by selecting a target location from the menu.</string>
-    <string name="shuffle">Re-suffling</string>
-    <string name="playlist_load_error">Playlist Error, playlist ID : %</string>
     <string name="empty_list_view">Nothing to show.</string>
 
     <!-- Main navigation drawer -->

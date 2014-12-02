@@ -19,7 +19,6 @@ import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.service.broadcastreceiver.OrientationBroadcastReceiver;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.HeadsetPluggedStateCallback;
-import com.dontbelievethebyte.skipshuffle.service.callbacks.MediaPlayerCommandsCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.OrientationChangeCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
@@ -36,7 +35,6 @@ import java.util.Set;
 public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksManager.PlaylistChangedCallback,
                                                                PrefsCallbacksManager.ThemeChangedCallback,
                                                                HeadsetPluggedStateCallback,
-                                                               MediaPlayerCommandsCallback,
                                                                OrientationChangeCallback,
                                                                TrackCompleteCallback{
 
@@ -68,23 +66,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         {
             return SkipShuffleMediaPlayer.this;
         }
-    }
-
-    @Override
-    public void onCommand(String command)
-    {
-        java.lang.reflect.Method method;
-        try {
-            method = ((Object) this).getClass().getMethod(command);
-            method.invoke(this);
-        } catch (Exception e) {
-            handleCommandException(e);
-        }
-    }
-
-    private void handleCommandException(Exception exception)
-    {
-        //@TODO handle exception.
     }
 
     @Override
@@ -218,13 +199,13 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         doPlay(playlist.getCurrentPosition());
     }
 
-    public void doShuffle() throws PlaylistEmptyException
+    public void shuffleToggle() throws PlaylistEmptyException
     {
-        if (playlist.isShuffle())
+        if (!playlist.isShuffle()) {
             playlist.shuffle();
-
+        }
         playlist.setShuffle(!playlist.isShuffle());
-        doPlay();
+        doPlay(0);
     }
 
     public boolean isPlaying()

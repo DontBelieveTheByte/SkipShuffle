@@ -44,7 +44,7 @@ public class RandomPlaylist {
         if (0 == currentTrackIds.size())
             throw new PlaylistEmptyException(0);
         return makeTrackFromId(
-                playlistData.trackIds.get(playlistData.currentPosition),
+                currentTrackIds.get(playlistData.currentPosition),
                 playlistData.currentPosition
         );
     }
@@ -76,7 +76,6 @@ public class RandomPlaylist {
         if (null == playlistData.shuffledTrackIds)
             playlistData.shuffledTrackIds = new ArrayList<String>(playlistData.trackIds);
         Collections.shuffle(playlistData.shuffledTrackIds);
-        setPosition(0);
     }
 
     public int getSize()
@@ -97,5 +96,6 @@ public class RandomPlaylist {
     public void setShuffle(boolean shuffle)
     {
         playlistData.isShuffleOn = shuffle;
+        setPosition(0);
     }
 }

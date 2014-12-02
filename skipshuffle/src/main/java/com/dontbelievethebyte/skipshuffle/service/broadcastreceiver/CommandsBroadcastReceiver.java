@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 
@@ -38,18 +39,32 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent)
     {
         if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
-            handleCommand(
-                    intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND),
-                    intent
-            );
-        } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
+            try {
+                handleCommand(
+                        intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND),
+                        intent
+                );
+            } catch (PlaylistEmptyException playListEmptyException) {
+                skipShuffleMediaPlayer.handlePlaylistEmptyException(playListEmptyException);
+            }
+        }
+        else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
             handleHeadsetIntent(intent);
         }
     }
 
-    private void handleCommand(String command, Intent intent)
+    private void handleCommand(String command, Intent intent) throws PlaylistEmptyException
     {
-        skipShuffleMediaPlayer.onCommand(command);
+        if (command.equals(SkipShuflleMediaPlayerCommandsContract.PLAY))
+                skipShuffleMediaPlayer.doPlay();
+        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.PAUSE))
+            skipShuffleMediaPlayer.doPause();
+        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.PREV))
+            skipShuffleMediaPlayer.doPrev();
+        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.SKIP))
+            skipShuffleMediaPlayer.doSkip();
+        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.SHUFFLE))
+            skipShuffleMediaPlayer.shuffleToggle();
     }
 
     private void handleHeadsetIntent(Intent intent)

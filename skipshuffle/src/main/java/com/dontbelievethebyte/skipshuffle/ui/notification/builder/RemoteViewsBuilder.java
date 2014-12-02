@@ -203,6 +203,7 @@ public class RemoteViewsBuilder {
     {
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
+        intent.setPackage(skipShuffleMediaPlayer.getPackageName());
         return PendingIntent.getBroadcast(
                 skipShuffleMediaPlayer,
                 requestCode,

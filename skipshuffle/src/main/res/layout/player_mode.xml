@@ -25,7 +25,7 @@
                 android:layout_height="10dp"
                 android:id="@+id/playBtn"
                 android:src="@drawable/play_states_neon"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:background="@android:color/transparent"/>
             <View
                 android:layout_width="0dp"
@@ -37,7 +37,7 @@
                 android:layout_height="10dp"
                 android:id="@+id/skipBtn"
                 android:src="@drawable/skip_states_neon"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:background="@android:color/transparent" />
         </LinearLayout>
         <LinearLayout
@@ -61,7 +61,8 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:ellipsize="marquee"/>
+                android:ellipsize="marquee"
+                android:enabled="true" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0px"

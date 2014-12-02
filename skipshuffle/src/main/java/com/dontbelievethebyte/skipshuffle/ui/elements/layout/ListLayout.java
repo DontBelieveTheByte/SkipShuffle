@@ -13,7 +13,7 @@ public class ListLayout extends AbstractLayout {
 
     public ListLayout(Activity activity)
     {
-        super(activity, R.layout.playlist_activity);
+        super(activity, R.layout.playlist_mode);
     }
 
     public ViewGroup getBottomLayout()

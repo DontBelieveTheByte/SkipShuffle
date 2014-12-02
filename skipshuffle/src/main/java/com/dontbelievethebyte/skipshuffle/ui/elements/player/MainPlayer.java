@@ -6,16 +6,10 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlayClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PlaylistClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.PrevClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.ShuffleClickListener;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.listeners.SkipClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 
 public class MainPlayer extends AbstractPlayerUI {
@@ -31,15 +25,6 @@ public class MainPlayer extends AbstractPlayerUI {
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
         setButtonsOnClickListeners();
-    }
-
-    private void setButtonsOnClickListeners()
-    {
-        buttons.play.setOnClickListener(new PlayClickListener(baseActivity));
-        buttons.skip.setOnClickListener(new SkipClickListener(baseActivity));
-        buttons.prev.setOnClickListener(new PrevClickListener(baseActivity));
-        buttons.shuffle.setOnClickListener(new ShuffleClickListener(baseActivity));
-        buttons.playlist.setOnClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
     }
 
     @Override
@@ -88,6 +73,7 @@ public class MainPlayer extends AbstractPlayerUI {
         buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
+        reboot();
     }
 
     @Override
