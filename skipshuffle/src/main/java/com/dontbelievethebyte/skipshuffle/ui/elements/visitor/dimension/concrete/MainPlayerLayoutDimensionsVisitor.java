@@ -11,7 +11,6 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterfac
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 
 public class MainPlayerLayoutDimensionsVisitor extends AbstractDimensionsVisitor {
 
@@ -31,10 +30,17 @@ public class MainPlayerLayoutDimensionsVisitor extends AbstractDimensionsVisitor
     {
         ViewGroup bottomLayout = contentArea.getBottomLayout();
 
+//        bottomLayout.setPadding(
+//        /* left   */ (int) (computedScreenWidth * (isLandScape ? DimensionsMapper.Player.Padding.Landscape.left : DimensionsMapper.Player.Padding.Portrait.left)),
+//        /* top    */ computeActionBarHeight(),
+//        /* right  */ (int) (computedScreenWidth * (isLandScape ? DimensionsMapper.Player.Padding.Landscape.right : DimensionsMapper.Player.Padding.Portrait.right)),
+//        /* bottom */ 0
+//        );
+
         bottomLayout.setPadding(
-        /* left   */ (int) (computedScreenWidth * (isLandScape ? DimensionsMapper.Player.Padding.Landscape.left : DimensionsMapper.Player.Padding.Portrait.left)),
+        /* left   */ 0,
         /* top    */ computeActionBarHeight(),
-        /* right  */ (int) (computedScreenWidth * (isLandScape ? DimensionsMapper.Player.Padding.Landscape.right : DimensionsMapper.Player.Padding.Portrait.right)),
+        /* right  */ 0,
         /* bottom */ 0
         );
     }

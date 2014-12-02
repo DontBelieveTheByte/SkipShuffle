@@ -23,8 +23,8 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
     @Override
     public void visit(UIElementCompositeInterface uiElement)
     {
-        adjustButtonDimensions();
-        adjustSongLabelDimensions();
+//        adjustButtonDimensions();
+//        adjustSongLabelDimensions();
     }
 
     private void adjustButtonDimensions()

@@ -15,7 +15,7 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/topRow"
             android:layout_weight="1"
             android:background="#ffff320b"
@@ -24,31 +24,31 @@
             android:padding="@dimen/player_layout_padding_row1">
             <ImageButton
                 android:contentDescription="@string/accessibility_play_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:id="@+id/playBtn"
                 android:src="@drawable/play_states_neon"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:layout_gravity="left"
+                android:layout_gravity="center|left"
                 android:layout_weight="1" />
 
             <ImageButton
                 android:contentDescription="@string/accessibility_skip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:id="@+id/skipBtn"
                 android:src="@drawable/skip_states_neon"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
-                android:layout_gravity="center|right"
+                android:layout_gravity="right"
                 android:layout_weight="1" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:orientation="horizontal"
             android:id="@+id/centerRow"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:background="#ff14ff44"
             android:padding="@dimen/player_layout_padding_row2"
@@ -56,9 +56,8 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:textSize="36sp"
                 android:background="@android:color/transparent"
-                android:layout_height="36dp"
+                android:layout_height="fill_parent"
                 android:text="@string/meta_data_unknown_title"
                 android:id="@+id/song_label"
                 android:typeface="monospace"
@@ -69,11 +68,13 @@
                 android:layout_weight="1"
                 android:textColor="#ff000000"
                 android:layout_gravity="center"
-                android:enabled="true" />
+                android:enabled="true"
+                android:textSize="24sp"
+                android:minLines="1" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/bottomRow"
             android:gravity="center"
             android:orientation="horizontal"

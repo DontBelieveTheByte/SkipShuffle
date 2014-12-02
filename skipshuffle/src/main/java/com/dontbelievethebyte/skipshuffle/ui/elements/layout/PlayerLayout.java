@@ -13,7 +13,7 @@ public class PlayerLayout extends AbstractLayout {
 
     public PlayerLayout(Activity activity)
     {
-        super(activity, R.layout.player_mode);
+        super(activity, R.layout.player_mode_new);
     }
 
     public ViewGroup getBottomLayout()
