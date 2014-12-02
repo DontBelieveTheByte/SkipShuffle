@@ -151,7 +151,6 @@ public class UICompositionFactory {
                         (DrawerLayout) baseActivity.findViewById(R.id.drawer_layout)
                 )
         );
-        musicPlayerDrawer.setTouchListener(baseActivity);
         musicPlayerDrawer.setAdapter(
                 new NavigationDrawerAdapter(
                         baseActivity,

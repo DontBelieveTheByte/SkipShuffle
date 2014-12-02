@@ -19,6 +19,7 @@ public class PlaylistClickListener extends CustomAbstractClickListener {
     @Override
     public void onClick(View view)
     {
+        handleHapticFeedback(view);
         PlayerActivity playerActivity = (PlayerActivity) activity;
         playerActivity.onViewModeChanged();
     }

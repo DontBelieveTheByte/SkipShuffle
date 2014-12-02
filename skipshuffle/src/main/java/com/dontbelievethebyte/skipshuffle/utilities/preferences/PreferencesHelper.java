@@ -22,6 +22,7 @@ public class PreferencesHelper {
     private Integer currentUIType;
     private SharedPreferences sharedPreferences;
     private Boolean isListViewMode;
+    private boolean hasVibrator;
 
     private PrefsCallbacksManager callbacksManager;
 
@@ -29,6 +30,8 @@ public class PreferencesHelper {
     {
         this.context = context;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        hasVibrator = vibrator.hasVibrator();
     }
 
     public PlaylistData getLastPlaylist()
@@ -90,53 +93,20 @@ public class PreferencesHelper {
     public boolean isHapticFeedback()
     {
         if (null == isHapticFeedback) {
-            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-
-            isHapticFeedback = vibrator.hasVibrator() &&
-                               sharedPreferences.getBoolean(
+            isHapticFeedback = sharedPreferences.getBoolean(
                                        context.getString(R.string.pref_haptic_feedback),
-                                       false
+                                       true
                                );
         }
-        return isHapticFeedback;
+        return hasVibrator;
     }
 
-    public void setHapticFeedback(boolean isHapticFeedback)
+    public void toggleHapticFeedback()
     {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-
-        long[] pattern = {
-                0L,
-                500L,
-                110L,
-                500L,
-                110L,
-                450L,
-                110L,
-                200L,
-                110L,
-                170L,
-                40L,
-                450L,
-                110L,
-                200L,
-                110L,
-                170L,
-                40L,
-                500L
-        };
-
-        if (vibrator.hasVibrator() && isHapticFeedback) {
-
-            vibrator.vibrate(pattern, -1);
-            this.isHapticFeedback = true;
-        } else {
-            this.isHapticFeedback = false;
-        }
         sharedPreferences.edit()
                          .putBoolean(
                                context.getString(R.string.pref_haptic_feedback),
-                               this.isHapticFeedback
+                               !isHapticFeedback()
                          ).apply();
     }
 
@@ -154,5 +124,4 @@ public class PreferencesHelper {
     {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(callbacksManager);
     }
-
 }

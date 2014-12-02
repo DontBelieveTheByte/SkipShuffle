@@ -8,15 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.listeners.TouchListener;
 import com.dontbelievethebyte.skipshuffle.exceptions.MenuOptionNotHandledException;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -38,8 +37,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                                                                         PrefsCallbacksManager.HapticFeedBackChangedCallback,
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
                                                                         PrefsCallbacksManager.ViewModeChangedCallback,
-                                                                        PlayerStateChangedCallback,
-                                                                        View.OnTouchListener {
+                                                                        PlayerStateChangedCallback {
 
     public static final String TAG = "SkipShuffle";
 
@@ -48,13 +46,14 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         public boolean handleMenuRefreshMedia()
         {
             showMediaScannerDialog();
-            return true;
+            return false;
         }
 
         @Override
         public boolean handleMenuHapticFeedBack()
         {
-            preferencesHelper.setHapticFeedback(!preferencesHelper.isHapticFeedback());
+            Log.d(BaseActivity.TAG, "TOUCHED MENYU!!!");
+            preferencesHelper.toggleHapticFeedback();
             return true;
         }
 
@@ -62,7 +61,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         public boolean handleMenuThemeSelection()
         {
             showThemeSelectionDialog();
-            return true;
+            return false;
         }
     }
 
@@ -206,13 +205,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent event)
-    {
-        TouchListener touchHandler = new TouchListener(preferencesHelper);
-        return touchHandler.handleTouch(view, event);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         try {
@@ -245,10 +237,33 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public void onHapticFeedBackChanged()
     {
+        long[] pattern = {
+                0L,
+                500L,
+                110L,
+                500L,
+                110L,
+                450L,
+                110L,
+                200L,
+                110L,
+                170L,
+                40L,
+                450L,
+                110L,
+                200L,
+                110L,
+                170L,
+                40L,
+                500L
+        };
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator.hasVibrator() && preferencesHelper.isHapticFeedback())
+            vibrator.vibrate(pattern, -1);
         toastHelper.showShortToast(
                 preferencesHelper.isHapticFeedback() ?
-                        getString(R.string.haptic_feedback_off) :
-                        getString(R.string.haptic_feedback_on)
+                        getString(R.string.haptic_feedback_on) :
+                        getString(R.string.haptic_feedback_off)
         );
     }
 

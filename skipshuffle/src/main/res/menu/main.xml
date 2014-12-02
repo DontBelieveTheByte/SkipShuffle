@@ -12,12 +12,12 @@
         android:icon="@drawable/ic_theme"
         skipshuffle:showAsAction="ifRoom">
     </item>
-    <item
-        android:title="@string/menu_haptic_feedback"
-        android:id="@+id/haptic_feedback_toggle"
-        android:icon="@drawable/ic_vibration"
-        skipshuffle:showAsAction="ifRoom">
-    </item>
+    <!--<item-->
+        <!--android:title="@string/menu_haptic_feedback"-->
+        <!--android:id="@+id/haptic_feedback_toggle"-->
+        <!--android:icon="@drawable/ic_vibration"-->
+        <!--skipshuffle:showAsAction="ifRoom">-->
+    <!--</item>-->
     <item
         android:title="@string/menu_refresh"
         android:id="@+id/refresh_media"

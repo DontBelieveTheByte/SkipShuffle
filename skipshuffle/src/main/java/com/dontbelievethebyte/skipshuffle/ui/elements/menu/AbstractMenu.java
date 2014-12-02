@@ -79,8 +79,8 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
         switch (menuItem.getItemId()) {
             case R.id.refresh_media:
                 return menuItemSelectedCallback.handleMenuRefreshMedia();
-            case R.id.haptic_feedback_toggle:
-                return menuItemSelectedCallback.handleMenuHapticFeedBack();
+//            case R.id.haptic_feedback_toggle:
+//                return menuItemSelectedCallback.handleMenuHapticFeedBack();
             case R.id.theme:
                 return menuItemSelectedCallback.handleMenuThemeSelection();
             default:

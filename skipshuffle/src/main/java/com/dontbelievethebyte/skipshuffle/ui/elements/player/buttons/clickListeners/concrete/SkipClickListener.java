@@ -22,6 +22,7 @@ public class SkipClickListener extends CustomAbstractClickListener {
     @Override
     public void onClick(View view)
     {
+        handleHapticFeedback(view);
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
             activity.ui.player.doSkip();
