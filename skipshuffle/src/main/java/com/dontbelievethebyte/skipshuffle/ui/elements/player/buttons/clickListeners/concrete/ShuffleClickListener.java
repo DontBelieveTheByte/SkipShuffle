@@ -25,8 +25,8 @@ public class ShuffleClickListener extends CustomAbstractClickListener {
         handleHapticFeedback(view);
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
-            activity.ui.player.doShuffle();
             mediaPlayer.shuffleToggle();
+            activity.ui.player.doShuffle();
         } catch (NoMediaPlayerException n) {
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
