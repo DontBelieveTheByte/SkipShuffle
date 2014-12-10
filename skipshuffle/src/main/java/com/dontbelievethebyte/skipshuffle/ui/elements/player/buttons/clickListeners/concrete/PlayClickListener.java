@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete;
 
+import android.util.Log;
 import android.view.View;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -26,16 +27,17 @@ public class PlayClickListener extends CustomAbstractClickListener {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
             if (mediaPlayer.isPlaying()) {
-                activity.ui.player.doPause();
+//                activity.ui.player.doPause();
                 mediaPlayer.doPause();
             } else {
-                activity.ui.player.doPlay();
                 mediaPlayer.doPlay();
+//                activity.ui.player.doPlay();
             }
         } catch (NoMediaPlayerException n){
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException e) {
-            e.printStackTrace();
+            Log.d(BaseActivity.TAG, "CAUGHT UP!");
+            activity.handlePlaylistEmptyException(e);
         }
     }
 }
