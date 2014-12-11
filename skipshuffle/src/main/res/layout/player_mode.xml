@@ -12,8 +12,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/bottom"
-        android:baselineAligned="false"
-        android:orientation="vertical">
+        android:baselineAligned="true"
+        android:orientation="vertical"
+        android:padding="10dp">
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
