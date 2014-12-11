@@ -14,10 +14,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/label_app_name"
-        android:theme="@android:style/Theme.Black.NoTitleBar">
+        android:theme="@style/CustomActionBarTheme"
+        >
         <activity
             android:name=".activities.PlayerActivity"
-            android:theme="@style/CustomActionBarTheme"
             android:launchMode="singleTop"
             android:label="@string/label_app_name" >
             <intent-filter>
@@ -27,7 +27,6 @@
         </activity>
         <activity
             android:name=".activities.MusicContentBrowserActivity"
-            android:theme="@style/CustomActionBarTheme"
             android:label="@string/label_playlist" >
         </activity>
 

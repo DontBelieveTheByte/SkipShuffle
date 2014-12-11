@@ -6,14 +6,11 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension;
 
 import android.app.Activity;
 import android.content.res.Configuration;
-import android.util.TypedValue;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.DimensionsMapper;
 
 public abstract class AbstractDimensionsVisitor {
 
@@ -49,27 +46,12 @@ public abstract class AbstractDimensionsVisitor {
         );
     }
 
-    protected int computeActionBarHeight()
+    protected RelativeLayout.LayoutParams createRelativeLayoutParams()
     {
-        TypedValue tv = new TypedValue();
-        if (activity.getTheme().resolveAttribute(R.attr.actionBarSize, tv, true)) {
-            return TypedValue.complexToDimensionPixelSize(
-                    tv.data,
-                    activity.getResources().getDisplayMetrics()
-            );
-        } else {
-            return (int) (computedScreenHeight * (isLandScape ? DimensionsMapper.Player.Padding.Landscape.top : DimensionsMapper.Player.Padding.Portrait.top));
-        }
+        return new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
     }
 
-    protected void setSquareImageButtonSize(int buttonId, double size)
-    {
-        ImageButton imageButton = (ImageButton) activity.findViewById(buttonId);
-
-        LinearLayout.LayoutParams playButtonLayoutParams = createLinearLayoutParams();
-
-        playButtonLayoutParams.height = (int) size;
-        playButtonLayoutParams.width = (int) size;
-        imageButton.setLayoutParams(playButtonLayoutParams);
-    }
 }

@@ -18,7 +18,7 @@
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
         <item name="actionMenuTextColor">@color/actionbar_text</item>
-        <item name="windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">false</item>
     </style>
 
     <!-- ActionBar styles -->
