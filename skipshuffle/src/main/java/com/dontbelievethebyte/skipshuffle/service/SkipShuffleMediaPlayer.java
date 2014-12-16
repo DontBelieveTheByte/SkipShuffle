@@ -5,8 +5,10 @@
 package com.dontbelievethebyte.skipshuffle.service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.provider.MediaStore;
@@ -36,7 +38,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
                                                                PrefsCallbacksManager.ThemeChangedCallback,
                                                                HeadsetPluggedStateCallback,
                                                                OrientationChangeCallback,
-                                                               TrackCompleteCallback{
+                                                               TrackCompleteCallback {
 
     private CommandsBroadcastReceiver clientCommandsBroadcastReceiver;
     private AndroidPlayer playerWrapper;
@@ -46,6 +48,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
     private OrientationBroadcastReceiver orientationBroadcastReceiver;
+    private AudioManager audioManager;
 
     @Override
     public void onThemeChanged()
@@ -77,6 +80,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     @Override
     public void onCreate()
     {
+        initAudioFocus();
         playerStateChangedCallbacks = new HashSet<PlayerStateChangedCallback>();
         clientCommandsBroadcastReceiver = new CommandsBroadcastReceiver(this);
         clientCommandsBroadcastReceiver.register();
@@ -86,6 +90,16 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         notification = new PlayerNotification(this);
         playerWrapper = new AndroidPlayer(this);
         initPlaylist();
+    }
+
+    private void initAudioFocus()
+    {
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.requestAudioFocus(
+                new AudioFocusManager(this),
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN
+        );
     }
 
     private void initPrefsHelper()
@@ -211,6 +225,15 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public boolean isPlaying()
     {
         return playerWrapper.isPlaying();
+    }
+
+    public boolean isPaused()
+    {
+        return playerWrapper.isPaused();
+    }
+
+    public void setVolume (float leftVolume, float rightVolume) {
+        playerWrapper.setVolume(leftVolume, rightVolume);
     }
 
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)

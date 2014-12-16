@@ -19,6 +19,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
     private MediaPlayer mp;
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
     private int seekPosition = 0;
+    private boolean paused = false;
 
     public AndroidPlayer(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
@@ -28,6 +29,10 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
         mp.setOnCompletionListener(this);
         mp.setOnPreparedListener(this);
         mp.setOnSeekCompleteListener(this);
+    }
+
+    public void setVolume (float leftVolume, float rightVolume) {
+        mp.setVolume(leftVolume, rightVolume);
     }
 
     @Override
@@ -46,7 +51,13 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
     public void onSeekComplete(MediaPlayer mediaPlayer)
     {
         mp.start();
+        paused = false;
         skipShuffleMediaPlayer.onPlayerStateChanged();
+    }
+
+    public boolean isPaused()
+    {
+        return paused;
     }
 
     public void pausePlayingTrack()
@@ -54,6 +65,7 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
         if (mp.isPlaying()) {
             seekPosition = mp.getCurrentPosition();
             mp.pause();
+            paused = true;
             skipShuffleMediaPlayer.onPlayerStateChanged();
         }
     }
