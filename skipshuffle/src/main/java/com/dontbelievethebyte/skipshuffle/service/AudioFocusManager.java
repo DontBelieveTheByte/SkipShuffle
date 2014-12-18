@@ -11,6 +11,7 @@ import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListener{
 
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
+    private boolean wasPlaying = false;
 
     AudioFocusManager(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
@@ -23,15 +24,16 @@ public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListene
             try {
                 switch (focusChange) {
                     case AudioManager.AUDIOFOCUS_GAIN:
-                        if (skipShuffleMediaPlayer.isPaused())
-                                skipShuffleMediaPlayer.doPlay();
+                        if (skipShuffleMediaPlayer.isPaused() && wasPlaying)
+                            skipShuffleMediaPlayer.doPlay();
+                        skipShuffleMediaPlayer.setVolume(1.0f, 1.0f);
                         break;
                     case AudioManager.AUDIOFOCUS_LOSS:
-                        if (skipShuffleMediaPlayer.isPlaying())
+                            wasPlaying = skipShuffleMediaPlayer.isPlaying();
                             skipShuffleMediaPlayer.doPause();
                         break;
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                        if (skipShuffleMediaPlayer.isPlaying())
+                            wasPlaying = skipShuffleMediaPlayer.isPlaying();
                             skipShuffleMediaPlayer.doPause();
                         break;
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
