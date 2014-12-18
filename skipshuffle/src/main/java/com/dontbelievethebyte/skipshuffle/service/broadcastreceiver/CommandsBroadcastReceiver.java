@@ -8,10 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import android.view.KeyEvent;
 
-import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
@@ -30,7 +28,7 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
         intentFilter.addAction(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
         intentFilter.addAction(Intent.ACTION_MEDIA_BUTTON);
-        intentFilter.addAction(Intent.ACTION_MEDIA_BUTTON);
+        intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         skipShuffleMediaPlayer.registerReceiver(this, intentFilter);
     }
 
@@ -48,20 +46,13 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
             } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
                 handleHeadsetIntent(intent);
             } else if (Intent.ACTION_MEDIA_BUTTON.equals(intent.getAction())) {
-                KeyEvent event = (KeyEvent) intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
-                if (KeyEvent.KEYCODE_MEDIA_PLAY == event.getKeyCode())
-                    handleCommand(SkipShuflleMediaPlayerCommandsContract.PLAY);
-                else if (KeyEvent.KEYCODE_MEDIA_NEXT == event.getKeyCode())
-                    handleCommand(SkipShuflleMediaPlayerCommandsContract.SKIP);
-                else if (KeyEvent.KEYCODE_MEDIA_PREVIOUS == event.getKeyCode())
-                    handleCommand(SkipShuflleMediaPlayerCommandsContract.PREV);
-                else if (KeyEvent.KEYCODE_MEDIA_STOP == event.getKeyCode())
-                    handleCommand(SkipShuflleMediaPlayerCommandsContract.SHUFFLE);
-                else if (KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE == event.getKeyCode())
-                    if (skipShuffleMediaPlayer.isPlaying())
-                        handleCommand(SkipShuflleMediaPlayerCommandsContract.PAUSE);
-                    else if (skipShuffleMediaPlayer.isPaused())
-                        handleCommand(SkipShuflleMediaPlayerCommandsContract.PLAY);
+                KeyEvent keyEvent = (KeyEvent) intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
+                if (KeyEvent.KEYCODE_HEADSETHOOK == keyEvent.getKeyCode() && KeyEvent.ACTION_UP == keyEvent.getAction()) {
+                    handleCommand(skipShuffleMediaPlayer.isPlaying() ?
+                            SkipShuflleMediaPlayerCommandsContract.PAUSE:
+                            SkipShuflleMediaPlayerCommandsContract.PLAY
+                    );
+                }
             }
         } catch (PlaylistEmptyException playListEmptyException) {
             skipShuffleMediaPlayer.handlePlaylistEmptyException(playListEmptyException);
