@@ -6,6 +6,7 @@ package com.dontbelievethebyte.skipshuffle.service.proxy;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.PowerManager;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.AudioTrackLoadingException;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
@@ -25,6 +26,10 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
     {
         this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
         mp = new MediaPlayer();
+        mp.setWakeMode(
+                skipShuffleMediaPlayer.getApplicationContext(),
+                PowerManager.PARTIAL_WAKE_LOCK
+        );
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mp.setOnCompletionListener(this);
         mp.setOnPreparedListener(this);
