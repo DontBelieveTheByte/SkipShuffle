@@ -217,8 +217,16 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
-        if (keyCode == KeyEvent.KEYCODE_MENU )
+        if (KeyEvent.KEYCODE_MENU  == keyCode)
             return customOptionsMenu.handleMenuKeyDown(keyCode, event);
+        else if (KeyEvent.KEYCODE_MEDIA_PLAY == keyCode || KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE == keyCode)
+            ui.player.buttons.play.performClick();
+        else if (KeyEvent.KEYCODE_MEDIA_NEXT == keyCode)
+            ui.player.buttons.skip.performClick();
+        else if (KeyEvent.KEYCODE_MEDIA_PREVIOUS == keyCode)
+            ui.player.buttons.prev.performClick();
+        else if (KeyEvent.KEYCODE_MEDIA_STOP == keyCode)
+            ui.player.buttons.shuffle.performClick();
         return super.onKeyDown(keyCode, event);
     }
 
