@@ -16,7 +16,7 @@
     <string name="dialog_media_scan_title">Recherche des répertoires médias</string>
     <string name="dialog_negative">Canceller</string>
     <string name="dialog_positive">OK</string>
-    <string name="dialog_theme_title">Choisir un theme</string>
+    <string name="dialog_theme_title">Choisir un thème</string>
     <string name="drawer_header_text">Parcourir</string>
     <string name="haptic_feedback_off">La vibration est désactivée.</string>
     <string name="haptic_feedback_on">La vibration est activée.</string>
@@ -26,7 +26,7 @@
     <string name="media_scan_start_title">"Recherches des fichiers audio…"</string>
     <string name="menu_haptic_feedback">Vibration</string>
     <string name="menu_refresh">Rafraîchir</string>
-    <string name="menu_theme">Theme</string>
+    <string name="menu_theme">Thème</string>
     <string name="meta_data_no_playlist">Rien ne joue.</string>
     <string name="meta_data_unknown_artist">Artiste inconnu</string>
     <string name="meta_data_unknown_title">Titre inconnu</string>
