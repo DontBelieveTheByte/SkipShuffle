@@ -31,4 +31,20 @@
     <string name="meta_data_unknown_artist">Artiste inconnu</string>
     <string name="meta_data_unknown_title">Titre inconnu</string>
     <string name="no_media_player">Lecteur media non connecté</string>
+
+    <string-array name="drawer_menu">
+        <item>Chansons</item>
+        <item>Artistes</item>
+        <item>Albums</item>
+        <item>Genres</item>
+        <item>Listes</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>Chansons</item>
+        <item>Artistes</item>
+        <item>Albums</item>
+        <item>Genres</item>
+        <item>Listes</item>
+    </string-array>
 </resources>

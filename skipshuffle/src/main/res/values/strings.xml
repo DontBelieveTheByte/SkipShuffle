@@ -37,7 +37,7 @@
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
 
-    <string-array name="dialog_theme_items">
+    <string-array name="dialog_theme_items" translatable="false">
         <item>Mono Light</item>
         <item>Mono Dark</item>
         <item>Neon</item>
