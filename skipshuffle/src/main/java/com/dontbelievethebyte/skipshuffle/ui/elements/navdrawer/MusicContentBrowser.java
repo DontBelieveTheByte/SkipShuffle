@@ -14,8 +14,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.Abstract
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
 public class MusicContentBrowser implements UIElementCompositeInterface,
-                                          AbstractDimensionsVisitor.Visitable,
-                                          DrawablesVisitor.Visitable {
+                                            AbstractDimensionsVisitor.Visitable,
+                                            DrawablesVisitor.Visitable {
 
     private ListView drawerList;
 

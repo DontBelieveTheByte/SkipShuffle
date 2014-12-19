@@ -5,7 +5,6 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.layout;
 
 import android.app.Activity;
-import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 
 import com.dontbelievethebyte.skipshuffle.R;
@@ -18,8 +17,6 @@ public abstract class AbstractLayout implements UIElementCompositeInterface {
     {
         activity.setContentView(layoutId);
         bottomLayout = (ViewGroup) activity.findViewById(R.id.bottom);
-        DrawerLayout drawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     public ViewGroup getBottomLayout()
