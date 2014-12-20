@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="accessibility_play_pause">Играть/Пауза</string>
+    <string name="accessibility_playlist">Плейлист</string>
+    <string name="haptic_feedback_on">Вибрации активируется</string>
+    <string name="haptic_feedback_off">Отключается вибрация</string>
+    <string name="accessibility_background">Справочная информация</string>
+    <string name="accessibility_prev">Предыдущий</string>
+    <string name="accessibility_shuffle">Shuffle</string>
+    <string name="accessibility_skip">Следующая</string>
+    <string name="empty_playlist">Пустой плейлист</string>
+    <string name="dialog_positive">Примите</string>
+    <string name="dialog_negative">Отмена</string>
+    <string name="dialog_media_scan_text">Поиск музыкальных файлов?</string>
+    <string name="dialog_media_scan_title">Сканирование каталогов СМИ</string>
+    <string name="dialog_theme_title">Выберите тему</string>
+    <string name="drawer_header_text">Обзор</string>
+    <string name="menu_theme">Тема</string>
+    <string name="label_playlist">Текущий список воспроизведения</string>
+    <string name="label_playlist_selector">Выберите Музыка</string>
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_haptic_feedback">Вибрация</string>
+    <string name="meta_data_unknown_artist">Неизвестный художник</string>
+    <string name="meta_data_unknown_title">Неизвестное название</string>
+    <string name="meta_data_no_playlist">Ничего не играет</string>
+    <string name="no_media_player">Медиаплеер не подключен.</string>
+    <string name="media_scan_done">Сканирование файлов мультимедиа закончилась.</string>
+    <string name="media_scan_start_title">Поиск аудио файлов.</string>
+
+    <string-array name="drawer_menu">
+        <item>Песни</item>
+        <item>Художники</item>
+        <item>Альбомы</item>
+        <item>Жанры</item>
+        <item>Списки воспроизведения</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>Песни</item>
+        <item>Художники</item>
+        <item>Альбомы</item>
+        <item>Жанры</item>
+        <item>Списки воспроизведения</item>
+    </string-array>
+</resources>

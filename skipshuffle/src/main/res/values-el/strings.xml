@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="accessibility_play_pause">Παιχνίδι/Παύση</string>
+    <string name="accessibility_playlist">Λίστα αναπαραγωγής</string>
+    <string name="haptic_feedback_on">Δόνηση είναι ενεργοποιηθεί</string>
+    <string name="haptic_feedback_off">Απενεργοποιείται η δόνηση</string>
+    <string name="accessibility_background">Φόντο</string>
+    <string name="accessibility_prev">Προηγούμενη</string>
+    <string name="accessibility_shuffle">Μετάθεση</string>
+    <string name="accessibility_skip">Επόμενη</string>
+    <string name="empty_playlist">Κενή λίστα αναπαραγωγής</string>
+    <string name="dialog_positive">Ok</string>
+    <string name="dialog_negative">Άκυρο</string>
+    <string name="dialog_media_scan_text">Αναζήτηση για αρχεία μουσικής;</string>
+    <string name="dialog_media_scan_title">Σάρωση καταλόγων μέσα</string>
+    <string name="dialog_theme_title">Επιλέξτε ένα θέμα</string>
+    <string name="drawer_header_text">Αναζήτηση</string>
+    <string name="menu_theme">Θέμα</string>
+    <string name="label_playlist">Τρέχουσα λίστα αναπαραγωγής</string>
+    <string name="label_playlist_selector">Επιλέξτε μουσική</string>
+    <string name="menu_refresh">Ανανέωση</string>
+    <string name="menu_haptic_feedback">Δόνηση</string>
+    <string name="meta_data_unknown_artist">Αγνώστου καλλιτέχνη</string>
+    <string name="meta_data_unknown_title">Άγνωστο τίτλος</string>
+    <string name="meta_data_no_playlist">Τίποτα δεν παίζει</string>
+    <string name="no_media_player">Δεν συνδέεται η συσκευή αναπαραγωγής πολυμέσων.</string>
+    <string name="media_scan_done">Σάρωση για αρχεία πολυμέσων είναι πάνω.</string>
+    <string name="media_scan_start_title">Αναζήτηση για αρχεία ήχου.</string>
+
+    <string-array name="drawer_menu">
+        <item>Τραγούδια</item>
+        <item>Καλλιτεχνών</item>
+        <item>Άλμπουμ</item>
+        <item>Είδη</item>
+        <item>Λίστες αναπαραγωγής</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>Τραγούδια</item>
+        <item>Καλλιτεχνών</item>
+        <item>Άλμπουμ</item>
+        <item>Είδη</item>
+        <item>Λίστες αναπαραγωγής</item>
+    </string-array>
+
+</resources>

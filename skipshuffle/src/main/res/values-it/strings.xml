@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="accessibility_play_pause">Giocare/Pausa</string>
+    <string name="accessibility_playlist">Playlist</string>
+    <string name="haptic_feedback_on">Vibrazione è attivato</string>
+    <string name="haptic_feedback_off">Vibrazione è disattivato</string>
+    <string name="accessibility_background">Sfondo</string>
+    <string name="accessibility_prev">Precedente</string>
+    <string name="accessibility_shuffle">Shuffle</string>
+    <string name="accessibility_skip">Prossimo</string>
+    <string name="empty_playlist">Playlist vuota</string>
+    <string name="dialog_positive">Ok</string>
+    <string name="dialog_negative">Annulla</string>
+    <string name="dialog_media_scan_text">Ricerca di file musicali?</string>
+    <string name="dialog_media_scan_title">Scansione directory media</string>
+    <string name="dialog_theme_title">Selezionare un tema</string>
+    <string name="drawer_header_text">Sfoglia</string>
+    <string name="menu_theme">Tema</string>
+    <string name="label_playlist">Playlist corrente</string>
+    <string name="label_playlist_selector">Selezionare la musica</string>
+    <string name="menu_refresh">Aggiornamento</string>
+    <string name="menu_haptic_feedback">Vibrazione</string>
+    <string name="meta_data_unknown_artist">Artista sconosciuto</string>
+    <string name="meta_data_unknown_title">Titolo sconosciuto</string>
+    <string name="meta_data_no_playlist">Niente sta giocando</string>
+    <string name="no_media_player">Lettore multimediale non è collegato.</string>
+    <string name="media_scan_done">Scansione dei file multimediali è finita.</string>
+    <string name="media_scan_start_title">Ricerca di file audio.</string>
+
+    <string-array name="drawer_menu">
+        <item>Canzoni</item>
+        <item>Artisti</item>
+        <item>Album</item>
+        <item>Generi</item>
+        <item>Playlist</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>Canzoni</item>
+        <item>Artisti</item>
+        <item>Album</item>
+        <item>Generi</item>
+        <item>Playlist</item>
+    </string-array>
+
+</resources>

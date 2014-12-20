@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="accessibility_background">背景</string>
+    <string name="haptic_feedback_on">振动被激活</string>
+    <string name="haptic_feedback_off">振动被停用</string>
+    <string name="accessibility_prev">上一页</string>
+    <string name="accessibility_shuffle">无序播放</string>
+    <string name="accessibility_skip">下一个</string>
+    <string name="accessibility_play_pause">玩/暂停</string>
+    <string name="accessibility_playlist">播放列表</string>
+    <string name="empty_playlist">空的播放列表</string>
+    <string name="dialog_positive">接受</string>
+    <string name="dialog_negative">取消</string>
+    <string name="dialog_media_scan_text">搜索音乐文件吗？</string>
+    <string name="dialog_media_scan_title">扫描媒体目录</string>
+    <string name="dialog_theme_title">选择一个主题</string>
+    <string name="drawer_header_text">浏览</string>
+    <string name="menu_theme">主题</string>
+    <string name="label_playlist">当前播放列表</string>
+    <string name="label_playlist_selector">选择音乐</string>
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_haptic_feedback">振动</string>
+    <string name="meta_data_unknown_artist">未知的艺术家</string>
+    <string name="meta_data_unknown_title">未知的标题</string>
+    <string name="meta_data_no_playlist">什么也不玩</string>
+    <string name="no_media_player">未连接的媒体播放器。</string>
+    <string name="media_scan_done">扫描媒体文件已经结束。</string>
+    <string name="media_scan_start_title">寻找音频文件。</string>
+
+    <string-array name="drawer_menu">
+        <item>歌曲</item>
+        <item>艺术家</item>
+        <item>专辑</item>
+        <item>流派</item>
+        <item>播放列表</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>歌曲</item>
+        <item>艺术家</item>
+        <item>专辑</item>
+        <item>流派</item>
+        <item>播放列表</item>
+    </string-array>
+</resources>

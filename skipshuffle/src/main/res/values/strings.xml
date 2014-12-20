@@ -7,22 +7,22 @@
 
     <!-- Default meta data -->
     <string name="meta_data_no_playlist">Nothing is playing.</string>
-    <string name="meta_data_unknown_title">Nothing title.</string>
+    <string name="meta_data_unknown_title">Unknown title.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
 
     <!-- Activities -->
-    <string name="label_app_name">SkipShuffle</string>
+    <string name="label_app_name" translatable="false">SkipShuffle</string>
     <string name="label_playlist">Current Playlist</string>
     <string name="label_playlist_selector">Select Music</string>
 
     <!-- Media scanner related stuff -->
-    <string name="media_scan_start_title">"Scanning audio files…"</string>
-    <string name="media_scan_done">Done scanning media.</string>
+    <string name="media_scan_start_title">"Searching for audio files…"</string>
+    <string name="media_scan_done">Done scanning for media files.</string>
 
     <!-- Toasts -->
     <string name="haptic_feedback_off">Haptic feedback turned off.</string>
     <string name="haptic_feedback_on">Haptic feedback turned on.</string>
-    <string name="no_media_player">No media player connected.</string>
+    <string name="no_media_player">Media player is not connected.</string>
     <string name="empty_playlist">Empty playlist</string>
 
     <!-- Main menu -->
@@ -31,24 +31,24 @@
     <string name="menu_refresh">Refresh</string>
 
     <!-- Dialogs -->
-    <string name="dialog_theme_title">Pick a theme</string>
+    <string name="dialog_theme_title">Select a theme</string>
     <string name="dialog_media_scan_title">Scan media directories</string>
     <string name="dialog_media_scan_text">Do you want to search for music files?</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
 
-    <string-array name="dialog_theme_items">
+    <string-array name="dialog_theme_items" translatable="false">
         <item>Mono Light</item>
         <item>Mono Dark</item>
         <item>Neon</item>
     </string-array>
 
     <!-- Preferences -->
-    <string name="pref_haptic_feedback">PREF_HAPTIC_FEEDBACK</string>
-    <string name="pref_media_directories">PREF_MEDIA_DIRECTORIES</string>
-    <string name="pref_current_playlist_id">PREF_CURRENT_PLAYLIST</string>
-    <string name="pref_current_ui_type">PREF_CURRENT_UI_TYPE</string>
-    <string name="pref_current_ui_view_mode">PREF_CURRENT_UI_VIEW_MODE</string>
+    <string name="pref_haptic_feedback" translatable="false">PREF_HAPTIC_FEEDBACK</string>
+    <string name="pref_media_directories" translatable="false">PREF_MEDIA_DIRECTORIES</string>
+    <string name="pref_current_playlist_id" translatable="false">PREF_CURRENT_PLAYLIST</string>
+    <string name="pref_current_ui_type" translatable="false">PREF_CURRENT_UI_TYPE</string>
+    <string name="pref_current_ui_view_mode" translatable="false">PREF_CURRENT_UI_VIEW_MODE</string>
 
     <!-- State info -->
     <string name="empty_list_view">Nothing to show.</string>
@@ -77,8 +77,8 @@
     <string name="accessibility_skip">Skip</string>
     <string name="accessibility_prev">Previous</string>
     <string name="accessibility_shuffle">Shuffle</string>
-    <string name="accessibility_skipshuffle">SkipShuffle</string>
+    <string name="accessibility_skipshuffle" translatable="false">SkipShuffle</string>
     <string name="accessibility_playlist">Playlist</string>
-    <string name="accessibility_background">background</string>
+    <string name="accessibility_background">Background</string>
 
 </resources>

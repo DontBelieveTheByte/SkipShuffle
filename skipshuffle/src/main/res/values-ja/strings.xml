@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="accessibility_play_pause">再生/一時停止 </string>
+    <string name="accessibility_playlist">プレイリスト</string>
+    <string name="haptic_feedback_on">振動は活性化します</string>
+    <string name="haptic_feedback_off">振動が非アクティブ化します。</string>
+    <string name="accessibility_background">バック グラウンド</string>
+    <string name="accessibility_prev">以前</string>
+    <string name="accessibility_shuffle">シャッフル</string>
+    <string name="accessibility_skip">次</string>
+    <string name="empty_playlist">空のプレイリスト</string>
+    <string name="dialog_positive">わかりました</string>
+    <string name="dialog_negative">キャンセル</string>
+    <string name="dialog_media_scan_text">音楽ファイルを検索？</string>
+    <string name="dialog_media_scan_title">メディア ディレクトリをスキャンします。</string>
+    <string name="dialog_theme_title">テーマを選択します。</string>
+    <string name="drawer_header_text">参照</string>
+    <string name="menu_theme">テーマ</string>
+    <string name="label_playlist">現在のプレイリスト</string>
+    <string name="label_playlist_selector">音楽を選択します。</string>
+    <string name="menu_refresh">更新</string>
+    <string name="menu_haptic_feedback">振動</string>
+    <string name="meta_data_unknown_artist">不明なアーティスト</string>
+    <string name="meta_data_unknown_title">不明なタイトル</string>
+    <string name="meta_data_no_playlist">何も再生します。</string>
+    <string name="no_media_player">メディア プレーヤーが接続されていません。</string>
+    <string name="media_scan_done">メディア ファイルをスキャンします。</string>
+    <string name="media_scan_start_title">オーディオ ファイルを検索します。</string>
+
+    <string-array name="drawer_menu">
+        <item>曲</item>
+        <item>アーティスト</item>
+        <item>アルバム</item>
+        <item>ジャンル</item>
+        <item>プレイリスト</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>曲</item>
+        <item>アーティスト</item>
+        <item>アルバム</item>
+        <item>ジャンル</item>
+        <item>プレイリスト</item>
+    </string-array>
+
+</resources>
