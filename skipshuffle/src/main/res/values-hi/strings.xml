@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="accessibility_play_pause">चलायें/विराम दें </string>
+    <string name="accessibility_playlist">चलाएँ-सूची</string>
+    <string name="haptic_feedback_on">कंपन सक्रिय है</string>
+    <string name="haptic_feedback_off">कंपन को निष्क्रिय है</string>
+    <string name="accessibility_background">पृष्ठभूमि</string>
+    <string name="accessibility_prev">पिछला</string>
+    <string name="accessibility_shuffle">साधा</string>
+    <string name="accessibility_skip">अगले</string>
+    <string name="empty_playlist">खाली प्लेलिस्ट</string>
+    <string name="dialog_positive">ठीक है</string>
+    <string name="dialog_negative">रद्द करें</string>
+    <string name="dialog_media_scan_text">संगीत फ़ाइलों के लिए खोज?</string>
+    <string name="dialog_media_scan_title">मीडिया निर्देशिका स्कैन करें</string>
+    <string name="dialog_theme_title">एक विषय का चयन करें</string>
+    <string name="drawer_header_text">ब्राउज़ करें</string>
+    <string name="menu_theme">थीम</string>
+    <string name="label_playlist">वर्तमान प्लेलिस्ट</string>
+    <string name="label_playlist_selector">संगीत का चयन करें</string>
+    <string name="menu_refresh">ताज़ा करें</string>
+    <string name="menu_haptic_feedback">कंपन</string>
+    <string name="meta_data_unknown_artist">अज्ञात कलाकार</string>
+    <string name="meta_data_unknown_title">अज्ञात शीर्षक</string>
+    <string name="meta_data_no_playlist">कुछ भी नहीं खेल रहा है</string>
+    <string name="no_media_player">मीडिया प्लेयर कनेक्टेड नहीं है। multimediale non è collegato.</string>
+    <string name="media_scan_done">मीडिया फ़ाइलों के लिए स्कैन कर रहा है से अधिक है।</string>
+    <string name="media_scan_start_title">ऑडियो फ़ाइलों के लिए खोज।</string>
+
+    <string-array name="drawer_menu">
+        <item>गाने</item>
+        <item>कलाकारों</item>
+        <item>एल्बम</item>
+        <item>शैलियों</item>
+        <item>प्लेलिस्ट् स</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>गाने</item>
+        <item>कलाकारों</item>
+        <item>एल्बम</item>
+        <item>शैलियों</item>
+        <item>प्लेलिस्ट् स</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">Nothing to show.</string>
+    <string name="haptic_feedback_off">Vibración está desactivada</string>
+    <string name="haptic_feedback_on">La vibración se activa</string>
+    <string name="accessibility_background">Fondo</string>
+    <string name="accessibility_prev">Anterior</string>
+    <string name="accessibility_shuffle">Shuffle</string>
+    <string name="accessibility_skip">Próxima</string>
+    <string name="accessibility_play_pause">Jugar/Pausa</string>
+    <string name="accessibility_playlist">Lista de reproducción</string>
+    <string name="empty_playlist">Lista de reproducción vacía</string>
+    <string name="dialog_positive">Vale</string>
+    <string name="dialog_negative">Cancelar</string>
+    <string name="dialog_media_scan_text">¿Búsqueda de archivos de música?</string>
+    <string name="dialog_media_scan_title">Exploración de directorios de medios de comunicación</string>
+    <string name="dialog_theme_title">Seleccione un tema</string>
+    <string name="drawer_header_text">Browse</string>
+    <string name="menu_theme">Tema</string>
+    <string name="label_playlist">Lista de reproducción actual</string>
+    <string name="label_playlist_selector">Seleccionar música</string>
+    <string name="menu_refresh">Actualización</string>
+    <string name="menu_haptic_feedback">Vibración</string>
+    <string name="meta_data_unknown_artist">Artista desconocido</string>
+    <string name="meta_data_unknown_title">Título desconocido</string>
+    <string name="meta_data_no_playlist">Nada está desempeñando</string>
+    <string name="no_media_player">Reproductor de medios de comunicación no está conectado.</string>
+    <string name="media_scan_done">Escaneo de archivos multimedia se terminó.</string>
+    <string name="media_scan_start_title">Búsqueda de archivos de audio.</string>
+
+    <string-array name="drawer_menu">
+        <item>Canciones</item>
+        <item>Artistas</item>
+        <item>Álbumes</item>
+        <item>Géneros</item>
+        <item>Listas de reproducción</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>Canciones</item>
+        <item>Artistas</item>
+        <item>Álbumes</item>
+        <item>Géneros</item>
+        <item>Listas de reproducción</item>
+    </string-array>
+
+</resources>

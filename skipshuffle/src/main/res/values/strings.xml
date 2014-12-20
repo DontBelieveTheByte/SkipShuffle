@@ -16,13 +16,13 @@
     <string name="label_playlist_selector">Select Music</string>
 
     <!-- Media scanner related stuff -->
-    <string name="media_scan_start_title">"Scanning audio files…"</string>
-    <string name="media_scan_done">Done scanning media.</string>
+    <string name="media_scan_start_title">"Searching for audio files…"</string>
+    <string name="media_scan_done">Done scanning for media files.</string>
 
     <!-- Toasts -->
     <string name="haptic_feedback_off">Haptic feedback turned off.</string>
     <string name="haptic_feedback_on">Haptic feedback turned on.</string>
-    <string name="no_media_player">No media player connected.</string>
+    <string name="no_media_player">Media player is not connected.</string>
     <string name="empty_playlist">Empty playlist</string>
 
     <!-- Main menu -->
@@ -31,7 +31,7 @@
     <string name="menu_refresh">Refresh</string>
 
     <!-- Dialogs -->
-    <string name="dialog_theme_title">Pick a theme</string>
+    <string name="dialog_theme_title">Select a theme</string>
     <string name="dialog_media_scan_title">Scan media directories</string>
     <string name="dialog_media_scan_text">Do you want to search for music files?</string>
     <string name="dialog_positive">OK</string>

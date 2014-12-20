@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+  -->
+
+<resources>
+    <string name="empty_list_view">لا شيء إظهار.</string>
+    <string name="accessibility_play_pause">اللعب/إيقاف مؤقت</string>
+    <string name="accessibility_playlist">قائمة التشغيل </string>
+    <string name="accessibility_background">معلومات أساسية</string>
+    <string name="accessibility_prev">السابقة</string>
+    <string name="accessibility_shuffle">المراوغة</string>
+    <string name="accessibility_skip">القادم</string>
+    <string name="dialog_media_scan_text">البحث عن ملفات الموسيقى؟</string>
+    <string name="dialog_media_scan_title">تفحص دلائل الوسائط</string>
+    <string name="dialog_negative">إلغاء الأمر</string>
+    <string name="dialog_positive">قبول</string>
+    <string name="dialog_theme_title">حدد سمة</string>
+    <string name="drawer_header_text">تصفح</string>
+    <string name="empty_playlist">قائمة التشغيل فارغة</string>
+    <string name="haptic_feedback_off">يتم إلغاء تنشيط الاهتزاز</string>
+    <string name="haptic_feedback_on">يتم تنشيط الاهتزاز</string>
+    <string name="menu_theme">الموضوع</string>
+    <string name="label_playlist">قائمة التشغيل الحالية</string>
+    <string name="label_playlist_selector">حدد الموسيقى</string>
+    <string name="menu_refresh">قم بتحديث</string>
+    <string name="menu_haptic_feedback">الاهتزاز</string>
+    <string name="meta_data_unknown_artist">فنان غير معروف</string>
+    <string name="meta_data_unknown_title">العنوان غير معروف</string>
+    <string name="meta_data_no_playlist">لا شيء يتم اللعب</string>
+    <string name="no_media_player">ميديا بلاير غير متصل.</string>
+    <string name="media_scan_done">المسح الضوئي لملفات الوسائط قد انتهت.</string>
+    <string name="media_scan_start_title">البحث عن ملفات الصوت.</string>
+
+    <string-array name="drawer_menu">
+        <item>أغاني</item>
+        <item>الفنانين</item>
+        <item>ألبومات</item>
+        <item>الأنواع</item>
+        <item>قوائم التشغيل</item>
+    </string-array>
+
+    <string-array name="adapter_types">
+        <item>أغاني</item>
+        <item>الفنانين</item>
+        <item>ألبومات</item>
+        <item>الأنواع</item>
+        <item>قوائم التشغيل</item>
+    </string-array>
+
+</resources>
