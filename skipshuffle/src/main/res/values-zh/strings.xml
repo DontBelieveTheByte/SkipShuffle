@@ -47,4 +47,10 @@
         <item>流派</item>
         <item>播放列表</item>
     </string-array>
+    <string name="dialog_app_rating_negative">永远不会</string>
+    <string name="dialog_app_rating_neutral">晚些时候</string>
+    <string name="dialog_app_rating_positive">现在</string>
+    <string name="dialog_app_rating_title">评价 SkipShuffle</string>
+    <string name="dialog_app_rating_text">谢谢您的支持 ！</string>
+    <string name="no_app_store">找不到谷歌存储应用程序。</string>
 </resources>

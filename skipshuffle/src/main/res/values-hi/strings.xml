@@ -47,5 +47,11 @@
         <item>शैलियों</item>
         <item>प्लेलिस्ट् स</item>
     </string-array>
+    <string name="dialog_app_rating_negative">कभी नहीं</string>
+    <string name="dialog_app_rating_neutral">बाद में</string>
+    <string name="dialog_app_rating_positive">अब</string>
+    <string name="dialog_app_rating_title">SkipShuffle का मूल्यांकन</string>
+    <string name="dialog_app_rating_text">आप अपने समर्थन के लिए धन्यवाद!</string>
+    <string name="no_app_store">गूगल चलायें संग्रह अनुप्रयोग नहीं ढूँढ सकता।</string>
 
 </resources>

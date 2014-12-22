@@ -47,5 +47,11 @@
         <item>Generi</item>
         <item>Playlist</item>
     </string-array>
+    <string name="dialog_app_rating_negative">Mai</string>
+    <string name="dialog_app_rating_neutral">Più tardi</string>
+    <string name="dialog_app_rating_positive">ora</string>
+    <string name="dialog_app_rating_title">Valutare SkipShuffle</string>
+    <string name="dialog_app_rating_text">Grazie per il vostro sostegno!</string>
+    <string name="no_app_store">Non può trovare applicazione Google Play Store.</string>
 
 </resources>

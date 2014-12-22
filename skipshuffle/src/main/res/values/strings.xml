@@ -24,6 +24,8 @@
     <string name="haptic_feedback_on">Haptic feedback turned on.</string>
     <string name="no_media_player">Media player is not connected.</string>
     <string name="empty_playlist">Empty playlist</string>
+    <string name="no_app_store">Cannot find Google store application.</string>
+
 
     <!-- Main menu -->
     <string name="menu_theme">Theme</string>
@@ -36,6 +38,11 @@
     <string name="dialog_media_scan_text">Do you want to search for music files?</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
+    <string name="dialog_app_rating_positive">Rate now</string>
+    <string name="dialog_app_rating_neutral">Later</string>
+    <string name="dialog_app_rating_negative">Never</string>
+    <string name="dialog_app_rating_title">Rate SkipShuffle</string>
+    <string name="dialog_app_rating_text">If you enjoy using SkipShuffle, please take a moment to rate the application. Thank you for your support!</string>
 
     <string-array name="dialog_theme_items" translatable="false">
         <item>Mono Light</item>
