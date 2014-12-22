@@ -23,6 +23,7 @@ public class PreferencesHelper {
     private SharedPreferences sharedPreferences;
     private Boolean isListViewMode;
     private Integer numberTimesAppWasOpened;
+    private Boolean canRateApp;
     private boolean hasVibrator;
 
 
@@ -34,6 +35,28 @@ public class PreferencesHelper {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         hasVibrator = vibrator.hasVibrator();
+    }
+
+    public boolean canRateApp()
+    {
+        if (null == canRateApp) {
+            canRateApp = sharedPreferences.getBoolean(
+                    context.getString(R.string.pref_can_rate_app),
+                    true
+            );
+        }
+        return canRateApp;
+    }
+
+    public void setCanRateApp(boolean canRateApp)
+    {
+        this.canRateApp = canRateApp;
+
+        sharedPreferences.edit()
+                .putInt(
+                        context.getString(R.string.pref_can_rate_app),
+                        numberTimesAppWasOpened
+                ).apply();
     }
 
     public int getNumberTimesAppWasOpened()

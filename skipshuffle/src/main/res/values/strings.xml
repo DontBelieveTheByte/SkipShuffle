@@ -50,6 +50,7 @@
     <string name="pref_current_ui_type" translatable="false">PREF_CURRENT_UI_TYPE</string>
     <string name="pref_current_ui_view_mode" translatable="false">PREF_CURRENT_UI_VIEW_MODE</string>
     <string name="pref_number_times_app_opened" translatable="false">PREF_NUMBER_TIMES_APP_OPENED</string>
+    <string name="pref_can_rate_app" translatable="false">PREF_CAN_RATE_APP</string>
 
     <!-- State info -->
     <string name="empty_list_view">Nothing to show.</string>
