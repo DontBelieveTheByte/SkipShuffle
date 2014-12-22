@@ -47,5 +47,6 @@
         <item>Géneros</item>
         <item>Listas de reproducción</item>
     </string-array>
+    <string name="menu_quizz">Quiz</string>
 
 </resources>

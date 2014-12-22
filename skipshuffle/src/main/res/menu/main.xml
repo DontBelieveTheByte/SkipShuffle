@@ -25,4 +25,9 @@
         skipshuffle:showAsAction="ifRoom">
     </item>
 
-</menu>
+    <item
+        android:title="@string/menu_quizz"
+        android:id="@+id/quizz"
+        android:icon="@drawable/ic_refresh"
+        skipshuffle:showAsAction="ifRoom">
+    </item></menu>

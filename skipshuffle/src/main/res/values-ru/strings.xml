@@ -47,4 +47,5 @@
         <item>Жанры</item>
         <item>Списки воспроизведения</item>
     </string-array>
+    <string name="menu_quizz">Викторина</string>
 </resources>

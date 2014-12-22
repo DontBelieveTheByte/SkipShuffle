@@ -47,5 +47,6 @@
         <item>Generi</item>
         <item>Playlist</item>
     </string-array>
+    <string name="menu_quizz">Quiz</string>
 
 </resources>

@@ -47,5 +47,6 @@
         <item>Genres</item>
         <item>Wiedergabelisten</item>
     </string-array>
+    <string name="menu_quizz">Quiz</string>
 
 </resources>

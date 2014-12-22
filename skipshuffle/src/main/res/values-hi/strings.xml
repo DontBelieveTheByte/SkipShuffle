@@ -47,5 +47,6 @@
         <item>शैलियों</item>
         <item>प्लेलिस्ट् स</item>
     </string-array>
+    <string name="menu_quizz">प्रश्नोत्तरी</string>
 
 </resources>

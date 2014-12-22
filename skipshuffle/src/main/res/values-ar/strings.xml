@@ -47,5 +47,6 @@
         <item>الأنواع</item>
         <item>قوائم التشغيل</item>
     </string-array>
+    <string name="menu_quizz">مسابقة</string>
 
 </resources>

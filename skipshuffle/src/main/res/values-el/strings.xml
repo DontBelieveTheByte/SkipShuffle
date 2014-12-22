@@ -47,5 +47,6 @@
         <item>Είδη</item>
         <item>Λίστες αναπαραγωγής</item>
     </string-array>
+    <string name="menu_quizz">Κουίζ</string>
 
 </resources>

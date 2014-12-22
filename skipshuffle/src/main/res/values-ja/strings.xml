@@ -47,5 +47,6 @@
         <item>ジャンル</item>
         <item>プレイリスト</item>
     </string-array>
+    <string name="menu_quizz">クイズ</string>
 
 </resources>
