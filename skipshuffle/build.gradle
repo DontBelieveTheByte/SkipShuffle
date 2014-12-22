@@ -21,7 +21,7 @@ android {
         applicationId "com.dontbelievethebyte.sk1pshuffle"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 9013
+        versionCode 9014
         versionName "Vlad III"
     }
 
