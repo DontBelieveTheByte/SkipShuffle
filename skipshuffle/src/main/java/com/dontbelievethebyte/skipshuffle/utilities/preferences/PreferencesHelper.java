@@ -23,6 +23,7 @@ public class PreferencesHelper {
     private SharedPreferences sharedPreferences;
     private Boolean isListViewMode;
     private boolean hasVibrator;
+    private Long quizScore;
 
     private PrefsCallbacksManager callbacksManager;
 
@@ -33,6 +34,23 @@ public class PreferencesHelper {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         hasVibrator = vibrator.hasVibrator();
     }
+
+    public Long getQuizScore()
+    {
+        if (null == quizScore) {
+            quizScore = sharedPreferences.getLong(context.getString(R.string.pref_quiz_score), 0);
+        }
+        return quizScore;
+    }
+
+    public void increaseQuizScore(Long quizScore)
+    {
+        this.quizScore = getQuizScore() + 1;
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.putLong(context.getString(R.string.pref_quiz_score), quizScore);
+        prefsEditor.apply();
+    }
+
 
     public PlaylistData getLastPlaylist()
     {
