@@ -91,6 +91,10 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
 
         toastHelper = new ToastHelper(getApplicationContext());
         mediaScannerHelper = new MediaScannerHelper(this);
+        setUpPreferencesHelper();
+//        preferencesHelper = new PreferencesHelper(getApplicationContext());
+        preferencesHelper.increaseNumberTimesAppWasOpened();
+
     }
 
     public PreferencesHelper getPreferencesHelper()
@@ -165,7 +169,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     protected void onResume()
     {
         super.onResume();
-        setUpPreferencesHelper();
+//        setUpPreferencesHelper();
         setUpMediaPlayerServiceBinding();
     }
 
