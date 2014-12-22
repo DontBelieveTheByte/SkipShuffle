@@ -10,24 +10,24 @@
         android:title="@string/menu_theme"
         android:id="@+id/theme"
         android:icon="@drawable/ic_theme"
-        skipshuffle:showAsAction="ifRoom">
+        skipshuffle:showAsAction="ifRoom|withText">
     </item>
     <!--<item-->
         <!--android:title="@string/menu_haptic_feedback"-->
         <!--android:id="@+id/haptic_feedback_toggle"-->
         <!--android:icon="@drawable/ic_vibration"-->
-        <!--skipshuffle:showAsAction="ifRoom">-->
+        <!--skipshuffle:showAsAction="ifRoom|withText">-->
     <!--</item>-->
     <item
         android:title="@string/menu_refresh"
         android:id="@+id/refresh_media"
         android:icon="@drawable/ic_refresh"
-        skipshuffle:showAsAction="ifRoom">
+        skipshuffle:showAsAction="ifRoom|withText">
     </item>
 
     <item
         android:title="@string/menu_quizz"
         android:id="@+id/quizz"
-        android:icon="@drawable/ic_refresh"
-        skipshuffle:showAsAction="ifRoom">
+        android:icon="@drawable/pause_btn_neon"
+        skipshuffle:showAsAction="ifRoom|withText">
     </item></menu>

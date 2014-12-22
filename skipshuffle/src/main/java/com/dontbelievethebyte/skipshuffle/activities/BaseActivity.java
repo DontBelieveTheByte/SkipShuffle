@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +21,7 @@ import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.connection.MediaPlayerServiceConnection;
+import com.dontbelievethebyte.skipshuffle.ui.dialog.QuizDialog;
 import com.dontbelievethebyte.skipshuffle.ui.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarWrapper;
@@ -52,7 +52,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         @Override
         public boolean handleMenuHapticFeedBack()
         {
-            Log.d(BaseActivity.TAG, "TOUCHED MENYU!!!");
             preferencesHelper.toggleHapticFeedback();
             return true;
         }
@@ -63,9 +62,16 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
             showThemeSelectionDialog();
             return false;
         }
+
+        @Override
+        public boolean handleMenuQuiz() {
+            showQuizDialog();
+            return true;
+        }
     }
 
     public UIComposition ui;
+    public QuizDialog quizDialog;
 
     protected PreferencesHelper preferencesHelper;
     protected CustomActionBarWrapper customActionBar;
@@ -230,18 +236,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         return super.onKeyDown(keyCode, keyEvent);
     }
 
-    public void showThemeSelectionDialog()
-    {
-        ThemeSelectionDialog themeSelectionDialog = new ThemeSelectionDialog(this);
-        themeSelectionDialog.build(preferencesHelper);
-        themeSelectionDialog.show();
-    }
-
-    public void showMediaScannerDialog()
-    {
-        mediaScannerHelper.showMediaScannerDialog();
-    }
-
     @Override
     public void onHapticFeedBackChanged()
     {
@@ -286,6 +280,16 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     {
         if (null != ui.player)
             ui.player.reboot();
+        if (null != quizDialog) {
+            try {
+                if(!getMediaPlayer().isPlaying() && null != ui.player)
+                    ui.player.buttons.play.performClick();
+                else
+                    quizDialog.show();
+            } catch (NoMediaPlayerException e) {
+                handleNoMediaPlayerException(e);
+            }
+        }
     }
 
     public void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)
@@ -300,5 +304,24 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         toastHelper.showLongToast(
                 getString(R.string.empty_playlist)
         );
+    }
+
+    public void showThemeSelectionDialog()
+    {
+        ThemeSelectionDialog themeSelectionDialog = new ThemeSelectionDialog(BaseActivity.this);
+        themeSelectionDialog.build(preferencesHelper);
+        themeSelectionDialog.show();
+    }
+
+    public void showQuizDialog()
+    {
+        quizDialog = new QuizDialog(BaseActivity.this);
+        quizDialog.build();
+        quizDialog.show();
+    }
+
+    public void showMediaScannerDialog()
+    {
+        mediaScannerHelper.showMediaScannerDialog();
     }
 }

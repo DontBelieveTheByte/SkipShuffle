@@ -8,8 +8,14 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -153,7 +159,24 @@ public class MusicContentBrowserActivity extends BaseActivity implements LoaderM
     @Override
     public void onPlayerStateChanged()
     {
+        ImageView imageView = (ImageView) getWindow().getDecorView().findViewById(android.R.id.content);
 
+        final Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+
+        imageView.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event){
+                int x = (int)event.getX();
+                int y = (int)event.getY();
+                int pixel = bitmap.getPixel(x,y);
+
+                //then do what you want with the pixel data, e.g
+                int redValue = Color.red(pixel);
+                int blueValue = Color.blue(pixel);
+                int greenValue = Color.green(pixel);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -161,4 +184,6 @@ public class MusicContentBrowserActivity extends BaseActivity implements LoaderM
     {
 
     }
+
+
 }

@@ -83,6 +83,9 @@ public abstract class AbstractMenu implements CustomOptionsMenuInterface {
 //                return menuItemSelectedCallback.handleMenuHapticFeedBack();
             case R.id.theme:
                 return menuItemSelectedCallback.handleMenuThemeSelection();
+            case R.id.quizz:
+            return menuItemSelectedCallback.handleMenuQuiz();
+
             default:
                 throw new MenuOptionNotHandledException();
         }

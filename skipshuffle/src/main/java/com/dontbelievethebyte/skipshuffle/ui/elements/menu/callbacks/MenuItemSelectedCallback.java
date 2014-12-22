@@ -11,4 +11,7 @@ public interface MenuItemSelectedCallback {
     public boolean handleMenuHapticFeedBack();
 
     public boolean handleMenuThemeSelection();
+
+    public boolean handleMenuQuiz();
+
 }
