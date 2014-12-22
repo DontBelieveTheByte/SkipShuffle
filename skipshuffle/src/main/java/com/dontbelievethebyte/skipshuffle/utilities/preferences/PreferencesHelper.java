@@ -43,7 +43,7 @@ public class PreferencesHelper {
         return quizScore;
     }
 
-    public void increaseQuizScore(Long quizScore)
+    public void increaseQuizScore()
     {
         this.quizScore = getQuizScore() + 1;
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
