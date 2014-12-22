@@ -76,7 +76,7 @@ public class PreferencesHelper {
 
         sharedPreferences.edit()
                 .putInt(
-                        context.getString(R.string.pref_current_ui_type),
+                        context.getString(R.string.pref_number_times_app_opened),
                         numberTimesAppWasOpened
                 ).apply();
     }
