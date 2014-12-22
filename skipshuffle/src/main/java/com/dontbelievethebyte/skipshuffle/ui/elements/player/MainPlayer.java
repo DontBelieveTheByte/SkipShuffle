@@ -14,7 +14,6 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSo
 
 public class MainPlayer extends AbstractPlayerUI {
 
-    private MainPlayerSongLabel songLabel;
     private TrackPrinter trackPrinter;
 
     public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel)

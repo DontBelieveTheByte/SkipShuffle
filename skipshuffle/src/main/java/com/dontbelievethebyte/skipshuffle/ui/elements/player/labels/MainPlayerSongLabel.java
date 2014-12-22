@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.labels;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -41,4 +42,13 @@ public class MainPlayerSongLabel implements UIElementCompositeInterface {
             label.setTextColor(color);
     }
 
+    public void show()
+    {
+        label.setVisibility(View.VISIBLE);
+    }
+
+    public void hide()
+    {
+        label.setVisibility(View.INVISIBLE);
+    }
 }

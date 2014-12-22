@@ -20,11 +20,13 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListen
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.PrevClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.ShuffleClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.SkipClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public AbstractPlayerButtons buttons;
     protected BaseActivity baseActivity;
+    protected MainPlayerSongLabel songLabel;
 
     public abstract void doPlay();
 
@@ -79,4 +81,8 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
         }
     }
 
+    public MainPlayerSongLabel getSongLabel()
+    {
+        return songLabel;
+    }
 }
