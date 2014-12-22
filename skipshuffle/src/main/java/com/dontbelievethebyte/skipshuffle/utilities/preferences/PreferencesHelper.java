@@ -53,9 +53,9 @@ public class PreferencesHelper {
         this.canRateApp = canRateApp;
 
         sharedPreferences.edit()
-                .putInt(
+                .putBoolean(
                         context.getString(R.string.pref_can_rate_app),
-                        numberTimesAppWasOpened
+                        canRateApp
                 ).apply();
     }
 
