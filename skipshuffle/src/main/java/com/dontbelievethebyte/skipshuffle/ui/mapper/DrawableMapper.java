@@ -149,7 +149,7 @@ public class DrawableMapper {
         }
     }
 
-    public static int getNotificationBackgroun(Integer uiType)
+    public static int getNotificationBackground(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
