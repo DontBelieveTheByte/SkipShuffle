@@ -35,12 +35,12 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doPlay()
     {
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.setColorFilter(
                 baseActivity.getResources().getColor(
                         ColorMapper.getPlayButton(type)
                 )
         );
+        buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
         notifyAdapter();
     }
@@ -48,12 +48,12 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doPause()
     {
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.setColorFilter(
                 baseActivity.getResources().getColor(
                         ColorMapper.getPauseButton(type)
                 )
         );
+        buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         notifyAdapter();
     }
@@ -62,9 +62,19 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void doSkip()
     {
         buttons.play.clearAnimation();
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPauseButton(type)
+                )
+        );
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.skip.startAnimation(buttons.animations.skipAnimation);
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPlayButton(type)
+                )
+        );
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
     }
@@ -73,9 +83,19 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void doPrev()
     {
         buttons.play.clearAnimation();
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPauseButton(type)
+                )
+        );
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.prev.startAnimation(buttons.animations.prevAnimation);
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPlayButton(type)
+                )
+        );
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
     }
@@ -85,9 +105,19 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     {
         buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
         buttons.play.clearAnimation();
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPauseButton(type)
+                )
+        );
         buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPlayButton(type)
+                )
+        );
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
     }
