@@ -15,6 +15,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
@@ -35,6 +36,11 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void doPlay()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPlayButton(type)
+                )
+        );
         buttons.play.startAnimation(buttons.animations.playAnimation);
         notifyAdapter();
     }
@@ -43,6 +49,11 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void doPause()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPause());
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPauseButton(type)
+                )
+        );
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         notifyAdapter();
     }

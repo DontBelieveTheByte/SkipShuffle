@@ -11,6 +11,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
 public class MainPlayer extends AbstractPlayerUI {
 
@@ -32,6 +33,11 @@ public class MainPlayer extends AbstractPlayerUI {
     public void doPlay()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPlay());
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPlayButton(type)
+                )
+        );
         buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
@@ -39,6 +45,11 @@ public class MainPlayer extends AbstractPlayerUI {
     public void doPause()
     {
         buttons.play.setImageDrawable(buttons.drawables.getPause());
+        buttons.play.setColorFilter(
+                baseActivity.getResources().getColor(
+                        ColorMapper.getPauseButton(type)
+                )
+        );
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
     }
 
