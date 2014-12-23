@@ -24,7 +24,7 @@ public class PlayAnimationListener extends AbstractAnimationListener {
     {
         playerUI.buttons.play.setColorFilter(
                 context.getResources().getColor(
-                        ColorMapper.getPauseButton(playerUI.type)
+                        ColorMapper.getPlayButton(playerUI.type)
                 ),
                 PorterDuff.Mode.SRC_IN
         );
