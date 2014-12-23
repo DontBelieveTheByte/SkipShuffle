@@ -12,6 +12,10 @@ public class DrawableMapper {
     public static int getPlay(Integer uiType)
     {
         switch (uiType) {
+            case UITypes.MONO_LIGHT :
+            case UITypes.MONO_DARK :
+            case UITypes.NEON :
+                return R.drawable.play_states_neon;
             default:
                 return R.drawable.play_states_neon;
         }
