@@ -25,8 +25,7 @@ import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 public class CurrentPlaylistAdapter extends BaseAdapter {
 
     private Context context;
-    private Integer titleColor;
-    private Integer artistColor;
+    private Integer titleColor, artistColor, pauseColor, playColor;
 
     static class ViewHolder {
         ImageView image;
@@ -90,6 +89,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     {
         titleColor = context.getResources().getColor(colors.playlistTitle);
         artistColor = context.getResources().getColor(colors.playlistArtist);
+        playColor = context.getResources().getColor(colors.playButton);
+        pauseColor = context.getResources().getColor(colors.pauseButton);
     }
 
     public void setDrawables(Drawables drawables)
@@ -109,8 +110,15 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         int height = params.height;
 
         if (randomPlaylist.getCurrentPosition() == position) {
+            imageLabel.setColorFilter(
+                    mediaPlayer.isPlaying() ?
+                            playColor :
+                            pauseColor
+
+            );
             imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? drawables.getPlay() : drawables.getPause());
             params.width = height;
+
         } else {
             imageLabel.setImageDrawable(null);
             params.width = (int) (height * 0.66);
