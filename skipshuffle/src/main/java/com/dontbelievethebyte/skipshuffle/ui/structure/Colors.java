@@ -19,6 +19,12 @@ public class Colors {
     public int songLabel;
     public int playlistTitle;
     public int playlistArtist;
+    public int playButton;
+    public int pauseButton;
+    public int skipButton;
+    public int prevButton;
+    public int playlistButton;
+    public int shuffleButton;
 
     public static ColorDrawable toColorDrawable(Integer color)
     {
@@ -36,5 +42,11 @@ public class Colors {
         songLabel = ColorMapper.getSongLabel(uiType);
         playlistTitle = ColorMapper.getPlaylistTitle(uiType);
         playlistArtist = ColorMapper.getPlaylistArtist(uiType);
+        playButton = ColorMapper.getPlayButton(uiType);
+        pauseButton = ColorMapper.getPauseButton(uiType);
+        skipButton = ColorMapper.getPrevButton(uiType);
+        prevButton = ColorMapper.getPlaylistButton(uiType);
+        playlistButton = ColorMapper.getPlaylistButton(uiType);
+        shuffleButton = ColorMapper.getShuffleButton(uiType);
     }
 }
