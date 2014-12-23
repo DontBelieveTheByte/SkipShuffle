@@ -16,6 +16,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
@@ -119,6 +120,14 @@ public class RemoteViewsBuilder {
                 drawables.prev
         );
 
+        remoteViews.setInt(
+                R.id.notif_prev,
+                "setColorFilter",
+                skipShuffleMediaPlayer.getResources().getColor(
+                        ColorMapper.getPrevButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                )
+        );
+
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_prev,
                 buildNotificationButtonsPendingIntent(
@@ -141,6 +150,16 @@ public class RemoteViewsBuilder {
                 SkipShuflleMediaPlayerCommandsContract.PAUSE :
                 SkipShuflleMediaPlayerCommandsContract.PLAY;
 
+        remoteViews.setInt(
+                R.id.notif_play,
+                "setColorFilter",
+                skipShuffleMediaPlayer.getResources().getColor(
+                        skipShuffleMediaPlayer.isPlaying() ?
+                                ColorMapper.getPlayButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType()) :
+                                ColorMapper.getPauseButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                )
+        );
+
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_play,
                 buildNotificationButtonsPendingIntent(
@@ -157,6 +176,14 @@ public class RemoteViewsBuilder {
                 isShuffle ? drawables.shufflePressed : drawables.shuffle
         );
 
+        remoteViews.setInt(
+                R.id.notif_shuffle,
+                "setColorFilter",
+                skipShuffleMediaPlayer.getResources().getColor(
+                        ColorMapper.getShuffleButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                )
+        );
+
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_shuffle,
                 buildNotificationButtonsPendingIntent(
@@ -171,6 +198,14 @@ public class RemoteViewsBuilder {
         remoteViews.setImageViewResource(
                 R.id.notif_skip,
                 drawables.skip
+        );
+
+        remoteViews.setInt(
+                R.id.notif_skip,
+                "setColorFilter",
+                skipShuffleMediaPlayer.getResources().getColor(
+                        ColorMapper.getSkipButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                )
         );
 
         remoteViews.setOnClickPendingIntent(
