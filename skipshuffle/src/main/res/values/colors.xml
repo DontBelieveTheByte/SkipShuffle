@@ -9,29 +9,29 @@
     <color name="background_mono_light">#ffc5c5c5</color>
     <color name="background_mono_dark">#ff1a1a1a</color>
 
-    <color name="play_button_neon">#1E2C56</color>
-    <color name="play_button_mono_light">#ffc5c5c5</color>
-    <color name="play_button_mono_dark">#ff1a1a1a</color>
+    <color name="play_button_neon">#ff8dc63f</color>
+    <color name="play_button_mono_light">#ff1a1a1a</color>
+    <color name="play_button_mono_dark">#ffc5c5c5</color>
 
-    <color name="pause_button_neon">#1E2C56</color>
-    <color name="pause_button_mono_light">#ffc5c5c5</color>
-    <color name="pause_button_mono_dark">#ff1a1a1a</color>
+    <color name="pause_button_neon">#ffffcc33</color>
+    <color name="pause_button_mono_light">#ff1a1a1a</color>
+    <color name="pause_button_mono_dark">#ffc5c5c5</color>
 
-    <color name="skip_button_neon">#1E2C56</color>
-    <color name="skip_button_mono_light">#ffc5c5c5</color>
-    <color name="skip_button_mono_dark">#ff1a1a1a</color>
+    <color name="skip_button_neon">#ff00aeef</color>
+    <color name="skip_button_mono_light">#ff1a1a1a</color>
+    <color name="skip_button_mono_dark">#ffc5c5c5</color>
 
-    <color name="shuffle_button_neon">#1E2C56</color>
-    <color name="shuffle_button_mono_light">#ffc5c5c5</color>
-    <color name="shuffle_button_mono_dark">#ff1a1a1a</color>
+    <color name="shuffle_button_neon">#ffce03ff</color>
+    <color name="shuffle_button_mono_light">#ff1a1a1a</color>
+    <color name="shuffle_button_mono_dark">#ffc5c5c5</color>
 
-    <color name="playlist_button_neon">#1E2C56</color>
-    <color name="playlist_button_mono_light">#ffc5c5c5</color>
-    <color name="playlist_button_mono_dark">#ff1a1a1a</color>
+    <color name="playlist_button_neon">#fff190ac</color>
+    <color name="playlist_button_mono_light">#ff1a1a1a</color>
+    <color name="playlist_button_mono_dark">#ffc5c5c5</color>
 
-    <color name="prev_button_neon">#1E2C56</color>
-    <color name="prev_button_mono_light">#ffc5c5c5</color>
-    <color name="prev_button_mono_dark">#ff1a1a1a</color>
+    <color name="prev_button_neon">#ffed1c24</color>
+    <color name="prev_button_mono_light">#ff1a1a1a</color>
+    <color name="prev_button_mono_dark">#ffc5c5c5</color>
 
     <color name="nav_drawer_background_neon">#1E2C56</color>
     <color name="nav_drawer_background_mono_light">#ffc5c5c5</color>
