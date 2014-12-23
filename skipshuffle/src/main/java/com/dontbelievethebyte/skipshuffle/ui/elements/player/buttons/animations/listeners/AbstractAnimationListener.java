@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners;
 
+import android.content.Context;
 import android.view.animation.Animation;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
@@ -11,10 +12,12 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 public abstract class AbstractAnimationListener implements Animation.AnimationListener{
 
     protected AbstractPlayerUI playerUI;
+    protected Context context;
 
-    public AbstractAnimationListener(AbstractPlayerUI playerUI)
+    public AbstractAnimationListener(AbstractPlayerUI playerUI, Context context)
     {
         this.playerUI = playerUI;
+        this.context = context;
     }
 
     @Override

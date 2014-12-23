@@ -5,11 +5,13 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.PauseAnimationListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.PlayAnimationListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.PrevAnimationListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.concrete.ShuffleAnimationListener;
@@ -52,11 +54,12 @@ public class PlayerButtonsAnimations {
         );
     }
 
-    public void setPlayerUIListeners(AbstractPlayerUI playerUI)
+    public void setPlayerUIListeners(AbstractPlayerUI playerUI, Context context)
     {
-        playAnimation.setAnimationListener(new PlayAnimationListener(playerUI));
-        skipAnimation.setAnimationListener(new SkipAnimationListener(playerUI));
-        prevAnimation.setAnimationListener(new PrevAnimationListener(playerUI));
-        shuffleAnimation.setAnimationListener(new ShuffleAnimationListener(playerUI));
+        playAnimation.setAnimationListener(new PlayAnimationListener(playerUI, context));
+        pauseAnimation.setAnimationListener(new PauseAnimationListener(playerUI, context));
+        skipAnimation.setAnimationListener(new SkipAnimationListener(playerUI, context));
+        prevAnimation.setAnimationListener(new PrevAnimationListener(playerUI, context));
+        shuffleAnimation.setAnimationListener(new ShuffleAnimationListener(playerUI, context));
     }
 }

@@ -15,7 +15,6 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
@@ -28,19 +27,13 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         this.type = baseActivity.getPreferencesHelper().getUIType();
         this.listView = listView;
         buttons = playerButtons;
-        buttons.animations.setPlayerUIListeners(this);
+        buttons.animations.setPlayerUIListeners(this, baseActivity);
         setButtonsOnClickListeners();
     }
 
     @Override
     public void doPlay()
     {
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPlayButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
         notifyAdapter();
     }
@@ -48,12 +41,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doPause()
     {
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPauseButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         notifyAdapter();
     }
@@ -61,65 +48,19 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doSkip()
     {
-        buttons.play.clearAnimation();
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPauseButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.skip.startAnimation(buttons.animations.skipAnimation);
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPlayButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doPrev()
     {
-        buttons.play.clearAnimation();
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPauseButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.prev.startAnimation(buttons.animations.prevAnimation);
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPlayButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doShuffle()
     {
-        buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
-        buttons.play.clearAnimation();
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPauseButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
-        buttons.play.setColorFilter(
-                baseActivity.getResources().getColor(
-                        ColorMapper.getPlayButton(type)
-                )
-        );
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override

@@ -12,9 +12,9 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.listeners.AbstractAnimationListener;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
-public class PrevAnimationListener extends AbstractAnimationListener {
+public class PauseAnimationListener extends AbstractAnimationListener {
 
-    public PrevAnimationListener(AbstractPlayerUI playerUI, Context context)
+    public PauseAnimationListener(AbstractPlayerUI playerUI, Context context)
     {
         super(playerUI, context);
     }
@@ -22,19 +22,18 @@ public class PrevAnimationListener extends AbstractAnimationListener {
     @Override
     public void onAnimationStart(Animation animation)
     {
-        playerUI.doPause();
-        playerUI.buttons.prev.setColorFilter(
+        playerUI.buttons.play.setColorFilter(
                 context.getResources().getColor(
-                        ColorMapper.getPrevButton(playerUI.type)
+                        ColorMapper.getPauseButton(playerUI.type)
                 ),
-                PorterDuff.Mode.SRC_ATOP
+                PorterDuff.Mode.SRC_IN
         );
-        playerUI.buttons.prev.setImageDrawable(playerUI.buttons.drawables.getPrevPressed());
+        playerUI.buttons.play.setImageDrawable(playerUI.buttons.drawables.getPause());
     }
 
     @Override
     public void onAnimationEnd(Animation animation)
     {
-        playerUI.buttons.prev.setImageDrawable(playerUI.buttons.drawables.getPrev());
+        playerUI.buttons.play.startAnimation(playerUI.buttons.animations.playAnimation);
     }
 }
