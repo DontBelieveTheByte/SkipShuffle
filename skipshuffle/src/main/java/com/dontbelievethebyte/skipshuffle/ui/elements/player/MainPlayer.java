@@ -20,6 +20,7 @@ public class MainPlayer extends AbstractPlayerUI {
     public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel)
     {
         this.baseActivity = baseActivity;
+        this.type = baseActivity.getPreferencesHelper().getUIType();
         trackPrinter = new TrackPrinter(baseActivity);
         this.songLabel = songLabel;
         buttons = playerButtons;

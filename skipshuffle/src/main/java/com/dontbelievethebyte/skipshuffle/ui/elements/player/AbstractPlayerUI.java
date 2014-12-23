@@ -23,6 +23,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListen
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
+    public int type;
     public AbstractPlayerButtons buttons;
     protected BaseActivity baseActivity;
 

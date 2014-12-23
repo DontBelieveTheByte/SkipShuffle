@@ -24,6 +24,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView)
     {
         this.baseActivity = baseActivity;
+        this.type = baseActivity.getPreferencesHelper().getUIType();
         this.listView = listView;
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this);
