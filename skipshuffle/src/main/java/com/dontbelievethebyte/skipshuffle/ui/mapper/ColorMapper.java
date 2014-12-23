@@ -120,6 +120,21 @@ public class ColorMapper {
         }
     }
 
+
+    public static int getPlaylistArtist(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.playlist_item_track_artist_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.playlist_item_track_artist_mono_dark;
+            case UITypes.NEON :
+                return R.color.playlist_item_track_artist_neon;
+            default:
+                return R.color.playlist_item_track_artist_neon;
+        }
+    }
+
     public static int getPlayButton(Integer uiType)
     {
         switch (uiType) {
@@ -191,7 +206,7 @@ public class ColorMapper {
         }
     }
 
-    public static int getPlaylisButton(Integer uiType)
+    public static int getPlaylistButton(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
