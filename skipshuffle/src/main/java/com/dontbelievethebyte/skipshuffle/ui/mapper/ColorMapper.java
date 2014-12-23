@@ -120,17 +120,89 @@ public class ColorMapper {
         }
     }
 
-    public static int getPlaylistArtist(Integer uiType)
+    public static int getPlayButton(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.color.playlist_item_track_artist_mono_light;
+                return R.color.play_button_mono_light;
             case UITypes.MONO_DARK :
-                return R.color.playlist_item_track_artist_mono_dark;
+                return R.color.play_button_mono_dark;
             case UITypes.NEON :
-                return R.color.playlist_item_track_artist_neon;
+                return R.color.play_button_neon;
+
             default:
-                return R.color.playlist_item_track_artist_neon;
+                return R.color.play_button_neon;
         }
     }
+
+    public static int getPauseButton(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.pause_button_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.pause_button_mono_dark;
+            case UITypes.NEON :
+                return R.color.pause_button_neon;
+            default:
+                return R.color.pause_button_neon;
+        }
+    }
+
+    public static int getSkipButton(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.skip_button_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.skip_button_mono_dark;
+            case UITypes.NEON :
+                return R.color.skip_button_neon;
+            default:
+                return R.color.skip_button_neon;
+        }
+    }
+
+    public static int getPrevButton(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.prev_button_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.prev_button_mono_dark;
+            case UITypes.NEON :
+                return R.color.prev_button_neon;
+            default:
+                return R.color.prev_button_neon;
+        }
+    }
+
+    public static int getShuffleButton(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.shuffle_button_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.shuffle_button_mono_dark;
+            case UITypes.NEON :
+                return R.color.shuffle_button_neon;
+            default:
+                return R.color.shuffle_button_neon;
+        }
+    }
+
+    public static int getPlaylisButton(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.playlist_button_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.playlist_button_mono_dark;
+            case UITypes.NEON :
+                return R.color.playlist_button_neon;
+            default:
+                return R.color.playlist_button_neon;
+        }
+    }
+
 }
