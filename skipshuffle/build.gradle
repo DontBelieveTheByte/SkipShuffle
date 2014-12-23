@@ -21,8 +21,8 @@ android {
         applicationId "com.dontbelievethebyte.sk1pshuffle"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 9014
-        versionName "Vlad III"
+        versionCode 9015
+        versionName "Joseph Stalin"
     }
 
     if(project.hasProperty("SKIPSHUFFLE_RELEASE_STORE_FILE")) {
