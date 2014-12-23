@@ -5,6 +5,10 @@
 
 <resources>
 
+    <color name="background_neon">#1E2C56</color>
+    <color name="background_mono_light">#ffc5c5c5</color>
+    <color name="background_mono_dark">#ff1a1a1a</color>
+
     <color name="play_button_neon">#1E2C56</color>
     <color name="play_button_mono_light">#ffc5c5c5</color>
     <color name="play_button_mono_dark">#ff1a1a1a</color>
