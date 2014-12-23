@@ -48,4 +48,10 @@
         <item>Listes</item>
     </string-array>
     <string name="menu_quizz">Quiz</string>
+    <string name="dialog_app_rating_negative">Jamais</string>
+    <string name="dialog_app_rating_neutral">Plus tard</string>
+    <string name="dialog_app_rating_positive">maintenant</string>
+    <string name="dialog_app_rating_title">Évaluez SkipShuffle</string>
+    <string name="dialog_app_rating_text">Je vous remercie pour votre soutien !</string>
+    <string name="no_app_store">Impossible de trouver l\'application Google Play Store.</string>
 </resources>

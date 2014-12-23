@@ -48,5 +48,11 @@
         <item>プレイリスト</item>
     </string-array>
     <string name="menu_quizz">クイズ</string>
+    <string name="dialog_app_rating_negative">決して</string>
+    <string name="dialog_app_rating_neutral">後で</string>
+    <string name="dialog_app_rating_positive">今のところ</string>
+    <string name="dialog_app_rating_title">SkipShuffle を評価します。</string>
+    <string name="dialog_app_rating_text">ご支援いただき、ありがとうございます ！</string>
+    <string name="no_app_store">Google Play ストア アプリケーションを見つけることができません。</string>
 
 </resources>

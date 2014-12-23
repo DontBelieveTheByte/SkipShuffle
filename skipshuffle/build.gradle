@@ -9,11 +9,19 @@ android {
     compileSdkVersion 21
     buildToolsVersion "19.1.0"
 
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    output.outputFile.name.replace(".apk", "-${variant.versionCode}.apk"))
+        }
+    }
+    
     defaultConfig {
         applicationId "com.dontbelievethebyte.sk1pshuffle"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 9013
+        versionCode 9014
         versionName "Vlad III"
     }
 

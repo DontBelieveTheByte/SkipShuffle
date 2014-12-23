@@ -48,5 +48,11 @@
         <item>Λίστες αναπαραγωγής</item>
     </string-array>
     <string name="menu_quizz">Κουίζ</string>
+    <string name="dialog_app_rating_negative">Ποτέ δεν</string>
+    <string name="dialog_app_rating_neutral">Αργότερα</string>
+    <string name="dialog_app_rating_positive">τώρα</string>
+    <string name="dialog_app_rating_title">Αξιολόγηση SkipShuffle</string>
+    <string name="dialog_app_rating_text">Σας ευχαριστώ για την υποστήριξή σας!</string>
+    <string name="no_app_store">Δεν μπορεί να βρει εφαρμογή Google παιχνίδι κατάστημα.</string>
 
 </resources>

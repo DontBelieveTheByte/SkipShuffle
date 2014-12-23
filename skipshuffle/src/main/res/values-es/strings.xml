@@ -48,5 +48,11 @@
         <item>Listas de reproducción</item>
     </string-array>
     <string name="menu_quizz">Quiz</string>
+    <string name="dialog_app_rating_negative">Nunca</string>
+    <string name="dialog_app_rating_neutral">Más tarde</string>
+    <string name="dialog_app_rating_positive">Ahora</string>
+    <string name="dialog_app_rating_title">Evaluar SkipShuffle</string>
+    <string name="dialog_app_rating_text">Gracias por su apoyo!</string>
+    <string name="no_app_store">No puede encontrar la aplicación Google Play Store.</string>
 
 </resources>

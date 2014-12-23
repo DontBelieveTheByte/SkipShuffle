@@ -48,5 +48,11 @@
         <item>Wiedergabelisten</item>
     </string-array>
     <string name="menu_quizz">Quiz</string>
+    <string name="dialog_app_rating_negative">Nie</string>
+    <string name="dialog_app_rating_neutral">Später</string>
+    <string name="dialog_app_rating_positive">jetzt</string>
+    <string name="dialog_app_rating_title">SkipShuffle bewerten</string>
+    <string name="dialog_app_rating_text">Vielen Dank für Ihre Unterstützung!</string>
+    <string name="no_app_store">Nicht finden Google Spiel Store Anwendung.</string>
 
 </resources>

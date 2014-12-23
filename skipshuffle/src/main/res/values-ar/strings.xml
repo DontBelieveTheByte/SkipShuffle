@@ -48,5 +48,11 @@
         <item>قوائم التشغيل</item>
     </string-array>
     <string name="menu_quizz">مسابقة</string>
+    <string name="dialog_app_rating_negative">ابدأ</string>
+    <string name="dialog_app_rating_neutral">في وقت لاحق</string>
+    <string name="dialog_app_rating_positive">الآن</string>
+    <string name="dialog_app_rating_title">تقييم سكيبشوفلي</string>
+    <string name="dialog_app_rating_text">شكرا لكم على دعمكم!</string>
+    <string name="no_app_store">لا يمكن العثور على تطبيق متجر جوجل.</string>
 
 </resources>

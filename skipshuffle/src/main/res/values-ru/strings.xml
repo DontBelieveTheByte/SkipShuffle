@@ -48,4 +48,10 @@
         <item>Списки воспроизведения</item>
     </string-array>
     <string name="menu_quizz">Викторина</string>
+    <string name="dialog_app_rating_negative">Никогда не</string>
+    <string name="dialog_app_rating_neutral">Позже</string>
+    <string name="dialog_app_rating_positive">Теперь</string>
+    <string name="dialog_app_rating_title">Оценить SkipShuffle</string>
+    <string name="dialog_app_rating_text">Спасибо вам за вашу поддержку!</string>
+    <string name="no_app_store">Не удается найти приложение Google Play Store.</string>
 </resources>
