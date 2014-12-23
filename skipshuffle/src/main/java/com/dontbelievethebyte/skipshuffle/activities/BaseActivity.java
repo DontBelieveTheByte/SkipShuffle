@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +52,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         @Override
         public boolean handleMenuHapticFeedBack()
         {
-            Log.d(BaseActivity.TAG, "TOUCHED MENYU!!!");
             preferencesHelper.toggleHapticFeedback();
             return true;
         }

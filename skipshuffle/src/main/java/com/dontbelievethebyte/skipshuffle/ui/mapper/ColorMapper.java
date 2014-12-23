@@ -17,6 +17,8 @@ public class ColorMapper {
                 return R.color.background_mono_dark;
             case UITypes.NEON :
                 return R.color.background_neon;
+            case UITypes.XMAS :
+                return R.color.background_xmas;
             default:
                 return R.color.background_neon;
         }
@@ -31,6 +33,8 @@ public class ColorMapper {
                 return R.color.list_empty_text_mono_dark;
             case UITypes.NEON :
                 return R.color.list_empty_text_neon;
+            case UITypes.XMAS :
+                return R.color.list_empty_text_xmas;
             default:
                 return R.color.list_empty_text_neon;
         }
@@ -45,6 +49,8 @@ public class ColorMapper {
                 return R.color.list_divider_mono_dark;
             case UITypes.NEON :
                 return R.color.list_divider_neon;
+            case UITypes.XMAS :
+                return R.color.list_divider_xmas;
             default:
                 return R.color.list_divider_neon;
         }
@@ -59,6 +65,8 @@ public class ColorMapper {
                 return R.color.nav_drawer_background_mono_dark;
             case UITypes.NEON :
                 return R.color.nav_drawer_background_neon;
+            case UITypes.XMAS:
+                return R.color.nav_drawer_background_xmas;
             default:
                 return R.color.nav_drawer_background_neon;
         }
@@ -73,6 +81,8 @@ public class ColorMapper {
                 return R.color.nav_drawer_header_text_mono_dark;
             case UITypes.NEON :
                 return R.color.nav_drawer_header_text_neon;
+            case UITypes.XMAS :
+                return R.color.nav_drawer_header_text_xmas;
             default:
                 return R.color.nav_drawer_header_text_neon;
         }
@@ -87,6 +97,8 @@ public class ColorMapper {
                 return R.color.nav_drawer_text_mono_dark;
             case UITypes.NEON :
                 return R.color.nav_drawer_text_neon;
+            case UITypes.XMAS :
+                return R.color.nav_drawer_text_xmas;
             default:
                 return R.color.nav_drawer_text_neon;
         }
@@ -101,6 +113,8 @@ public class ColorMapper {
                 return R.color.song_label_mono_dark;
             case UITypes.NEON :
                 return R.color.song_label_neon;
+            case UITypes.XMAS :
+                return R.color.song_label_xmas;
             default:
                 return R.color.song_label_neon;
         }
@@ -115,6 +129,8 @@ public class ColorMapper {
                 return R.color.playlist_item_track_title_mono_dark;
             case UITypes.NEON :
                 return R.color.playlist_item_track_title_neon;
+            case UITypes.XMAS :
+                return R.color.playlist_item_track_title_xmas;
             default:
                 return R.color.playlist_item_track_title_neon;
         }
@@ -130,6 +146,8 @@ public class ColorMapper {
                 return R.color.playlist_item_track_artist_mono_dark;
             case UITypes.NEON :
                 return R.color.playlist_item_track_artist_neon;
+            case UITypes.XMAS :
+                return R.color.playlist_item_track_artist_xmas;
             default:
                 return R.color.playlist_item_track_artist_neon;
         }
@@ -144,7 +162,8 @@ public class ColorMapper {
                 return R.color.play_button_mono_dark;
             case UITypes.NEON :
                 return R.color.play_button_neon;
-
+            case UITypes.XMAS :
+                return R.color.play_button_xmas;
             default:
                 return R.color.play_button_neon;
         }
@@ -159,6 +178,8 @@ public class ColorMapper {
                 return R.color.pause_button_mono_dark;
             case UITypes.NEON :
                 return R.color.pause_button_neon;
+            case UITypes.XMAS:
+                return R.color.pause_button_xmas;
             default:
                 return R.color.pause_button_neon;
         }
@@ -173,6 +194,8 @@ public class ColorMapper {
                 return R.color.skip_button_mono_dark;
             case UITypes.NEON :
                 return R.color.skip_button_neon;
+            case UITypes.XMAS :
+                return R.color.skip_button_xmas;
             default:
                 return R.color.skip_button_neon;
         }
@@ -187,6 +210,8 @@ public class ColorMapper {
                 return R.color.prev_button_mono_dark;
             case UITypes.NEON :
                 return R.color.prev_button_neon;
+            case UITypes.XMAS :
+                return R.color.prev_button_xmas;
             default:
                 return R.color.prev_button_neon;
         }
@@ -201,6 +226,8 @@ public class ColorMapper {
                 return R.color.shuffle_button_mono_dark;
             case UITypes.NEON :
                 return R.color.shuffle_button_neon;
+            case UITypes.XMAS :
+                return R.color.shuffle_button_xmas;
             default:
                 return R.color.shuffle_button_neon;
         }
@@ -215,6 +242,8 @@ public class ColorMapper {
                 return R.color.playlist_button_mono_dark;
             case UITypes.NEON :
                 return R.color.playlist_button_neon;
+            case UITypes.XMAS:
+                return R.color.playlist_button_xmas;
             default:
                 return R.color.playlist_button_neon;
         }

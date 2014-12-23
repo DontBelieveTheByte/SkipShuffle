@@ -158,6 +158,8 @@ public class DrawableMapper {
                 return R.drawable.notification_background_mono_dark;
             case UITypes.NEON :
                 return R.drawable.notification_background_neon;
+            case UITypes.XMAS :
+                return R.drawable.notification_background_xmas;
             default:
                 return R.drawable.notification_background_neon;
         }

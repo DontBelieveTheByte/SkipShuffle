@@ -49,6 +49,9 @@ public class ThemeSelectionDialog {
                             case UITypes.MONO_DARK:
                                 preferencesHelper.setUIType(UITypes.MONO_DARK);
                                 break;
+                            case UITypes.XMAS:
+                                preferencesHelper.setUIType(UITypes.XMAS);
+                                break;
                             default: //Equivalent to UIFactory.NEON
                                 preferencesHelper.setUIType(UITypes.NEON);
                                 break;

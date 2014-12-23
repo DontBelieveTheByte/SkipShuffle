@@ -8,62 +8,78 @@
     <color name="background_neon">#1E2C56</color>
     <color name="background_mono_light">#ffc5c5c5</color>
     <color name="background_mono_dark">#ff1a1a1a</color>
+    <color name="background_xmas">#ffffff</color>
 
     <color name="play_button_neon">#ff8dc63f</color>
     <color name="play_button_mono_light">#ff1a1a1a</color>
     <color name="play_button_mono_dark">#ffc5c5c5</color>
+    <color name="play_button_xmas">#378b29</color>
+
 
     <color name="pause_button_neon">#ffffcc33</color>
     <color name="pause_button_mono_light">#ff1a1a1a</color>
     <color name="pause_button_mono_dark">#ffc5c5c5</color>
+    <color name="pause_button_xmas">#F1CA4D</color>
 
     <color name="skip_button_neon">#ff00aeef</color>
     <color name="skip_button_mono_light">#ff1a1a1a</color>
     <color name="skip_button_mono_dark">#ffc5c5c5</color>
+    <color name="skip_button_xmas">#ff0000</color>
 
     <color name="shuffle_button_neon">#ffce03ff</color>
     <color name="shuffle_button_mono_light">#ff1a1a1a</color>
     <color name="shuffle_button_mono_dark">#ffc5c5c5</color>
+    <color name="shuffle_button_xmas">#ff0000</color>
 
     <color name="playlist_button_neon">#fff190ac</color>
     <color name="playlist_button_mono_light">#ff1a1a1a</color>
     <color name="playlist_button_mono_dark">#ffc5c5c5</color>
+    <color name="playlist_button_xmas">#ff0000</color>
 
     <color name="prev_button_neon">#ffed1c24</color>
     <color name="prev_button_mono_light">#ff1a1a1a</color>
     <color name="prev_button_mono_dark">#ffc5c5c5</color>
+    <color name="prev_button_xmas">#ff0000</color>
 
     <color name="nav_drawer_background_neon">#1E2C56</color>
     <color name="nav_drawer_background_mono_light">#ffc5c5c5</color>
     <color name="nav_drawer_background_mono_dark">#ff1a1a1a</color>
+    <color name="nav_drawer_background_xmas">#ffe42624</color>
 
     <color name="nav_drawer_header_text_neon">#ffff7f00</color>
     <color name="nav_drawer_header_text_mono_light">#ff1a1a1a</color>
     <color name="nav_drawer_header_text_mono_dark">#ffc5c5c5</color>
+    <color name="nav_drawer_header_text_xmas">#ffffffff</color>
 
     <color name="nav_drawer_text_neon">#ff6aff09</color>
     <color name="nav_drawer_text_mono_light">#ff1a1a1a</color>
     <color name="nav_drawer_text_mono_dark">#ffc5c5c5</color>
+    <color name="nav_drawer_text_xmas">#ffffffff</color>
 
     <color name="list_divider_neon">#ffff00d1</color>
     <color name="list_divider_mono_light">#ff1a1a1a</color>
     <color name="list_divider_mono_dark">#ffc5c5c5</color>
+    <color name="list_divider_xmas">#000000</color>
 
     <color name="list_empty_text_neon">#ff6aff09</color>
     <color name="list_empty_text_mono_light">#ff1a1a1a</color>
     <color name="list_empty_text_mono_dark">#ffc5c5c5</color>
+    <color name="list_empty_text_xmas">#ffc5c5c5</color>
 
     <color name="song_label_neon">#ffff7f00</color>
     <color name="song_label_mono_light">#ff1a1a1a</color>
     <color name="song_label_mono_dark">#ffc5c5c5</color>
+    <color name="song_label_xmas">#378b29</color>
 
     <color name="playlist_item_track_title_neon">#ff6aff09</color>
     <color name="playlist_item_track_title_mono_light">#ff1a1a1a</color>
     <color name="playlist_item_track_title_mono_dark">#ffc5c5c5</color>
+    <color name="playlist_item_track_title_xmas">#378b29</color>
 
     <color name="playlist_item_track_artist_neon">#ffffb100</color>
     <color name="playlist_item_track_artist_mono_light">#ff2f2f2f</color>
     <color name="playlist_item_track_artist_mono_dark">#ffaeaeae</color>
+    <color name="playlist_item_track_artist_xmas">#ff0000</color>
 
     <!--Action bar specific colors-->
     <color name="actionbar_background">#b4c5c5c5</color>
