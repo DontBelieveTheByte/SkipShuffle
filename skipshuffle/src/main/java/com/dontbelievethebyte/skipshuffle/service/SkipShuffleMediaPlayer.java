@@ -241,6 +241,13 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         initPlaylist();
     }
 
+    public void seekTo(int position)
+    {
+        if (playerWrapper.isPlaying())
+            playerWrapper.seekTo(position);
+
+    }
+
     public RandomPlaylist getPlaylist()
     {
         return playlist;

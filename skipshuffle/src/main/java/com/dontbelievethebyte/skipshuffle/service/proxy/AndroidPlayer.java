@@ -75,6 +75,21 @@ public class AndroidPlayer implements MediaPlayer.OnPreparedListener,
         }
     }
 
+    public void seekTo(int position)
+    {
+        seekPosition = position;
+        mp.seekTo(position);
+    }
+
+    public int getCurrentTrackDuration()
+    {
+        return mp.getDuration();
+    }
+    public int getCurrentTrackPosition()
+    {
+        return mp.getCurrentPosition();
+    }
+
     public void resetSeekPosition()
     {
         seekPosition = 0;

@@ -5,7 +5,9 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.concrete;
 
 import android.app.Activity;
+import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.skipshuffle.R;
@@ -30,9 +32,11 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
     {
         TextView songLabel = (TextView) activity.findViewById(R.id.song_label);
         setSongLabelContainerSize(songLabel);
+        SeekBar seekBar = (SeekBar) activity.findViewById(R.id.seekBar);
+        setSongLabelContainerSize(seekBar);
     }
 
-    private void setSongLabelContainerSize(TextView songLabel)
+    private void setSongLabelContainerSize(View view)
     {
         RelativeLayout.LayoutParams songLabelLayoutParams = createRelativeLayoutParams();
 
@@ -42,7 +46,7 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
                 computedScreenWidth * DimensionsMapper.Player.Center.Portrait.width;
 
         songLabelLayoutParams.width = (int) songLabelWidth;
-        songLabel.setLayoutParams(songLabelLayoutParams);
+        view.setLayoutParams(songLabelLayoutParams);
     }
 
 }

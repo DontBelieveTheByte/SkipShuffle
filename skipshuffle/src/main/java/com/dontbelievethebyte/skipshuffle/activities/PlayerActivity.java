@@ -4,9 +4,12 @@
 
 package com.dontbelievethebyte.skipshuffle.activities;
 
+import android.widget.SeekBar;
+
+import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UICompositionFactory;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.seeklisteners.SeekListener;
 
 public class PlayerActivity extends BaseActivity {
 
@@ -37,6 +40,8 @@ public class PlayerActivity extends BaseActivity {
         } catch (NoMediaPlayerException e) {
             handleNoMediaPlayerException(e);
         }
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekListener(this));
     }
 
     @Override
