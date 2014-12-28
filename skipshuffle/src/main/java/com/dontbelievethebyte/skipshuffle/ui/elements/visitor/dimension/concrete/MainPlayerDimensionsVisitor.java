@@ -6,7 +6,7 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.concret
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -38,7 +38,7 @@ public class MainPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
 
     private void setSongLabelContainerSize(View view)
     {
-        RelativeLayout.LayoutParams songLabelLayoutParams = createRelativeLayoutParams();
+        LinearLayout.LayoutParams songLabelLayoutParams = createLinearLayoutParams();
 
         double songLabelTextSize = (computedScreenHeight * (isLandScape ? DimensionsMapper.Player.Center.Landscape.textSize : DimensionsMapper.Player.Center.Portrait.textSize));
         double songLabelWidth = isLandScape ?

@@ -27,11 +27,11 @@ public class PlayClickListener extends CustomAbstractClickListener {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
             if (mediaPlayer.isPlaying()) {
-//                activity.ui.player.doPause();
+//                baseActivity.ui.player.doPause();
                 mediaPlayer.doPause();
             } else {
                 mediaPlayer.doPlay();
-//                activity.ui.player.doPlay();
+//                baseActivity.ui.player.doPlay();
             }
         } catch (NoMediaPlayerException n){
             activity.handleNoMediaPlayerException(n);

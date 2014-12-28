@@ -20,11 +20,14 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListen
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.PrevClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.ShuffleClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.SkipClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.SeekBar;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public int type;
     public AbstractPlayerButtons buttons;
+    public SeekBar seekBar;
+
     protected BaseActivity baseActivity;
 
     public abstract void doPlay();

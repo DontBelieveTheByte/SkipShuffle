@@ -31,6 +31,8 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.SeekBar;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.seeklisteners.SeekListener;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
@@ -49,10 +51,14 @@ public class UICompositionFactory {
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
+        SeekBar seekBar = new SeekBar(playerActivity);
+        seekBar.setSeekListener(new SeekListener(playerActivity));
+
         MainPlayer player = new MainPlayer(
                 playerActivity,
                 buttons,
-                songLabel
+                songLabel,
+                seekBar
         );
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
@@ -75,6 +81,9 @@ public class UICompositionFactory {
         ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
         buttons.animations = new PlayerButtonsAnimations(playerActivity);
         buttons.drawables = drawables;
+
+        SeekBar seekBar = new SeekBar(playerActivity);
+        seekBar.setSeekListener(new SeekListener(playerActivity));
 
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
@@ -101,7 +110,8 @@ public class UICompositionFactory {
         ListPlayer player = new ListPlayer(
                 playerActivity,
                 buttons,
-                listView
+                listView,
+                seekBar
         );
 
         listView.setSelection(randomPlaylist.getCurrentPosition());
