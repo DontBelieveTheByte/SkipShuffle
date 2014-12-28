@@ -43,11 +43,25 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     protected void setButtonsOnClickListeners()
     {
-        buttons.play.setOnClickListener(new PlayClickListener(baseActivity));
-        buttons.skip.setOnClickListener(new SkipClickListener(baseActivity));
-        buttons.prev.setOnClickListener(new PrevClickListener(baseActivity));
-        buttons.shuffle.setOnClickListener(new ShuffleClickListener(baseActivity));
-        buttons.playlist.setOnClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
+        PlayClickListener playClickListener = new PlayClickListener(baseActivity);
+        buttons.play.setOnClickListener(playClickListener);
+        buttons.play.setOnLongClickListener(playClickListener);
+
+        SkipClickListener skipClickListener = new SkipClickListener(baseActivity);
+        buttons.skip.setOnClickListener(skipClickListener);
+        buttons.skip.setOnLongClickListener(skipClickListener);
+
+        PrevClickListener prevClickListener = new PrevClickListener(baseActivity);
+        buttons.prev.setOnClickListener(prevClickListener);
+        buttons.prev.setOnLongClickListener(prevClickListener);
+
+        ShuffleClickListener shuffleClickListener = new ShuffleClickListener(baseActivity);
+        buttons.shuffle.setOnClickListener(shuffleClickListener);
+        buttons.shuffle.setOnLongClickListener(shuffleClickListener);
+
+        PlaylistClickListener playlistClickListener = new PlaylistClickListener((PlayerActivity)baseActivity);
+        buttons.playlist.setOnClickListener(playlistClickListener);
+        buttons.playlist.setOnLongClickListener(playlistClickListener);
     }
 
     public void reboot()
