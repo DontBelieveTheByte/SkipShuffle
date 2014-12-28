@@ -80,4 +80,5 @@ public class MainPlayer extends AbstractPlayerUI {
         baseActivity.handlePlaylistEmptyException(playlistEmptyException);
     }
 
+
 }

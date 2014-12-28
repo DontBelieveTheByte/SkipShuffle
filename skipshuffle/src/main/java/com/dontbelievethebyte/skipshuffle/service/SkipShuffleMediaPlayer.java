@@ -275,4 +275,13 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         doSkip();
     }
+
+    public int getCurrentTrackDuration()
+    {
+        return playerWrapper.getCurrentTrackDuration();
+    }
+    public int getCurrentTrackPosition()
+    {
+        return playerWrapper.getCurrentTrackPosition();
+    }
 }

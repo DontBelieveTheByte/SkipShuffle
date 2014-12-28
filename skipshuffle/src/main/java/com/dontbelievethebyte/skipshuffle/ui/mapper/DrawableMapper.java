@@ -87,9 +87,9 @@ public class DrawableMapper {
             case UITypes.MONO_LIGHT :
             case UITypes.MONO_DARK :
             case UITypes.NEON :
-                return R.drawable.remove_states_neon;
+                return R.drawable.seekbar_thumg_states_neon;
             default:
-                return R.drawable.remove_states_neon;
+                return R.drawable.seekbar_thumg_states_neon;
         }
     }
 
