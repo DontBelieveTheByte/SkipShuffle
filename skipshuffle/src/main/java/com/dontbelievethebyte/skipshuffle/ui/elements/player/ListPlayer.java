@@ -34,13 +34,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     }
 
     @Override
-    protected void setButtonsOnClickListeners()
-    {
-        super.setButtonsOnClickListeners();
-        buttons.playlist.setOnLongClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
-    }
-
-    @Override
     public void doPlay()
     {
         buttons.play.startAnimation(buttons.animations.playAnimation);
