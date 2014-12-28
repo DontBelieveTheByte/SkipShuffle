@@ -9,6 +9,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.AbstractColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.ColorVisitorFactory;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
@@ -29,6 +30,7 @@ public class UIComposition {
     private AbstractLayout contentArea;
     private Colors colors;
     private Drawables drawables;
+    private CustomSeekBar customSeekBar;
 
     public UIComposition(UICompositionBuilder builder)
     {
@@ -38,6 +40,7 @@ public class UIComposition {
         musicPlayerDrawer = builder.musicPlayerDrawer;
         player = builder.player;
         drawables = builder.drawables;
+        customSeekBar = builder.customSeekBar;
         visitElements();
     }
 
@@ -48,6 +51,7 @@ public class UIComposition {
         uiElements.add(player);
         uiElements.add(player.buttons);
         uiElements.add(contentArea);
+        uiElements.add(customSeekBar);
         colorVisit(uiElements);
         dimensionsVisit(uiElements);
         drawablesVisit(uiElements);

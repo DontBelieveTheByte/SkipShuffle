@@ -11,7 +11,7 @@ import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 
-public class SeekBar implements UIElementCompositeInterface {
+public class CustomSeekBar implements UIElementCompositeInterface {
     protected BaseActivity baseActivity;
     private android.widget.SeekBar seekBar;
     private android.os.Handler seekHandler = new android.os.Handler();
@@ -22,7 +22,7 @@ public class SeekBar implements UIElementCompositeInterface {
         return (progress * skipShuffleMediaPlayer.getCurrentTrackDuration()) / 100;
     }
 
-    public SeekBar(final BaseActivity baseActivity)
+    public CustomSeekBar(final BaseActivity baseActivity)
     {
         this.baseActivity = baseActivity;
 

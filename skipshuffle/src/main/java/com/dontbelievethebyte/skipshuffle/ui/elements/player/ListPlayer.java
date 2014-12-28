@@ -15,19 +15,19 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.SeekBar;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
     public ListView listView;
 
-    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView, SeekBar seekBar)
+    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView, CustomSeekBar customSeekBar)
     {
         this.baseActivity = baseActivity;
         this.type = baseActivity.getPreferencesHelper().getUIType();
         this.listView = listView;
-        this.seekBar = seekBar;
+        this.customSeekBar = customSeekBar;
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this, baseActivity);
         setButtonsOnClickListeners();
@@ -69,7 +69,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void setTrack(Track track)
     {
         listView.smoothScrollToPosition(track.getPosition() + ScrollOffsetCalculator.compute(listView));
-        seekBar.reset();
+        customSeekBar.reset();
     }
 
     private void notifyAdapter()

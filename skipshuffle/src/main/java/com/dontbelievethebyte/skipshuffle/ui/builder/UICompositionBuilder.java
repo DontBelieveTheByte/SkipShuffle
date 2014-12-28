@@ -9,7 +9,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.SeekBar;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
@@ -17,12 +17,11 @@ public class UICompositionBuilder {
 
     public AbstractPlayerUI player;
     public MusicContentBrowser musicPlayerDrawer;
-
     public BaseActivity baseActivity;
     public AbstractLayout contentArea;
     public Colors colors;
     public Drawables drawables;
-    public SeekBar seekBar;
+    public CustomSeekBar customSeekBar;
 
     public UICompositionBuilder setActivity(BaseActivity baseActivity)
     {
@@ -60,9 +59,9 @@ public class UICompositionBuilder {
         return this;
     }
 
-    public UICompositionBuilder setSeekbar(SeekBar seekBar)
+    public UICompositionBuilder setSeekbar(CustomSeekBar customSeekBar)
     {
-        this.seekBar = seekBar;
+        this.customSeekBar = customSeekBar;
         return this;
     }
 

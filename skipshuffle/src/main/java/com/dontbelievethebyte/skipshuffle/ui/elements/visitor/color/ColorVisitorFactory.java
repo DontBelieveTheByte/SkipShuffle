@@ -12,11 +12,13 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete.ContentBrowserColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete.ListLayoutColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete.ListPlayerColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete.MainPlayerColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete.MainPlayerLayoutColorVisitor;
+import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete.SeekBarColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.exception.NoSuchVisitorException;
 
 public class ColorVisitorFactory {
@@ -37,6 +39,9 @@ public class ColorVisitorFactory {
 
         else if (uiElement instanceof MainPlayer)
             return new MainPlayerColorVisitor(activity);
+
+        else if (uiElement instanceof CustomSeekBar)
+            return new SeekBarColorVisitor(activity);
         else
             throw new NoSuchVisitorException();
     }

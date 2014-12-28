@@ -28,11 +28,11 @@ public class SeekListener implements SeekBar.OnSeekBarChangeListener {
             if (fromUser) {
                 if (skipShuffleMediaPlayer.isPaused()) {
                     skipShuffleMediaPlayer.doPlay();
-                    skipShuffleMediaPlayer.seekTo(progress);
                 } else if (!skipShuffleMediaPlayer.isPlaying()) {
                     skipShuffleMediaPlayer.doPlay();
-                    skipShuffleMediaPlayer.seekTo(progress);
                 }
+                skipShuffleMediaPlayer.seekTo(progress);
+
                 Log.d(BaseActivity.TAG, "PROG : " + Integer.toString(progress));
             }
         } catch (NoMediaPlayerException nm) {

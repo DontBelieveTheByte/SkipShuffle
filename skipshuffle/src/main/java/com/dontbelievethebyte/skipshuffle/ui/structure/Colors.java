@@ -25,6 +25,7 @@ public class Colors {
     public int prevButton;
     public int playlistButton;
     public int shuffleButton;
+    public int seekBarProgress;
 
     public static ColorDrawable toColorDrawable(Integer color)
     {
@@ -48,5 +49,6 @@ public class Colors {
         prevButton = ColorMapper.getPlaylistButton(uiType);
         playlistButton = ColorMapper.getPlaylistButton(uiType);
         shuffleButton = ColorMapper.getShuffleButton(uiType);
+        seekBarProgress = ColorMapper.getPlayButton(uiType);
     }
 }

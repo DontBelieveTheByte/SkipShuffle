@@ -31,7 +31,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.SeekBar;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.seeklisteners.SeekListener;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
@@ -51,14 +51,14 @@ public class UICompositionFactory {
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
 
-        SeekBar seekBar = new SeekBar(playerActivity);
-        seekBar.setSeekListener(new SeekListener(playerActivity));
+        CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
+        customSeekBar.setSeekListener(new SeekListener(playerActivity));
 
         MainPlayer player = new MainPlayer(
                 playerActivity,
                 buttons,
                 songLabel,
-                seekBar
+                customSeekBar
         );
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
@@ -68,6 +68,7 @@ public class UICompositionFactory {
         uiBuilder.setColors(new Colors(uiType));
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
+        uiBuilder.setSeekbar(customSeekBar);
         return uiBuilder.build();
     }
 
@@ -82,8 +83,8 @@ public class UICompositionFactory {
         buttons.animations = new PlayerButtonsAnimations(playerActivity);
         buttons.drawables = drawables;
 
-        SeekBar seekBar = new SeekBar(playerActivity);
-        seekBar.setSeekListener(new SeekListener(playerActivity));
+        CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
+        customSeekBar.setSeekListener(new SeekListener(playerActivity));
 
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
         songLabel.setTypeFace(customTypeface);
@@ -111,7 +112,7 @@ public class UICompositionFactory {
                 playerActivity,
                 buttons,
                 listView,
-                seekBar
+                customSeekBar
         );
 
         listView.setSelection(randomPlaylist.getCurrentPosition());
@@ -123,6 +124,7 @@ public class UICompositionFactory {
         uiBuilder.setColors(colors);
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
+        uiBuilder.setSeekbar(customSeekBar);
         return uiBuilder.build();
     }
 
