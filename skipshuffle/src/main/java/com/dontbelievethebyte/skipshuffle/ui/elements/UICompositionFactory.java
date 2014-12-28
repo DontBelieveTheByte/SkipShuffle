@@ -94,7 +94,9 @@ public class UICompositionFactory {
         playlistAdapter.setColors(colors);
         playlistAdapter.setTypeface(customTypeface.getTypeFace());
         listView.setAdapter(playlistAdapter);
-        listView.setOnItemClickListener(new CurrentPlaylistClick(playerActivity));
+        CurrentPlaylistClick currentPlaylistClick = new CurrentPlaylistClick(playerActivity);
+        listView.setOnItemClickListener(currentPlaylistClick);
+        listView.setOnItemLongClickListener(currentPlaylistClick);
 
         ListPlayer player = new ListPlayer(
                 playerActivity,
@@ -102,7 +104,7 @@ public class UICompositionFactory {
                 listView
         );
 
-        listView.setSelection(randomPlaylist.getCurrentPosition() - 1);
+        listView.setSelection(randomPlaylist.getCurrentPosition());
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);

@@ -10,7 +10,8 @@ import android.view.View;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
 
-public abstract class CustomAbstractClickListener implements View.OnClickListener {
+public abstract class CustomAbstractClickListener implements View.OnClickListener,
+                                                             View.OnLongClickListener{
 
     protected BaseActivity activity;
     private PreferencesHelper preferencesHelper;

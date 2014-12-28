@@ -40,4 +40,10 @@ public class PlayClickListener extends CustomAbstractClickListener {
             activity.handlePlaylistEmptyException(e);
         }
     }
+
+    @Override
+    public boolean onLongClick(View v)
+    {
+        return false;
+    }
 }
