@@ -7,6 +7,7 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -14,6 +15,7 @@ import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.PlaylistClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
@@ -29,6 +31,13 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this, baseActivity);
         setButtonsOnClickListeners();
+    }
+
+    @Override
+    protected void setButtonsOnClickListeners()
+    {
+        super.setButtonsOnClickListeners();
+        buttons.playlist.setOnLongClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
     }
 
     @Override
