@@ -53,4 +53,5 @@
     <string name="dialog_app_rating_title">Оценить SkipShuffle</string>
     <string name="dialog_app_rating_text">Спасибо вам за вашу поддержку!</string>
     <string name="no_app_store">Не удается найти приложение Google Play Store.</string>
+    <string name="dialog_song_info_title">Дорожки</string>
 </resources>

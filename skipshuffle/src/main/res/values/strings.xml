@@ -43,6 +43,8 @@
     <string name="dialog_app_rating_negative">Never</string>
     <string name="dialog_app_rating_title">Rate SkipShuffle</string>
     <string name="dialog_app_rating_text">If you enjoy using SkipShuffle, please take a moment to rate the application. Thank you for your support!</string>
+    <string name="dialog_song_info_title">Track info</string>
+
 
     <string-array name="dialog_theme_items" translatable="false">
         <item>Mono Light</item>

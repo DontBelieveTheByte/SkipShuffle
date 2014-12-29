@@ -53,5 +53,6 @@
     <string name="dialog_app_rating_title">تقييم سكيبشوفلي</string>
     <string name="dialog_app_rating_text">شكرا لكم على دعمكم!</string>
     <string name="no_app_store">لا يمكن العثور على تطبيق متجر جوجل.</string>
+    <string name="dialog_song_info_title">معلومات المسار</string>
 
 </resources>

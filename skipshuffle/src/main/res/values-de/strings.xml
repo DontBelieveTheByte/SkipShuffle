@@ -53,5 +53,6 @@
     <string name="dialog_app_rating_title">SkipShuffle bewerten</string>
     <string name="dialog_app_rating_text">Vielen Dank für Ihre Unterstützung!</string>
     <string name="no_app_store">Nicht finden Google Spiel Store Anwendung.</string>
+    <string name="dialog_song_info_title">Streckeninfos</string>
 
 </resources>

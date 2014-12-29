@@ -53,5 +53,6 @@
     <string name="dialog_app_rating_title">Evaluar SkipShuffle</string>
     <string name="dialog_app_rating_text">Gracias por su apoyo!</string>
     <string name="no_app_store">No puede encontrar la aplicación Google Play Store.</string>
+    <string name="dialog_song_info_title">Pista info</string>
 
 </resources>
