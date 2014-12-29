@@ -84,6 +84,13 @@
         <item>Playlists</item>
     </string-array>
 
+    <!-- Track Metadata -->
+    <string name="meta_data_title">Title</string>
+    <string name="meta_data_artist">Artist</string>
+    <string name="meta_data_album">Album</string>
+    <string name="meta_data_duration">Duration</string>
+
+
     <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>
     <string name="accessibility_skip">Skip</string>
