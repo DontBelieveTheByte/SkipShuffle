@@ -54,14 +54,37 @@ public class TrackPrinter {
         }
     }
 
+    public String printGenre(Track track)
+    {
+        if (null == track)
+            return "";
+        else {
+            if (null == track.getGenre() || MediaStore.UNKNOWN_STRING.equals(track.getGenre()))
+                return context.getString(R.string.meta_data_unknown);
+            return track.getGenre();
+        }
+    }
+
     public String printDuration(Track track)
     {
         if (null == track)
             return "";
         else {
-            if (null == track.getDuration() || MediaStore.UNKNOWN_STRING.equals(track.getDuration()))
+            if (null == track.getDuration())
                 return context.getString(R.string.meta_data_unknown);
-            return track.getDuration();
+            else {
+                String duration = "";
+
+                long hours = (track.getDuration() / 3600000);
+                long remainingMinutes = (track.getDuration() - (hours * 3600000)) / 60000;
+                String minutes = String.valueOf(remainingMinutes);
+                if (minutes.equals(0))
+                    minutes = "00";
+                long remainingSeconds = (track.getDuration() - (hours * 3600000) - (remainingMinutes * 60000));
+                String seconds = String.valueOf(remainingSeconds);
+                seconds = (seconds.length() < 2) ? seconds = "00" : seconds.substring(0, 2);
+                return (hours > 0) ? hours + ":" + minutes + ":" + seconds : minutes + ":" + seconds;
+            }
         }
     }
 
