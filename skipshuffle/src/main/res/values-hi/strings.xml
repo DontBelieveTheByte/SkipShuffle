@@ -54,5 +54,10 @@
     <string name="dialog_app_rating_text">आप अपने समर्थन के लिए धन्यवाद!</string>
     <string name="no_app_store">गूगल चलायें संग्रह अनुप्रयोग नहीं ढूँढ सकता।</string>
     <string name="dialog_song_info_title">ट्रैक जानकारी</string>
+    <string name="meta_data_album">एल्बम</string>
+    <string name="meta_data_artist">कलाकार</string>
+    <string name="meta_data_duration">अवधि</string>
+    <string name="meta_data_title">शीर्षक</string>
+    <string name="meta_data_unknown">अज्ञात</string>
 
 </resources>

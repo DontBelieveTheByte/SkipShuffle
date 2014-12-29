@@ -54,5 +54,10 @@
     <string name="dialog_app_rating_text">Grazie per il vostro sostegno!</string>
     <string name="no_app_store">Non può trovare applicazione Google Play Store.</string>
     <string name="dialog_song_info_title">Info traccia</string>
+    <string name="meta_data_album">Album</string>
+    <string name="meta_data_artist">Artista</string>
+    <string name="meta_data_duration">Durata</string>
+    <string name="meta_data_title">Titolo</string>
+    <string name="meta_data_unknown">Sconosciuto</string>
 
 </resources>
