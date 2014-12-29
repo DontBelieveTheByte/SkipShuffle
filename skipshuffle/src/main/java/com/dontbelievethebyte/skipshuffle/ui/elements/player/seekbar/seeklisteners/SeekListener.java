@@ -26,13 +26,9 @@ public class SeekListener implements SeekBar.OnSeekBarChangeListener {
         try {
             SkipShuffleMediaPlayer skipShuffleMediaPlayer = baseActivity.getMediaPlayer();
             if (fromUser) {
-                if (skipShuffleMediaPlayer.isPaused()) {
-                    skipShuffleMediaPlayer.doPlay();
-                } else if (!skipShuffleMediaPlayer.isPlaying()) {
-                    skipShuffleMediaPlayer.doPlay();
+                if (skipShuffleMediaPlayer.isPaused() || skipShuffleMediaPlayer.isPlaying()) {
+                    skipShuffleMediaPlayer.seekToPosition(progress);
                 }
-                skipShuffleMediaPlayer.seekTo(progress);
-
                 Log.d(BaseActivity.TAG, "PROG : " + Integer.toString(progress));
             }
         } catch (NoMediaPlayerException nm) {
@@ -53,6 +49,4 @@ public class SeekListener implements SeekBar.OnSeekBarChangeListener {
     {
 
     }
-
-
 }

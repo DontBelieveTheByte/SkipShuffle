@@ -5,6 +5,8 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar;
 
 
+import android.view.View;
+
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
@@ -12,40 +14,32 @@ import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 
 public class CustomSeekBar implements UIElementCompositeInterface {
-    protected BaseActivity baseActivity;
+    private final static int MILLISECONDS_REFRESH_RATE = 500;
+
+    private BaseActivity baseActivity;
     private android.widget.SeekBar seekBar;
     private android.os.Handler seekHandler = new android.os.Handler();
-    protected Runnable runnable;
-
-    public static int progressPercentageToSeekPosition(SkipShuffleMediaPlayer skipShuffleMediaPlayer, int progress)
-    {
-        return (progress * skipShuffleMediaPlayer.getCurrentTrackDuration()) / 100;
-    }
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run()
+        {
+            try {
+                SkipShuffleMediaPlayer mp = baseActivity.getMediaPlayer();
+                if(mp.isPlaying()) {
+                    seekBar.setMax(mp.getCurrentTrackDuration());
+                    seekBar.setProgress(mp.getCurrentTrackPosition());
+                }
+            } catch (NoMediaPlayerException e) {
+                baseActivity.handleNoMediaPlayerException(e);
+            }
+            seekHandler.postDelayed(runnable, MILLISECONDS_REFRESH_RATE);
+        }
+    };
 
     public CustomSeekBar(final BaseActivity baseActivity)
     {
         this.baseActivity = baseActivity;
-
         seekBar = (android.widget.SeekBar) baseActivity.findViewById(R.id.seekBar);
-
-        runnable = new Runnable() {
-            @Override
-            public void run()
-            {
-                try {
-                    SkipShuffleMediaPlayer mp = baseActivity.getMediaPlayer();
-
-                    if(mp.isPlaying()) {
-                        seekBar.setMax(mp.getCurrentTrackDuration());
-                        seekBar.setProgress(mp.getCurrentTrackPosition());
-                    }
-                } catch (NoMediaPlayerException e) {
-                    baseActivity.handleNoMediaPlayerException(e);
-                }
-//                Log.d(BaseActivity.TAG, "YOYOYOYOYOYO");
-                seekHandler.postDelayed(runnable, 1000);
-            }
-        };
         runnable.run();
     }
 
@@ -59,15 +53,12 @@ public class CustomSeekBar implements UIElementCompositeInterface {
         seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
     }
 
-    public void reset()
+    public void setEnabled(boolean state)
     {
-//        try {
-//            SkipShuffleMediaPlayer mp = baseActivity.getMediaPlayer();
-////            seekBar.setMax(mp.getCurrentTrackDuration());
-////            seekBar.setProgress(mp.getCurrentTrackPosition());
-//            runnable.run();
-//        } catch (NoMediaPlayerException e) {
-//            baseActivity.handleNoMediaPlayerException(e);
-//        }
+        seekBar.setEnabled(state);
+        if (state)
+            seekBar.setVisibility(View.VISIBLE);
+        else
+            seekBar.setVisibility(View.INVISIBLE);
     }
 }

@@ -68,7 +68,6 @@ public class MainPlayer extends AbstractPlayerUI {
         stringBuilder.append(" - ");
         stringBuilder.append(trackPrinter.printArtist(track));
         songLabel.setContent(stringBuilder.toString());
-        customSeekBar.reset();
     }
 
     public MainPlayerSongLabel getSongLabel()

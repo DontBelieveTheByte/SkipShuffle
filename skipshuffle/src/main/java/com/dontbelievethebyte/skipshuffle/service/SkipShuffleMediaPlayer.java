@@ -185,6 +185,8 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         }
     }
 
+
+
     public void doPlay(int playlistPosition) throws PlaylistEmptyException
     {
         playerWrapper.resetSeekPosition();
@@ -247,11 +249,10 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         initPlaylist();
     }
 
-    public void seekTo(int position)
+    public void seekToPosition(int position) throws PlaylistEmptyException
     {
-        if (playerWrapper.isPlaying())
+        if (playerWrapper.isPlaying() || playerWrapper.isPaused())
             playerWrapper.seekTo(position);
-
     }
 
     public RandomPlaylist getPlaylist()

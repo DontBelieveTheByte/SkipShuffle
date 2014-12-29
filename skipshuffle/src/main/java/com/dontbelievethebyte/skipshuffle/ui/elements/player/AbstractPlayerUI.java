@@ -77,6 +77,10 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
+            customSeekBar.setEnabled(
+                    (mediaPlayer.isPaused() || mediaPlayer.isPlaying())
+            );
+
             buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);

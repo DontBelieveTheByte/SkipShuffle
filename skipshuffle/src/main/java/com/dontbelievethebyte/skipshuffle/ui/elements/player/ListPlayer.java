@@ -69,7 +69,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     public void setTrack(Track track)
     {
         listView.smoothScrollToPosition(track.getPosition() + ScrollOffsetCalculator.compute(listView));
-        customSeekBar.reset();
     }
 
     private void notifyAdapter()
@@ -82,6 +81,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         }
     }
 
+    @Override
     public void reboot()
     {
         try {
@@ -92,6 +92,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
+            customSeekBar.setEnabled(
+                    (mediaPlayer.isPaused() || mediaPlayer.isPlaying())
+            );
             buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);
