@@ -9,6 +9,7 @@
     <string name="meta_data_no_playlist">Nothing is playing.</string>
     <string name="meta_data_unknown_title">Unknown title.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
+    <string name="meta_data_unknown">Unknown</string>
 
     <!-- Activities -->
     <string name="label_app_name" translatable="false">SkipShuffle</string>

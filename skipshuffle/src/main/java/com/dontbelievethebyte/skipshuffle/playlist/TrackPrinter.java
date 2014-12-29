@@ -42,4 +42,39 @@ public class TrackPrinter {
             return track.getArtist();
         }
     }
+
+    public String printAlbum(Track track)
+    {
+        if (null == track)
+            return "";
+        else {
+            if (null == track.getAlbum() || MediaStore.UNKNOWN_STRING.equals(track.getAlbum()))
+                return context.getString(R.string.meta_data_unknown);
+            return track.getAlbum();
+        }
+    }
+
+    public String printDuration(Track track)
+    {
+        if (null == track)
+            return "";
+        else {
+            if (null == track.getDuration() || MediaStore.UNKNOWN_STRING.equals(track.getDuration()))
+                return context.getString(R.string.meta_data_unknown);
+            return track.getDuration();
+        }
+    }
+
+    public String printFullReport(Track track)
+    {
+        String report = context.getString(R.string.meta_data_title) + ": ";
+        report += printTitle(track) + "\n";
+        report += context.getString(R.string.meta_data_artist) + ": ";
+        report += printArtist(track) + "\n";
+        report += context.getString(R.string.meta_data_album) + ": ";
+        report += printAlbum(track) + "\n";
+        report += context.getString(R.string.meta_data_duration) + ": ";
+        report += printDuration(track);
+        return report;
+    }
 }
