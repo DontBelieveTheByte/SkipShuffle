@@ -13,7 +13,8 @@
     <SeekBar
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar"/>
+        android:id="@+id/seekBar"
+        android:paddingTop="@dimen/seekbar_top_padding" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"

@@ -249,4 +249,52 @@ public class ColorMapper {
         }
     }
 
+    public static int getSeekbarProgress(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.seekbar_progress_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.seekbar_progress_mono_dark;
+            case UITypes.NEON :
+                return R.color.seekbar_progress_neon;
+            case UITypes.XMAS:
+                return R.color.seekbar_progress_xmas;
+            default:
+                return R.color.seekbar_progress_neon;
+        }
+    }
+
+    public static int getSeekbarBackground(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.seekbar_background_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.seekbar_background_mono_dark;
+            case UITypes.NEON :
+                return R.color.seekbar_background_neon;
+            case UITypes.XMAS:
+                return R.color.seekbar_background_xmas;
+            default:
+                return R.color.seekbar_background_neon;
+        }
+    }
+
+    public static int getSeekbarThumb(Integer uiType)
+    {
+        switch (uiType) {
+            case UITypes.MONO_LIGHT :
+                return R.color.seekbar_thumb_mono_light;
+            case UITypes.MONO_DARK :
+                return R.color.seekbar_thumb_mono_dark;
+            case UITypes.NEON :
+                return R.color.seekbar_thumb_neon;
+            case UITypes.XMAS:
+                return R.color.seekbar_thumb_xmas;
+            default:
+                return R.color.seekbar_thumb_neon;
+        }
+    }
+
 }
