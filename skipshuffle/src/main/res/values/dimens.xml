@@ -1,10 +1,9 @@
-<!--
-  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
+<!--   Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
 <resources>
+
     <dimen name="null_size">0dp</dimen>
-    <!--Navigation drawer stuff-->
+    <!-- Navigation drawer stuff -->
     <dimen name="navdrawer_padding_top">12dp</dimen>
     <dimen name="navdrawer_divider_height">1dp</dimen>
     <dimen name="navdrawer_item_text_size">48sp</dimen>
@@ -12,13 +11,13 @@
     <dimen name="navdrawer_item_text_padding_top">8dp</dimen>
     <dimen name="navdrawer_item_text_padding_bottom">8dp</dimen>
 
-    <!--List stuff-->
+    <!-- List stuff -->
     <dimen name="list_padding_top">12dp</dimen>
     <dimen name="list_padding_left_right">4dp</dimen>
     <dimen name="list_footer_height">64dp</dimen>
     <dimen name="list_buttons_w_h">48dp</dimen>
 
-    <!--Single list items layout-->
+    <!-- Single list items layout -->
     <dimen name="common_single_list_item_w_h">72dp</dimen>
     <dimen name="file_picker_empty_view_text_size">28sp</dimen>
     <dimen name="single_playlist_item_image_padding">12dp</dimen>
@@ -32,7 +31,7 @@
     <dimen name="single_playlist_item_track_artist_padding_bottom">1dp</dimen>
     <dimen name="single_playlist_item_track_artist_text_size">20sp</dimen>
 
-    <!--Notification stuff-->
+    <!-- Notification stuff -->
     <dimen name="notification_padding">4dp</dimen>
     <dimen name="notification_icon_holder_width">48dp</dimen>
     <dimen name="notification_icon_w_h">24dp</dimen>
@@ -40,9 +39,9 @@
     <dimen name="notification_track_title">18sp</dimen>
     <dimen name="notification_track_artist">14sp</dimen>
     <dimen name="notification_track_labels_padding_left">4dp</dimen>
-
     <dimen name="player_layout_padding_row1">10dp</dimen>
     <dimen name="player_layout_padding_row2">0dp</dimen>
     <dimen name="player_layout_padding_row3">15dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
 
 </resources>
