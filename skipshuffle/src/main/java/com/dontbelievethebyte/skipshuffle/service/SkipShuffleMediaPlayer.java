@@ -5,6 +5,8 @@
 package com.dontbelievethebyte.skipshuffle.service;
 
 import android.app.Service;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,6 +28,7 @@ import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCa
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification.PlayerNotification;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.SkipShuffleWidget;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 
@@ -170,6 +173,12 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void onPlayerStateChanged()
     {
+        Intent intent = new Intent(this, SkipShuffleWidget.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), SkipShuffleWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        sendBroadcast(intent);
+
         notification.showNotification();
         for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
             playerStateChangedCallback.onPlayerStateChanged();
@@ -184,8 +193,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
             handleAudioLoadingTrackException(audioLoadingTrackException);
         }
     }
-
-
 
     public void doPlay(int playlistPosition) throws PlaylistEmptyException
     {

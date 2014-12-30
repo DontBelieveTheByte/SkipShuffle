@@ -9,6 +9,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
 
+import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
+
 public class SkipShuffleWidget extends AppWidgetProvider {
 
     @Override
@@ -36,7 +38,13 @@ public class SkipShuffleWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         WidgetRemoteViewsBuilder widgetRemoteViewsBuilder = new WidgetRemoteViewsBuilder(context);
-        RemoteViews remoteViews = widgetRemoteViewsBuilder.build();
+        int uiType = UITypes.JACK_O_LANTERN;
+        boolean isPlaying = true;
+        boolean isShuffle = false;
+        String title = "DERPADASD";
+        String artist = "MOFOOF";
+
+        RemoteViews remoteViews = widgetRemoteViewsBuilder.build(uiType, isPlaying, isShuffle, title, artist);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);

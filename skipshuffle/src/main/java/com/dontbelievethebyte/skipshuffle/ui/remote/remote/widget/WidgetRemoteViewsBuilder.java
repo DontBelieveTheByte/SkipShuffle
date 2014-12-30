@@ -22,7 +22,7 @@ public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
     @Override
     public RemoteViews build(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
     {
-        buildContainer(R.layout.notification);
+        buildContainer(R.layout.widget);
 
         buildPrev(R.id.notif_prev);
 
