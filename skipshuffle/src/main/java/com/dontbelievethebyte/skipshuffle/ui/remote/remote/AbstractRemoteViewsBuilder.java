@@ -5,19 +5,19 @@
 package com.dontbelievethebyte.skipshuffle.ui.remote.remote;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 
 public abstract class AbstractRemoteViewsBuilder {
 
-    protected SkipShuffleMediaPlayer skipShuffleMediaPlayer;
     protected RemoteViews remoteViews;
     protected Colorizer colorize;
+    protected Context context;
 
     protected class Colorizer {
         public void label(int resourceId, int color)
@@ -38,9 +38,9 @@ public abstract class AbstractRemoteViewsBuilder {
         }
     }
 
-    public AbstractRemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
+    public AbstractRemoteViewsBuilder(Context context)
     {
-        this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
+        this.context = context;
         colorize = new Colorizer();
     }
 
@@ -62,29 +62,18 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected void buildContainer()
+    protected void buildContainer(String packageName)
     {
         remoteViews = new RemoteViews(
-                skipShuffleMediaPlayer.getPackageName(),
+                packageName,
                 R.layout.notification
         );
-
-//        remoteViews.setImageViewResource(
-//                R.id.buttons_background_image,
-//                drawables.notificationBackground
-//        );
-//
-//        remoteViews.setImageViewResource(
-//                R.id.buttons_background_image_overflow_protection,
-//                drawables.notificationBackground
-//        );
     }
 
-    protected void buildPrev()
+    protected void buildPrev(int resourceId)
     {
-
         remoteViews.setOnClickPendingIntent(
-                R.id.notif_prev,
+                resourceId,
                 buildNotificationButtonsPendingIntent(
                         SkipShuflleMediaPlayerCommandsContract.PREV,
                         0
@@ -92,21 +81,21 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected void buildPlay(Integer drawable, boolean isPlaying)
+    protected void buildPlay(int resourceId, Integer drawable, boolean isPlaying)
     {
         if (null != drawable) {
             remoteViews.setImageViewResource(
-                    R.id.notif_play,
+                    resourceId,
                     drawable
             );
         }
 
-        String command = (skipShuffleMediaPlayer.isPlaying()) ?
+        String command = (isPlaying) ?
                 SkipShuflleMediaPlayerCommandsContract.PAUSE :
                 SkipShuflleMediaPlayerCommandsContract.PLAY;
 
         remoteViews.setOnClickPendingIntent(
-                R.id.notif_play,
+                resourceId,
                 buildNotificationButtonsPendingIntent(
                         command,
                         2
@@ -114,12 +103,14 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected void buildShuffle(boolean isShuffle)
+    protected void buildShuffle(int resourceId, Integer drawable)
     {
-//        remoteViews.setImageViewResource(
-//                R.id.notif_shuffle,
-//                isShuffle ? drawables.shufflePressed : drawables.shuffle
-//        );
+        if (null != drawable) {
+            remoteViews.setImageViewResource(
+                    resourceId,
+                    drawable
+            );
+        }
 
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_shuffle,
@@ -130,15 +121,10 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected void buildSkip()
+    protected void buildSkip(int resourceId)
     {
-//        remoteViews.setImageViewResource(
-//                R.id.notif_skip,
-//                drawables.skip
-//        );
-
         remoteViews.setOnClickPendingIntent(
-                R.id.notif_skip,
+                resourceId,
                 buildNotificationButtonsPendingIntent(
                         SkipShuflleMediaPlayerCommandsContract.SKIP,
                         3
@@ -146,19 +132,19 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected void buildDefault()
+    protected void buildDefault(int resourceId)
     {
-        Intent playerActivityIntent = new Intent(skipShuffleMediaPlayer, PlayerActivity.class);
+        Intent playerActivityIntent = new Intent(context, PlayerActivity.class);
 
         PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
-                skipShuffleMediaPlayer,
+                context,
                 4,
                 playerActivityIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT
         );
 
         remoteViews.setOnClickPendingIntent(
-                R.id.notif_all,
+                resourceId,
                 mainActivityPendingIntent
         );
     }
@@ -167,9 +153,9 @@ public abstract class AbstractRemoteViewsBuilder {
     {
         Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
         intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        intent.setPackage(skipShuffleMediaPlayer.getPackageName());
+        intent.setPackage(context.getPackageName());
         return PendingIntent.getBroadcast(
-                skipShuffleMediaPlayer,
+                context,
                 requestCode,
                 intent,
                 PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT

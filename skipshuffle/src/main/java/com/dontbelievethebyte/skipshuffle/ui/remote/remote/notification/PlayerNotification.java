@@ -12,8 +12,6 @@ import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
 public class PlayerNotification {
 
@@ -56,11 +54,7 @@ public class PlayerNotification {
 
     private RemoteViews getRemoteViews()
     {
-        NotificationRemoteViewsBuilder remoteViewsBuilder = new NotificationRemoteViewsBuilder(
-                skipShuffleMediaPlayer,
-                new Drawables(skipShuffleMediaPlayer, skipShuffleMediaPlayer.getPreferencesHelper().getUIType()),
-                new Colors(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
-        );
+        NotificationRemoteViewsBuilder remoteViewsBuilder = new NotificationRemoteViewsBuilder(skipShuffleMediaPlayer);
         return remoteViewsBuilder.build();
     }
 }
