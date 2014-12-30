@@ -88,6 +88,9 @@ public class ThemeSelectionDialog {
                             case UITypes.HOMER:
                                 preferencesHelper.setUIType(UITypes.HOMER);
                                 break;
+                            case UITypes.KOSHER:
+                                preferencesHelper.setUIType(UITypes.KOSHER);
+                                break;
                             case UITypes.MARIO:
                                 preferencesHelper.setUIType(UITypes.MARIO);
                                 break;
