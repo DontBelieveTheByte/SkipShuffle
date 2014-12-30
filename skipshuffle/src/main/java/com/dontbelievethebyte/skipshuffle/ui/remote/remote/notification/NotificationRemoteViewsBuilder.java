@@ -20,7 +20,6 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
     public NotificationRemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
     {
         super(skipShuffleMediaPlayer);
-        context = skipShuffleMediaPlayer;
     }
 
     @Override
