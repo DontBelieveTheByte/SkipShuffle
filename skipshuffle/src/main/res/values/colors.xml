@@ -9,7 +9,7 @@
     <color name="background_mono_light">#ffc5c5c5</color>
     <color name="background_mono_dark">#ff1a1a1a</color>
     <color name="background_xmas">#ffffff</color>
-    <color name="background_pink_panther">#ffffff</color>
+    <color name="background_pink_panther">#ffcfff</color>
     <color name="background_jack_o_lantern">#ffffff</color>
     <color name="background_sharmrock">#ffffff</color>
     <color name="background_murica">#ffffff</color>
@@ -36,7 +36,7 @@
     <color name="play_button_mono_light">#ff1a1a1a</color>
     <color name="play_button_mono_dark">#ffc5c5c5</color>
     <color name="play_button_xmas">#378b29</color>
-    <color name="play_button_pink_panther">#378b29</color>
+    <color name="play_button_pink_panther">#ff8ad1</color>
     <color name="play_button_sharmrock">#378b29</color>
     <color name="play_button_murica">#378b29</color>
     <color name="play_button_psychedelic">#378b29</color>
@@ -62,7 +62,7 @@
     <color name="pause_button_mono_light">#ff1a1a1a</color>
     <color name="pause_button_mono_dark">#ffc5c5c5</color>
     <color name="pause_button_xmas">#F1CA4D</color>
-    <color name="pause_button_pink_panther">#F1CA4D</color>
+    <color name="pause_button_pink_panther">#ff8ad1</color>
     <color name="pause_button_jack_o_lantern">#F1CA4D</color>
     <color name="pause_button_sharmrock">#F1CA4D</color>
     <color name="pause_button_murica">#F1CA4D</color>
@@ -89,7 +89,7 @@
     <color name="skip_button_mono_light">#ff1a1a1a</color>
     <color name="skip_button_mono_dark">#ffc5c5c5</color>
     <color name="skip_button_xmas">#ff0000</color>
-    <color name="skip_button_pink_panther">#ff0000</color>
+    <color name="skip_button_pink_panther">#ff8ad1</color>
     <color name="skip_button_jack_o_lantern">#ff0000</color>
     <color name="skip_button_sharmrock">#ff0000</color>
     <color name="skip_button_murica">#ff0000</color>
@@ -116,7 +116,7 @@
     <color name="shuffle_button_mono_light">#ff1a1a1a</color>
     <color name="shuffle_button_mono_dark">#ffc5c5c5</color>
     <color name="shuffle_button_xmas">#ff0000</color>
-    <color name="shuffle_button_pink_panther">#ff0000</color>
+    <color name="shuffle_button_pink_panther">#ff8ad1</color>
     <color name="shuffle_button_jack_o_lantern">#ff0000</color>
     <color name="shuffle_button_sharmrock">#ff0000</color>
     <color name="shuffle_button_murica">#ff0000</color>
@@ -143,7 +143,7 @@
     <color name="playlist_button_mono_light">#ff1a1a1a</color>
     <color name="playlist_button_mono_dark">#ffc5c5c5</color>
     <color name="playlist_button_xmas">#ff0000</color>
-    <color name="playlist_button_pink_panther">#ff0000</color>
+    <color name="playlist_button_pink_panther">#ff8ad1</color>
     <color name="playlist_button_jack_o_lantern">#ff0000</color>
     <color name="playlist_button_sharmrock">#ff0000</color>
     <color name="playlist_button_murica">#ff0000</color>
@@ -170,7 +170,7 @@
     <color name="prev_button_mono_light">#ff1a1a1a</color>
     <color name="prev_button_mono_dark">#ffc5c5c5</color>
     <color name="prev_button_xmas">#ff0000</color>
-    <color name="prev_button_pink_panther">#ff0000</color>
+    <color name="prev_button_pink_panther">#ff8ad1</color>
     <color name="prev_button_jack_o_lantern">#ff0000</color>
     <color name="prev_button_sharmrock">#ff0000</color>
     <color name="prev_button_murica">#ff0000</color>
@@ -197,7 +197,7 @@
     <color name="nav_drawer_background_mono_light">#ffc5c5c5</color>
     <color name="nav_drawer_background_mono_dark">#ff1a1a1a</color>
     <color name="nav_drawer_background_xmas">#ffe42624</color>
-    <color name="nav_drawer_background_pink_panther">#ffe42624</color>
+    <color name="nav_drawer_background_pink_panther">#ff8ad1</color>
     <color name="nav_drawer_background_jack_o_lantern">#ffe42624</color>
     <color name="nav_drawer_background_sharmrock">#ffe42624</color>
     <color name="nav_drawer_background_murica">#ffe42624</color>
@@ -305,7 +305,7 @@
     <color name="list_empty_text_mono_light">#ff1a1a1a</color>
     <color name="list_empty_text_mono_dark">#ffc5c5c5</color>
     <color name="list_empty_text_xmas">#ffc5c5c5</color>
-    <color name="list_empty_text_pink_panther">#ffc5c5c5</color>
+    <color name="list_empty_text_pink_panther">#ff0000</color>
     <color name="list_empty_text_jack_o_lantern">#ffc5c5c5</color>
     <color name="list_empty_text_sharmrock">#ffc5c5c5</color>
     <color name="list_empty_text_murica">#ffc5c5c5</color>
@@ -332,7 +332,7 @@
     <color name="song_label_mono_light">#ff1a1a1a</color>
     <color name="song_label_mono_dark">#ffc5c5c5</color>
     <color name="song_label_xmas">#378b29</color>
-    <color name="song_label_pink_panther">#378b29</color>
+    <color name="song_label_pink_panther">#ff0000</color>
     <color name="song_label_jack_o_lantern">#378b29</color>
     <color name="song_label_sharmrock">#378b29</color>
     <color name="song_label_murica">#378b29</color>
@@ -359,7 +359,7 @@
     <color name="playlist_item_track_title_mono_light">#ff1a1a1a</color>
     <color name="playlist_item_track_title_mono_dark">#ffc5c5c5</color>
     <color name="playlist_item_track_title_xmas">#378b29</color>
-    <color name="playlist_item_track_title_pink_panther">#378b29</color>
+    <color name="playlist_item_track_title_pink_panther">#ff0000</color>
     <color name="playlist_item_track_title_jack_o_lantern">#378b29</color>
     <color name="playlist_item_track_title_sharmrock">#378b29</color>
     <color name="playlist_item_track_title_murica">#378b29</color>
@@ -467,7 +467,7 @@
     <color name="seekbar_thumb_mono_light">#ff2f2f2f</color>
     <color name="seekbar_thumb_mono_dark">#ffaeaeae</color>
     <color name="seekbar_thumb_xmas">#F1CA4D</color>
-    <color name="seekbar_thumb_pink_panther">#F1CA4D</color>
+    <color name="seekbar_thumb_pink_panther">#ff0000</color>
     <color name="seekbar_thumb_jack_o_lantern">#F1CA4D</color>
     <color name="seekbar_thumb_sharmrock">#F1CA4D</color>
     <color name="seekbar_thumb_murica">#F1CA4D</color>
