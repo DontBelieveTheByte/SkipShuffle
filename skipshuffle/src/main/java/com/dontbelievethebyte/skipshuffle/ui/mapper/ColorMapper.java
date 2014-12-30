@@ -24,7 +24,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.background_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.background_sharmrock;
+                return R.color.background_shamrock;
             case UITypes.MURICA :
                 return R.color.background_murica;
             case UITypes.PSYCHEDELIC :
@@ -84,7 +84,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.list_empty_text_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.list_empty_text_sharmrock;
+                return R.color.list_empty_text_shamrock;
             case UITypes.MURICA :
                 return R.color.list_empty_text_murica;
             case UITypes.PSYCHEDELIC :
@@ -144,7 +144,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.list_divider_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.list_divider_sharmrock;
+                return R.color.list_divider_shamrock;
             case UITypes.MURICA :
                 return R.color.list_divider_murica;
             case UITypes.PSYCHEDELIC :
@@ -204,7 +204,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.nav_drawer_background_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.nav_drawer_background_sharmrock;
+                return R.color.nav_drawer_background_shamrock;
             case UITypes.MURICA :
                 return R.color.nav_drawer_background_murica;
             case UITypes.PSYCHEDELIC :
@@ -264,7 +264,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.nav_drawer_header_text_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.nav_drawer_header_text_sharmrock;
+                return R.color.nav_drawer_header_text_shamrock;
             case UITypes.MURICA :
                 return R.color.nav_drawer_header_text_murica;
             case UITypes.PSYCHEDELIC :
@@ -324,7 +324,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.nav_drawer_text_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.nav_drawer_text_sharmrock;
+                return R.color.nav_drawer_text_shamrock;
             case UITypes.MURICA :
                 return R.color.nav_drawer_text_murica;
             case UITypes.PSYCHEDELIC :
@@ -384,7 +384,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.song_label_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.song_label_sharmrock;
+                return R.color.song_label_shamrock;
             case UITypes.MURICA :
                 return R.color.song_label_murica;
             case UITypes.PSYCHEDELIC :
@@ -444,7 +444,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.playlist_item_track_title_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.playlist_item_track_title_sharmrock;
+                return R.color.playlist_item_track_title_shamrock;
             case UITypes.MURICA :
                 return R.color.playlist_item_track_title_murica;
             case UITypes.PSYCHEDELIC :
@@ -505,7 +505,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.playlist_item_track_artist_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.playlist_item_track_artist_sharmrock;
+                return R.color.playlist_item_track_artist_shamrock;
             case UITypes.MURICA :
                 return R.color.playlist_item_track_artist_murica;
             case UITypes.PSYCHEDELIC :
@@ -565,7 +565,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.play_button_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.play_button_sharmrock;
+                return R.color.play_button_shamrock;
             case UITypes.MURICA :
                 return R.color.play_button_murica;
             case UITypes.PSYCHEDELIC :
@@ -625,7 +625,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.pause_button_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.pause_button_sharmrock;
+                return R.color.pause_button_shamrock;
             case UITypes.MURICA :
                 return R.color.pause_button_murica;
             case UITypes.PSYCHEDELIC :
@@ -685,7 +685,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.skip_button_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.skip_button_sharmrock;
+                return R.color.skip_button_shamrock;
             case UITypes.MURICA :
                 return R.color.skip_button_murica;
             case UITypes.PSYCHEDELIC :
@@ -745,7 +745,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.prev_button_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.prev_button_sharmrock;
+                return R.color.prev_button_shamrock;
             case UITypes.MURICA :
                 return R.color.prev_button_murica;
             case UITypes.PSYCHEDELIC :
@@ -805,7 +805,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.shuffle_button_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.shuffle_button_sharmrock;
+                return R.color.shuffle_button_shamrock;
             case UITypes.MURICA :
                 return R.color.shuffle_button_murica;
             case UITypes.PSYCHEDELIC :
@@ -865,7 +865,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.playlist_button_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.playlist_button_sharmrock;
+                return R.color.playlist_button_shamrock;
             case UITypes.MURICA :
                 return R.color.playlist_button_murica;
             case UITypes.PSYCHEDELIC :
@@ -925,7 +925,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.seekbar_progress_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.seekbar_progress_sharmrock;
+                return R.color.seekbar_progress_shamrock;
             case UITypes.MURICA :
                 return R.color.seekbar_progress_murica;
             case UITypes.PSYCHEDELIC :
@@ -985,7 +985,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.seekbar_background_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.seekbar_background_sharmrock;
+                return R.color.seekbar_background_shamrock;
             case UITypes.MURICA :
                 return R.color.seekbar_background_murica;
             case UITypes.PSYCHEDELIC :
@@ -1045,7 +1045,7 @@ public class ColorMapper {
             case UITypes.JACK_O_LANTERN :
                 return R.color.seekbar_thumb_jack_o_lantern;
             case UITypes.SHAMROCK :
-                return R.color.seekbar_thumb_sharmrock;
+                return R.color.seekbar_thumb_shamrock;
             case UITypes.MURICA :
                 return R.color.seekbar_thumb_murica;
             case UITypes.PSYCHEDELIC :

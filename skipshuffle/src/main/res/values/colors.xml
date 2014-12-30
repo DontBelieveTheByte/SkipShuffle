@@ -11,7 +11,7 @@
     <color name="background_xmas">#ffffff</color>
     <color name="background_pink_panther">#ffcfff</color>
     <color name="background_jack_o_lantern">#ff6600</color>
-    <color name="background_sharmrock">#ffffff</color>
+    <color name="background_shamrock">#ffffff</color>
     <color name="background_murica">#ffffff</color>
     <color name="background_psychedelic">#ffffff</color>
     <color name="background_rasta">#ffffff</color>
@@ -38,7 +38,7 @@
     <color name="play_button_xmas">#378b29</color>
     <color name="play_button_pink_panther">#ff8ad1</color>
     <color name="play_button_jack_o_lantern">#000000</color>
-    <color name="play_button_sharmrock">#378b29</color>
+    <color name="play_button_shamrock">#007831</color>
     <color name="play_button_murica">#378b29</color>
     <color name="play_button_psychedelic">#378b29</color>
     <color name="play_button_rasta">#378b29</color>
@@ -65,7 +65,7 @@
     <color name="pause_button_xmas">#F1CA4D</color>
     <color name="pause_button_pink_panther">#ff8ad1</color>
     <color name="pause_button_jack_o_lantern">#000000</color>
-    <color name="pause_button_sharmrock">#F1CA4D</color>
+    <color name="pause_button_shamrock">#007831</color>
     <color name="pause_button_murica">#F1CA4D</color>
     <color name="pause_button_psychedelic">#F1CA4D</color>
     <color name="pause_button_rasta">#F1CA4D</color>
@@ -92,7 +92,7 @@
     <color name="skip_button_xmas">#ff0000</color>
     <color name="skip_button_pink_panther">#ff8ad1</color>
     <color name="skip_button_jack_o_lantern">#000000</color>
-    <color name="skip_button_sharmrock">#ff0000</color>
+    <color name="skip_button_shamrock">#007831</color>
     <color name="skip_button_murica">#ff0000</color>
     <color name="skip_button_psychedelic">#ff0000</color>
     <color name="skip_button_rasta">#ff0000</color>
@@ -119,7 +119,7 @@
     <color name="shuffle_button_xmas">#ff0000</color>
     <color name="shuffle_button_pink_panther">#ff8ad1</color>
     <color name="shuffle_button_jack_o_lantern">#000000</color>
-    <color name="shuffle_button_sharmrock">#ff0000</color>
+    <color name="shuffle_button_shamrock">#007831</color>
     <color name="shuffle_button_murica">#ff0000</color>
     <color name="shuffle_button_psychedelic">#ff0000</color>
     <color name="shuffle_button_rasta">#ff0000</color>
@@ -146,7 +146,7 @@
     <color name="playlist_button_xmas">#ff0000</color>
     <color name="playlist_button_pink_panther">#ff8ad1</color>
     <color name="playlist_button_jack_o_lantern">#000000</color>
-    <color name="playlist_button_sharmrock">#ff0000</color>
+    <color name="playlist_button_shamrock">#007831</color>
     <color name="playlist_button_murica">#ff0000</color>
     <color name="playlist_button_psychedelic">#ff0000</color>
     <color name="playlist_button_rasta">#ff0000</color>
@@ -173,7 +173,7 @@
     <color name="prev_button_xmas">#ff0000</color>
     <color name="prev_button_pink_panther">#ff8ad1</color>
     <color name="prev_button_jack_o_lantern">#000000</color>
-    <color name="prev_button_sharmrock">#ff0000</color>
+    <color name="prev_button_shamrock">#007831</color>
     <color name="prev_button_murica">#ff0000</color>
     <color name="prev_button_psychedelic">#ff0000</color>
     <color name="prev_button_rasta">#ff0000</color>
@@ -200,7 +200,7 @@
     <color name="nav_drawer_background_xmas">#ffe42624</color>
     <color name="nav_drawer_background_pink_panther">#ff8ad1</color>
     <color name="nav_drawer_background_jack_o_lantern">#ffe42624</color>
-    <color name="nav_drawer_background_sharmrock">#ffe42624</color>
+    <color name="nav_drawer_background_shamrock">#007831</color>
     <color name="nav_drawer_background_murica">#ffe42624</color>
     <color name="nav_drawer_background_psychedelic">#ffe42624</color>
     <color name="nav_drawer_background_rasta">#ffe42624</color>
@@ -227,7 +227,7 @@
     <color name="nav_drawer_header_text_xmas">#ffffffff</color>
     <color name="nav_drawer_header_text_pink_panther">#ffffffff</color>
     <color name="nav_drawer_header_text_jack_o_lantern">#ffffffff</color>
-    <color name="nav_drawer_header_text_sharmrock">#ffffffff</color>
+    <color name="nav_drawer_header_text_shamrock">#007831</color>
     <color name="nav_drawer_header_text_murica">#ffffffff</color>
     <color name="nav_drawer_header_text_psychedelic">#ffffffff</color>
     <color name="nav_drawer_header_text_rasta">#ffffffff</color>
@@ -254,7 +254,7 @@
     <color name="nav_drawer_text_xmas">#ffffffff</color>
     <color name="nav_drawer_text_pink_panther">#ffffffff</color>
     <color name="nav_drawer_text_jack_o_lantern">#ffffffff</color>
-    <color name="nav_drawer_text_sharmrock">#ffffffff</color>
+    <color name="nav_drawer_text_shamrock">#007831</color>
     <color name="nav_drawer_text_murica">#ffffffff</color>
     <color name="nav_drawer_text_psychedelic">#ffffffff</color>
     <color name="nav_drawer_text_rasta">#ffffffff</color>
@@ -281,7 +281,7 @@
     <color name="list_divider_xmas">#000000</color>
     <color name="list_divider_pink_panther">#000000</color>
     <color name="list_divider_jack_o_lantern">#000</color>
-    <color name="list_divider_sharmrock">#000000</color>
+    <color name="list_divider_shamrock">#007831</color>
     <color name="list_divider_murica">#000000</color>
     <color name="list_divider_psychedelic">#000000</color>
     <color name="list_divider_rasta">#000000</color>
@@ -308,7 +308,7 @@
     <color name="list_empty_text_xmas">#ffc5c5c5</color>
     <color name="list_empty_text_pink_panther">#ff0000</color>
     <color name="list_empty_text_jack_o_lantern">#000</color>
-    <color name="list_empty_text_sharmrock">#ffc5c5c5</color>
+    <color name="list_empty_text_shamrock">#007831</color>
     <color name="list_empty_text_murica">#ffc5c5c5</color>
     <color name="list_empty_text_psychedelic">#ffc5c5c5</color>
     <color name="list_empty_text_rasta">#ffc5c5c5</color>
@@ -335,7 +335,7 @@
     <color name="song_label_xmas">#378b29</color>
     <color name="song_label_pink_panther">#ff0000</color>
     <color name="song_label_jack_o_lantern">#000</color>
-    <color name="song_label_sharmrock">#378b29</color>
+    <color name="song_label_shamrock">#007831</color>
     <color name="song_label_murica">#378b29</color>
     <color name="song_label_psychedelic">#378b29</color>
     <color name="song_label_rasta">#378b29</color>
@@ -362,7 +362,7 @@
     <color name="playlist_item_track_title_xmas">#378b29</color>
     <color name="playlist_item_track_title_pink_panther">#ff0000</color>
     <color name="playlist_item_track_title_jack_o_lantern">#000</color>
-    <color name="playlist_item_track_title_sharmrock">#378b29</color>
+    <color name="playlist_item_track_title_shamrock">#007831</color>
     <color name="playlist_item_track_title_murica">#378b29</color>
     <color name="playlist_item_track_title_psychedelic">#378b29</color>
     <color name="playlist_item_track_title_rasta">#378b29</color>
@@ -389,7 +389,7 @@
     <color name="playlist_item_track_artist_xmas">#ff0000</color>
     <color name="playlist_item_track_artist_pink_panther">#ff0000</color>
     <color name="playlist_item_track_artist_jack_o_lantern">#000000</color>
-    <color name="playlist_item_track_artist_sharmrock">#ff0000</color>
+    <color name="playlist_item_track_artist_shamrock">#007831</color>
     <color name="playlist_item_track_artist_murica">#ff0000</color>
     <color name="playlist_item_track_artist_psychedelic">#ff0000</color>
     <color name="playlist_item_track_artist_rasta">#ff0000</color>
@@ -416,7 +416,7 @@
     <color name="seekbar_background_xmas">#ffff7f00</color>
     <color name="seekbar_background_pink_panther">#ffff7f00</color>
     <color name="seekbar_background_jack_o_lantern">#ffff7f00</color>
-    <color name="seekbar_background_sharmrock">#ffff7f00</color>
+    <color name="seekbar_background_shamrock">#007831</color>
     <color name="seekbar_background_murica">#ffff7f00</color>
     <color name="seekbar_background_psychedelic">#ffff7f00</color>
     <color name="seekbar_background_rasta">#ffff7f00</color>
@@ -443,7 +443,7 @@
     <color name="seekbar_progress_xmas">#000000</color>
     <color name="seekbar_progress_pink_panther">#000000</color>
     <color name="seekbar_progress_jack_o_lantern">#000000</color>
-    <color name="seekbar_progress_sharmrock">#000000</color>
+    <color name="seekbar_progress_shamrock">#007831</color>
     <color name="seekbar_progress_murica">#000000</color>
     <color name="seekbar_progress_psychedelic">#000000</color>
     <color name="seekbar_progress_rasta">#000000</color>
@@ -470,7 +470,7 @@
     <color name="seekbar_thumb_xmas">#F1CA4D</color>
     <color name="seekbar_thumb_pink_panther">#ff0000</color>
     <color name="seekbar_thumb_jack_o_lantern">#000</color>
-    <color name="seekbar_thumb_sharmrock">#F1CA4D</color>
+    <color name="seekbar_thumb_shamrock">#007831</color>
     <color name="seekbar_thumb_murica">#F1CA4D</color>
     <color name="seekbar_thumb_psychedelic">#F1CA4D</color>
     <color name="seekbar_thumb_rasta">#F1CA4D</color>
