@@ -15,7 +15,7 @@
     <color name="background_murica">#ffffff</color>
     <color name="background_psychedelic">#ffffff</color>
     <color name="background_rasta">#ffffff</color>
-    <color name="background_ussr">#ffffff</color>
+    <color name="background_ussr">#cc0000</color>
     <color name="background_tron">#ffffff</color>
     <color name="background_ramen">#ffffff</color>
     <color name="background_rainbow">#ffffff</color>
@@ -42,7 +42,7 @@
     <color name="play_button_murica">#378b29</color>
     <color name="play_button_psychedelic">#378b29</color>
     <color name="play_button_rasta">#378b29</color>
-    <color name="play_button_ussr">#378b29</color>
+    <color name="play_button_ussr">#ffd700</color>
     <color name="play_button_tron">#378b29</color>
     <color name="play_button_ramen">#378b29</color>
     <color name="play_button_rainbow">#378b29</color>
@@ -69,7 +69,7 @@
     <color name="pause_button_murica">#F1CA4D</color>
     <color name="pause_button_psychedelic">#F1CA4D</color>
     <color name="pause_button_rasta">#F1CA4D</color>
-    <color name="pause_button_ussr">#F1CA4D</color>
+    <color name="pause_button_ussr">#ffd700</color>
     <color name="pause_button_tron">#F1CA4D</color>
     <color name="pause_button_ramen">#F1CA4D</color>
     <color name="pause_button_rainbow">#F1CA4D</color>
@@ -96,7 +96,7 @@
     <color name="skip_button_murica">#ff0000</color>
     <color name="skip_button_psychedelic">#ff0000</color>
     <color name="skip_button_rasta">#ff0000</color>
-    <color name="skip_button_ussr">#ff0000</color>
+    <color name="skip_button_ussr">#ffd700</color>
     <color name="skip_button_tron">#ff0000</color>
     <color name="skip_button_ramen">#ff0000</color>
     <color name="skip_button_rainbow">#ff0000</color>
@@ -123,7 +123,7 @@
     <color name="shuffle_button_murica">#ff0000</color>
     <color name="shuffle_button_psychedelic">#ff0000</color>
     <color name="shuffle_button_rasta">#ff0000</color>
-    <color name="shuffle_button_ussr">#ff0000</color>
+    <color name="shuffle_button_ussr">#ffd700</color>
     <color name="shuffle_button_tron">#ff0000</color>
     <color name="shuffle_button_ramen">#ff0000</color>
     <color name="shuffle_button_rainbow">#ff0000</color>
@@ -150,7 +150,7 @@
     <color name="playlist_button_murica">#ff0000</color>
     <color name="playlist_button_psychedelic">#ff0000</color>
     <color name="playlist_button_rasta">#ff0000</color>
-    <color name="playlist_button_ussr">#ff0000</color>
+    <color name="playlist_button_ussr">#ffd700</color>
     <color name="playlist_button_tron">#ff0000</color>
     <color name="playlist_button_ramen">#ff0000</color>
     <color name="playlist_button_rainbow">#ff0000</color>
@@ -177,7 +177,7 @@
     <color name="prev_button_murica">#ff0000</color>
     <color name="prev_button_psychedelic">#ff0000</color>
     <color name="prev_button_rasta">#ff0000</color>
-    <color name="prev_button_ussr">#ff0000</color>
+    <color name="prev_button_ussr">#ffd700</color>
     <color name="prev_button_tron">#ff0000</color>
     <color name="prev_button_ramen">#ff0000</color>
     <color name="prev_button_rainbow">#ff0000</color>
@@ -204,7 +204,7 @@
     <color name="nav_drawer_background_murica">#ffe42624</color>
     <color name="nav_drawer_background_psychedelic">#ffe42624</color>
     <color name="nav_drawer_background_rasta">#ffe42624</color>
-    <color name="nav_drawer_background_ussr">#ffe42624</color>
+    <color name="nav_drawer_background_ussr">#ffd700</color>
     <color name="nav_drawer_background_tron">#ffe42624</color>
     <color name="nav_drawer_background_ramen">#ffe42624</color>
     <color name="nav_drawer_background_rainbow">#ffe42624</color>
@@ -231,7 +231,7 @@
     <color name="nav_drawer_header_text_murica">#ffffffff</color>
     <color name="nav_drawer_header_text_psychedelic">#ffffffff</color>
     <color name="nav_drawer_header_text_rasta">#ffffffff</color>
-    <color name="nav_drawer_header_text_ussr">#ffffffff</color>
+    <color name="nav_drawer_header_text_ussr">#ffd700</color>
     <color name="nav_drawer_header_text_tron">#ffffffff</color>
     <color name="nav_drawer_header_text_ramen">#ffffffff</color>
     <color name="nav_drawer_header_text_rainbow">#ffffffff</color>
@@ -258,7 +258,7 @@
     <color name="nav_drawer_text_murica">#ffffffff</color>
     <color name="nav_drawer_text_psychedelic">#ffffffff</color>
     <color name="nav_drawer_text_rasta">#ffffffff</color>
-    <color name="nav_drawer_text_ussr">#ffffffff</color>
+    <color name="nav_drawer_text_ussr">#ffd700</color>
     <color name="nav_drawer_text_tron">#ffffffff</color>
     <color name="nav_drawer_text_ramen">#ffffffff</color>
     <color name="nav_drawer_text_rainbow">#ffffffff</color>
@@ -285,7 +285,7 @@
     <color name="list_divider_murica">#000000</color>
     <color name="list_divider_psychedelic">#000000</color>
     <color name="list_divider_rasta">#000000</color>
-    <color name="list_divider_ussr">#000000</color>
+    <color name="list_divider_ussr">#ffd700</color>
     <color name="list_divider_tron">#000000</color>
     <color name="list_divider_ramen">#000000</color>
     <color name="list_divider_rainbow">#000000</color>
@@ -312,7 +312,7 @@
     <color name="list_empty_text_murica">#ffc5c5c5</color>
     <color name="list_empty_text_psychedelic">#ffc5c5c5</color>
     <color name="list_empty_text_rasta">#ffc5c5c5</color>
-    <color name="list_empty_text_ussr">#ffc5c5c5</color>
+    <color name="list_empty_text_ussr">#ffd700</color>
     <color name="list_empty_text_tron">#ffc5c5c5</color>
     <color name="list_empty_text_ramen">#ffc5c5c5</color>
     <color name="list_empty_text_rainbow">#ffc5c5c5</color>
@@ -339,7 +339,7 @@
     <color name="song_label_murica">#378b29</color>
     <color name="song_label_psychedelic">#378b29</color>
     <color name="song_label_rasta">#378b29</color>
-    <color name="song_label_ussr">#378b29</color>
+    <color name="song_label_ussr">#ffd700</color>
     <color name="song_label_tron">#378b29</color>
     <color name="song_label_ramen">#378b29</color>
     <color name="song_label_rainbow">#378b29</color>
@@ -366,7 +366,7 @@
     <color name="playlist_item_track_title_murica">#378b29</color>
     <color name="playlist_item_track_title_psychedelic">#378b29</color>
     <color name="playlist_item_track_title_rasta">#378b29</color>
-    <color name="playlist_item_track_title_ussr">#378b29</color>
+    <color name="playlist_item_track_title_ussr">#ffd700</color>
     <color name="playlist_item_track_title_tron">#378b29</color>
     <color name="playlist_item_track_title_ramen">#378b29</color>
     <color name="playlist_item_track_title_rainbow">#378b29</color>
@@ -393,7 +393,7 @@
     <color name="playlist_item_track_artist_murica">#ff0000</color>
     <color name="playlist_item_track_artist_psychedelic">#ff0000</color>
     <color name="playlist_item_track_artist_rasta">#ff0000</color>
-    <color name="playlist_item_track_artist_ussr">#ff0000</color>
+    <color name="playlist_item_track_artist_ussr">#ffd700</color>
     <color name="playlist_item_track_artist_tron">#ff0000</color>
     <color name="playlist_item_track_artist_ramen">#ff0000</color>
     <color name="playlist_item_track_artist_rainbow">#ff0000</color>
@@ -420,7 +420,7 @@
     <color name="seekbar_background_murica">#ffff7f00</color>
     <color name="seekbar_background_psychedelic">#ffff7f00</color>
     <color name="seekbar_background_rasta">#ffff7f00</color>
-    <color name="seekbar_background_ussr">#ffff7f00</color>
+    <color name="seekbar_background_ussr">#ffd700</color>
     <color name="seekbar_background_tron">#ffff7f00</color>
     <color name="seekbar_background_ramen">#ffff7f00</color>
     <color name="seekbar_background_rainbow">#ffff7f00</color>
@@ -447,7 +447,7 @@
     <color name="seekbar_progress_murica">#000000</color>
     <color name="seekbar_progress_psychedelic">#000000</color>
     <color name="seekbar_progress_rasta">#000000</color>
-    <color name="seekbar_progress_ussr">#000000</color>
+    <color name="seekbar_progress_ussr">#ffd700</color>
     <color name="seekbar_progress_tron">#000000</color>
     <color name="seekbar_progress_ramen">#000000</color>
     <color name="seekbar_progress_rainbow">#000000</color>
@@ -474,7 +474,7 @@
     <color name="seekbar_thumb_murica">#F1CA4D</color>
     <color name="seekbar_thumb_psychedelic">#F1CA4D</color>
     <color name="seekbar_thumb_rasta">#F1CA4D</color>
-    <color name="seekbar_thumb_ussr">#F1CA4D</color>
+    <color name="seekbar_thumb_ussr">#ffd700</color>
     <color name="seekbar_thumb_tron">#F1CA4D</color>
     <color name="seekbar_thumb_ramen">#F1CA4D</color>
     <color name="seekbar_thumb_rainbow">#F1CA4D</color>
