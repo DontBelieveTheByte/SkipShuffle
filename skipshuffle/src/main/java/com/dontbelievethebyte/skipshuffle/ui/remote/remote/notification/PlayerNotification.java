@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.notification;
+package com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,7 +11,6 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.ui.notification.builder.RemoteViewsBuilder;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
@@ -57,7 +56,7 @@ public class PlayerNotification {
 
     private RemoteViews getRemoteViews()
     {
-        RemoteViewsBuilder remoteViewsBuilder = new RemoteViewsBuilder(
+        NotificationRemoteViewsBuilder remoteViewsBuilder = new NotificationRemoteViewsBuilder(
                 skipShuffleMediaPlayer,
                 new Drawables(skipShuffleMediaPlayer, skipShuffleMediaPlayer.getPreferencesHelper().getUIType()),
                 new Colors(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())

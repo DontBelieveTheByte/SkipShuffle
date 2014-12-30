@@ -25,7 +25,7 @@ import com.dontbelievethebyte.skipshuffle.service.callbacks.OrientationChangeCal
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification.PlayerNotification;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 

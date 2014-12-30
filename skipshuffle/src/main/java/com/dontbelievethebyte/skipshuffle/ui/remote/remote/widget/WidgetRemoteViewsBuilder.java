@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.notification.builder;
+package com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
@@ -20,14 +19,14 @@ import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
 
-public class RemoteViewsBuilder {
+public class WidgetRemoteViewsBuilder {
 
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
     private RemoteViews remoteViews;
     private Drawables drawables;
     private Colors colors;
 
-    public RemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables, Colors colors)
+    public WidgetRemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables, Colors colors)
     {
         this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
         this.drawables = drawables;
@@ -44,24 +43,44 @@ public class RemoteViewsBuilder {
         this.colors = colors;
     }
 
-    public RemoteViews build()
+    public RemoteViews buildNotification()
     {
         RandomPlaylist playlist = skipShuffleMediaPlayer.getPlaylist();
+        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
         buildContainer();
         buildPrev();
-        buildPlay();
+        buildPlay(skipShuffleMediaPlayer.isPlaying());
         buildShuffle((null != playlist) && playlist.isShuffle());
         buildSkip();
         buildDefault();
         buildTextLabelsColor();
         if (null != playlist) {
             try {
-                buildTextLabelsContent(playlist.getCurrent());
+                buildTitleLabelContent(trackPrinter.printTitle(playlist.getCurrent()));
             } catch (PlaylistEmptyException e) {
-                buildTextLabelsContent(null);
+                buildTitleLabelContent(null);
             }
         } else
-            buildTextLabelsContent(null);
+            buildTitleLabelContent(null);
+        return remoteViews;
+    }
+
+    public RemoteViews buildWidget()
+    {
+        boolean isPlaying = false;
+        boolean isShuffle = true;
+        String title = "derp";
+        String artist = "merp";
+        buildContainer();
+        buildPrev();
+        buildPlay(isPlaying);
+        buildShuffle(isShuffle);
+        buildSkip();
+        buildDefault();
+        buildTextLabelsColor();
+        buildTitleLabelContent(title);
+        buildArtistLabelContent(artist);
+
         return remoteViews;
     }
 
@@ -80,18 +99,19 @@ public class RemoteViewsBuilder {
         );
     }
 
-    private void buildTextLabelsContent(Track track)
+    private void buildTitleLabelContent(String title)
     {
-        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
-
         remoteViews.setTextViewText(
                 R.id.track_title,
-                trackPrinter.printTitle(track)
+                title
         );
+    }
 
+    private void buildArtistLabelContent(String artist)
+    {
         remoteViews.setTextViewText(
                 R.id.track_artist,
-                trackPrinter.printArtist(track)
+                artist
         );
     }
 
@@ -137,9 +157,9 @@ public class RemoteViewsBuilder {
         );
     }
 
-    private void buildPlay()
+    private void buildPlay(boolean isPlaying)
     {
-        int imageResource = (skipShuffleMediaPlayer.isPlaying()) ? drawables.play : drawables.pause;
+        int imageResource = isPlaying ? drawables.play : drawables.pause;
 
         remoteViews.setImageViewResource(
                 R.id.notif_play,
