@@ -21,7 +21,6 @@
     <color name="background_rainbow">#0000ff</color>
     <color name="background_homer">#fff</color>
     <color name="background_kosher">#fff</color>
-    <color name="background_mario">#fff</color>
     <color name="background_star_wars">#000</color>
 
     <color name="play_button_neon">#ff8dc63f</color>
@@ -40,7 +39,6 @@
     <color name="play_button_rainbow">#00ff00</color>
     <color name="play_button_homer">#378b29</color>
     <color name="play_button_kosher">#0038b8</color>
-    <color name="play_button_mario">#378b29</color>
     <color name="play_button_star_wars">#ffe81f</color>
 
     <color name="pause_button_neon">#ffffcc33</color>
