@@ -563,7 +563,7 @@ public class ColorMapper {
             case UITypes.PINK_PANTHER :
                 return R.color.play_button_pink_panther;
             case UITypes.JACK_O_LANTERN :
-                return R.color.playlist_button_jack_o_lantern;
+                return R.color.play_button_jack_o_lantern;
             case UITypes.SHAMROCK :
                 return R.color.play_button_sharmrock;
             case UITypes.MURICA :
