@@ -4,282 +4,109 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget;
 
-import android.app.PendingIntent;
-import android.content.Intent;
+import android.content.Context;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
-import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
-import com.dontbelievethebyte.skipshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.AbstractRemoteViewsBuilder;
 
-public class WidgetRemoteViewsBuilder {
+public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
-    private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
-    private RemoteViews remoteViews;
-    private Drawables drawables;
-    private Colors colors;
-
-    public WidgetRemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer, Drawables drawables, Colors colors)
+    public WidgetRemoteViewsBuilder(Context context)
     {
-        this.skipShuffleMediaPlayer = skipShuffleMediaPlayer;
-        this.drawables = drawables;
-        this.colors = colors;
+        super(context);
     }
 
-    public void setDrawables(Drawables drawables)
+    @Override
+    public RemoteViews build(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
     {
-        this.drawables = drawables;
-    }
+        buildContainer(R.layout.notification);
 
-    public void setColors(Colors colors)
-    {
-        this.colors = colors;
-    }
+        buildPrev(R.id.notif_prev);
 
-    public RemoteViews buildNotification()
-    {
-        RandomPlaylist playlist = skipShuffleMediaPlayer.getPlaylist();
-        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
-        buildContainer();
-        buildPrev();
-        buildPlay(skipShuffleMediaPlayer.isPlaying());
-        buildShuffle((null != playlist) && playlist.isShuffle());
-        buildSkip();
-        buildDefault();
-        buildTextLabelsColor();
-        if (null != playlist) {
-            try {
-                buildTitleLabelContent(trackPrinter.printTitle(playlist.getCurrent()));
-            } catch (PlaylistEmptyException e) {
-                buildTitleLabelContent(null);
-            }
-        } else
-            buildTitleLabelContent(null);
+        buildPlay(
+                R.id.notif_play,
+                isPlaying ? DrawableMapper.getPlay(uiType) : DrawableMapper.getPause(uiType),
+                isPlaying
+        );
+
+        buildShuffle(
+                R.id.notif_shuffle,
+                isShuffle ? DrawableMapper.getShufflePressed(uiType) : DrawableMapper.getShuffle(uiType)
+        );
+
+        buildSkip(R.id.notif_skip);
+
+        buildDefault(R.id.notif_all);
+
+        if (null != title)
+            buildTitleLabelContent(title);
+        if (null != artist)
+            buildArtistLabelContent(artist);
+
+        colorize(uiType, isPlaying);
         return remoteViews;
     }
 
-    public RemoteViews buildWidget()
+    private void colorize(int uiType, boolean isPlaying)
     {
-        boolean isPlaying = false;
-        boolean isShuffle = true;
-        String title = "derp";
-        String artist = "merp";
-        buildContainer();
-        buildPrev();
-        buildPlay(isPlaying);
-        buildShuffle(isShuffle);
-        buildSkip();
-        buildDefault();
-        buildTextLabelsColor();
-        buildTitleLabelContent(title);
-        buildArtistLabelContent(artist);
-
-        return remoteViews;
-    }
-
-    private void buildTextLabelsColor()
-    {
-        int trackTitleLabelColor = skipShuffleMediaPlayer.getResources().getColor(colors.playlistTitle);
-        remoteViews.setTextColor(
-                R.id.track_title,
-                trackTitleLabelColor
+        colorize.label(R.id.track_title,
+                context.getResources().getColor(
+                        ColorMapper.getPlaylistTitle(uiType)
+                )
         );
 
-        int trackArtistLabelColor = skipShuffleMediaPlayer.getResources().getColor(colors.playlistArtist);
-        remoteViews.setTextColor(
+        colorize.label(
                 R.id.track_artist,
-                trackArtistLabelColor
-        );
-    }
-
-    private void buildTitleLabelContent(String title)
-    {
-        remoteViews.setTextViewText(
-                R.id.track_title,
-                title
-        );
-    }
-
-    private void buildArtistLabelContent(String artist)
-    {
-        remoteViews.setTextViewText(
-                R.id.track_artist,
-                artist
-        );
-    }
-
-    private void buildContainer()
-    {
-        remoteViews = new RemoteViews(
-                skipShuffleMediaPlayer.getPackageName(),
-                R.layout.notification
+                context.getResources().getColor(
+                        ColorMapper.getPlaylistArtist(uiType)
+                )
         );
 
-        remoteViews.setImageViewResource(
+        colorize.drawable(
+                R.id.notif_play,
+                context.getResources().getColor(
+                        isPlaying ?
+                                ColorMapper.getPlayButton(uiType) :
+                                ColorMapper.getPauseButton(uiType)
+                )
+        );
+
+        colorize.drawable(
+                R.id.notif_prev,
+                context.getResources().getColor(
+                        ColorMapper.getPrevButton(uiType)
+                )
+        );
+
+        colorize.drawable(
+                R.id.notif_shuffle,
+                context.getResources().getColor(
+                        ColorMapper.getShuffleButton(uiType)
+                )
+        );
+
+        colorize.drawable(
+                R.id.notif_skip,
+                context.getResources().getColor(
+                        ColorMapper.getSkipButton(uiType)
+                )
+        );
+
+        colorize.drawable(
                 R.id.buttons_background_image,
-                drawables.notificationBackground
-        );
-
-        remoteViews.setInt(
-                R.id.buttons_background_image,
-                "setColorFilter",
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getBackground(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getBackground(uiType)
                 )
         );
 
-        remoteViews.setImageViewResource(
+        colorize.drawable(
                 R.id.buttons_background_image_overflow_protection,
-                drawables.notificationBackground
-        );
-
-        remoteViews.setInt(
-                R.id.buttons_background_image_overflow_protection,
-                "setColorFilter",
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getBackground(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getBackground(uiType)
                 )
-        );
-    }
-
-    private void buildPrev()
-    {
-        remoteViews.setImageViewResource(
-                R.id.notif_prev,
-                drawables.prev
-        );
-
-        remoteViews.setInt(
-                R.id.notif_prev,
-                "setColorFilter",
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getPrevButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
-                )
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_prev,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.PREV,
-                        0
-                )
-        );
-    }
-
-    private void buildPlay(boolean isPlaying)
-    {
-        int imageResource = isPlaying ? drawables.play : drawables.pause;
-
-        remoteViews.setImageViewResource(
-                R.id.notif_play,
-                imageResource
-        );
-
-        String command = (skipShuffleMediaPlayer.isPlaying()) ?
-                SkipShuflleMediaPlayerCommandsContract.PAUSE :
-                SkipShuflleMediaPlayerCommandsContract.PLAY;
-
-        remoteViews.setInt(
-                R.id.notif_play,
-                "setColorFilter",
-                skipShuffleMediaPlayer.getResources().getColor(
-                        skipShuffleMediaPlayer.isPlaying() ?
-                                ColorMapper.getPlayButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType()) :
-                                ColorMapper.getPauseButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
-                )
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_play,
-                buildNotificationButtonsPendingIntent(
-                        command,
-                        2
-                )
-        );
-    }
-
-    private void buildShuffle(boolean isShuffle)
-    {
-        remoteViews.setImageViewResource(
-                R.id.notif_shuffle,
-                isShuffle ? drawables.shufflePressed : drawables.shuffle
-        );
-
-        remoteViews.setInt(
-                R.id.notif_shuffle,
-                "setColorFilter",
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getShuffleButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
-                )
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_shuffle,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.SHUFFLE,
-                        1
-                )
-        );
-    }
-
-    private void buildSkip()
-    {
-        remoteViews.setImageViewResource(
-                R.id.notif_skip,
-                drawables.skip
-        );
-
-        remoteViews.setInt(
-                R.id.notif_skip,
-                "setColorFilter",
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getSkipButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
-                )
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_skip,
-                buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.SKIP,
-                        3
-                )
-        );
-    }
-
-    private void buildDefault()
-    {
-        Intent playerActivityIntent = new Intent(skipShuffleMediaPlayer, PlayerActivity.class);
-
-        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
-                skipShuffleMediaPlayer,
-                4,
-                playerActivityIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT
-        );
-
-        remoteViews.setOnClickPendingIntent(
-                R.id.notif_all,
-                mainActivityPendingIntent
-        );
-    }
-
-    private PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode)
-    {
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
-        intent.setPackage(skipShuffleMediaPlayer.getPackageName());
-        return PendingIntent.getBroadcast(
-                skipShuffleMediaPlayer,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT
         );
     }
 }

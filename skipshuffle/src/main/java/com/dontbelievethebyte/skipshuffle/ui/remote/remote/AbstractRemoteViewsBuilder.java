@@ -44,7 +44,15 @@ public abstract class AbstractRemoteViewsBuilder {
         colorize = new Colorizer();
     }
 
-    public abstract RemoteViews build();
+    public RemoteViews build()
+    {
+        return null;
+    }
+
+    public RemoteViews build(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
+    {
+        return null;
+    }
 
     protected void buildTitleLabelContent(String title)
     {
