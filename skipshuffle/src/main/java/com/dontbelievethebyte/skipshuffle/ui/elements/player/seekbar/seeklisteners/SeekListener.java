@@ -4,7 +4,6 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.seeklisteners;
 
-import android.util.Log;
 import android.widget.SeekBar;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
@@ -29,7 +28,6 @@ public class SeekListener implements SeekBar.OnSeekBarChangeListener {
                 if (skipShuffleMediaPlayer.isPaused() || skipShuffleMediaPlayer.isPlaying()) {
                     skipShuffleMediaPlayer.seekToPosition(progress);
                 }
-                Log.d(BaseActivity.TAG, "PROG : " + Integer.toString(progress));
             }
         } catch (NoMediaPlayerException nm) {
             baseActivity.handleNoMediaPlayerException(nm);
