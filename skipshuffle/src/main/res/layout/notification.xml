@@ -33,7 +33,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/buttons_background_image"
             android:layout_centerInParent="true"
-            android:src="#ff003d01"
+            android:src="@drawable/notification_background"
             android:contentDescription="@string/accessibility_background" />
 
         <LinearLayout
@@ -86,7 +86,7 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/buttons_background_image_overflow_protection"
                 android:layout_centerInParent="true"
-                android:src="#ff3d0e00"
+                android:src="@drawable/notification_background"
                 android:contentDescription="@string/accessibility_background" />
 
             <LinearLayout
