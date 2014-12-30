@@ -27,9 +27,9 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
     public RemoteViews build()
     {
         SkipShuffleMediaPlayer skipShuffleMediaPlayer = (SkipShuffleMediaPlayer) context;
-        RandomPlaylist playlist = skipShuffleMediaPlayer.getPlaylist();
-        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
-        buildContainer(skipShuffleMediaPlayer.getPackageName());
+
+        buildContainer(R.layout.notification);
+
         buildPrev(R.id.notif_prev);
 
         int uiType = skipShuffleMediaPlayer.getPreferencesHelper().getUIType();
@@ -39,6 +39,8 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
                 skipShuffleMediaPlayer.isPlaying() ? DrawableMapper.getPlay(uiType) : DrawableMapper.getPause(uiType),
                 skipShuffleMediaPlayer.isPlaying()
         );
+
+        RandomPlaylist playlist = skipShuffleMediaPlayer.getPlaylist();
         buildShuffle(
                 R.id.notif_shuffle,
                 (null != playlist) && playlist.isShuffle() ? DrawableMapper.getShufflePressed(uiType) : DrawableMapper.getShuffle(uiType)
@@ -48,6 +50,7 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
         buildDefault(R.id.notif_all);
 
+        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
         if (null != playlist) {
             try {
                 buildTitleLabelContent(trackPrinter.printTitle(playlist.getCurrent()));

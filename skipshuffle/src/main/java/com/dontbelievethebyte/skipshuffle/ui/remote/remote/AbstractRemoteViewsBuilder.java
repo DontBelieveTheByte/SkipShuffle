@@ -62,11 +62,11 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected void buildContainer(String packageName)
+    protected void buildContainer(int layoutResourceId)
     {
         remoteViews = new RemoteViews(
-                packageName,
-                R.layout.notification
+                context.getPackageName(),
+                layoutResourceId
         );
     }
 
