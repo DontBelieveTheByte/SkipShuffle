@@ -969,66 +969,6 @@ public class ColorMapper {
         }
     }
 
-    public static int getSeekbarBackground(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.color.seekbar_background_mono_light;
-            case UITypes.MONO_DARK :
-                return R.color.seekbar_background_mono_dark;
-            case UITypes.NEON :
-                return R.color.seekbar_background_neon;
-            case UITypes.XMAS:
-                return R.color.seekbar_background_xmas;
-            case UITypes.PINK_PANTHER :
-                return R.color.seekbar_background_pink_panther;
-            case UITypes.JACK_O_LANTERN :
-                return R.color.seekbar_background_jack_o_lantern;
-            case UITypes.SHAMROCK :
-                return R.color.seekbar_background_shamrock;
-            case UITypes.MURICA :
-                return R.color.seekbar_background_murica;
-            case UITypes.PSYCHEDELIC :
-                return R.color.seekbar_background_psychedelic;
-            case UITypes.RASTA :
-                return R.color.seekbar_background_rasta;
-            case UITypes.USSR :
-                return R.color.seekbar_background_ussr;
-            case UITypes.TRON :
-                return R.color.seekbar_background_tron;
-            case UITypes.RAMEN :
-                return R.color.seekbar_background_ramen;
-            case UITypes.RAINBOW :
-                return R.color.seekbar_background_rainbow;
-            case UITypes.METAL :
-                return R.color.seekbar_background_metal;
-            case UITypes.HOMER :
-                return R.color.seekbar_background_homer;
-            case UITypes.KOSHER :
-                return R.color.seekbar_background_kosher;
-            case UITypes.MARIO :
-                return R.color.seekbar_background_mario;
-            case UITypes.STAR_WARS :
-                return R.color.seekbar_background_star_wars;
-            case UITypes.NAZI :
-                return R.color.seekbar_background_nazi;
-            case UITypes.LOCOS_TACOS :
-                return R.color.seekbar_background_locos_tacos;
-            case UITypes.FRUIT_LOOPS :
-                return R.color.seekbar_background_fruit_loops;
-            case UITypes.RONALDO :
-                return R.color.seekbar_background_ronaldo;
-            case UITypes.CUP_A_TEA:
-                return R.color.seekbar_background_cup_a_tea;
-            case UITypes.BACON :
-                return R.color.seekbar_background_bacon;
-            case UITypes.PUNJAB :
-                return R.color.seekbar_background_punjab;
-            default:
-                return R.color.seekbar_background_neon;
-        }
-    }
-
     public static int getSeekbarThumb(Integer uiType)
     {
         switch (uiType) {
