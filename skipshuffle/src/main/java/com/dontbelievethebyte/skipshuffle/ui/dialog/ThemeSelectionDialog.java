@@ -52,6 +52,69 @@ public class ThemeSelectionDialog {
                             case UITypes.XMAS:
                                 preferencesHelper.setUIType(UITypes.XMAS);
                                 break;
+                            case UITypes.PINK_PANTHER:
+                                preferencesHelper.setUIType(UITypes.PINK_PANTHER);
+                                break;
+                            case UITypes.JACK_O_LANTERN:
+                                preferencesHelper.setUIType(UITypes.JACK_O_LANTERN);
+                                break;
+                            case UITypes.SHAMROCK:
+                                preferencesHelper.setUIType(UITypes.SHAMROCK);
+                                break;
+                            case UITypes.MURICA:
+                                preferencesHelper.setUIType(UITypes.MURICA);
+                                break;
+                            case UITypes.PSYCHEDELIC:
+                                preferencesHelper.setUIType(UITypes.PSYCHEDELIC);
+                                break;
+                            case UITypes.RASTA:
+                                preferencesHelper.setUIType(UITypes.RASTA);
+                                break;
+                            case UITypes.USSR:
+                                preferencesHelper.setUIType(UITypes.USSR);
+                                break;
+                            case UITypes.TRON:
+                                preferencesHelper.setUIType(UITypes.TRON);
+                                break;
+                            case UITypes.RAMEN:
+                                preferencesHelper.setUIType(UITypes.RAMEN);
+                                break;
+                            case UITypes.RAINBOW:
+                                preferencesHelper.setUIType(UITypes.RAINBOW);
+                                break;
+                            case UITypes.METAL:
+                                preferencesHelper.setUIType(UITypes.METAL);
+                                break;
+                            case UITypes.HOMER:
+                                preferencesHelper.setUIType(UITypes.HOMER);
+                                break;
+                            case UITypes.MARIO:
+                                preferencesHelper.setUIType(UITypes.MARIO);
+                                break;
+                            case UITypes.STAR_WARS:
+                                preferencesHelper.setUIType(UITypes.STAR_WARS);
+                                break;
+                            case UITypes.NAZI:
+                                preferencesHelper.setUIType(UITypes.NAZI);
+                                break;
+                            case UITypes.LOCOS_TACOS:
+                                preferencesHelper.setUIType(UITypes.LOCOS_TACOS);
+                                break;
+                            case UITypes.FRUIT_LOOPS:
+                                preferencesHelper.setUIType(UITypes.FRUIT_LOOPS);
+                                break;
+                            case UITypes.RONALDO:
+                                preferencesHelper.setUIType(UITypes.RONALDO);
+                                break;
+                            case UITypes.CUP_A_TEA:
+                                preferencesHelper.setUIType(UITypes.CUP_A_TEA);
+                                break;
+                            case UITypes.BACON:
+                                preferencesHelper.setUIType(UITypes.BACON);
+                                break;
+                            case UITypes.PUNJAB:
+                                preferencesHelper.setUIType(UITypes.PUNJAB);
+                                break;
                             default: //Equivalent to UIFactory.NEON
                                 preferencesHelper.setUIType(UITypes.NEON);
                                 break;

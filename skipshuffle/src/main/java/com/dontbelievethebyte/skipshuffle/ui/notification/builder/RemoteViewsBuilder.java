@@ -107,9 +107,25 @@ public class RemoteViewsBuilder {
                 drawables.notificationBackground
         );
 
+        remoteViews.setInt(
+                R.id.buttons_background_image,
+                "setColorFilter",
+                skipShuffleMediaPlayer.getResources().getColor(
+                        ColorMapper.getBackground(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                )
+        );
+
         remoteViews.setImageViewResource(
                 R.id.buttons_background_image_overflow_protection,
                 drawables.notificationBackground
+        );
+
+        remoteViews.setInt(
+                R.id.buttons_background_image_overflow_protection,
+                "setColorFilter",
+                skipShuffleMediaPlayer.getResources().getColor(
+                        ColorMapper.getBackground(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                )
         );
     }
 

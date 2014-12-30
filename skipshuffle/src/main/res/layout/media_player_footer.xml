@@ -34,7 +34,7 @@
             android:layout_width="@dimen/list_buttons_w_h"
             android:layout_height="@dimen/list_buttons_w_h"
             android:id="@+id/prevBtn"
-            android:src="@drawable/prev_states_neon"
+            android:src="@drawable/prev_states"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter" />
         <View
@@ -48,7 +48,7 @@
             android:layout_height="@dimen/list_buttons_w_h"
             android:id="@+id/shuffleBtn"
             android:longClickable="false"
-            android:src="@drawable/shuffle_states_neon"
+            android:src="@drawable/shuffle_states"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent" />
         <View
@@ -61,7 +61,7 @@
             android:layout_width="@dimen/list_buttons_w_h"
             android:layout_height="@dimen/list_buttons_w_h"
             android:id="@+id/playBtn"
-            android:src="@drawable/play_states_neon"
+            android:src="@drawable/play_states"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter" />
 
@@ -74,7 +74,7 @@
             android:layout_width="@dimen/list_buttons_w_h"
             android:layout_height="@dimen/list_buttons_w_h"
             android:id="@+id/skipBtn"
-            android:src="@drawable/skip_states_neon"
+            android:src="@drawable/skip_states"
             android:contentDescription="@string/accessibility_skip"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
@@ -89,7 +89,7 @@
             android:layout_width="@dimen/list_buttons_w_h"
             android:layout_height="@dimen/list_buttons_w_h"
             android:id="@+id/playlistBtn"
-            android:src="@drawable/playlist_states_neon"
+            android:src="@drawable/playlist_states"
             android:contentDescription="@string/accessibility_skip"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
