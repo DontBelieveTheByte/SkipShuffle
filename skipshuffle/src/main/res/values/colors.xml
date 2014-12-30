@@ -11,19 +11,19 @@
     <color name="background_xmas">#ffffff</color>
     <color name="background_pink_panther">#ffcfff</color>
     <color name="background_jack_o_lantern">#ff6600</color>
-    <color name="background_shamrock">#ffffff</color>
-    <color name="background_murica">#ffffff</color>
-    <color name="background_psychedelic">#ffffff</color>
-    <color name="background_rasta">#ffffff</color>
+    <color name="background_shamrock">#fff</color>
+    <color name="background_murica">#fff</color>
+    <color name="background_psychedelic">#fff</color>
+    <color name="background_rasta">#fff</color>
     <color name="background_ussr">#cc0000</color>
     <color name="background_tron">#000</color>
-    <color name="background_ramen">#ffffff</color>
-    <color name="background_rainbow">#ffffff</color>
-    <color name="background_metal">#ffffff</color>
-    <color name="background_homer">#ffffff</color>
-    <color name="background_kosher">#ffffff</color>
-    <color name="background_mario">#ffffff</color>
-    <color name="background_star_wars">#ffffff</color>
+    <color name="background_ramen">#fff</color>
+    <color name="background_rainbow">#fff</color>
+    <color name="background_metal">#fff</color>
+    <color name="background_homer">#fff</color>
+    <color name="background_kosher">#fff</color>
+    <color name="background_mario">#fff</color>
+    <color name="background_star_wars">#000</color>
     <color name="background_nazi">#ffffff</color>
     <color name="background_locos_tacos">#ffffff</color>
     <color name="background_fruit_loops">#ffffff</color>
@@ -50,7 +50,7 @@
     <color name="play_button_homer">#378b29</color>
     <color name="play_button_kosher">#0038b8</color>
     <color name="play_button_mario">#378b29</color>
-    <color name="play_button_star_wars">#378b29</color>
+    <color name="play_button_star_wars">#ffe81f</color>
     <color name="play_button_nazi">#378b29</color>
     <color name="play_button_locos_tacos">#378b29</color>
     <color name="play_button_fruit_loops">#378b29</color>
@@ -77,7 +77,7 @@
     <color name="pause_button_homer">#F1CA4D</color>
     <color name="pause_button_kosher">#0038b8</color>
     <color name="pause_button_mario">#F1CA4D</color>
-    <color name="pause_button_star_wars">#F1CA4D</color>
+    <color name="pause_button_star_wars">#ffe81f</color>
     <color name="pause_button_nazi">#F1CA4D</color>
     <color name="pause_button_locos_tacos">#F1CA4D</color>
     <color name="pause_button_fruit_loops">#F1CA4D</color>
@@ -104,7 +104,7 @@
     <color name="skip_button_homer">#ff0000</color>
     <color name="skip_button_kosher">#0038b8</color>
     <color name="skip_button_mario">#ff0000</color>
-    <color name="skip_button_star_wars">#ff0000</color>
+    <color name="skip_button_star_wars">#ffe81f</color>
     <color name="skip_button_nazi">#ff0000</color>
     <color name="skip_button_locos_tacos">#ff0000</color>
     <color name="skip_button_fruit_loops">#ff0000</color>
@@ -131,7 +131,7 @@
     <color name="shuffle_button_homer">#ff0000</color>
     <color name="shuffle_button_kosher">#0038b8</color>
     <color name="shuffle_button_mario">#ff0000</color>
-    <color name="shuffle_button_star_wars">#ff0000</color>
+    <color name="shuffle_button_star_wars">#ffe81f</color>
     <color name="shuffle_button_nazi">#ff0000</color>
     <color name="shuffle_button_locos_tacos">#ff0000</color>
     <color name="shuffle_button_fruit_loops">#ff0000</color>
@@ -158,7 +158,7 @@
     <color name="playlist_button_homer">#ff0000</color>
     <color name="playlist_button_kosher">#0038b8</color>
     <color name="playlist_button_mario">#ff0000</color>
-    <color name="playlist_button_star_wars">#ff0000</color>
+    <color name="playlist_button_star_wars">#ffe81f</color>
     <color name="playlist_button_nazi">#ff0000</color>
     <color name="playlist_button_locos_tacos">#ff0000</color>
     <color name="playlist_button_fruit_loops">#ff0000</color>
@@ -185,7 +185,7 @@
     <color name="prev_button_homer">#ff0000</color>
     <color name="prev_button_kosher">#0038b8</color>
     <color name="prev_button_mario">#ff0000</color>
-    <color name="prev_button_star_wars">#ff0000</color>
+    <color name="prev_button_star_wars">#ffe81f</color>
     <color name="prev_button_nazi">#ff0000</color>
     <color name="prev_button_locos_tacos">#ff0000</color>
     <color name="prev_button_fruit_loops">#ff0000</color>
@@ -212,7 +212,7 @@
     <color name="nav_drawer_background_homer">#ffe42624</color>
     <color name="nav_drawer_background_kosher">#0038b8</color>
     <color name="nav_drawer_background_mario">#ffe42624</color>
-    <color name="nav_drawer_background_star_wars">#ffe42624</color>
+    <color name="nav_drawer_background_star_wars">#ffe81f</color>
     <color name="nav_drawer_background_nazi">#ffe42624</color>
     <color name="nav_drawer_background_locos_tacos">#ffe42624</color>
     <color name="nav_drawer_background_fruit_loops">#ffe42624</color>
@@ -239,7 +239,7 @@
     <color name="nav_drawer_header_text_homer">#ffffffff</color>
     <color name="nav_drawer_header_text_kosher">#ffffffff</color>
     <color name="nav_drawer_header_text_mario">#ffffffff</color>
-    <color name="nav_drawer_header_text_star_wars">#ffffffff</color>
+    <color name="nav_drawer_header_text_star_wars">#000</color>
     <color name="nav_drawer_header_text_nazi">#ffffffff</color>
     <color name="nav_drawer_header_text_locos_tacos">#ffffffff</color>
     <color name="nav_drawer_header_text_fruit_loops">#ffffffff</color>
@@ -266,7 +266,7 @@
     <color name="nav_drawer_text_homer">#ffffffff</color>
     <color name="nav_drawer_text_kosher">#ffffffff</color>
     <color name="nav_drawer_text_mario">#ffffffff</color>
-    <color name="nav_drawer_text_star_wars">#ffffffff</color>
+    <color name="nav_drawer_text_star_wars">#000</color>
     <color name="nav_drawer_text_nazi">#ffffffff</color>
     <color name="nav_drawer_text_locos_tacos">#ffffffff</color>
     <color name="nav_drawer_text_fruit_loops">#ffffffff</color>
@@ -293,7 +293,7 @@
     <color name="list_divider_homer">#000000</color>
     <color name="list_divider_kosher">#0038b8</color>
     <color name="list_divider_mario">#000000</color>
-    <color name="list_divider_star_wars">#000000</color>
+    <color name="list_divider_star_wars">#ffe81f</color>
     <color name="list_divider_nazi">#000000</color>
     <color name="list_divider_locos_tacos">#000000</color>
     <color name="list_divider_fruit_loops">#000000</color>
@@ -320,7 +320,7 @@
     <color name="list_empty_text_homer">#ffc5c5c5</color>
     <color name="list_empty_text_kosher">#0038b8</color>
     <color name="list_empty_text_mario">#ffc5c5c5</color>
-    <color name="list_empty_text_star_wars">#ffc5c5c5</color>
+    <color name="list_empty_text_star_wars">#ffe81f</color>
     <color name="list_empty_text_nazi">#ffc5c5c5</color>
     <color name="list_empty_text_locos_tacos">#ffc5c5c5</color>
     <color name="list_empty_text_fruit_loops">#ffc5c5c5</color>
@@ -347,7 +347,7 @@
     <color name="song_label_homer">#378b29</color>
     <color name="song_label_kosher">#0038b8</color>
     <color name="song_label_mario">#378b29</color>
-    <color name="song_label_star_wars">#378b29</color>
+    <color name="song_label_star_wars">#ffe81f</color>
     <color name="song_label_nazi">#378b29</color>
     <color name="song_label_locos_tacos">#378b29</color>
     <color name="song_label_fruit_loops">#378b29</color>
@@ -374,7 +374,7 @@
     <color name="playlist_item_track_title_homer">#378b29</color>
     <color name="playlist_item_track_title_kosher">#0038b8</color>
     <color name="playlist_item_track_title_mario">#378b29</color>
-    <color name="playlist_item_track_title_star_wars">#378b29</color>
+    <color name="playlist_item_track_title_star_wars">#ffe81f</color>
     <color name="playlist_item_track_title_nazi">#378b29</color>
     <color name="playlist_item_track_title_locos_tacos">#378b29</color>
     <color name="playlist_item_track_title_fruit_loops">#378b29</color>
@@ -401,7 +401,7 @@
     <color name="playlist_item_track_artist_homer">#ff0000</color>
     <color name="playlist_item_track_artist_kosher">#0038b8</color>
     <color name="playlist_item_track_artist_mario">#ff0000</color>
-    <color name="playlist_item_track_artist_star_wars">#ff0000</color>
+    <color name="playlist_item_track_artist_star_wars">#ffe81f</color>
     <color name="playlist_item_track_artist_nazi">#ff0000</color>
     <color name="playlist_item_track_artist_locos_tacos">#ff0000</color>
     <color name="playlist_item_track_artist_fruit_loops">#ff0000</color>
@@ -428,7 +428,7 @@
     <color name="seekbar_background_homer">#ffff7f00</color>
     <color name="seekbar_background_kosher">#0038b8</color>
     <color name="seekbar_background_mario">#ffff7f00</color>
-    <color name="seekbar_background_star_wars">#ffff7f00</color>
+    <color name="seekbar_background_star_wars">#ffe81f</color>
     <color name="seekbar_background_nazi">#ffff7f00</color>
     <color name="seekbar_background_locos_tacos">#ffff7f00</color>
     <color name="seekbar_background_fruit_loops">#ffff7f00</color>
@@ -455,7 +455,7 @@
     <color name="seekbar_progress_homer">#000000</color>
     <color name="seekbar_progress_kosher">#0038b8</color>
     <color name="seekbar_progress_mario">#000000</color>
-    <color name="seekbar_progress_star_wars">#000000</color>
+    <color name="seekbar_progress_star_wars">#ffe81f</color>
     <color name="seekbar_progress_nazi">#000000</color>
     <color name="seekbar_progress_locos_tacos">#000000</color>
     <color name="seekbar_progress_fruit_loops">#000000</color>
@@ -482,7 +482,7 @@
     <color name="seekbar_thumb_homer">#F1CA4D</color>
     <color name="seekbar_thumb_kosher">#0038b8</color>
     <color name="seekbar_thumb_mario">#F1CA4D</color>
-    <color name="seekbar_thumb_star_wars">#F1CA4D</color>
+    <color name="seekbar_thumb_star_wars">#ffe81f</color>
     <color name="seekbar_thumb_nazi">#F1CA4D</color>
     <color name="seekbar_thumb_locos_tacos">#F1CA4D</color>
     <color name="seekbar_thumb_fruit_loops">#F1CA4D</color>
