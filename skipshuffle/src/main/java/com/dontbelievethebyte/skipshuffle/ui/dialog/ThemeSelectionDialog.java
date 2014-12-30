@@ -82,41 +82,11 @@ public class ThemeSelectionDialog {
                             case UITypes.RAINBOW:
                                 preferencesHelper.setUIType(UITypes.RAINBOW);
                                 break;
-                            case UITypes.METAL:
-                                preferencesHelper.setUIType(UITypes.METAL);
-                                break;
-                            case UITypes.HOMER:
-                                preferencesHelper.setUIType(UITypes.HOMER);
-                                break;
                             case UITypes.KOSHER:
                                 preferencesHelper.setUIType(UITypes.KOSHER);
                                 break;
-                            case UITypes.MARIO:
-                                preferencesHelper.setUIType(UITypes.MARIO);
-                                break;
                             case UITypes.STAR_WARS:
                                 preferencesHelper.setUIType(UITypes.STAR_WARS);
-                                break;
-                            case UITypes.NAZI:
-                                preferencesHelper.setUIType(UITypes.NAZI);
-                                break;
-                            case UITypes.LOCOS_TACOS:
-                                preferencesHelper.setUIType(UITypes.LOCOS_TACOS);
-                                break;
-                            case UITypes.FRUIT_LOOPS:
-                                preferencesHelper.setUIType(UITypes.FRUIT_LOOPS);
-                                break;
-                            case UITypes.RONALDO:
-                                preferencesHelper.setUIType(UITypes.RONALDO);
-                                break;
-                            case UITypes.CUP_A_TEA:
-                                preferencesHelper.setUIType(UITypes.CUP_A_TEA);
-                                break;
-                            case UITypes.BACON:
-                                preferencesHelper.setUIType(UITypes.BACON);
-                                break;
-                            case UITypes.PUNJAB:
-                                preferencesHelper.setUIType(UITypes.PUNJAB);
                                 break;
                             default: //Equivalent to UIFactory.NEON
                                 preferencesHelper.setUIType(UITypes.NEON);

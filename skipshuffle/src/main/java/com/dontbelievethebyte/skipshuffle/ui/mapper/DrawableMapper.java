@@ -26,18 +26,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.play_states;
         }
@@ -60,18 +50,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.play_btn_pressed_neon;
         }
@@ -94,18 +74,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.pause_states;
         }
@@ -128,18 +98,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.pause_btn_pressed_neon;
         }
@@ -162,18 +122,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.prev_states;
         }
@@ -196,18 +146,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.prev_btn_pressed_neon;
         }
@@ -230,18 +170,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.seekbar_thumg_states;
         }
@@ -264,18 +194,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.skip_states;
         }
@@ -298,18 +218,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.next_btn_pressed_neon;
         }
@@ -332,18 +242,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.shuffle_states;
         }
@@ -366,18 +266,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.shuffle_btn_pressed_neon;
         }
@@ -400,18 +290,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.playlist_states;
         }
@@ -434,18 +314,8 @@ public class DrawableMapper {
             case UITypes.TRON :
             case UITypes.RAMEN :
             case UITypes.RAINBOW :
-            case UITypes.METAL :
-            case UITypes.HOMER :
             case UITypes.KOSHER :
-            case UITypes.MARIO :
             case UITypes.STAR_WARS :
-            case UITypes.NAZI :
-            case UITypes.LOCOS_TACOS :
-            case UITypes.FRUIT_LOOPS :
-            case UITypes.RONALDO :
-            case UITypes.CUP_A_TEA:
-            case UITypes.BACON :
-            case UITypes.PUNJAB :
             default:
                 return R.drawable.notification_background;
         }
