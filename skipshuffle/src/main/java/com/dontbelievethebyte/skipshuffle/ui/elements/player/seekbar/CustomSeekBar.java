@@ -56,9 +56,5 @@ public class CustomSeekBar implements UIElementCompositeInterface {
     public void setEnabled(boolean state)
     {
         seekBar.setEnabled(state);
-        if (state)
-            seekBar.setVisibility(View.VISIBLE);
-        else
-            seekBar.setVisibility(View.INVISIBLE);
     }
 }
