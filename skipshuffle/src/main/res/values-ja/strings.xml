@@ -53,5 +53,11 @@
     <string name="dialog_app_rating_title">SkipShuffle を評価します。</string>
     <string name="dialog_app_rating_text">ご支援いただき、ありがとうございます ！</string>
     <string name="no_app_store">Google Play ストア アプリケーションを見つけることができません。</string>
+    <string name="dialog_song_info_title">トラック情報</string>
+    <string name="meta_data_album">アルバム</string>
+    <string name="meta_data_artist">アーティスト</string>
+    <string name="meta_data_duration">期間</string>
+    <string name="meta_data_title">タイトル</string>
+    <string name="meta_data_unknown">不明</string>
 
 </resources>

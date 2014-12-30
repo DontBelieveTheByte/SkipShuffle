@@ -20,11 +20,14 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListen
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.PrevClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.ShuffleClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.SkipClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     public int type;
     public AbstractPlayerButtons buttons;
+    public CustomSeekBar customSeekBar;
+
     protected BaseActivity baseActivity;
 
     public abstract void doPlay();
@@ -74,6 +77,10 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
+            customSeekBar.setEnabled(
+                    (mediaPlayer.isPaused() || mediaPlayer.isPlaying())
+            );
+
             buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);

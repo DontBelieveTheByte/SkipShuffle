@@ -6,6 +6,7 @@
     <string name="meta_data_no_playlist">Nothing is playing.</string>
     <string name="meta_data_unknown_title">Unknown title.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
+    <string name="meta_data_unknown">Unknown</string>
 
     <!-- Activities -->
     <string name="label_app_name" translatable="false">SkipShuffle</string>
@@ -39,12 +40,25 @@
     <string name="dialog_app_rating_negative">Never</string>
     <string name="dialog_app_rating_title">Rate SkipShuffle</string>
     <string name="dialog_app_rating_text">If you enjoy using SkipShuffle, please take a moment to rate the application. Thank you for your support!</string>
+    <string name="dialog_song_info_title">Track info</string>
 
     <string-array name="dialog_theme_items" translatable="false">
         <item>Mono Light</item>
         <item>Mono Dark</item>
         <item>Neon</item>
         <item>Xmas</item>
+        <item>Pink Panther</item>
+        <item>Jack O\'Lantern</item>
+        <item>Shamrock</item>
+        <item>\'Murica</item>
+        <item>Psychedelic</item>
+        <item>Rasta</item>
+        <item>USSR</item>
+        <item>Tron</item>
+        <item>Ramen</item>
+        <item>Rainbow</item>
+        <item>Kosher</item>
+        <item>Star Wars</item>
     </string-array>
 
     <!-- Preferences -->
@@ -76,6 +90,13 @@
         <item>Genres</item>
         <item>Playlists</item>
     </string-array>
+
+    <!-- Track Metadata -->
+    <string name="meta_data_title">Title</string>
+    <string name="meta_data_artist">Artist</string>
+    <string name="meta_data_album">Album</string>
+    <string name="meta_data_duration">Duration</string>
+
 
     <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>

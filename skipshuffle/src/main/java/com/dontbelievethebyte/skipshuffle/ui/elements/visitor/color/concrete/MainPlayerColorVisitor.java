@@ -5,7 +5,9 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.concrete;
 
 import android.app.Activity;
+import android.widget.SeekBar;
 
+import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
@@ -66,5 +68,11 @@ public class MainPlayerColorVisitor extends AbstractColorVisitor {
                         ColorMapper.getPrevButton(playerUI.type)
                 )
         );
+    }
+
+    private void colorSeekbar(AbstractPlayerUI playerUI)
+    {
+        SeekBar seekBar = (SeekBar) activity.findViewById(R.id.seekBar);
+
     }
 }

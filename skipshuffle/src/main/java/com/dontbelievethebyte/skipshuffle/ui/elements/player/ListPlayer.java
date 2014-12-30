@@ -7,7 +7,6 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.player;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
@@ -15,19 +14,20 @@ import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.PlaylistClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
     public ListView listView;
 
-    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView)
+    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView, CustomSeekBar customSeekBar)
     {
         this.baseActivity = baseActivity;
         this.type = baseActivity.getPreferencesHelper().getUIType();
         this.listView = listView;
+        this.customSeekBar = customSeekBar;
         buttons = playerButtons;
         buttons.animations.setPlayerUIListeners(this, baseActivity);
         setButtonsOnClickListeners();
@@ -81,6 +81,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         }
     }
 
+    @Override
     public void reboot()
     {
         try {
@@ -91,6 +92,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
+            customSeekBar.setEnabled(
+                    (mediaPlayer.isPaused() || mediaPlayer.isPlaying())
+            );
             buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);

@@ -6,7 +6,6 @@ package com.dontbelievethebyte.skipshuffle.activities;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UICompositionFactory;
-import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
 public class PlayerActivity extends BaseActivity {
 

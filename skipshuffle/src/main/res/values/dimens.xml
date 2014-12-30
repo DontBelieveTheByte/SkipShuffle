@@ -44,4 +44,6 @@
     <dimen name="player_layout_padding_row3">15dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
 
+    <dimen name="seekbar_top_padding">12dp</dimen>
+
 </resources>

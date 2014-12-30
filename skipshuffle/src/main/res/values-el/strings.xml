@@ -53,5 +53,11 @@
     <string name="dialog_app_rating_title">Αξιολόγηση SkipShuffle</string>
     <string name="dialog_app_rating_text">Σας ευχαριστώ για την υποστήριξή σας!</string>
     <string name="no_app_store">Δεν μπορεί να βρει εφαρμογή Google παιχνίδι κατάστημα.</string>
+    <string name="dialog_song_info_title">Παρακολούθηση πληροφοριών </string>
+    <string name="meta_data_album">Album</string>
+    <string name="meta_data_artist">Καλλιτέχνης</string>
+    <string name="meta_data_duration">Διάρκεια</string>
+    <string name="meta_data_title">Τίτλος</string>
+    <string name="meta_data_unknown">Άγνωστο</string>
 
 </resources>

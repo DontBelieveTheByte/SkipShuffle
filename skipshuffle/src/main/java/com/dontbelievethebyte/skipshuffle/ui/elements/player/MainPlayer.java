@@ -11,15 +11,17 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 
 public class MainPlayer extends AbstractPlayerUI {
 
     private MainPlayerSongLabel songLabel;
     private TrackPrinter trackPrinter;
 
-    public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel)
+    public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel, CustomSeekBar customSeekBar)
     {
         this.baseActivity = baseActivity;
+        this.customSeekBar = customSeekBar;
         this.type = baseActivity.getPreferencesHelper().getUIType();
         trackPrinter = new TrackPrinter(baseActivity);
         this.songLabel = songLabel;
@@ -79,5 +81,6 @@ public class MainPlayer extends AbstractPlayerUI {
         songLabel.setContent(baseActivity.getString(R.string.meta_data_no_playlist));
         baseActivity.handlePlaylistEmptyException(playlistEmptyException);
     }
+
 
 }

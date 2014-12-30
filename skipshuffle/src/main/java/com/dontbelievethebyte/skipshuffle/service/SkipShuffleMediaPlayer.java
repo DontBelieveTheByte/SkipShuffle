@@ -48,7 +48,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
     private OrientationBroadcastReceiver orientationBroadcastReceiver;
-    private AudioManager audioManager;
 
     @Override
     public void onThemeChanged()
@@ -94,7 +93,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     private void initAudioFocus()
     {
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.requestAudioFocus(
                 new AudioFocusManager(this),
                 AudioManager.STREAM_MUSIC,
@@ -186,6 +185,8 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         }
     }
 
+
+
     public void doPlay(int playlistPosition) throws PlaylistEmptyException
     {
         playerWrapper.resetSeekPosition();
@@ -248,6 +249,12 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         initPlaylist();
     }
 
+    public void seekToPosition(int position) throws PlaylistEmptyException
+    {
+        if (playerWrapper.isPlaying() || playerWrapper.isPaused())
+            playerWrapper.seekTo(position);
+    }
+
     public RandomPlaylist getPlaylist()
     {
         return playlist;
@@ -274,5 +281,14 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private void handleAudioLoadingTrackException(AudioTrackLoadingException audioTrackLoadingException) throws PlaylistEmptyException
     {
         doSkip();
+    }
+
+    public int getCurrentTrackDuration()
+    {
+        return playerWrapper.getCurrentTrackDuration();
+    }
+    public int getCurrentTrackPosition()
+    {
+        return playerWrapper.getCurrentTrackPosition();
     }
 }
