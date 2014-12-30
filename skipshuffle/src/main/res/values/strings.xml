@@ -85,7 +85,5 @@
     <string name="accessibility_skipshuffle" translatable="false">SkipShuffle</string>
     <string name="accessibility_playlist">Playlist</string>
     <string name="accessibility_background">Background</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
 
 </resources>
