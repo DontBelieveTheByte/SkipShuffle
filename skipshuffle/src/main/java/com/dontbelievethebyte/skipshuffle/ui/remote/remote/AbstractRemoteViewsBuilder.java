@@ -12,6 +12,7 @@ import android.widget.RemoteViews;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
 
 public abstract class AbstractRemoteViewsBuilder {
 
@@ -49,7 +50,7 @@ public abstract class AbstractRemoteViewsBuilder {
         return null;
     }
 
-    public RemoteViews build(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
+    public RemoteViews build(PlayerState playerState)
     {
         return null;
     }

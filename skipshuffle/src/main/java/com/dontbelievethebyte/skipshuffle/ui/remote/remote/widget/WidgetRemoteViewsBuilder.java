@@ -20,7 +20,7 @@ public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
     }
 
     @Override
-    public RemoteViews build(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
+    public RemoteViews build(PlayerState playerState)
     {
         buildContainer(R.layout.widget);
 
@@ -28,25 +28,25 @@ public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
         buildPlay(
                 R.id.notif_play,
-                isPlaying ? DrawableMapper.getPlay(uiType) : DrawableMapper.getPause(uiType),
-                isPlaying
+                playerState.isPlaying() ? DrawableMapper.getPlay(playerState.getUiType()) : DrawableMapper.getPause(playerState.getUiType()),
+                playerState.isPlaying()
         );
 
         buildShuffle(
                 R.id.notif_shuffle,
-                isShuffle ? DrawableMapper.getShufflePressed(uiType) : DrawableMapper.getShuffle(uiType)
+                playerState.isShuffle() ? DrawableMapper.getShufflePressed(playerState.getUiType()) : DrawableMapper.getShuffle(playerState.getUiType())
         );
 
         buildSkip(R.id.notif_skip);
 
         buildDefault(R.id.notif_all);
 
-        if (null != title)
-            buildTitleLabelContent(title);
-        if (null != artist)
-            buildArtistLabelContent(artist);
+        if (null != playerState.getTitle())
+            buildTitleLabelContent(playerState.getTitle());
+        if (null != playerState.getArtist())
+            buildArtistLabelContent(playerState.getArtist());
 
-        colorize(uiType, isPlaying);
+        colorize(playerState.getUiType(), playerState.isPlaying());
         return remoteViews;
     }
 
