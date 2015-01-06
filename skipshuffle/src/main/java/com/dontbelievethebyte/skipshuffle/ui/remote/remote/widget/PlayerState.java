@@ -12,7 +12,7 @@ public class PlayerState {
     private String title;
     private String artist;
 
-    public PlayerState(int uiType, boolean isPlaying, boolean isShuffle, String artist, String title)
+    public PlayerState(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
     {
         this.uiType = uiType;
         this.isPlaying = isPlaying;
