@@ -46,66 +46,66 @@ public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
         if (null != playerState.getArtist())
             buildArtistLabelContent(playerState.getArtist());
 
-        colorize(playerState.getUiType(), playerState.isPlaying());
+        colorize(playerState);
         return remoteViews;
     }
 
-    private void colorize(int uiType, boolean isPlaying)
+    private void colorize(PlayerState playerState)
     {
         colorize.label(R.id.track_title,
                 context.getResources().getColor(
-                        ColorMapper.getPlaylistTitle(uiType)
+                        ColorMapper.getPlaylistTitle(playerState.getUiType())
                 )
         );
 
         colorize.label(
                 R.id.track_artist,
                 context.getResources().getColor(
-                        ColorMapper.getPlaylistArtist(uiType)
+                        ColorMapper.getPlaylistArtist(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_play,
                 context.getResources().getColor(
-                        isPlaying ?
-                                ColorMapper.getPlayButton(uiType) :
-                                ColorMapper.getPauseButton(uiType)
+                        playerState.isPlaying() ?
+                                ColorMapper.getPlayButton(playerState.getUiType()) :
+                                ColorMapper.getPauseButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_prev,
                 context.getResources().getColor(
-                        ColorMapper.getPrevButton(uiType)
+                        ColorMapper.getPrevButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_shuffle,
                 context.getResources().getColor(
-                        ColorMapper.getShuffleButton(uiType)
+                        ColorMapper.getShuffleButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_skip,
                 context.getResources().getColor(
-                        ColorMapper.getSkipButton(uiType)
+                        ColorMapper.getSkipButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.buttons_background_image,
                 context.getResources().getColor(
-                        ColorMapper.getBackground(uiType)
+                        ColorMapper.getBackground(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.buttons_background_image_overflow_protection,
                 context.getResources().getColor(
-                        ColorMapper.getBackground(uiType)
+                        ColorMapper.getBackground(playerState.getUiType())
                 )
         );
     }

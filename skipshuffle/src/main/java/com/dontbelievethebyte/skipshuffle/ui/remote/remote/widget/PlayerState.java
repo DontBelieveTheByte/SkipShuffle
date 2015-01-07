@@ -4,15 +4,21 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget;
 
+import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.skipshuffle.playlist.Track;
+import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
+import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
+
 public class PlayerState {
 
-    private int uiType;
-    private boolean isPlaying = true;
-    private boolean isShuffle = false;
+    private Integer uiType;
+    private Boolean isPlaying = true;
+    private Boolean isShuffle = false;
     private String title;
     private String artist;
 
-    public PlayerState(int uiType, boolean isPlaying, boolean isShuffle, String title, String artist)
+    public PlayerState(Integer uiType, Boolean isPlaying, Boolean isShuffle, String title, String artist)
     {
         this.uiType = uiType;
         this.isPlaying = isPlaying;
@@ -21,19 +27,35 @@ public class PlayerState {
         this.artist = artist;
     }
 
+    public PlayerState(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
+    {
+        try {
+            this.uiType = skipShuffleMediaPlayer.getPreferencesHelper().getUIType();
+            this.isPlaying = skipShuffleMediaPlayer.isPlaying();
+            this.isShuffle = skipShuffleMediaPlayer.getPlaylist().isShuffle();
+
+            TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
+            Track track = skipShuffleMediaPlayer.getPlaylist().getCurrent();
+            this.title = trackPrinter.printTitle(track);
+            this.artist = trackPrinter.printArtist(track);
+        } catch (PlaylistEmptyException e) {
+            skipShuffleMediaPlayer.handlePlaylistEmptyException(e);
+        }
+    }
+
     public int getUiType()
     {
-        return uiType;
+        return (null != uiType) ? uiType: UITypes.NEON;
     }
 
     public boolean isPlaying()
     {
-        return isPlaying;
+        return (null != isPlaying) ? isPlaying : false;
     }
 
     public boolean isShuffle()
     {
-        return isShuffle;
+        return (null != isShuffle) ? isShuffle : false;
     }
 
     public String getTitle()

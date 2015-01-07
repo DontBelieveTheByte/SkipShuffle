@@ -7,13 +7,11 @@ package com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
-import com.dontbelievethebyte.skipshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
 import com.dontbelievethebyte.skipshuffle.ui.remote.remote.AbstractRemoteViewsBuilder;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
 
 public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
@@ -23,105 +21,92 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
     }
 
     @Override
-    public RemoteViews build()
+    public RemoteViews build(PlayerState playerState)
     {
-        SkipShuffleMediaPlayer skipShuffleMediaPlayer = (SkipShuffleMediaPlayer) context;
 
         buildContainer(R.layout.notification);
 
         buildPrev(R.id.notif_prev);
 
-        int uiType = skipShuffleMediaPlayer.getPreferencesHelper().getUIType();
-
         buildPlay(
                 R.id.notif_play,
-                skipShuffleMediaPlayer.isPlaying() ? DrawableMapper.getPlay(uiType) : DrawableMapper.getPause(uiType),
-                skipShuffleMediaPlayer.isPlaying()
+                playerState.isPlaying() ? DrawableMapper.getPlay(playerState.getUiType()) : DrawableMapper.getPause(playerState.getUiType()),
+                playerState.isPlaying()
         );
 
-        RandomPlaylist playlist = skipShuffleMediaPlayer.getPlaylist();
         buildShuffle(
                 R.id.notif_shuffle,
-                (null != playlist) && playlist.isShuffle() ? DrawableMapper.getShufflePressed(uiType) : DrawableMapper.getShuffle(uiType)
+                playerState.isShuffle() ? DrawableMapper.getShufflePressed(playerState.getUiType()) : DrawableMapper.getShuffle(playerState.getUiType())
         );
 
         buildSkip(R.id.notif_skip);
 
         buildDefault(R.id.notif_all);
 
-        TrackPrinter trackPrinter = new TrackPrinter(skipShuffleMediaPlayer);
-        if (null != playlist) {
-            try {
-                buildTitleLabelContent(trackPrinter.printTitle(playlist.getCurrent()));
-                buildArtistLabelContent(trackPrinter.printArtist(playlist.getCurrent()));
-            } catch (PlaylistEmptyException e) {
-                buildTitleLabelContent(null);
-                buildArtistLabelContent(null);
-            }
-        } else
-            buildTitleLabelContent(null);
+        buildTitleLabelContent(playerState.getTitle());
+        buildArtistLabelContent(playerState.getArtist());
 
-        colorize();
+        colorize(playerState);
 
         return remoteViews;
     }
 
-    private void colorize()
+    private void colorize(PlayerState playerState)
     {
-        SkipShuffleMediaPlayer skipShuffleMediaPlayer = (SkipShuffleMediaPlayer) context;
+        int uiType = playerState.getUiType();
         colorize.label(R.id.track_title,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getPlaylistTitle(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getPlaylistTitle(uiType)
                 )
         );
 
         colorize.label(
-                R.id.track_artist, skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getPlaylistArtist(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                R.id.track_artist, context.getResources().getColor(
+                        ColorMapper.getPlaylistArtist(uiType)
                 )
         );
 
         colorize.drawable(
                 R.id.notif_play,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        skipShuffleMediaPlayer.isPlaying() ?
-                                ColorMapper.getPlayButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType()) :
-                                ColorMapper.getPauseButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        playerState.isPlaying() ?
+                                ColorMapper.getPlayButton(uiType) :
+                                ColorMapper.getPauseButton(uiType)
                 )
         );
 
         colorize.drawable(
                 R.id.notif_prev,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getPrevButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getPrevButton(uiType)
                 )
         );
 
         colorize.drawable(
                 R.id.notif_shuffle,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getShuffleButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getShuffleButton(uiType)
                 )
         );
 
         colorize.drawable(
                 R.id.notif_skip,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getSkipButton(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getSkipButton(uiType)
                 )
         );
 
         colorize.drawable(
                 R.id.buttons_background_image,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getBackground(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getBackground(uiType)
                 )
         );
 
         colorize.drawable(
                 R.id.buttons_background_image_overflow_protection,
-                skipShuffleMediaPlayer.getResources().getColor(
-                        ColorMapper.getBackground(skipShuffleMediaPlayer.getPreferencesHelper().getUIType())
+                context.getResources().getColor(
+                        ColorMapper.getBackground(uiType)
                 )
         );
     }

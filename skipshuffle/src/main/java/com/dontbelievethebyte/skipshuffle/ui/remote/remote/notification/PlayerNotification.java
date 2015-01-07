@@ -12,8 +12,10 @@ import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
 
-public class PlayerNotification {
+public class PlayerNotification implements PlayerStateChangedCallback {
 
     public static int getNotificationId()
     {
@@ -45,16 +47,24 @@ public class PlayerNotification {
 
     public Notification buildNotification()
     {
-        RemoteViews remoteViews = getRemoteViews();
+        RemoteViews remoteViews = getRemoteViews(
+                new PlayerState(skipShuffleMediaPlayer)
+        );
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(skipShuffleMediaPlayer);
         notificationBuilder.setSmallIcon(R.drawable.ic_notification);
         notificationBuilder.setContent(remoteViews);
         return notificationBuilder.build();
     }
 
-    private RemoteViews getRemoteViews()
+    private RemoteViews getRemoteViews(PlayerState playerState)
     {
         NotificationRemoteViewsBuilder remoteViewsBuilder = new NotificationRemoteViewsBuilder(skipShuffleMediaPlayer);
-        return remoteViewsBuilder.build();
+        return remoteViewsBuilder.build(playerState);
+    }
+
+    @Override
+    public void onPlayerStateChanged()
+    {
+        showNotification();
     }
 }

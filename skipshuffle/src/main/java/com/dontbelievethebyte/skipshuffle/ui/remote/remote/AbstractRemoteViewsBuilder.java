@@ -45,11 +45,6 @@ public abstract class AbstractRemoteViewsBuilder {
         colorize = new Colorizer();
     }
 
-    public RemoteViews build()
-    {
-        return null;
-    }
-
     public RemoteViews build(PlayerState playerState)
     {
         return null;

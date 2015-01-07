@@ -7,11 +7,16 @@ package com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 public class SkipShuffleWidget extends AppWidgetProvider {
+
+    private static PlayerState playerState = new PlayerState(null, null, null, null, null);
+
+    private static int appWidgetIds[];
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
@@ -38,16 +43,33 @@ public class SkipShuffleWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId)
     {
         WidgetRemoteViewsBuilder widgetRemoteViewsBuilder = new WidgetRemoteViewsBuilder(context);
-        int uiType = UITypes.JACK_O_LANTERN;
-        boolean isPlaying = true;
-        boolean isShuffle = false;
-        String title = "DERPADASD";
-        String artist = "MOFOOF";
-
-        RemoteViews remoteViews = widgetRemoteViewsBuilder.build(uiType, isPlaying, isShuffle, title, artist);
-
+        RemoteViews remoteViews = widgetRemoteViewsBuilder.build(playerState);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        super.onReceive(context, intent);
+        parseReceivedIntent(intent);
+        onUpdate(
+                context,
+                AppWidgetManager.getInstance(context),
+                appWidgetIds
+        );
+    }
+
+    private void parseReceivedIntent(Intent intent)
+    {
+        playerState = new PlayerState(
+                intent.getIntExtra(WidgetContract.UI_TYPE, UITypes.NEON),
+                intent.getBooleanExtra(WidgetContract.IS_PLAYING, false),
+                intent.getBooleanExtra(WidgetContract.IS_SHUFFLE, false),
+                intent.getStringExtra(WidgetContract.TITLE),
+                intent.getStringExtra(WidgetContract.ARTIST)
+        );
+        appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
     }
 }
 
