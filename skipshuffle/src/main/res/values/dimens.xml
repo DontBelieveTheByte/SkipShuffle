@@ -42,8 +42,15 @@
     <dimen name="player_layout_padding_row1">10dp</dimen>
     <dimen name="player_layout_padding_row2">0dp</dimen>
     <dimen name="player_layout_padding_row3">15dp</dimen>
-    <dimen name="widget_margin">8dp</dimen>
 
+    <!--Widgets stuff -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_text_padding_left">20dp</dimen>
+    <dimen name="widget_track_title">22sp</dimen>
+    <dimen name="widget_track_artist">18sp</dimen>
+
+    <!-- Seekbar stuff -->
     <dimen name="seekbar_top_padding">12dp</dimen>
+
 
 </resources>
