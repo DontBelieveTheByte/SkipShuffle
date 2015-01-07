@@ -52,8 +52,6 @@ public abstract class AbstractRemoteViewsBuilder {
         return null;
     }
 
-    protected abstract int getRequestCodeFactor();
-
     protected void buildTitleLabelContent(String title)
     {
         remoteViews.setTextViewText(
@@ -146,7 +144,7 @@ public abstract class AbstractRemoteViewsBuilder {
 
         PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(
                 context,
-                4,
+                ++REQUEST_CODE_FACTOR,
                 playerActivityIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT
         );

@@ -50,11 +50,6 @@ public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
         return remoteViews;
     }
 
-    @Override
-    protected int getRequestCodeFactor() {
-        return 2;
-    }
-
     private void colorize(PlayerState playerState)
     {
         colorize.label(R.id.track_title,
