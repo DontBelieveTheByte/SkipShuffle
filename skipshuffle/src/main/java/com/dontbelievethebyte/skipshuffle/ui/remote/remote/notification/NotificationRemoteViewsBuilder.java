@@ -51,6 +51,11 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
         return remoteViews;
     }
 
+    @Override
+    protected int getRequestCodeFactor() {
+        return 1;
+    }
+
     private void colorize(PlayerState playerState)
     {
         int uiType = playerState.getUiType();

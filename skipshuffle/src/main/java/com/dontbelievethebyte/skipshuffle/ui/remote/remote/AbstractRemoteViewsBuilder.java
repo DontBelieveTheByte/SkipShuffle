@@ -16,6 +16,8 @@ import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
 
 public abstract class AbstractRemoteViewsBuilder {
 
+    public static int REQUEST_CODE_FACTOR = 0;
+
     protected RemoteViews remoteViews;
     protected Colorizer colorize;
     protected Context context;
@@ -49,6 +51,8 @@ public abstract class AbstractRemoteViewsBuilder {
     {
         return null;
     }
+
+    protected abstract int getRequestCodeFactor();
 
     protected void buildTitleLabelContent(String title)
     {
@@ -160,7 +164,7 @@ public abstract class AbstractRemoteViewsBuilder {
         intent.setPackage(context.getPackageName());
         return PendingIntent.getBroadcast(
                 context,
-                requestCode,
+                ++REQUEST_CODE_FACTOR,
                 intent,
                 PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT
         );
