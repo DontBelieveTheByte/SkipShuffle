@@ -34,7 +34,6 @@
         <receiver android:name=".ui.remote.remote.widget.SkipShuffleWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.dontbelievethebyte.player.update"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
