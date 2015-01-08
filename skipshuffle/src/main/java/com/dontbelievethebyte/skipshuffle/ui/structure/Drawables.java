@@ -19,7 +19,6 @@ public class Drawables {
     public int pausePressed;
     public int prev;
     public int prevPressed;
-    public int remove;
     public int skip;
     public int skipPressed;
     public int shuffle;
@@ -39,7 +38,6 @@ public class Drawables {
         pausePressed = DrawableMapper.getPausePressed(uiType);
         prev = DrawableMapper.getPrev(uiType);
         prevPressed = DrawableMapper.getPrevPressed(uiType);
-        remove = DrawableMapper.getRemove(uiType);
         skip = DrawableMapper.getSkip(uiType);
         skipPressed = DrawableMapper.getSkipPressed(uiType);
         shuffle = DrawableMapper.getShuffle(uiType);
@@ -77,11 +75,6 @@ public class Drawables {
     public Drawable getPrevPressed()
     {
         return toDrawable(prevPressed);
-    }
-
-    public Drawable getRemove()
-    {
-        return toDrawable(remove);
     }
 
     public Drawable getSkip()

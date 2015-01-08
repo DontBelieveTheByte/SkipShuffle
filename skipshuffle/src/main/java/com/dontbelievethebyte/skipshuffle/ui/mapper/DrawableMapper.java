@@ -53,7 +53,7 @@ public class DrawableMapper {
             case UITypes.KOSHER :
             case UITypes.STAR_WARS :
             default:
-                return R.drawable.play_btn_pressed_neon;
+                return R.drawable.play_btn_pressed;
         }
     }
 
@@ -101,7 +101,7 @@ public class DrawableMapper {
             case UITypes.KOSHER :
             case UITypes.STAR_WARS :
             default:
-                return R.drawable.pause_btn_pressed_neon;
+                return R.drawable.pause_btn_pressed;
         }
     }
 
@@ -149,31 +149,7 @@ public class DrawableMapper {
             case UITypes.KOSHER :
             case UITypes.STAR_WARS :
             default:
-                return R.drawable.prev_btn_pressed_neon;
-        }
-    }
-
-    public static int getRemove(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
-            default:
-                return R.drawable.seekbar_thumg_states;
+                return R.drawable.prev_btn_pressed;
         }
     }
 
@@ -221,7 +197,7 @@ public class DrawableMapper {
             case UITypes.KOSHER :
             case UITypes.STAR_WARS :
             default:
-                return R.drawable.next_btn_pressed_neon;
+                return R.drawable.next_btn_pressed;
         }
     }
 
@@ -269,7 +245,7 @@ public class DrawableMapper {
             case UITypes.KOSHER :
             case UITypes.STAR_WARS :
             default:
-                return R.drawable.shuffle_btn_pressed_neon;
+                return R.drawable.shuffle_btn_pressed;
         }
     }
 

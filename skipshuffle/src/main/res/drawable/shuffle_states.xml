@@ -5,13 +5,13 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/shuffle_btn_neon"
+        android:drawable="@drawable/shuffle_btn"
         android:state_pressed="false"
     />
 
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/shuffle_btn_pressed_neon"
+        android:drawable="@drawable/shuffle_btn_pressed"
 
     />
 
