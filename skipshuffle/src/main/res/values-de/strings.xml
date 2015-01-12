@@ -47,5 +47,17 @@
         <item>Genres</item>
         <item>Wiedergabelisten</item>
     </string-array>
+    <string name="dialog_app_rating_negative">Nie</string>
+    <string name="dialog_app_rating_neutral">Später</string>
+    <string name="dialog_app_rating_positive">jetzt</string>
+    <string name="dialog_app_rating_title">SkipShuffle bewerten</string>
+    <string name="dialog_app_rating_text">Vielen Dank für Ihre Unterstützung!</string>
+    <string name="no_app_store">Nicht finden Google Spiel Store Anwendung.</string>
+    <string name="dialog_song_info_title">Streckeninfos</string>
+    <string name="meta_data_album">Album</string>
+    <string name="meta_data_artist">Künstler</string>
+    <string name="meta_data_duration">Dauer</string>
+    <string name="meta_data_title">Titel</string>
+    <string name="meta_data_unknown">Unbekannt</string>
 
 </resources>

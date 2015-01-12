@@ -3,88 +3,103 @@
 <!--
   Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
   -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="@dimen/list_footer_height"
+    android:layout_height="wrap_content"
     android:baselineAligned="false"
-    android:id="@+id/playlist_controls"
+    android:id="@+id/playlist_controls_container"
     android:gravity="center">
+    <SeekBar
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:paddingTop="@dimen/seekbar_top_padding" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/list_footer_height"
+        android:baselineAligned="false"
+        android:id="@+id/playlist_controls"
+        android:gravity="center">
 
-    <ImageButton
-        android:contentDescription="@string/accessibility_prev"
-        android:layout_width="@dimen/list_buttons_w_h"
-        android:layout_height="@dimen/list_buttons_w_h"
-        android:id="@+id/prevBtn"
-        android:src="@drawable/prev_states_neon"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
 
-    <ImageButton
-        android:contentDescription="@string/accessibility_shuffle"
-        android:layout_width="@dimen/list_buttons_w_h"
-        android:layout_height="@dimen/list_buttons_w_h"
-        android:id="@+id/shuffleBtn"
-        android:longClickable="false"
-        android:src="@drawable/shuffle_states_neon"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1" />
+        <ImageButton
+            android:contentDescription="@string/accessibility_prev"
+            android:layout_width="@dimen/list_buttons_w_h"
+            android:layout_height="@dimen/list_buttons_w_h"
+            android:id="@+id/prevBtn"
+            android:src="@drawable/prev_states"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
 
-    <ImageButton
-        android:contentDescription="@string/accessibility_play_pause"
-        android:layout_width="@dimen/list_buttons_w_h"
-        android:layout_height="@dimen/list_buttons_w_h"
-        android:id="@+id/playBtn"
-        android:src="@drawable/play_states_neon"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter" />
+        <ImageButton
+            android:contentDescription="@string/accessibility_shuffle"
+            android:layout_width="@dimen/list_buttons_w_h"
+            android:layout_height="@dimen/list_buttons_w_h"
+            android:id="@+id/shuffleBtn"
+            android:longClickable="false"
+            android:src="@drawable/shuffle_states"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1" />
+        <ImageButton
+            android:contentDescription="@string/accessibility_play_pause"
+            android:layout_width="@dimen/list_buttons_w_h"
+            android:layout_height="@dimen/list_buttons_w_h"
+            android:id="@+id/playBtn"
+            android:src="@drawable/play_states"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter" />
 
-    <ImageButton
-        android:layout_width="@dimen/list_buttons_w_h"
-        android:layout_height="@dimen/list_buttons_w_h"
-        android:id="@+id/skipBtn"
-        android:src="@drawable/skip_states_neon"
-        android:contentDescription="@string/accessibility_skip"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:cropToPadding="false" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1" />
+        <ImageButton
+            android:layout_width="@dimen/list_buttons_w_h"
+            android:layout_height="@dimen/list_buttons_w_h"
+            android:id="@+id/skipBtn"
+            android:src="@drawable/skip_states"
+            android:contentDescription="@string/accessibility_skip"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false" />
 
-    <ImageButton
-        android:layout_width="@dimen/list_buttons_w_h"
-        android:layout_height="@dimen/list_buttons_w_h"
-        android:id="@+id/playlistBtn"
-        android:src="@drawable/playlist_states_neon"
-        android:contentDescription="@string/accessibility_skip"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:cropToPadding="false" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
 
+        <ImageButton
+            android:layout_width="@dimen/list_buttons_w_h"
+            android:layout_height="@dimen/list_buttons_w_h"
+            android:id="@+id/playlistBtn"
+            android:src="@drawable/playlist_states"
+            android:contentDescription="@string/accessibility_skip"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 </LinearLayout>
+
+

@@ -47,5 +47,17 @@
         <item>Géneros</item>
         <item>Listas de reproducción</item>
     </string-array>
+    <string name="dialog_app_rating_negative">Nunca</string>
+    <string name="dialog_app_rating_neutral">Más tarde</string>
+    <string name="dialog_app_rating_positive">Ahora</string>
+    <string name="dialog_app_rating_title">Evaluar SkipShuffle</string>
+    <string name="dialog_app_rating_text">Gracias por su apoyo!</string>
+    <string name="no_app_store">No puede encontrar la aplicación Google Play Store.</string>
+    <string name="dialog_song_info_title">Pista info</string>
+    <string name="meta_data_album">Álbum</string>
+    <string name="meta_data_artist">Artista</string>
+    <string name="meta_data_duration">Duración</string>
+    <string name="meta_data_title">Título</string>
+    <string name="meta_data_unknown">Desconocido</string>
 
 </resources>

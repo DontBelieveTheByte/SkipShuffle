@@ -47,4 +47,16 @@
         <item>Жанры</item>
         <item>Списки воспроизведения</item>
     </string-array>
+    <string name="dialog_app_rating_negative">Никогда не</string>
+    <string name="dialog_app_rating_neutral">Позже</string>
+    <string name="dialog_app_rating_positive">Теперь</string>
+    <string name="dialog_app_rating_title">Оценить SkipShuffle</string>
+    <string name="dialog_app_rating_text">Спасибо вам за вашу поддержку!</string>
+    <string name="no_app_store">Не удается найти приложение Google Play Store.</string>
+    <string name="dialog_song_info_title">Дорожки</string>
+    <string name="meta_data_album">Альбом</string>
+    <string name="meta_data_artist">Художник</string>
+    <string name="meta_data_duration">Продолжительность</string>
+    <string name="meta_data_title">Название</string>
+    <string name="meta_data_unknown">Неизвестно</string>
 </resources>

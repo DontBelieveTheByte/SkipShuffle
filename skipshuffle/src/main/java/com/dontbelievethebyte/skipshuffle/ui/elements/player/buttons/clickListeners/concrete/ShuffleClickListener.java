@@ -33,4 +33,20 @@ public class ShuffleClickListener extends CustomAbstractClickListener {
             activity.handlePlaylistEmptyException(playlistEmptyException);
         }
     }
+
+    @Override
+    public boolean onLongClick(View view)
+    {
+        handleHapticFeedback(view);
+        try {
+            SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
+            mediaPlayer.doShuffle();
+            activity.ui.player.doShuffle();
+        } catch (NoMediaPlayerException n) {
+            activity.handleNoMediaPlayerException(n);
+        } catch (PlaylistEmptyException playlistEmptyException) {
+            activity.handlePlaylistEmptyException(playlistEmptyException);
+        }
+        return true;
+    }
 }

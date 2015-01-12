@@ -25,7 +25,8 @@ import com.dontbelievethebyte.skipshuffle.service.callbacks.OrientationChangeCal
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.skipshuffle.service.proxy.AndroidPlayer;
-import com.dontbelievethebyte.skipshuffle.ui.notification.PlayerNotification;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification.PlayerNotification;
+import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.WidgetUpdater;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 
@@ -44,11 +45,11 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private AndroidPlayer playerWrapper;
     private PreferencesHelper preferencesHelper;
     private PlayerNotification notification;
+    private WidgetUpdater widgetUpdater;
     private RandomPlaylist playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
     private OrientationBroadcastReceiver orientationBroadcastReceiver;
-    private AudioManager audioManager;
 
     @Override
     public void onThemeChanged()
@@ -88,13 +89,17 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         orientationBroadcastReceiver.register();
         initPrefsHelper();
         notification = new PlayerNotification(this);
+        playerStateChangedCallbacks.add(notification);
+        widgetUpdater = new WidgetUpdater(this);
+        playerStateChangedCallbacks.add(widgetUpdater);
         playerWrapper = new AndroidPlayer(this);
         initPlaylist();
+        widgetUpdater.onPlayerStateChanged();
     }
 
     private void initAudioFocus()
     {
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.requestAudioFocus(
                 new AudioFocusManager(this),
                 AudioManager.STREAM_MUSIC,
@@ -171,7 +176,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
 
     public void onPlayerStateChanged()
     {
-        notification.showNotification();
         for(PlayerStateChangedCallback playerStateChangedCallback : playerStateChangedCallbacks) {
             playerStateChangedCallback.onPlayerStateChanged();
         }
@@ -222,6 +226,13 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         doPlay(0);
     }
 
+    public void doShuffle() throws PlaylistEmptyException
+    {
+        playlist.shuffle();
+        playlist.setShuffle(true);
+        doPlay(0);
+    }
+
     public boolean isPlaying()
     {
         return playerWrapper.isPlaying();
@@ -239,6 +250,12 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public void handlePlaylistEmptyException(PlaylistEmptyException playlistEmptyException)
     {
         initPlaylist();
+    }
+
+    public void seekToPosition(int position) throws PlaylistEmptyException
+    {
+        if (playerWrapper.isPlaying() || playerWrapper.isPaused())
+            playerWrapper.seekTo(position);
     }
 
     public RandomPlaylist getPlaylist()
@@ -267,5 +284,14 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private void handleAudioLoadingTrackException(AudioTrackLoadingException audioTrackLoadingException) throws PlaylistEmptyException
     {
         doSkip();
+    }
+
+    public int getCurrentTrackDuration()
+    {
+        return playerWrapper.getCurrentTrackDuration();
+    }
+    public int getCurrentTrackPosition()
+    {
+        return playerWrapper.getCurrentTrackPosition();
     }
 }

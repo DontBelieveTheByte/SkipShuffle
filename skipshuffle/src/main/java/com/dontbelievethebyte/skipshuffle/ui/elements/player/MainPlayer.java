@@ -11,69 +11,53 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.labels.MainPlayerSongLabel;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 
 public class MainPlayer extends AbstractPlayerUI {
 
     private MainPlayerSongLabel songLabel;
     private TrackPrinter trackPrinter;
 
-    public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel)
+    public MainPlayer(BaseActivity baseActivity, MainPlayerButtons playerButtons, MainPlayerSongLabel songLabel, CustomSeekBar customSeekBar)
     {
         this.baseActivity = baseActivity;
+        this.customSeekBar = customSeekBar;
+        this.type = baseActivity.getPreferencesHelper().getUIType();
         trackPrinter = new TrackPrinter(baseActivity);
         this.songLabel = songLabel;
         buttons = playerButtons;
-        buttons.animations.setPlayerUIListeners(this);
+        buttons.animations.setPlayerUIListeners(this, baseActivity);
         setButtonsOnClickListeners();
     }
 
     @Override
     public void doPlay()
     {
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doPause()
     {
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
     }
 
     @Override
     public void doSkip()
     {
-        buttons.play.clearAnimation();
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.skip.startAnimation(buttons.animations.skipAnimation);
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doPrev()
     {
-        buttons.play.clearAnimation();
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.prev.startAnimation(buttons.animations.prevAnimation);
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doShuffle()
     {
-        buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
-        buttons.play.clearAnimation();
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
-        reboot();
     }
 
     @Override
@@ -97,5 +81,6 @@ public class MainPlayer extends AbstractPlayerUI {
         songLabel.setContent(baseActivity.getString(R.string.meta_data_no_playlist));
         baseActivity.handlePlaylistEmptyException(playlistEmptyException);
     }
+
 
 }

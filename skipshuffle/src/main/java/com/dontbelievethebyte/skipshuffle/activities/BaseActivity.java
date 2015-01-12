@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +27,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.actionbar.CustomActionBarW
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.menu.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.skipshuffle.utilities.AppRater;
 import com.dontbelievethebyte.skipshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.media.MediaScannerHelper;
 import com.dontbelievethebyte.skipshuffle.utilities.preferences.PreferencesHelper;
@@ -52,7 +52,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         @Override
         public boolean handleMenuHapticFeedBack()
         {
-            Log.d(BaseActivity.TAG, "TOUCHED MENYU!!!");
             preferencesHelper.toggleHapticFeedback();
             return true;
         }
@@ -91,6 +90,12 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
 
         toastHelper = new ToastHelper(getApplicationContext());
         mediaScannerHelper = new MediaScannerHelper(this);
+        AppRater appRater = new AppRater(
+                this,
+                new PreferencesHelper(getApplicationContext()),
+                toastHelper
+        );
+        appRater.rateIfPossible();
     }
 
     public PreferencesHelper getPreferencesHelper()

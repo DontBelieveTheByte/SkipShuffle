@@ -33,7 +33,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/buttons_background_image"
             android:layout_centerInParent="true"
-            android:src="#ff003d01"
+            android:src="@drawable/notification_background"
             android:contentDescription="@string/accessibility_background" />
 
         <LinearLayout
@@ -86,7 +86,7 @@
                 android:layout_height="fill_parent"
                 android:id="@+id/buttons_background_image_overflow_protection"
                 android:layout_centerInParent="true"
-                android:src="#ff3d0e00"
+                android:src="@drawable/notification_background"
                 android:contentDescription="@string/accessibility_background" />
 
             <LinearLayout
@@ -106,7 +106,7 @@
                     android:layout_width="@dimen/notification_buttons_w_h"
                     android:layout_height="@dimen/notification_buttons_w_h"
                     android:id="@+id/notif_prev"
-                    android:src="@drawable/prev_states_neon"
+                    android:src="@drawable/prev_states"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
                     android:layout_weight="1" />
@@ -117,7 +117,7 @@
                     android:layout_height="@dimen/notification_buttons_w_h"
                     android:id="@+id/notif_shuffle"
                     android:longClickable="false"
-                    android:src="@drawable/shuffle_states_neon"
+                    android:src="@drawable/shuffle_states"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
                     android:layout_weight="1" />
@@ -127,7 +127,7 @@
                     android:layout_width="@dimen/notification_buttons_w_h"
                     android:layout_height="@dimen/notification_buttons_w_h"
                     android:id="@+id/notif_play"
-                    android:src="@drawable/play_states_neon"
+                    android:src="@drawable/play_states"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
                     android:layout_weight="1" />
@@ -137,7 +137,7 @@
                     android:layout_width="@dimen/notification_buttons_w_h"
                     android:layout_height="@dimen/notification_buttons_w_h"
                     android:id="@+id/notif_skip"
-                    android:src="@drawable/skip_states_neon"
+                    android:src="@drawable/skip_states"
                     android:scaleType="fitCenter"
                     android:background="@android:color/transparent"
                     android:cropToPadding="false"

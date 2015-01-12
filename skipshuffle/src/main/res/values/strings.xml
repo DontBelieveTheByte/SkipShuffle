@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
-  -->
-
+<!--   Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
 <resources>
 
     <!-- Default meta data -->
     <string name="meta_data_no_playlist">Nothing is playing.</string>
     <string name="meta_data_unknown_title">Unknown title.</string>
     <string name="meta_data_unknown_artist">Unknown artist</string>
+    <string name="meta_data_unknown">Unknown</string>
 
     <!-- Activities -->
     <string name="label_app_name" translatable="false">SkipShuffle</string>
@@ -24,6 +22,7 @@
     <string name="haptic_feedback_on">Haptic feedback turned on.</string>
     <string name="no_media_player">Media player is not connected.</string>
     <string name="empty_playlist">Empty playlist</string>
+    <string name="no_app_store">Cannot find Google store application.</string>
 
     <!-- Main menu -->
     <string name="menu_theme">Theme</string>
@@ -36,11 +35,30 @@
     <string name="dialog_media_scan_text">Do you want to search for music files?</string>
     <string name="dialog_positive">OK</string>
     <string name="dialog_negative">Cancel</string>
+    <string name="dialog_app_rating_positive">Rate now</string>
+    <string name="dialog_app_rating_neutral">Later</string>
+    <string name="dialog_app_rating_negative">Never</string>
+    <string name="dialog_app_rating_title">Rate SkipShuffle</string>
+    <string name="dialog_app_rating_text">If you enjoy using SkipShuffle, please take a moment to rate the application. Thank you for your support!</string>
+    <string name="dialog_song_info_title">Track info</string>
 
     <string-array name="dialog_theme_items" translatable="false">
         <item>Mono Light</item>
         <item>Mono Dark</item>
         <item>Neon</item>
+        <item>Xmas</item>
+        <item>Pink Panther</item>
+        <item>Jack O\'Lantern</item>
+        <item>Shamrock</item>
+        <item>\'Murica</item>
+        <item>Psychedelic</item>
+        <item>Rasta</item>
+        <item>USSR</item>
+        <item>Tron</item>
+        <item>Ramen</item>
+        <item>Rainbow</item>
+        <item>Kosher</item>
+        <item>Star Wars</item>
     </string-array>
 
     <!-- Preferences -->
@@ -49,6 +67,8 @@
     <string name="pref_current_playlist_id" translatable="false">PREF_CURRENT_PLAYLIST</string>
     <string name="pref_current_ui_type" translatable="false">PREF_CURRENT_UI_TYPE</string>
     <string name="pref_current_ui_view_mode" translatable="false">PREF_CURRENT_UI_VIEW_MODE</string>
+    <string name="pref_number_times_app_opened" translatable="false">PREF_NUMBER_TIMES_APP_OPENED</string>
+    <string name="pref_can_rate_app" translatable="false">PREF_CAN_RATE_APP</string>
 
     <!-- State info -->
     <string name="empty_list_view">Nothing to show.</string>
@@ -63,7 +83,6 @@
         <item>Genres</item>
         <item>Playlists</item>
     </string-array>
-
     <string-array name="adapter_types">
         <item>Songs</item>
         <item>Artists</item>
@@ -71,6 +90,13 @@
         <item>Genres</item>
         <item>Playlists</item>
     </string-array>
+
+    <!-- Track Metadata -->
+    <string name="meta_data_title">Title</string>
+    <string name="meta_data_artist">Artist</string>
+    <string name="meta_data_album">Album</string>
+    <string name="meta_data_duration">Duration</string>
+
 
     <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>

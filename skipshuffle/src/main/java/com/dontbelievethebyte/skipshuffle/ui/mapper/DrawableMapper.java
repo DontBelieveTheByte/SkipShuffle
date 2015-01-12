@@ -9,87 +9,27 @@ import com.dontbelievethebyte.skipshuffle.ui.mapper.types.UITypes;
 
 public class DrawableMapper {
 
-    public static int getBack(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.drawable.back_states_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.back_states_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.back_states_neon;
-            default:
-                return R.drawable.back_states_neon;
-        }
-    }
-
-    public static int getCancel(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.drawable.cancel_states_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.cancel_states_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.cancel_states_neon;
-            default:
-                return R.drawable.cancel_states_neon;
-        }
-    }
-
-    public static int getFile(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.drawable.file_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.file_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.file_neon;
-            default:
-                return R.drawable.file_neon;
-        }
-    }
-
-    public static int getFolder(Integer uiType)
-    {
-        switch (uiType){
-            case UITypes.MONO_LIGHT :
-                return R.drawable.folder_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.folder_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.folder_neon;
-            default:
-                return R.drawable.folder_neon;
-        }
-    }
-
-    public static int getOk(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.drawable.ok_states_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.ok_states_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.ok_states_neon;
-            default:
-                return R.drawable.ok_states_neon;
-        }
-    }
-
     public static int getPlay(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.play_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.play_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.play_states_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.play_states_neon;
+                return R.drawable.play_states;
         }
     }
 
@@ -97,13 +37,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.play_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.play_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.play_btn_pressed_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.play_btn_pressed_neon;
+                return R.drawable.play_btn_pressed;
         }
     }
 
@@ -111,13 +61,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.pause_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.pause_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.pause_states_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.pause_states_neon;
+                return R.drawable.pause_states;
         }
     }
 
@@ -125,13 +85,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.pause_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.pause_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.pause_btn_pressed_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.pause_btn_pressed_neon;
+                return R.drawable.pause_btn_pressed;
         }
     }
 
@@ -139,13 +109,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.prev_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.prev_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.prev_states_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.prev_states_neon;
+                return R.drawable.prev_states;
         }
     }
 
@@ -153,27 +133,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.prev_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.prev_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.prev_btn_pressed_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.prev_btn_pressed_neon;
-        }
-    }
-
-    public static int getRemove(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.drawable.remove_states_mono_light;
-            case UITypes.MONO_DARK :
-                return R.drawable.remove_states_mono_dark;
-            case UITypes.NEON :
-                return R.drawable.remove_states_neon;
-            default:
-                return R.drawable.remove_states_neon;
+                return R.drawable.prev_btn_pressed;
         }
     }
 
@@ -181,13 +157,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.skip_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.skip_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.skip_states_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.skip_states_neon;
+                return R.drawable.skip_states;
         }
     }
 
@@ -195,13 +181,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.next_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.next_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.next_btn_pressed_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.next_btn_pressed_neon;
+                return R.drawable.next_btn_pressed;
         }
     }
 
@@ -209,13 +205,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.shuffle_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.shuffle_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.shuffle_states_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.shuffle_states_neon;
+                return R.drawable.shuffle_states;
         }
     }
 
@@ -223,13 +229,23 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.shuffle_btn_pressed_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.shuffle_btn_pressed_mono_dark;
             case UITypes.NEON :
-                return R.drawable.shuffle_btn_pressed_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.shuffle_btn_pressed_neon;
+                return R.drawable.shuffle_btn_pressed;
         }
     }
 
@@ -237,27 +253,47 @@ public class DrawableMapper {
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.playlist_states_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.playlist_states_mono_dark;
             case UITypes.NEON :
-                return R.drawable.playlist_states_neon;
+            case UITypes.XMAS:
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.playlist_states_neon;
+                return R.drawable.playlist_states;
         }
     }
 
-    public static int getNotificationBackgroun(Integer uiType)
+    public static int getNotificationBackground(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
-                return R.drawable.notification_background_mono_light;
             case UITypes.MONO_DARK :
-                return R.drawable.notification_background_mono_dark;
             case UITypes.NEON :
-                return R.drawable.notification_background_neon;
+            case UITypes.XMAS :
+            case UITypes.PINK_PANTHER :
+            case UITypes.JACK_O_LANTERN :
+            case UITypes.SHAMROCK :
+            case UITypes.MURICA :
+            case UITypes.PSYCHEDELIC :
+            case UITypes.RASTA :
+            case UITypes.USSR :
+            case UITypes.TRON :
+            case UITypes.RAMEN :
+            case UITypes.RAINBOW :
+            case UITypes.KOSHER :
+            case UITypes.STAR_WARS :
             default:
-                return R.drawable.notification_background_neon;
+                return R.drawable.notification_background;
         }
     }
 }

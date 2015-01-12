@@ -33,4 +33,10 @@ public class PrevClickListener extends CustomAbstractClickListener {
             activity.handlePlaylistEmptyException(playlistEmptyException);
         }
     }
+
+    @Override
+    public boolean onLongClick(View v)
+    {
+        return false;
+    }
 }

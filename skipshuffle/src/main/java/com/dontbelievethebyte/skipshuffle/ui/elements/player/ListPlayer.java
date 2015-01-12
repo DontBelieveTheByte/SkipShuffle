@@ -15,25 +15,27 @@ import com.dontbelievethebyte.skipshuffle.playlist.Track;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.skipshuffle.utilities.ScrollOffsetCalculator;
 
 public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeInterface {
 
     public ListView listView;
 
-    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView)
+    public ListPlayer(BaseActivity baseActivity, ListPlayerButtons playerButtons, ListView listView, CustomSeekBar customSeekBar)
     {
         this.baseActivity = baseActivity;
+        this.type = baseActivity.getPreferencesHelper().getUIType();
         this.listView = listView;
+        this.customSeekBar = customSeekBar;
         buttons = playerButtons;
-        buttons.animations.setPlayerUIListeners(this);
+        buttons.animations.setPlayerUIListeners(this, baseActivity);
         setButtonsOnClickListeners();
     }
 
     @Override
     public void doPlay()
     {
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
         buttons.play.startAnimation(buttons.animations.playAnimation);
         notifyAdapter();
     }
@@ -41,7 +43,6 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doPause()
     {
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
         buttons.play.startAnimation(buttons.animations.pauseAnimation);
         notifyAdapter();
     }
@@ -49,35 +50,19 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
     @Override
     public void doSkip()
     {
-        buttons.play.clearAnimation();
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.skip.startAnimation(buttons.animations.skipAnimation);
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doPrev()
     {
-        buttons.play.clearAnimation();
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.prev.startAnimation(buttons.animations.prevAnimation);
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
     public void doShuffle()
     {
-        buttons.shuffle.setImageDrawable(buttons.drawables.getShuffle());
-        buttons.play.clearAnimation();
-        buttons.play.setImageDrawable(buttons.drawables.getPause());
-        buttons.play.startAnimation(buttons.animations.pauseAnimation);
         buttons.shuffle.startAnimation(buttons.animations.shuffleAnimation);
-        buttons.play.setImageDrawable(buttons.drawables.getPlay());
-        buttons.play.startAnimation(buttons.animations.playAnimation);
     }
 
     @Override
@@ -96,6 +81,7 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
         }
     }
 
+    @Override
     public void reboot()
     {
         try {
@@ -106,6 +92,9 @@ public class ListPlayer extends AbstractPlayerUI implements UIElementCompositeIn
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
+            customSeekBar.setEnabled(
+                    (mediaPlayer.isPaused() || mediaPlayer.isPlaying())
+            );
             buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);

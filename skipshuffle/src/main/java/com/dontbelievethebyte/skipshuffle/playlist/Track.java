@@ -14,7 +14,7 @@ public class Track {
     private String artist;
     private String album;
     private String genre;
-    private String duration;
+    private Long duration;
     private int position;
 
     public Track(){}
@@ -27,6 +27,7 @@ public class Track {
         setArtist(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
         setAlbum(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
         setPath(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+        setDuration(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
         setPosition(position);
         cursor.close();
     }
@@ -91,9 +92,14 @@ public class Track {
         this.genre = genre;
     }
 
-    public String getDuration()
+    public Long getDuration()
     {
         return duration;
+    }
+
+    public void setDuration(long duration)
+    {
+        this.duration = duration;
     }
 
     public int getPosition()

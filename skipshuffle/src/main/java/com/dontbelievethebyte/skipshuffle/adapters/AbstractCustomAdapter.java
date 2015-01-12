@@ -41,9 +41,16 @@ public abstract class AbstractCustomAdapter extends CursorAdapter {
     {
         ImageView imageLabel = (ImageView) view.findViewById(resourceId);
         ViewGroup.LayoutParams params = imageLabel.getLayoutParams();
-        imageLabel.setImageDrawable(
-                isPlay ? drawables.getPlay() : drawables.getPause()
-        );
+//        imageLabel.setImageDrawable(
+//                isPlay ? drawables.getPlay() : drawables.getPause()
+//        );
+//        imageLabel.setColorFilter(
+//                mediaPlayer.isPlaying() ?
+//                        ColorMapper.getPlayButton(mediaPlayer.getPreferencesHelper().getUIType()) :
+//                        ColorMapper.getPauseButton(mediaPlayer.getPreferencesHelper().getUIType())
+//
+//        );
+
         imageLabel.setLayoutParams(params);
         return imageLabel;
     }

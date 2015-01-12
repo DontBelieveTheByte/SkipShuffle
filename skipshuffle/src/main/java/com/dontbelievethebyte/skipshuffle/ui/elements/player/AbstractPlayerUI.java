@@ -20,10 +20,14 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListen
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.PrevClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.ShuffleClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.clickListeners.concrete.SkipClickListener;
+import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
+    public int type;
     public AbstractPlayerButtons buttons;
+    public CustomSeekBar customSeekBar;
+
     protected BaseActivity baseActivity;
 
     public abstract void doPlay();
@@ -42,11 +46,25 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
     protected void setButtonsOnClickListeners()
     {
-        buttons.play.setOnClickListener(new PlayClickListener(baseActivity));
-        buttons.skip.setOnClickListener(new SkipClickListener(baseActivity));
-        buttons.prev.setOnClickListener(new PrevClickListener(baseActivity));
-        buttons.shuffle.setOnClickListener(new ShuffleClickListener(baseActivity));
-        buttons.playlist.setOnClickListener(new PlaylistClickListener((PlayerActivity)baseActivity));
+        PlayClickListener playClickListener = new PlayClickListener(baseActivity);
+        buttons.play.setOnClickListener(playClickListener);
+        buttons.play.setOnLongClickListener(playClickListener);
+
+        SkipClickListener skipClickListener = new SkipClickListener(baseActivity);
+        buttons.skip.setOnClickListener(skipClickListener);
+        buttons.skip.setOnLongClickListener(skipClickListener);
+
+        PrevClickListener prevClickListener = new PrevClickListener(baseActivity);
+        buttons.prev.setOnClickListener(prevClickListener);
+        buttons.prev.setOnLongClickListener(prevClickListener);
+
+        ShuffleClickListener shuffleClickListener = new ShuffleClickListener(baseActivity);
+        buttons.shuffle.setOnClickListener(shuffleClickListener);
+        buttons.shuffle.setOnLongClickListener(shuffleClickListener);
+
+        PlaylistClickListener playlistClickListener = new PlaylistClickListener((PlayerActivity)baseActivity);
+        buttons.playlist.setOnClickListener(playlistClickListener);
+        buttons.playlist.setOnLongClickListener(playlistClickListener);
     }
 
     public void reboot()
@@ -59,6 +77,10 @@ public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
                 doPause();
             RandomPlaylist playlist = mediaPlayer.getPlaylist();
             setTrack(playlist.getCurrent());
+            customSeekBar.setEnabled(
+                    (mediaPlayer.isPaused() || mediaPlayer.isPlaying())
+            );
+
             buttons.shuffle.setImageDrawable(getShuffleDrawable());
         } catch (NoMediaPlayerException e) {
             baseActivity.handleNoMediaPlayerException(e);
