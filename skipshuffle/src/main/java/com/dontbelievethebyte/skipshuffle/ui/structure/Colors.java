@@ -4,17 +4,22 @@
 
 package com.dontbelievethebyte.skipshuffle.ui.structure;
 
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 
 public class Colors {
 
+    public static ColorDrawable toColorDrawable(Context context, Integer color)
+    {
+        return new ColorDrawable(context.getResources().getColor(color));
+    }
+
     public int background;
     public int emptyListText;
     public int listDivider;
     public int navDrawerBackground;
-    public int navDrawerHeaderText;
     public int navDrawerText;
     public int songLabel;
     public int playlistTitle;
@@ -28,18 +33,12 @@ public class Colors {
     public int seekBarProgress;
     public int seekBarThumb;
 
-    public static ColorDrawable toColorDrawable(Integer color)
-    {
-        return new ColorDrawable(color);
-    }
-
     public Colors(int uiType)
     {
         background = ColorMapper.getBackground(uiType);
         emptyListText = ColorMapper.getEmptyListText(uiType);
         listDivider = ColorMapper.getListDivider(uiType);
         navDrawerBackground = ColorMapper.getNavDrawerBackground(uiType);
-        navDrawerHeaderText = ColorMapper.getNavHeaderText(uiType);
         navDrawerText = ColorMapper.getNavDrawerText(uiType);
         songLabel = ColorMapper.getSongLabel(uiType);
         playlistTitle = ColorMapper.getPlaylistTitle(uiType);
@@ -50,7 +49,7 @@ public class Colors {
         prevButton = ColorMapper.getPlaylistButton(uiType);
         playlistButton = ColorMapper.getPlaylistButton(uiType);
         shuffleButton = ColorMapper.getShuffleButton(uiType);
-        seekBarProgress = ColorMapper.getSeekbarProgress(uiType);
-        seekBarThumb = ColorMapper.getSeekbarThumb(uiType);
+        seekBarProgress = ColorMapper.getSeekBarProgress(uiType);
+        seekBarThumb = ColorMapper.getSeekBarThumb(uiType);
     }
 }

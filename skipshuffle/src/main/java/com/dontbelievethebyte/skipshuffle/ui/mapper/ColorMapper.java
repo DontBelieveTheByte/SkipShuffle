@@ -168,46 +168,6 @@ public class ColorMapper {
         }
     }
 
-    public static int getNavHeaderText(Integer uiType)
-    {
-        switch (uiType) {
-            case UITypes.MONO_LIGHT :
-                return R.color.nav_drawer_header_text_mono_light;
-            case UITypes.MONO_DARK :
-                return R.color.nav_drawer_header_text_mono_dark;
-            case UITypes.NEON :
-                return R.color.nav_drawer_header_text_neon;
-            case UITypes.XMAS :
-                return R.color.nav_drawer_header_text_xmas;
-            case UITypes.PINK_PANTHER :
-                return R.color.nav_drawer_header_text_pink_panther;
-            case UITypes.JACK_O_LANTERN :
-                return R.color.nav_drawer_header_text_jack_o_lantern;
-            case UITypes.SHAMROCK :
-                return R.color.nav_drawer_header_text_shamrock;
-            case UITypes.MURICA :
-                return R.color.nav_drawer_header_text_murica;
-            case UITypes.PSYCHEDELIC :
-                return R.color.nav_drawer_header_text_psychedelic;
-            case UITypes.RASTA :
-                return R.color.nav_drawer_header_text_rasta;
-            case UITypes.USSR :
-                return R.color.nav_drawer_header_text_ussr;
-            case UITypes.TRON :
-                return R.color.nav_drawer_header_text_tron;
-            case UITypes.RAMEN :
-                return R.color.nav_drawer_header_text_ramen;
-            case UITypes.RAINBOW :
-                return R.color.nav_drawer_header_text_rainbow;
-            case UITypes.KOSHER :
-                return R.color.nav_drawer_header_text_kosher;
-            case UITypes.STAR_WARS :
-                return R.color.nav_drawer_header_text_star_wars;
-            default:
-                return R.color.nav_drawer_header_text_neon;
-        }
-    }
-
     public static int getNavDrawerText(Integer uiType)
     {
         switch (uiType) {
@@ -609,7 +569,7 @@ public class ColorMapper {
         }
     }
 
-    public static int getSeekbarProgress(Integer uiType)
+    public static int getSeekBarProgress(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :
@@ -649,7 +609,7 @@ public class ColorMapper {
         }
     }
 
-    public static int getSeekbarThumb(Integer uiType)
+    public static int getSeekBarThumb(Integer uiType)
     {
         switch (uiType) {
             case UITypes.MONO_LIGHT :

@@ -26,7 +26,9 @@ public class ContentBrowserColorVisitor extends AbstractColorVisitor {
             ListView drawerList = ((MusicContentBrowser) uiElement).getDrawerList();
             if (null != drawerList) {
                 drawerList.setBackgroundResource(colors.navDrawerBackground);
-                drawerList.setDivider(Colors.toColorDrawable(colors.listDivider));
+                drawerList.setDivider(
+                        Colors.toColorDrawable(activity, colors.listDivider)
+                );
             }
         }
     }
