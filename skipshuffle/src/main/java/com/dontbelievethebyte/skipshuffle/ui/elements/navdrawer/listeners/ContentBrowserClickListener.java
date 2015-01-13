@@ -15,12 +15,12 @@ import android.widget.ListView;
 import com.dontbelievethebyte.skipshuffle.activities.MusicContentBrowserActivity;
 import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
 
-public class ContentBrowser implements ListView.OnItemClickListener {
+public class ContentBrowserClickListener implements ListView.OnItemClickListener {
 
     private Context context;
     private DrawerLayout drawer;
 
-    public ContentBrowser(Context context, DrawerLayout drawer)
+    public ContentBrowserClickListener(Context context, DrawerLayout drawer)
     {
         this.context = context;
         this.drawer = drawer;

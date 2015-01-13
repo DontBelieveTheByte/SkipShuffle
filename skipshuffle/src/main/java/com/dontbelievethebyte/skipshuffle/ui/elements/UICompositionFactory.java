@@ -24,7 +24,7 @@ import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowserClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
@@ -64,7 +64,10 @@ public class UICompositionFactory {
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);
         uiBuilder.setContentArea(contentArea);
-        uiBuilder.setNavigationDrawer(null);
+        uiBuilder.setNavigationDrawer(buildNavigationDrawer(
+                playerActivity,
+                customTypeface
+        ));
         uiBuilder.setColors(new Colors(uiType));
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
@@ -120,7 +123,10 @@ public class UICompositionFactory {
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);
         uiBuilder.setContentArea(contentArea);
-        uiBuilder.setNavigationDrawer(null);
+        uiBuilder.setNavigationDrawer(buildNavigationDrawer(
+                playerActivity,
+                customTypeface
+        ));
         uiBuilder.setColors(colors);
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
@@ -156,11 +162,11 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    private static MusicContentBrowser buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface) throws NoMediaPlayerException
+    private static MusicContentBrowser buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)
     {
         MusicContentBrowser musicPlayerDrawer = new MusicContentBrowser(baseActivity, R.id.drawer_list);
         musicPlayerDrawer.setClickListener(
-                new ContentBrowser(
+                new ContentBrowserClickListener(
                         baseActivity,
                         (DrawerLayout) baseActivity.findViewById(R.id.drawer_layout)
                 )
