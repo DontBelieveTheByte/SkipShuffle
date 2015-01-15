@@ -27,16 +27,16 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
     public void onItemClick(AdapterView parent, View view, int position, long id)
     {
         switch (position) {
-            case 1:
+            case 0:
                 browseSongs(view.getContext());
                 break;
-            case 2:
+            case 1:
                 browseArtists(view.getContext());
                 break;
-            case 3:
+            case 2:
                 browseAlbums(view.getContext());
                 break;
-            case 4:
+            case 3:
                 browseGenres(view.getContext());
                 break;
             default:
