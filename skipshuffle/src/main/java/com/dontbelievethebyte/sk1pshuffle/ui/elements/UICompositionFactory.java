@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.activities.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.sk1pshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.adapters.NavigationDrawerAdapter;
@@ -131,6 +132,11 @@ public class UICompositionFactory {
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
         return uiBuilder.build();
+    }
+
+    public static UIComposition makeContentBrowser(ContentBrowserActivity contentBrowserActivity, int uiType) throws NoMediaPlayerException
+    {
+          return null;
     }
 
     private static ContentBrowserDrawer buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)

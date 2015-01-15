@@ -7,7 +7,6 @@ package com.dontbelievethebyte.sk1pshuffle.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,8 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
+import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 
-public class ContentBrowserActivity extends ActionBarActivity {
+public class ContentBrowserActivity extends BaseActivity implements UIElementCompositeInterface {
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
 
@@ -35,8 +35,8 @@ public class ContentBrowserActivity extends ActionBarActivity {
         parseActivityIntent();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+                                       .add(R.id.container, new PlaceholderFragment())
+                                       .commit();
         }
     }
 
@@ -72,7 +72,7 @@ public class ContentBrowserActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements UIElementCompositeInterface {
 
         public PlaceholderFragment() {
         }
@@ -83,5 +83,22 @@ public class ContentBrowserActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_content_browser, container, false);
             return rootView;
         }
+    }
+
+    @Override
+    public void onViewModeChanged()
+    {
+
+    }
+
+    @Override
+    protected void setUI(Integer type)
+    {
+//        try {
+////            ui = UICompositionFactory.makeContentBrowser(this, preferencesHelper.getUIType());
+////            ui.player.reboot();
+//        } catch (NoMediaPlayerException e) {
+//            handleNoMediaPlayerException(e);
+//        }
     }
 }
