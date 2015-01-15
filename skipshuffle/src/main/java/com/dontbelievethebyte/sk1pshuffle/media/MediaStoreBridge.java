@@ -15,21 +15,6 @@ public class MediaStoreBridge {
     private Context context;
     private ContentResolver contentResolver;
 
-    public static class Types {
-
-        public static final String TYPE = "Type";
-        public static final int SONG = 0;
-        public static final int SONGS = 1;
-        public static final int ARTIST = 2;
-        public static final int ARTISTS = 3;
-        public static final int ALBUM = 4;
-        public static final int ALBUMS = 5;
-        public static final int GENRE= 6;
-        public static final int GENRES = 7;
-        public static final int PLAYLIST = 8;
-        public static final int PLAYLISTS = 9;
-    }
-
     public MediaStoreBridge(Context context)
     {
         this.context = context;

@@ -7,13 +7,11 @@ package com.dontbelievethebyte.sk1pshuffle.ui.elements.navdrawer.listeners;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activities.ContentBrowserActivity;
 
 public class ContentBrowserClickListener implements ListView.OnItemClickListener {
@@ -48,29 +46,41 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
 
     private void browseSongs(Context context)
     {
-        Log.d(BaseActivity.TAG , "$$$ BROWSING SONGS");
         Intent intent = new Intent(context, ContentBrowserActivity.class);
+        intent.putExtra(
+                ContentBrowserActivity.CONTENT_TYPE,
+                ContentBrowserActivity.ContentTypes.SONGS.ordinal()
+        );
         context.startActivity(intent);
     }
 
     private void browseArtists(Context context)
     {
-        Log.d(BaseActivity.TAG , "$$$ BROWSING ARTISTS");
         Intent intent = new Intent(context, ContentBrowserActivity.class);
+        intent.putExtra(
+                ContentBrowserActivity.CONTENT_TYPE,
+                ContentBrowserActivity.ContentTypes.ARTISTS.ordinal()
+        );
         context.startActivity(intent);
     }
 
     private void browseAlbums(Context context)
     {
-        Log.d(BaseActivity.TAG , "$$$ BROWSING ALBUMS");
         Intent intent = new Intent(context, ContentBrowserActivity.class);
+        intent.putExtra(
+                ContentBrowserActivity.CONTENT_TYPE,
+                ContentBrowserActivity.ContentTypes.ALBUMS.ordinal()
+        );
         context.startActivity(intent);
     }
 
     private void browseGenres(Context context)
     {
-        Log.d(BaseActivity.TAG , "$$$ BROWSING GENRES");
         Intent intent = new Intent(context, ContentBrowserActivity.class);
+        intent.putExtra(
+                ContentBrowserActivity.CONTENT_TYPE,
+                ContentBrowserActivity.ContentTypes.GENRES.ordinal()
+        );
         context.startActivity(intent);
     }
 }
