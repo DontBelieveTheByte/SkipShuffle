@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--   Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
+<!-- Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
 <resources>
 
     <!-- Default meta data -->
@@ -82,7 +82,6 @@
         <item>Albums</item>
         <item>Genres</item>
     </string-array>
-
     <string-array name="adapter_types">
         <item>Songs</item>
         <item>Artists</item>
@@ -97,7 +96,6 @@
     <string name="meta_data_album">Album</string>
     <string name="meta_data_duration">Duration</string>
 
-
     <!-- Content description for accessibility -->
     <string name="accessibility_play_pause">Play/Pause</string>
     <string name="accessibility_skip">Skip</string>
@@ -106,5 +104,8 @@
     <string name="accessibility_skipshuffle" translatable="false">SkipShuffle</string>
     <string name="accessibility_playlist">Playlist</string>
     <string name="accessibility_background">Background</string>
+    <string name="title_activity_content_browser">ContentBrowserActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

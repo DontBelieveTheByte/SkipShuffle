@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--   Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
+<!-- Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dontbelievethebyte.sk1pshuffle" >
 
@@ -14,7 +14,7 @@
         android:label="@string/label_app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:name="com.dontbelievethebyte.sk1pshuffle.activities.PlayerActivity"
+            android:name=".activities.PlayerActivity"
             android:label="@string/label_app_name"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -24,20 +24,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dontbelievethebyte.sk1pshuffle.activities.MusicContentBrowserActivity"
+            android:name=".activities.MusicContentBrowserActivity"
             android:label="@string/label_playlist" >
         </activity>
 
-        <service android:name="com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer" >
+        <service android:name=".service.SkipShuffleMediaPlayer" >
         </service>
 
-        <receiver android:name="com.dontbelievethebyte.sk1pshuffle.ui.remote.widgets.widget.SkipShuffleWidget" >
+        <receiver android:name=".ui.remote.widgets.widget.SkipShuffleWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/skip_shuffle_widget_info" />
         </receiver>
+
+        <activity
+            android:name=".activities.ContentBrowserActivity"
+            android:label="@string/title_activity_content_browser" >
+        </activity>
     </application>
+
 </manifest>
