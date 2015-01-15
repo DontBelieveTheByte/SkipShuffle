@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.activities.MusicContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.sk1pshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.adapters.NavigationDrawerAdapter;
@@ -131,34 +130,6 @@ public class UICompositionFactory {
         uiBuilder.setDrawables(drawables);
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
-        return uiBuilder.build();
-    }
-
-    public static UIComposition makeMusicContentBrowser(MusicContentBrowserActivity musicContentBrowserActivity, int uiType) throws NoMediaPlayerException
-    {
-        ListLayout contentArea = new ListLayout(musicContentBrowserActivity);
-        CustomTypeface customTypeface = new CustomTypeface(musicContentBrowserActivity, uiType);
-        Drawables drawables = new Drawables(musicContentBrowserActivity, uiType);
-
-        ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
-        buttons.animations = new PlayerButtonsAnimations(musicContentBrowserActivity);
-        buttons.drawables = drawables;
-
-        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
-        songLabel.setTypeFace(customTypeface);
-
-//        ListPlayer player = new ListPlayer(
-//                this,
-//                buttons,
-//                songLabel
-//        );
-
-        UICompositionBuilder uiBuilder = new UICompositionBuilder();
-        uiBuilder.setActivity(musicContentBrowserActivity);
-        uiBuilder.setContentArea(contentArea);
-        uiBuilder.setNavigationDrawer(buildNavigationDrawer(musicContentBrowserActivity, customTypeface));
-        uiBuilder.setColors(new Colors(uiType));
-        uiBuilder.setDrawables(drawables);
         return uiBuilder.build();
     }
 
