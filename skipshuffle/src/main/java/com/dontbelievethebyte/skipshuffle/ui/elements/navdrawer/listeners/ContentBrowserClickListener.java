@@ -5,56 +5,62 @@
 package com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.dontbelievethebyte.skipshuffle.activities.MusicContentBrowserActivity;
-import com.dontbelievethebyte.skipshuffle.media.MediaStoreBridge;
+import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 
 public class ContentBrowserClickListener implements ListView.OnItemClickListener {
 
-    private Context context;
     private DrawerLayout drawer;
 
-    public ContentBrowserClickListener(Context context, DrawerLayout drawer)
+    public ContentBrowserClickListener(DrawerLayout drawer)
     {
-        this.context = context;
         this.drawer = drawer;
     }
 
     @Override
     public void onItemClick(AdapterView parent, View view, int position, long id)
     {
-        int type;
         switch (position) {
-            case MediaStoreBridge.Types.SONGS:
-            case MediaStoreBridge.Types.ARTISTS:
-            case MediaStoreBridge.Types.ALBUMS:
-            case MediaStoreBridge.Types.GENRES:
-            case MediaStoreBridge.Types.PLAYLIST:
-            type = position;
+            case 1:
+                browseSongs(view.getContext());
+                break;
+            case 2:
+                browseArtists(view.getContext());
+                break;
+            case 3:
+                browseAlbums(view.getContext());
+                break;
+            case 4:
+                browseGenres(view.getContext());
                 break;
             default:
-                type = MediaStoreBridge.Types.SONGS;
         }
         drawer.closeDrawer(Gravity.START);
-        startPlaylistActivity(type);
     }
 
-    private void startPlaylistActivity(int type)
+    private void browseSongs(Context context)
     {
-        Intent intent = new Intent(
-                context,
-                MusicContentBrowserActivity.class
-        );
-        intent.putExtra(
-                MediaStoreBridge.Types.TYPE,
-                type
-        );
-        context.startActivity(intent);
+        Log.d(BaseActivity.TAG , "$$$ BROWSING SONGS");
+    }
+
+    private void browseArtists(Context context)
+    {
+        Log.d(BaseActivity.TAG , "$$$ BROWSING ARTISTS");
+    }
+
+    private void browseAlbums(Context context)
+    {
+        Log.d(BaseActivity.TAG , "$$$ BROWSING ALBUMS");
+    }
+
+    private void browseGenres(Context context)
+    {
+        Log.d(BaseActivity.TAG , "$$$ BROWSING GENRES");
     }
 }

@@ -9,7 +9,7 @@ import android.app.Activity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
@@ -25,7 +25,7 @@ public class ColorVisitorFactory {
 
     public static AbstractColorVisitor make(UIElementCompositeInterface uiElement, Activity activity) throws NoSuchVisitorException
     {
-        if (uiElement instanceof MusicContentBrowser)
+        if (uiElement instanceof ContentBrowserDrawer)
             return new ContentBrowserColorVisitor(activity);
 
         else if (uiElement instanceof ListLayout)

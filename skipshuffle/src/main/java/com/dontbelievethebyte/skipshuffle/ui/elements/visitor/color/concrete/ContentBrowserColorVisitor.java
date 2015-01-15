@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.color.AbstractColorVisitor;
 import com.dontbelievethebyte.skipshuffle.ui.structure.Colors;
 
@@ -22,8 +22,8 @@ public class ContentBrowserColorVisitor extends AbstractColorVisitor {
     @Override
     public void visit(UIElementCompositeInterface uiElement)
     {
-        if (uiElement instanceof MusicContentBrowser) {
-            ListView drawerList = ((MusicContentBrowser) uiElement).getDrawerList();
+        if (uiElement instanceof ContentBrowserDrawer) {
+            ListView drawerList = ((ContentBrowserDrawer) uiElement).getDrawerList();
             if (null != drawerList) {
                 drawerList.setBackgroundResource(colors.navDrawerBackground);
                 drawerList.setDivider(

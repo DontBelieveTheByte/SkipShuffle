@@ -6,7 +6,7 @@ package com.dontbelievethebyte.skipshuffle.ui.elements;
 
 import com.dontbelievethebyte.skipshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.seekbar.CustomSeekBar;
@@ -26,7 +26,7 @@ public class UIComposition {
     public AbstractPlayerUI player;
 
     private BaseActivity baseActivity;
-    private MusicContentBrowser musicPlayerDrawer;
+    private ContentBrowserDrawer musicPlayerDrawer;
     private AbstractLayout contentArea;
     private Colors colors;
     private Drawables drawables;

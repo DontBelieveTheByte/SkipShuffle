@@ -7,7 +7,7 @@ package com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension;
 import android.app.Activity;
 
 import com.dontbelievethebyte.skipshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.visitor.dimension.concrete.ContentBrowserDimensionsVisitor;
@@ -19,7 +19,7 @@ public class DimensionsVisitorFactory {
 
     public static AbstractDimensionsVisitor make(UIElementCompositeInterface uiElement, Activity activity) throws NoSuchVisitorException
     {
-        if (uiElement instanceof MusicContentBrowser)
+        if (uiElement instanceof ContentBrowserDrawer)
             return new ContentBrowserDimensionsVisitor(activity);
         else if (uiElement instanceof MainPlayer)
             return new MainPlayerDimensionsVisitor(activity);

@@ -23,7 +23,7 @@ import com.dontbelievethebyte.skipshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.ListLayout;
 import com.dontbelievethebyte.skipshuffle.ui.elements.layout.PlayerLayout;
-import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.MusicContentBrowser;
+import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.navdrawer.listeners.ContentBrowserClickListener;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.elements.player.MainPlayer;
@@ -162,16 +162,15 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    private static MusicContentBrowser buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)
+    private static ContentBrowserDrawer buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)
     {
-        MusicContentBrowser musicPlayerDrawer = new MusicContentBrowser(baseActivity, R.id.drawer_list);
-        musicPlayerDrawer.setClickListener(
+        ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(baseActivity, R.id.drawer_list);
+        contentBrowserDrawer.setClickListener(
                 new ContentBrowserClickListener(
-                        baseActivity,
                         (DrawerLayout) baseActivity.findViewById(R.id.drawer_layout)
                 )
         );
-        musicPlayerDrawer.setAdapter(
+        contentBrowserDrawer.setAdapter(
                 new NavigationDrawerAdapter(
                         baseActivity,
                         R.layout.drawer_list_item,
@@ -180,6 +179,6 @@ public class UICompositionFactory {
                         customTypeface.getTypeFace()
                 )
         );
-        return musicPlayerDrawer;
+        return contentBrowserDrawer;
     }
 }
