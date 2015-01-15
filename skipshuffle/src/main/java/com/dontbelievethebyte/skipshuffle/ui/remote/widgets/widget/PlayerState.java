@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget;
+package com.dontbelievethebyte.skipshuffle.ui.remote.widgets.widget;
 
 import com.dontbelievethebyte.skipshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.skipshuffle.playlist.Track;

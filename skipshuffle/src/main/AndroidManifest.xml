@@ -31,7 +31,7 @@
         <service android:name=".service.SkipShuffleMediaPlayer" >
         </service>
 
-        <receiver android:name=".ui.remote.remote.widget.SkipShuffleWidget" >
+        <receiver android:name=".ui.remote.widgets.widget.SkipShuffleWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

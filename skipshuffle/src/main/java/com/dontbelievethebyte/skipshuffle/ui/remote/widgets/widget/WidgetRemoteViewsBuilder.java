@@ -2,29 +2,27 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification;
+package com.dontbelievethebyte.skipshuffle.ui.remote.widgets.widget;
 
+import android.content.Context;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.skipshuffle.R;
-import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.ColorMapper;
 import com.dontbelievethebyte.skipshuffle.ui.mapper.DrawableMapper;
-import com.dontbelievethebyte.skipshuffle.ui.remote.remote.AbstractRemoteViewsBuilder;
-import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
+import com.dontbelievethebyte.skipshuffle.ui.remote.widgets.AbstractRemoteViewsBuilder;
 
-public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
+public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
-    public NotificationRemoteViewsBuilder(SkipShuffleMediaPlayer skipShuffleMediaPlayer)
+    public WidgetRemoteViewsBuilder(Context context)
     {
-        super(skipShuffleMediaPlayer);
+        super(context);
     }
 
     @Override
     public RemoteViews build(PlayerState playerState)
     {
-
-        buildContainer(R.layout.notification);
+        buildContainer(R.layout.widget);
 
         buildPrev(R.id.notif_prev);
 
@@ -43,26 +41,27 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
         buildDefault(R.id.notif_all);
 
-        buildTitleLabelContent(playerState.getTitle());
-        buildArtistLabelContent(playerState.getArtist());
+        if (null != playerState.getTitle())
+            buildTitleLabelContent(playerState.getTitle());
+        if (null != playerState.getArtist())
+            buildArtistLabelContent(playerState.getArtist());
 
         colorize(playerState);
-
         return remoteViews;
     }
 
     private void colorize(PlayerState playerState)
     {
-        int uiType = playerState.getUiType();
         colorize.label(R.id.track_title,
                 context.getResources().getColor(
-                        ColorMapper.getPlaylistTitle(uiType)
+                        ColorMapper.getPlaylistTitle(playerState.getUiType())
                 )
         );
 
         colorize.label(
-                R.id.track_artist, context.getResources().getColor(
-                        ColorMapper.getPlaylistArtist(uiType)
+                R.id.track_artist,
+                context.getResources().getColor(
+                        ColorMapper.getPlaylistArtist(playerState.getUiType())
                 )
         );
 
@@ -70,43 +69,43 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
                 R.id.notif_play,
                 context.getResources().getColor(
                         playerState.isPlaying() ?
-                                ColorMapper.getPlayButton(uiType) :
-                                ColorMapper.getPauseButton(uiType)
+                                ColorMapper.getPlayButton(playerState.getUiType()) :
+                                ColorMapper.getPauseButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_prev,
                 context.getResources().getColor(
-                        ColorMapper.getPrevButton(uiType)
+                        ColorMapper.getPrevButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_shuffle,
                 context.getResources().getColor(
-                        ColorMapper.getShuffleButton(uiType)
+                        ColorMapper.getShuffleButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.notif_skip,
                 context.getResources().getColor(
-                        ColorMapper.getSkipButton(uiType)
+                        ColorMapper.getSkipButton(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.buttons_background_image,
                 context.getResources().getColor(
-                        ColorMapper.getBackground(uiType)
+                        ColorMapper.getBackground(playerState.getUiType())
                 )
         );
 
         colorize.drawable(
                 R.id.buttons_background_image_overflow_protection,
                 context.getResources().getColor(
-                        ColorMapper.getBackground(uiType)
+                        ColorMapper.getBackground(playerState.getUiType())
                 )
         );
     }

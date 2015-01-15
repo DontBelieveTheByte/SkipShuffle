@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.remote.remote.notification;
+package com.dontbelievethebyte.skipshuffle.ui.remote.widgets.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -13,7 +13,7 @@ import android.widget.RemoteViews;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.skipshuffle.service.callbacks.PlayerStateChangedCallback;
-import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
+import com.dontbelievethebyte.skipshuffle.ui.remote.widgets.widget.PlayerState;
 
 public class PlayerNotification implements PlayerStateChangedCallback {
 

@@ -29,7 +29,6 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
     private int selectedTextBackgroundColor;
     private int textColor;
 
-    //@TODO colorize using visitor instead of constructor.
     public NavigationDrawerAdapter(Context context, int resource, String[] strings, PreferencesHelper preferencesHelper, Typeface typeface)
     {
         super(context, resource, strings);

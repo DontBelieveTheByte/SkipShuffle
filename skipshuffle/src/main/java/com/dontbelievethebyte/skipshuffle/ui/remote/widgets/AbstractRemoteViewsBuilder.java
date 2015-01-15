@@ -2,7 +2,7 @@
  * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
  */
 
-package com.dontbelievethebyte.skipshuffle.ui.remote.remote;
+package com.dontbelievethebyte.skipshuffle.ui.remote.widgets;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.RemoteViews;
 import com.dontbelievethebyte.skipshuffle.R;
 import com.dontbelievethebyte.skipshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.skipshuffle.service.SkipShuflleMediaPlayerCommandsContract;
-import com.dontbelievethebyte.skipshuffle.ui.remote.remote.widget.PlayerState;
+import com.dontbelievethebyte.skipshuffle.ui.remote.widgets.widget.PlayerState;
 
 public abstract class AbstractRemoteViewsBuilder {
 
