@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 
-public class ContentBrowserActivity extends BaseActivity implements UIElementCompositeInterface {
+public class ContentBrowserActivity extends BaseActivity {
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
 

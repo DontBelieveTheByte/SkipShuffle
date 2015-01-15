@@ -4,6 +4,8 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.builder;
 
+import android.app.Fragment;
+
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
@@ -18,6 +20,7 @@ public class UICompositionBuilder {
     public AbstractPlayerUI player;
     public ContentBrowserDrawer musicPlayerDrawer;
     public BaseActivity baseActivity;
+    public Fragment fragment;
     public AbstractLayout contentArea;
     public Colors colors;
     public Drawables drawables;
@@ -26,6 +29,12 @@ public class UICompositionBuilder {
     public UICompositionBuilder setActivity(BaseActivity baseActivity)
     {
         this.baseActivity = baseActivity;
+        return this;
+    }
+
+    public UICompositionBuilder setFragment(Fragment fragment)
+    {
+        this.fragment = fragment;
         return this;
     }
 

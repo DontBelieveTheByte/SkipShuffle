@@ -26,7 +26,7 @@ public class UIComposition {
     public AbstractPlayerUI player;
 
     private BaseActivity baseActivity;
-    private ContentBrowserDrawer musicPlayerDrawer;
+    private ContentBrowserDrawer contentBrowserDrawer;
     private AbstractLayout contentArea;
     private Colors colors;
     private Drawables drawables;
@@ -37,7 +37,7 @@ public class UIComposition {
         baseActivity = builder.baseActivity;
         contentArea = builder.contentArea;
         colors = builder.colors;
-        musicPlayerDrawer = builder.musicPlayerDrawer;
+        contentBrowserDrawer = builder.musicPlayerDrawer;
         player = builder.player;
         drawables = builder.drawables;
         customSeekBar = builder.customSeekBar;
@@ -47,7 +47,8 @@ public class UIComposition {
     private void visitElements()
     {
         ArrayList<UIElementCompositeInterface> uiElements = new ArrayList<UIElementCompositeInterface>();
-        uiElements.add(musicPlayerDrawer);
+        uiElements.add(baseActivity);
+        uiElements.add(contentBrowserDrawer);
         uiElements.add(player);
         uiElements.add(player.buttons);
         uiElements.add(contentArea);

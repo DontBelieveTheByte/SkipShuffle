@@ -23,6 +23,7 @@ import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCa
 import com.dontbelievethebyte.sk1pshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.sk1pshuffle.ui.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIComposition;
+import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.menu.builder.OptionsMenuBuilder;
@@ -37,7 +38,8 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                                                                         PrefsCallbacksManager.HapticFeedBackChangedCallback,
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
                                                                         PrefsCallbacksManager.ViewModeChangedCallback,
-                                                                        PlayerStateChangedCallback {
+                                                                        PlayerStateChangedCallback,
+                                                                        UIElementCompositeInterface {
 
     public static final String TAG = "SkipShuffle";
 
