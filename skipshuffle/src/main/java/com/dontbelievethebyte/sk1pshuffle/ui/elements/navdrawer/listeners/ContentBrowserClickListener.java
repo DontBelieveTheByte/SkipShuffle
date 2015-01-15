@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.sk1pshuffle.activities.ContentBrowserActivity;
+import com.dontbelievethebyte.sk1pshuffle.media.ContentTypes;
 
 public class ContentBrowserClickListener implements ListView.OnItemClickListener {
 
@@ -49,7 +50,7 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
                 ContentBrowserActivity.CONTENT_TYPE,
-                ContentBrowserActivity.ContentTypes.SONGS.ordinal()
+                ContentTypes.SONGS.ordinal()
         );
         context.startActivity(intent);
     }
@@ -59,7 +60,7 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
                 ContentBrowserActivity.CONTENT_TYPE,
-                ContentBrowserActivity.ContentTypes.ARTISTS.ordinal()
+                ContentTypes.ARTISTS.ordinal()
         );
         context.startActivity(intent);
     }
@@ -69,7 +70,7 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
                 ContentBrowserActivity.CONTENT_TYPE,
-                ContentBrowserActivity.ContentTypes.ALBUMS.ordinal()
+                ContentTypes.ALBUMS.ordinal()
         );
         context.startActivity(intent);
     }
@@ -79,7 +80,7 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
                 ContentBrowserActivity.CONTENT_TYPE,
-                ContentBrowserActivity.ContentTypes.GENRES.ordinal()
+                ContentTypes.GENRES.ordinal()
         );
         context.startActivity(intent);
     }
