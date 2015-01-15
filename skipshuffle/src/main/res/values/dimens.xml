@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2014. Jean-Francois Berube, all rights reserved. -->
+<!--
+  Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
+  -->
 <resources>
 
     <dimen name="null_size">0dp</dimen>

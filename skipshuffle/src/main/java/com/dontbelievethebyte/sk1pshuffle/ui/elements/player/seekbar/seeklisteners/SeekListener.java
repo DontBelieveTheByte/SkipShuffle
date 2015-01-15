@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014. Jean-Francois Berube, all rights reserved.
+ * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
 package com.dontbelievethebyte.sk1pshuffle.ui.elements.player.seekbar.seeklisteners;
