@@ -22,7 +22,8 @@ import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.ContentBrowserDrawer;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.ContentBrowserClickListener;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.concrete.BaseActivityClickListener;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.concrete.ContentBrowserActivityClickListener;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.ListPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.MainPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.animations.PlayerButtonsAnimations;
@@ -62,12 +63,14 @@ public class UICompositionFactory {
                 customSeekBar
         );
 
+        ContentBrowserDrawer contentBrowserDrawer = buildNavigationDrawer(
+                activity,
+                theme
+        );
+
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(activity);
-        uiBuilder.setNavigationDrawer(buildNavigationDrawer(
-                activity,
-                theme.getCustomTypeface()
-        ));
+        uiBuilder.setNavigationDrawer(contentBrowserDrawer);
         uiBuilder.setTheme(theme);
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
@@ -119,12 +122,15 @@ public class UICompositionFactory {
 
         listView.setSelection(randomPlaylist.getCurrentPosition());
 
+        ContentBrowserDrawer contentBrowserDrawer = buildNavigationDrawer(
+                activity,
+                theme
+        );
+
+
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(activity);
-        uiBuilder.setNavigationDrawer(buildNavigationDrawer(
-                activity,
-                theme.getCustomTypeface()
-        ));
+        uiBuilder.setNavigationDrawer(contentBrowserDrawer);
         uiBuilder.setTheme(theme);
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
@@ -143,27 +149,51 @@ public class UICompositionFactory {
         TextView emptyText = (TextView) viewGroup.findViewById(R.id.emptyView);
         listView.setEmptyView(emptyText);
 
+        ContentBrowserDrawer contentBrowserDrawer = buildNavigationDrawer(
+                activity,
+                theme
+        );
+
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(activity);
+        uiBuilder.setNavigationDrawer(contentBrowserDrawer);
         uiBuilder.setTheme(theme);
         return uiBuilder.build();
     }
 
-    private static ContentBrowserDrawer buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)
+    private static ContentBrowserDrawer buildNavigationDrawer(BaseActivity activity, Theme theme)
     {
-        ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(baseActivity, R.id.drawer_list);
+        ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(activity, R.id.drawer_list);
         contentBrowserDrawer.setClickListener(
-                new ContentBrowserClickListener(
-                        (DrawerLayout) baseActivity.findViewById(R.id.drawer_layout)
+                new BaseActivityClickListener(
+                        (DrawerLayout) activity.findViewById(R.id.drawer_layout)
                 )
         );
         contentBrowserDrawer.setAdapter(
                 new NavigationDrawerAdapter(
-                        baseActivity,
+                        activity,
                         R.layout.drawer_list_item,
-                        baseActivity.getResources().getStringArray(R.array.drawer_menu),
-                        baseActivity.getPreferencesHelper(),
-                        customTypeface.getTypeFace()
+                        activity.getResources().getStringArray(R.array.drawer_menu),
+                        theme
+                )
+        );
+        return contentBrowserDrawer;
+    }
+
+    private static ContentBrowserDrawer buildNavigationDrawer(ContentBrowserActivity activity, Theme theme)
+    {
+        ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(activity, R.id.drawer_list);
+        contentBrowserDrawer.setClickListener(
+                new ContentBrowserActivityClickListener(
+                        (DrawerLayout) activity.findViewById(R.id.drawer_layout)
+                )
+        );
+        contentBrowserDrawer.setAdapter(
+                new NavigationDrawerAdapter(
+                        activity,
+                        R.layout.drawer_list_item,
+                        activity.getResources().getStringArray(R.array.drawer_menu),
+                        theme
                 )
         );
         return contentBrowserDrawer;

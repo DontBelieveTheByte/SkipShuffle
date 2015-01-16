@@ -13,8 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
 
 public class NavigationDrawerAdapter extends ArrayAdapter<String> {
 
@@ -29,16 +28,14 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
     private int selectedTextBackgroundColor;
     private int textColor;
 
-    public NavigationDrawerAdapter(Context context, int resource, String[] strings, PreferencesHelper preferencesHelper, Typeface typeface)
+    public NavigationDrawerAdapter(Context context, int resource, String[] strings, Theme theme)
     {
         super(context, resource, strings);
         layoutInflater = LayoutInflater.from(context);
-        this.typeface = typeface;
+        this.typeface = theme.getCustomTypeface().getTypeFace();
         layoutResource = resource;
-        selectedTextBackgroundColor = ColorMapper.getListDivider(preferencesHelper.getUIType());
-        textColor = context.getResources().getColor(
-                ColorMapper.getNavDrawerText(preferencesHelper.getUIType())
-        );
+        selectedTextBackgroundColor = theme.getColors().background;
+        textColor = context.getResources().getColor(theme.getColors().navDrawerText);
     }
 
     public int getSelectedItem()

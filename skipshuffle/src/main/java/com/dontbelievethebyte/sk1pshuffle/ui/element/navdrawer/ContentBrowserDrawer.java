@@ -4,11 +4,11 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.visitor.dimension.AbstractDimensionsVisitor;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.visitor.drawable.DrawablesVisitor;
@@ -19,9 +19,9 @@ public class ContentBrowserDrawer implements UIElementCompositeInterface,
 
     private ListView drawerList;
 
-    public ContentBrowserDrawer(BaseActivity baseActivity, int drawerId)
+    public ContentBrowserDrawer(Activity activity, int drawerId)
     {
-        drawerList = (ListView) baseActivity.findViewById(drawerId);
+        drawerList = (ListView) activity.findViewById(drawerId);
     }
 
     public void setClickListener(ListView.OnItemClickListener navDrawerClickListener)

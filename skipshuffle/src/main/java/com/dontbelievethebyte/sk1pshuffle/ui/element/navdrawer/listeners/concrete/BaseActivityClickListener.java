@@ -2,50 +2,25 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners;
+package com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.concrete;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.media.ContentTypes;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.AbstractDrawerClickListener;
 
-public class ContentBrowserClickListener implements ListView.OnItemClickListener {
+public class BaseActivityClickListener extends AbstractDrawerClickListener {
 
-    private DrawerLayout drawer;
-
-    public ContentBrowserClickListener(DrawerLayout drawer)
+    public BaseActivityClickListener(DrawerLayout drawer)
     {
-        this.drawer = drawer;
+        super(drawer);
     }
 
     @Override
-    public void onItemClick(AdapterView parent, View view, int position, long id)
-    {
-        switch (position) {
-            case 0:
-                browseSongs(view.getContext());
-                break;
-            case 1:
-                browseArtists(view.getContext());
-                break;
-            case 2:
-                browseAlbums(view.getContext());
-                break;
-            case 3:
-                browseGenres(view.getContext());
-                break;
-            default:
-        }
-        drawer.closeDrawer(Gravity.START);
-    }
-
-    private void browseSongs(Context context)
+    protected void browseSongs(Context context)
     {
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
@@ -55,7 +30,8 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         context.startActivity(intent);
     }
 
-    private void browseArtists(Context context)
+    @Override
+    protected void browseArtists(Context context)
     {
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
@@ -65,7 +41,8 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         context.startActivity(intent);
     }
 
-    private void browseAlbums(Context context)
+    @Override
+    protected void browseAlbums(Context context)
     {
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
@@ -75,7 +52,8 @@ public class ContentBrowserClickListener implements ListView.OnItemClickListener
         context.startActivity(intent);
     }
 
-    private void browseGenres(Context context)
+    @Override
+    protected void browseGenres(Context context)
     {
         Intent intent = new Intent(context, ContentBrowserActivity.class);
         intent.putExtra(
