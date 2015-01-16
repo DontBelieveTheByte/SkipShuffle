@@ -76,9 +76,9 @@ public class MediaStoreBridge {
     {
         return  new CursorLoader(
                 context,
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
                 Projections.artists,
-                MediaStore.Audio.Media.IS_MUSIC,
+                null,
                 null, // SelectionArgs
                 null//Sort order
         );
