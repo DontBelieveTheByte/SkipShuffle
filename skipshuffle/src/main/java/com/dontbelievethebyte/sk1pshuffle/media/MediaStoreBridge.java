@@ -25,11 +25,11 @@ public class MediaStoreBridge {
     {
         return  new CursorLoader(
                 context,
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
                 Projections.albums,
-                MediaStore.Audio.Media.IS_MUSIC,
+                null,
                 null, // SelectionArgs
-                MediaStore.Audio.Albums.ALBUM //Sort order
+                null //Sort order
         );
     }
 
@@ -47,16 +47,14 @@ public class MediaStoreBridge {
 
     public CursorLoader getGenres()
     {
-//        return  new CursorLoader(
-//                context,
-//                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-//                Projections.genres,
-//                null,
-//                null, // SelectionArgs
-//                null//Sort order
-//        );
-        String[] ALBUM_SUMMARY_PROJECTION = { MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM, MediaStore.Audio.Albums.ARTIST};
-        return new CursorLoader(context, MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,ALBUM_SUMMARY_PROJECTION, null, null, null);
+        return  new CursorLoader(
+                context,
+                MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,
+                Projections.genres,
+                null,
+                null, // SelectionArgs
+                null//Sort order
+        );
 
     }
 
