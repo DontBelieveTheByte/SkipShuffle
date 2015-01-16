@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.adapters;
+package com.dontbelievethebyte.sk1pshuffle.media.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public abstract class AbstractCustomAdapter extends CursorAdapter {
-
-    private Drawables drawables;
 
     protected LayoutInflater layoutInflater;
     protected String[] adapterTypes;
@@ -30,27 +27,12 @@ public abstract class AbstractCustomAdapter extends CursorAdapter {
         adapterTypes = context.getResources().getStringArray(R.array.adapter_types);
     }
 
-    public void setDrawables(Drawables drawables)
-    {
-        this.drawables = drawables;
-    }
-
     public abstract String getTitle();
 
-    protected ImageView setImage(View view, int resourceId, boolean isPlay)
+    protected ImageView setImage(View view, int resourceId)
     {
         ImageView imageLabel = (ImageView) view.findViewById(resourceId);
         ViewGroup.LayoutParams params = imageLabel.getLayoutParams();
-//        imageLabel.setImageDrawable(
-//                isPlay ? drawables.getPlay() : drawables.getPause()
-//        );
-//        imageLabel.setColorFilter(
-//                mediaPlayer.isPlaying() ?
-//                        ColorMapper.getPlayButton(mediaPlayer.getPreferencesHelper().getUIType()) :
-//                        ColorMapper.getPauseButton(mediaPlayer.getPreferencesHelper().getUIType())
-//
-//        );
-
         imageLabel.setLayoutParams(params);
         return imageLabel;
     }

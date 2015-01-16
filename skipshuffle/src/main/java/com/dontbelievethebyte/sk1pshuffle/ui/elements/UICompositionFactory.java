@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activities.PlayerActivity;
-import com.dontbelievethebyte.sk1pshuffle.adapters.CurrentPlaylistAdapter;
+import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.sk1pshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.listeners.CurrentPlaylistClick;

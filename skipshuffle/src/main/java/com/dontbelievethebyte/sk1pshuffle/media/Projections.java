@@ -33,7 +33,7 @@ public class Projections {
     };
 
     public final static String[] genres = {
-            MediaStore.Audio.Genres._ID,
+//            MediaStore.Audio.Genres._ID,
             MediaStore.Audio.Genres.NAME
     };
 

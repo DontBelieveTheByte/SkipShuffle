@@ -6,7 +6,7 @@ package com.dontbelievethebyte.sk1pshuffle.media;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.CursorLoader;
+import android.support.v4.content.CursorLoader;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
@@ -47,14 +47,17 @@ public class MediaStoreBridge {
 
     public CursorLoader getGenres()
     {
-        return  new CursorLoader(
-                context,
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                Projections.genres,
-                MediaStore.Audio.Media.IS_MUSIC,
-                null, // SelectionArgs
-                null//Sort order
-        );
+//        return  new CursorLoader(
+//                context,
+//                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+//                Projections.genres,
+//                null,
+//                null, // SelectionArgs
+//                null//Sort order
+//        );
+        String[] ALBUM_SUMMARY_PROJECTION = { MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM, MediaStore.Audio.Albums.ARTIST};
+        return new CursorLoader(context, MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,ALBUM_SUMMARY_PROJECTION, null, null, null);
+
     }
 
     public CursorLoader getSongsFromGenre(String id) {

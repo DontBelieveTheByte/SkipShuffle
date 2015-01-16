@@ -7,7 +7,7 @@ package com.dontbelievethebyte.sk1pshuffle.ui.elements.player;
 import android.widget.ListView;
 
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.adapters.CurrentPlaylistAdapter;
+import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;

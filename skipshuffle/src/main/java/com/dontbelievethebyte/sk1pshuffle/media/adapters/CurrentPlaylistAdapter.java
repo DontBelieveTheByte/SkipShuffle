@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.adapters;
+package com.dontbelievethebyte.sk1pshuffle.media.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;

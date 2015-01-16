@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.adapters;
+package com.dontbelievethebyte.sk1pshuffle.media.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 
-public class AlbumsAdapter extends AbstractCustomAdapter {
+public class ArtistsAdapter extends AbstractCustomAdapter {
 
-    public AlbumsAdapter(Context context)
+    public ArtistsAdapter(Context context)
     {
         super(context);
     }
@@ -22,14 +22,14 @@ public class AlbumsAdapter extends AbstractCustomAdapter {
     @Override
     public String getTitle()
     {
-        return adapterTypes[2];
+        return adapterTypes[1];
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup)
     {
         return layoutInflater.inflate(
-                R.layout.list_item_album,
+                R.layout.list_item_artist,
                 viewGroup,
                 false
         );
@@ -38,8 +38,8 @@ public class AlbumsAdapter extends AbstractCustomAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor)
     {
-        setImage(view, R.id.album_image, false);
-        setTextField(view, R.id.album_title, cursor, MediaStore.Audio.Media.TITLE);
-        setTextField(view, R.id.album_number_of_songs, cursor, MediaStore.Audio.Media.ARTIST);
+        setImage(view, R.id.artist_image);
+        setTextField(view, R.id.artist_name, cursor, MediaStore.Audio.Media.TITLE);
+        setTextField(view, R.id.artist_number_of_albums, cursor, MediaStore.Audio.Media.ARTIST);
     }
 }
