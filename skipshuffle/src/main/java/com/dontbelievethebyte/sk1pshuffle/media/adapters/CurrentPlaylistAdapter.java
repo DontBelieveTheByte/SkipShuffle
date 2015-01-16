@@ -70,7 +70,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
 
         if (null == convertView) {
             viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.list_item_song, viewGroup, false);
+            convertView = layoutInflater.inflate(R.layout.list_item_current_playlist, viewGroup, false);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.track_image);
             viewHolder.title = (TextView) convertView.findViewById(R.id.track_title);
             viewHolder.artist = (TextView) convertView.findViewById(R.id.track_artist);
