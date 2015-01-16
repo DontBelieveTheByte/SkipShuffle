@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.activity.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
 import com.dontbelievethebyte.sk1pshuffle.adapter.NavigationDrawerAdapter;
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
@@ -37,34 +38,34 @@ import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public class UICompositionFactory {
 
-    public static UIComposition makeMainPlayer(PlayerActivity playerActivity, int uiType)
+    public static UIComposition createMainPlayer(PlayerActivity activity, int uiType)
     {
-        playerActivity.setContentView(R.layout.player_mode);
-        ViewGroup viewGroup = (ViewGroup) playerActivity.findViewById(R.id.bottom);
+        activity.setContentView(R.layout.player_mode);
+        ViewGroup viewGroup = (ViewGroup) activity.findViewById(R.id.bottom);
 
-        Theme theme = buildTheme(playerActivity, uiType);
+        Theme theme = buildTheme(activity, uiType);
 
         MainPlayerButtons buttons = new MainPlayerButtons(viewGroup);
-        buttons.animations = new PlayerButtonsAnimations(playerActivity);
+        buttons.animations = new PlayerButtonsAnimations(activity);
         buttons.drawables = theme.getDrawables();
 
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(viewGroup , R.id.song_label);
         songLabel.setTypeFace(theme.getCustomTypeface());
 
-        CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
-        customSeekBar.setSeekListener(new SeekListener(playerActivity));
+        CustomSeekBar customSeekBar = new CustomSeekBar(activity);
+        customSeekBar.setSeekListener(new SeekListener(activity));
 
         MainPlayer player = new MainPlayer(
-                playerActivity,
+                activity,
                 buttons,
                 songLabel,
                 customSeekBar
         );
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
-        uiBuilder.setActivity(playerActivity);
+        uiBuilder.setActivity(activity);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(
-                playerActivity,
+                activity,
                 theme.getCustomTypeface()
         ));
         uiBuilder.setTheme(theme);
@@ -73,29 +74,29 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    public static UIComposition makeListPlayer(PlayerActivity playerActivity, int uiType) throws NoMediaPlayerException
+    public static UIComposition createListPlayer(PlayerActivity activity, int uiType) throws NoMediaPlayerException
     {
-        Theme theme = buildTheme(playerActivity, uiType);
+        Theme theme = buildTheme(activity, uiType);
 
-        playerActivity.setContentView(R.layout.playlist_mode);
-        ViewGroup viewGroup = (ViewGroup) playerActivity.findViewById(R.id.bottom);
+        activity.setContentView(R.layout.playlist_mode);
+        ViewGroup viewGroup = (ViewGroup) activity.findViewById(R.id.bottom);
 
         ListPlayerButtons buttons = new ListPlayerButtons(viewGroup);
-        buttons.animations = new PlayerButtonsAnimations(playerActivity);
+        buttons.animations = new PlayerButtonsAnimations(activity);
         buttons.drawables = theme.getDrawables();
 
-        CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
-        customSeekBar.setSeekListener(new SeekListener(playerActivity));
+        CustomSeekBar customSeekBar = new CustomSeekBar(activity);
+        customSeekBar.setSeekListener(new SeekListener(activity));
 
         ListView listView = (ListView) viewGroup.findViewById(R.id.current_list);
         TextView emptyText = (TextView) viewGroup.findViewById(R.id.emptyView);
         listView.setEmptyView(emptyText);
 
-        SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
+        SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
         RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
 
         CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
-                playerActivity,
+                activity,
                 randomPlaylist,
                 mediaPlayer
         );
@@ -105,12 +106,12 @@ public class UICompositionFactory {
         playlistAdapter.setTypeface(theme.getCustomTypeface().getTypeFace());
         listView.setAdapter(playlistAdapter);
 
-        CurrentPlaylistItemClickListener currentPlaylistClick = new CurrentPlaylistItemClickListener(playerActivity);
+        CurrentPlaylistItemClickListener currentPlaylistClick = new CurrentPlaylistItemClickListener(activity);
         listView.setOnItemClickListener(currentPlaylistClick);
         listView.setOnItemLongClickListener(currentPlaylistClick);
 
         ListPlayer player = new ListPlayer(
-                playerActivity,
+                activity,
                 buttons,
                 listView,
                 customSeekBar
@@ -119,14 +120,32 @@ public class UICompositionFactory {
         listView.setSelection(randomPlaylist.getCurrentPosition());
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
-        uiBuilder.setActivity(playerActivity);
+        uiBuilder.setActivity(activity);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(
-                playerActivity,
+                activity,
                 theme.getCustomTypeface()
         ));
         uiBuilder.setTheme(theme);
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
+        return uiBuilder.build();
+    }
+
+    public static UIComposition createContentBrowser(ContentBrowserActivity activity, int uiType)
+    {
+        Theme theme = buildTheme(activity, uiType);
+        activity.setContentView(R.layout.activity_content_browser);
+
+        activity.setContentView(R.layout.playlist_mode);
+        ViewGroup viewGroup = (ViewGroup) activity.findViewById(R.id.bottom);
+
+        ListView listView = (ListView) viewGroup.findViewById(R.id.current_list);
+        TextView emptyText = (TextView) viewGroup.findViewById(R.id.emptyView);
+        listView.setEmptyView(emptyText);
+
+        UICompositionBuilder uiBuilder = new UICompositionBuilder();
+        uiBuilder.setActivity(activity);
+        uiBuilder.setTheme(theme);
         return uiBuilder.build();
     }
 

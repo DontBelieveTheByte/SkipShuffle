@@ -46,7 +46,9 @@ public class UIComposition {
         uiElements.add(activity);
         uiElements.add(contentBrowserDrawer);
         uiElements.add(player);
-        uiElements.add(player.buttons);
+        if (null != player) {
+            uiElements.add(player.buttons);
+        }
         uiElements.add(customSeekBar);
         colorVisit(uiElements);
         dimensionsVisit(uiElements);

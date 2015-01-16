@@ -30,8 +30,8 @@ public class PlayerActivity extends BaseActivity {
     {
         try {
             ui = (viewMode) ?
-                    UICompositionFactory.makeListPlayer(this, type):
-                    UICompositionFactory.makeMainPlayer(this, type);
+                    UICompositionFactory.createListPlayer(this, type):
+                    UICompositionFactory.createMainPlayer(this, type);
             ui.player.reboot();
         } catch (NoMediaPlayerException e) {
             handleNoMediaPlayerException(e);

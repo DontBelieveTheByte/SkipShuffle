@@ -6,7 +6,7 @@ package com.dontbelievethebyte.sk1pshuffle.media.adapters;
 
 import android.content.Context;
 import android.provider.MediaStore;
-import android.widget.SimpleCursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 
