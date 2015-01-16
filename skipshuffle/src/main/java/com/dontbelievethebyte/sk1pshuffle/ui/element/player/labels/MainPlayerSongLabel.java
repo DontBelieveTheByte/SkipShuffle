@@ -7,18 +7,16 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element.player.labels;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
 
 public class MainPlayerSongLabel implements UIElementCompositeInterface {
 
     private TextView label;
 
-    public MainPlayerSongLabel(AbstractLayout contentArea, int labelId)
+    public MainPlayerSongLabel(ViewGroup viewGroup, int labelId)
     {
-        ViewGroup bottomLayout = contentArea.getBottomLayout();
-        label = (TextView) bottomLayout.findViewById(labelId);
+        label = (TextView) viewGroup.findViewById(labelId);
     }
 
     public void setContent(String content)

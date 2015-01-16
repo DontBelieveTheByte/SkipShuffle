@@ -10,7 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.fragment.ContentBrowserFragment;
 
-public class ContentBrowserActivity extends ActionBarActivity {
+public class ContentBrowserActivity extends ActionBarActivity implements ThemableActivityInterface{
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
 

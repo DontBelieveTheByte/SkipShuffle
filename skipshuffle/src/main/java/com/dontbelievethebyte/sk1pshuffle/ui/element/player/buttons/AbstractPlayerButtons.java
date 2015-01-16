@@ -7,7 +7,6 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.visitor.drawable.DrawablesVisitor;
@@ -23,11 +22,11 @@ public abstract class AbstractPlayerButtons implements UIElementCompositeInterfa
     public Drawables drawables;
     public PlayerButtonsAnimations animations;
 
-    protected ViewGroup bottomLayout;
+    protected ViewGroup viewGroup;
 
-    public AbstractPlayerButtons(AbstractLayout contentArea)
+    public AbstractPlayerButtons(ViewGroup viewGroup)
     {
-        bottomLayout = contentArea.getBottomLayout();
+        this.viewGroup = viewGroup;
     }
 
     @Override

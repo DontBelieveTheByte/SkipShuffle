@@ -6,9 +6,8 @@ package com.dontbelievethebyte.sk1pshuffle.ui.builder;
 
 import android.app.Fragment;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.activity.ThemableActivityInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.CustomSeekBar;
@@ -18,15 +17,14 @@ public class UICompositionBuilder {
 
     public AbstractPlayerUI player;
     public ContentBrowserDrawer musicPlayerDrawer;
-    public BaseActivity baseActivity;
+    public ThemableActivityInterface themableActivity;
     public Fragment fragment;
-    public AbstractLayout contentArea;
     public CustomSeekBar customSeekBar;
     public Theme theme;
 
-    public UICompositionBuilder setActivity(BaseActivity baseActivity)
+    public UICompositionBuilder setActivity(ThemableActivityInterface themableActivity)
     {
-        this.baseActivity = baseActivity;
+        this.themableActivity = themableActivity;
         return this;
     }
 
@@ -51,12 +49,6 @@ public class UICompositionBuilder {
     public UICompositionBuilder setPlayer(AbstractPlayerUI playerUIInterface)
     {
         this.player = playerUIInterface;
-        return this;
-    }
-
-    public UICompositionBuilder setContentArea(AbstractLayout contentArea)
-    {
-        this.contentArea = contentArea;
         return this;
     }
 

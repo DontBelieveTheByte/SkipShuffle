@@ -4,9 +4,10 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.element;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
+import android.app.Activity;
+
+import com.dontbelievethebyte.sk1pshuffle.activity.ThemableActivityInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.builder.UICompositionBuilder;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.CustomSeekBar;
@@ -24,16 +25,14 @@ public class UIComposition {
 
     public AbstractPlayerUI player;
 
-    private BaseActivity baseActivity;
+    private ThemableActivityInterface activity;
     private ContentBrowserDrawer contentBrowserDrawer;
-    private AbstractLayout contentArea;
     private CustomSeekBar customSeekBar;
     private Theme theme;
 
     public UIComposition(UICompositionBuilder builder)
     {
-        baseActivity = builder.baseActivity;
-        contentArea = builder.contentArea;
+        activity = builder.themableActivity;
         theme = builder.theme;
         contentBrowserDrawer = builder.musicPlayerDrawer;
         player = builder.player;
@@ -44,11 +43,10 @@ public class UIComposition {
     private void visitElements()
     {
         ArrayList<UIElementCompositeInterface> uiElements = new ArrayList<UIElementCompositeInterface>();
-        uiElements.add(baseActivity);
+        uiElements.add(activity);
         uiElements.add(contentBrowserDrawer);
         uiElements.add(player);
         uiElements.add(player.buttons);
-        uiElements.add(contentArea);
         uiElements.add(customSeekBar);
         colorVisit(uiElements);
         dimensionsVisit(uiElements);
@@ -59,7 +57,10 @@ public class UIComposition {
     {
         for (UIElementCompositeInterface element : uiElements) {
             try {
-                AbstractColorVisitor colorVisitor = ColorVisitorFactory.make(element, baseActivity);
+                AbstractColorVisitor colorVisitor = ColorVisitorFactory.make(
+                        element,
+                        (Activity) activity
+                );
                 colorVisitor.setColors(theme.getColors());
                 colorVisitor.visit(element);
             } catch (NoSuchVisitorException e) {
@@ -72,7 +73,10 @@ public class UIComposition {
     {
         for (UIElementCompositeInterface element : uiElements) {
             try {
-                AbstractDimensionsVisitor dimensionsVisitor = DimensionsVisitorFactory.make(element, baseActivity);
+                AbstractDimensionsVisitor dimensionsVisitor = DimensionsVisitorFactory.make(
+                        element,
+                        (Activity) activity
+                );
                 dimensionsVisitor.visit(element);
             } catch (NoSuchVisitorException e) {
                 continue;

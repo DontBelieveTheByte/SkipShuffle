@@ -15,19 +15,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.exception.MenuOptionNotHandledException;
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.sk1pshuffle.service.connection.MediaPlayerServiceConnection;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.exception.MenuOptionNotHandledException;
 import com.dontbelievethebyte.sk1pshuffle.utilities.AppRater;
 import com.dontbelievethebyte.sk1pshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.media.MediaScannerHelper;
@@ -39,7 +38,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
                                                                         PrefsCallbacksManager.ViewModeChangedCallback,
                                                                         PlayerStateChangedCallback,
-                                                                        UIElementCompositeInterface {
+                                                                        ThemableActivityInterface {
 
     public static final String TAG = "SkipShuffle";
 

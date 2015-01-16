@@ -6,6 +6,7 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element;
 
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,9 +20,6 @@ import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.builder.UICompositionBuilder;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.ListLayout;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.PlayerLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.ContentBrowserClickListener;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.ListPlayer;
@@ -41,14 +39,16 @@ public class UICompositionFactory {
 
     public static UIComposition makeMainPlayer(PlayerActivity playerActivity, int uiType)
     {
+        playerActivity.setContentView(R.layout.player_mode);
+        ViewGroup viewGroup = (ViewGroup) playerActivity.findViewById(R.id.bottom);
+
         Theme theme = buildTheme(playerActivity, uiType);
 
-        AbstractLayout contentArea = new PlayerLayout(playerActivity);
-        MainPlayerButtons buttons = new MainPlayerButtons(contentArea);
+        MainPlayerButtons buttons = new MainPlayerButtons(viewGroup);
         buttons.animations = new PlayerButtonsAnimations(playerActivity);
         buttons.drawables = theme.getDrawables();
 
-        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
+        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(viewGroup , R.id.song_label);
         songLabel.setTypeFace(theme.getCustomTypeface());
 
         CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
@@ -63,7 +63,6 @@ public class UICompositionFactory {
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);
-        uiBuilder.setContentArea(contentArea);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(
                 playerActivity,
                 theme.getCustomTypeface()
@@ -77,33 +76,35 @@ public class UICompositionFactory {
     public static UIComposition makeListPlayer(PlayerActivity playerActivity, int uiType) throws NoMediaPlayerException
     {
         Theme theme = buildTheme(playerActivity, uiType);
-        ListLayout contentArea = new ListLayout(playerActivity);
 
-        ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
+        playerActivity.setContentView(R.layout.playlist_mode);
+        ViewGroup viewGroup = (ViewGroup) playerActivity.findViewById(R.id.bottom);
+
+        ListPlayerButtons buttons = new ListPlayerButtons(viewGroup);
         buttons.animations = new PlayerButtonsAnimations(playerActivity);
         buttons.drawables = theme.getDrawables();
 
         CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
         customSeekBar.setSeekListener(new SeekListener(playerActivity));
 
-        MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
-        songLabel.setTypeFace(theme.getCustomTypeface());
-
-        ListView listView = (ListView) playerActivity.findViewById(R.id.current_list);
-        TextView emptyText = (TextView) playerActivity.findViewById(R.id.emptyView);
+        ListView listView = (ListView) viewGroup.findViewById(R.id.current_list);
+        TextView emptyText = (TextView) viewGroup.findViewById(R.id.emptyView);
         listView.setEmptyView(emptyText);
 
         SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
         RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
+
         CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
                 playerActivity,
                 randomPlaylist,
                 mediaPlayer
         );
+
         playlistAdapter.setDrawables(theme.getDrawables());
         playlistAdapter.setColors(theme.getColors());
         playlistAdapter.setTypeface(theme.getCustomTypeface().getTypeFace());
         listView.setAdapter(playlistAdapter);
+
         CurrentPlaylistItemClickListener currentPlaylistClick = new CurrentPlaylistItemClickListener(playerActivity);
         listView.setOnItemClickListener(currentPlaylistClick);
         listView.setOnItemLongClickListener(currentPlaylistClick);
@@ -119,7 +120,6 @@ public class UICompositionFactory {
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(playerActivity);
-        uiBuilder.setContentArea(contentArea);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(
                 playerActivity,
                 theme.getCustomTypeface()
