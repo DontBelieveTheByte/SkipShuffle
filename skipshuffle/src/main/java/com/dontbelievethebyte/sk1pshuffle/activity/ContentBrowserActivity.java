@@ -29,6 +29,7 @@ import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UICompositionFactory;
+import com.dontbelievethebyte.sk1pshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
 public class ContentBrowserActivity extends ActionBarActivity implements ThemableActivityInterface,
@@ -105,14 +106,19 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
     @Override
     public void setPlaylist(PlaylistData playlistData)
     {
-
+        finish();
     }
 
     @Override
     public void handleBuildPlaylistFailsException(PlaylistBuildFailsException e)
     {
-
+        ToastHelper toastHelper = new ToastHelper(getApplicationContext());
+        toastHelper.showLongToast(
+                getString(R.string.)
+        );
+        finish();
     }
+
     private void setUI()
     {
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());

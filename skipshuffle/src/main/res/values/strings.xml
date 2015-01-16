@@ -25,6 +25,7 @@
     <string name="no_media_player">Media player is not connected.</string>
     <string name="empty_playlist">Empty playlist</string>
     <string name="no_app_store">Cannot find Google store application.</string>
+    <string name="playlist_build_exception">Problem building playlist.</string>
 
     <!-- Main menu -->
     <string name="menu_theme">Theme</string>
