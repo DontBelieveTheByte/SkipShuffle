@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.element;
 
+import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,13 +12,12 @@ import android.widget.TextView;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
-import com.dontbelievethebyte.sk1pshuffle.media.listener.CurrentPlaylistItemClickListener;
-import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.adapter.NavigationDrawerAdapter;
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
+import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
+import com.dontbelievethebyte.sk1pshuffle.media.listener.CurrentPlaylistItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.ListLayout;
@@ -32,6 +32,8 @@ import com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.concrete.Mai
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.seeklisteners.SeekListener;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
@@ -39,16 +41,15 @@ public class UICompositionFactory {
 
     public static UIComposition makeMainPlayer(PlayerActivity playerActivity, int uiType)
     {
-        AbstractLayout contentArea = new PlayerLayout(playerActivity);
-        CustomTypeface customTypeface = new CustomTypeface(playerActivity, uiType);
-        Drawables drawables = new Drawables(playerActivity, uiType);
+        Theme theme = buildTheme(playerActivity, uiType);
 
+        AbstractLayout contentArea = new PlayerLayout(playerActivity);
         MainPlayerButtons buttons = new MainPlayerButtons(contentArea);
         buttons.animations = new PlayerButtonsAnimations(playerActivity);
-        buttons.drawables = drawables;
+        buttons.drawables = theme.getDrawables();
 
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
-        songLabel.setTypeFace(customTypeface);
+        songLabel.setTypeFace(theme.getCustomTypeface());
 
         CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
         customSeekBar.setSeekListener(new SeekListener(playerActivity));
@@ -65,10 +66,9 @@ public class UICompositionFactory {
         uiBuilder.setContentArea(contentArea);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(
                 playerActivity,
-                customTypeface
+                theme.getCustomTypeface()
         ));
-        uiBuilder.setColors(new Colors(uiType));
-        uiBuilder.setDrawables(drawables);
+        uiBuilder.setTheme(theme);
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
         return uiBuilder.build();
@@ -76,20 +76,18 @@ public class UICompositionFactory {
 
     public static UIComposition makeListPlayer(PlayerActivity playerActivity, int uiType) throws NoMediaPlayerException
     {
+        Theme theme = buildTheme(playerActivity, uiType);
         ListLayout contentArea = new ListLayout(playerActivity);
-        CustomTypeface customTypeface = new CustomTypeface(playerActivity, uiType);
-        Drawables drawables = new Drawables(playerActivity, uiType);
-        Colors colors = new Colors(uiType);
 
         ListPlayerButtons buttons = new ListPlayerButtons(contentArea);
         buttons.animations = new PlayerButtonsAnimations(playerActivity);
-        buttons.drawables = drawables;
+        buttons.drawables = theme.getDrawables();
 
         CustomSeekBar customSeekBar = new CustomSeekBar(playerActivity);
         customSeekBar.setSeekListener(new SeekListener(playerActivity));
 
         MainPlayerSongLabel songLabel = new MainPlayerSongLabel(contentArea, R.id.song_label);
-        songLabel.setTypeFace(customTypeface);
+        songLabel.setTypeFace(theme.getCustomTypeface());
 
         ListView listView = (ListView) playerActivity.findViewById(R.id.current_list);
         TextView emptyText = (TextView) playerActivity.findViewById(R.id.emptyView);
@@ -102,9 +100,9 @@ public class UICompositionFactory {
                 randomPlaylist,
                 mediaPlayer
         );
-        playlistAdapter.setDrawables(drawables);
-        playlistAdapter.setColors(colors);
-        playlistAdapter.setTypeface(customTypeface.getTypeFace());
+        playlistAdapter.setDrawables(theme.getDrawables());
+        playlistAdapter.setColors(theme.getColors());
+        playlistAdapter.setTypeface(theme.getCustomTypeface().getTypeFace());
         listView.setAdapter(playlistAdapter);
         CurrentPlaylistItemClickListener currentPlaylistClick = new CurrentPlaylistItemClickListener(playerActivity);
         listView.setOnItemClickListener(currentPlaylistClick);
@@ -124,10 +122,9 @@ public class UICompositionFactory {
         uiBuilder.setContentArea(contentArea);
         uiBuilder.setNavigationDrawer(buildNavigationDrawer(
                 playerActivity,
-                customTypeface
+                theme.getCustomTypeface()
         ));
-        uiBuilder.setColors(colors);
-        uiBuilder.setDrawables(drawables);
+        uiBuilder.setTheme(theme);
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
         return uiBuilder.build();
@@ -151,5 +148,14 @@ public class UICompositionFactory {
                 )
         );
         return contentBrowserDrawer;
+    }
+
+    private static Theme buildTheme(Context context, int uiType)
+    {
+        return new Theme(
+                new Colors(uiType),
+                new Drawables(context, uiType),
+                new CustomTypeface(context, uiType)
+        );
     }
 }

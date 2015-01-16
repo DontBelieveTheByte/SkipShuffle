@@ -4,31 +4,25 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.theme;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.TypeFaceMapper;
 
 public class CustomTypeface {
 
-    private int uiType;
     private Typeface typeface;
-    private Activity activity;
 
-    public CustomTypeface(Activity activity, int uiType)
+    public CustomTypeface(Context context, int uiType)
     {
-        this.activity = activity;
-        this.uiType = uiType;
+        typeface = Typeface.createFromAsset(
+                context.getAssets(),
+                TypeFaceMapper.getTypeFace(uiType)
+        );
     }
 
     public Typeface getTypeFace()
     {
-        if (null == typeface) {
-            typeface = Typeface.createFromAsset(
-                    activity.getAssets(),
-                    TypeFaceMapper.getTypeFace(uiType)
-            );
-        }
         return typeface;
     }
 }

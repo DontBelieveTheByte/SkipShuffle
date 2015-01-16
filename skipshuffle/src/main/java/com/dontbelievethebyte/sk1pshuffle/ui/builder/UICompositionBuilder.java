@@ -7,13 +7,12 @@ package com.dontbelievethebyte.sk1pshuffle.ui.builder;
 import android.app.Fragment;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.ContentBrowserDrawer;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.CustomSeekBar;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
 
 public class UICompositionBuilder {
 
@@ -22,9 +21,8 @@ public class UICompositionBuilder {
     public BaseActivity baseActivity;
     public Fragment fragment;
     public AbstractLayout contentArea;
-    public Colors colors;
-    public Drawables drawables;
     public CustomSeekBar customSeekBar;
+    public Theme theme;
 
     public UICompositionBuilder setActivity(BaseActivity baseActivity)
     {
@@ -35,6 +33,12 @@ public class UICompositionBuilder {
     public UICompositionBuilder setFragment(Fragment fragment)
     {
         this.fragment = fragment;
+        return this;
+    }
+
+    public UICompositionBuilder setTheme(Theme theme)
+    {
+        this.theme = theme;
         return this;
     }
 
@@ -53,18 +57,6 @@ public class UICompositionBuilder {
     public UICompositionBuilder setContentArea(AbstractLayout contentArea)
     {
         this.contentArea = contentArea;
-        return this;
-    }
-
-    public UICompositionBuilder setDrawables(Drawables drawables)
-    {
-        this.drawables = drawables;
-        return this;
-    }
-
-    public UICompositionBuilder setColors(Colors colors)
-    {
-        this.colors = colors;
         return this;
     }
 
