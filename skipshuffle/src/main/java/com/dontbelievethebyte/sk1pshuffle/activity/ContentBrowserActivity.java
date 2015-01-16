@@ -5,6 +5,7 @@
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,12 +30,12 @@ import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UICompositionFactory;
-import com.dontbelievethebyte.sk1pshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
 public class ContentBrowserActivity extends ActionBarActivity implements ThemableActivityInterface,
                                                                          LoaderManager.LoaderCallbacks<Cursor>,
-        PlaylistBuilderInterface {
+                                                                         PlaylistBuilderInterface {
+    public static final int REQUEST_CODE = 4444;
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
     public UIComposition ui;
@@ -106,16 +107,14 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
     @Override
     public void setPlaylist(PlaylistData playlistData)
     {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
 
     @Override
     public void handleBuildPlaylistFailsException(PlaylistBuildFailsException e)
     {
-        ToastHelper toastHelper = new ToastHelper(getApplicationContext());
-        toastHelper.showLongToast(
-                getString(R.string.playlist_build_exception)
-        );
         finish();
     }
 

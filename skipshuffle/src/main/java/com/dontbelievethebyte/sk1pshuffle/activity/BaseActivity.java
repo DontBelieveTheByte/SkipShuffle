@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -39,9 +40,6 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                                                                         PrefsCallbacksManager.ViewModeChangedCallback,
                                                                         PlayerStateChangedCallback,
                                                                         ThemableActivityInterface {
-
-
-    public static final int CONTENT_BROWSER = 4444;
 
     private class MenuCallBacks implements MenuItemSelectedCallback {
         @Override
@@ -235,6 +233,19 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         else if (KeyEvent.KEYCODE_MEDIA_STOP == keyCode)
             ui.getPlayer().buttons.shuffle.performClick();
         return super.onKeyDown(keyCode, keyEvent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (ContentBrowserActivity.REQUEST_CODE) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    toastHelper.showLongToast("OKOKOK!");
+                }
+                break;
+            }
+        }
     }
 
     public void showThemeSelectionDialog()

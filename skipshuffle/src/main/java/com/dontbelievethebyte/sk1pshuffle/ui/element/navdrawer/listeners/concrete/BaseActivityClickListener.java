@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.media.ContentTypes;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.AbstractDrawerClickListener;
@@ -29,11 +28,7 @@ public class BaseActivityClickListener extends AbstractDrawerClickListener {
                 ContentBrowserActivity.CONTENT_TYPE,
                 ContentTypes.SONGS.ordinal()
         );
-        Activity activity = (Activity) context;
-        activity.startActivityForResult(
-                intent,
-                BaseActivity.CONTENT_BROWSER
-        );
+        launchChildActivity(intent , (Activity) context);
     }
 
     @Override
@@ -44,7 +39,7 @@ public class BaseActivityClickListener extends AbstractDrawerClickListener {
                 ContentBrowserActivity.CONTENT_TYPE,
                 ContentTypes.ARTISTS.ordinal()
         );
-        context.startActivity(intent);
+        launchChildActivity(intent , (Activity) context);
     }
 
     @Override
@@ -55,7 +50,7 @@ public class BaseActivityClickListener extends AbstractDrawerClickListener {
                 ContentBrowserActivity.CONTENT_TYPE,
                 ContentTypes.ALBUMS.ordinal()
         );
-        context.startActivity(intent);
+        launchChildActivity(intent , (Activity) context);
     }
 
     @Override
@@ -66,6 +61,14 @@ public class BaseActivityClickListener extends AbstractDrawerClickListener {
                 ContentBrowserActivity.CONTENT_TYPE,
                 ContentTypes.GENRES.ordinal()
         );
-        context.startActivity(intent);
+        launchChildActivity(intent , (Activity) context);
+    }
+
+    private void launchChildActivity(Intent intent, Activity activity)
+    {
+        activity.startActivityForResult(
+                intent,
+                ContentBrowserActivity.REQUEST_CODE
+        );
     }
 }
