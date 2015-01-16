@@ -7,8 +7,8 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
 
 public class CustomSeekBar implements UIElementCompositeInterface {

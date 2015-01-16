@@ -4,10 +4,12 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.concrete;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 
+import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.media.ContentTypes;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.AbstractDrawerClickListener;
@@ -27,7 +29,11 @@ public class BaseActivityClickListener extends AbstractDrawerClickListener {
                 ContentBrowserActivity.CONTENT_TYPE,
                 ContentTypes.SONGS.ordinal()
         );
-        context.startActivity(intent);
+        Activity activity = (Activity) context;
+        activity.startActivityForResult(
+                intent,
+                BaseActivity.CONTENT_BROWSER
+        );
     }
 
     @Override

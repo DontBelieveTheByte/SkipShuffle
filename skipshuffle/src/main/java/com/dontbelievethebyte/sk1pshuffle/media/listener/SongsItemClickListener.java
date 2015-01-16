@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Interface.PlaylistBuilderInterface;
 import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
+import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
+import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class SongsItemClickListener implements AdapterView.OnItemClickListener{
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-        Log.d(BaseActivity.TAG, "Position : " + Integer.toString(position));
+        Log.d(LogUtil.TAG, "Position : " + Integer.toString(position));
             try {
                 PlaylistData playlistData = buildPlaylist(position);
                 playlistBuilderInterface.setPlaylist(playlistData);

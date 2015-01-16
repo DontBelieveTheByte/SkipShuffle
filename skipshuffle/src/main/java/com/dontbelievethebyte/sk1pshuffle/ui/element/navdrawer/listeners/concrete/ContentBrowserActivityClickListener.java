@@ -8,8 +8,8 @@ import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.listeners.AbstractDrawerClickListener;
+import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
 
 public class ContentBrowserActivityClickListener extends AbstractDrawerClickListener {
 
@@ -22,7 +22,7 @@ public class ContentBrowserActivityClickListener extends AbstractDrawerClickList
     @Override
     protected void browseSongs(Context context)
     {
-        Log.d(BaseActivity.TAG, "DMADOSAMDO");
+        Log.d(LogUtil.TAG, "DMADOSAMDO");
     }
 
     @Override

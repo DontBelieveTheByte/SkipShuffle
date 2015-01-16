@@ -9,9 +9,9 @@ import android.content.Context;
 import android.os.Vibrator;
 import android.view.Menu;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.CustomOptionsMenuInterface;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.concrete.NoVibratorMenu;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.concrete.VibratorMenu;
 

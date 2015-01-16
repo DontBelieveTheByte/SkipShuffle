@@ -8,9 +8,9 @@ import android.content.ComponentName;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 
 import java.util.HashSet;
 import java.util.Set;

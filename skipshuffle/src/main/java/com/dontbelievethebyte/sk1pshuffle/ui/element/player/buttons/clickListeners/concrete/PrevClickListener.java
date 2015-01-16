@@ -7,9 +7,9 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.clickListen
 import android.view.View;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.clickListeners.CustomAbstractClickListener;
 
 public class PrevClickListener extends CustomAbstractClickListener {

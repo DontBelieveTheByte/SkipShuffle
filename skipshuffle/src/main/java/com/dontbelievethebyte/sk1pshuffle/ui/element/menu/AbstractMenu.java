@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.ViewConfiguration;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.exception.MenuOptionNotHandledException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.callbacks.MenuItemSelectedCallback;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.exception.MenuOptionNotHandledException;
 
 public abstract class AbstractMenu implements CustomOptionsMenuInterface {
 

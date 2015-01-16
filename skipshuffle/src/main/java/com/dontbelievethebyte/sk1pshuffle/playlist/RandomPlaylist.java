@@ -4,8 +4,8 @@
 
 package com.dontbelievethebyte.sk1pshuffle.playlist;
 
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
+import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 
 import java.util.ArrayList;
 import java.util.Collections;

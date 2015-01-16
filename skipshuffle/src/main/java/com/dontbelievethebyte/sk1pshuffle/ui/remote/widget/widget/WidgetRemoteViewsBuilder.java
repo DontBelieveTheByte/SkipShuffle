@@ -8,9 +8,9 @@ import android.content.Context;
 import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
+import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.AbstractRemoteViewsBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DrawableMapper;
-import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.AbstractRemoteViewsBuilder;
 
 public class WidgetRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 

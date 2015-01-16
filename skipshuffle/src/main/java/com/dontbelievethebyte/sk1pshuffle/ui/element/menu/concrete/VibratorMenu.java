@@ -8,8 +8,8 @@ import android.app.Activity;
 import android.view.Menu;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.AbstractMenu;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.callbacks.MenuItemSelectedCallback;
 
 public class VibratorMenu extends AbstractMenu {
 

@@ -6,9 +6,9 @@ package com.dontbelievethebyte.sk1pshuffle.media;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.support.v4.content.CursorLoader;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.support.v4.content.CursorLoader;
 
 public class MediaStoreBridge {
 

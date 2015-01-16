@@ -7,8 +7,8 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element.menu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.exception.MenuOptionNotHandledException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.actionbar.CustomActionBarWrapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.menu.exception.MenuOptionNotHandledException;
 
 public interface CustomOptionsMenuInterface {
 

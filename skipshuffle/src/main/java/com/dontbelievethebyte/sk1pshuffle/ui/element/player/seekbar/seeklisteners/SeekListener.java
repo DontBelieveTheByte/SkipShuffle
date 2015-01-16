@@ -7,9 +7,9 @@ package com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.seeklistene
 import android.widget.SeekBar;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 
 public class SeekListener implements SeekBar.OnSeekBarChangeListener {
     private BaseActivity baseActivity;

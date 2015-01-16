@@ -8,11 +8,11 @@ import android.graphics.drawable.Drawable;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
-import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
+import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.AbstractPlayerButtons;
 import com.dontbelievethebyte.sk1pshuffle.ui.element.player.buttons.clickListeners.concrete.PlayClickListener;

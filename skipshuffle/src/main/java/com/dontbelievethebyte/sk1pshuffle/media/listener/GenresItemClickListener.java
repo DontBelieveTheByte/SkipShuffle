@@ -8,14 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
 
 public class GenresItemClickListener implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-        Log.d(BaseActivity.TAG, "Position : " + Integer.toString(position));
+        Log.d(LogUtil.TAG, "Position : " + Integer.toString(position));
 
     }
 }

@@ -8,10 +8,10 @@ import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DrawableMapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.AbstractRemoteViewsBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.widget.PlayerState;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DrawableMapper;
 
 public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 

@@ -40,7 +40,8 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
                                                                         PlayerStateChangedCallback,
                                                                         ThemableActivityInterface {
 
-    public static final String TAG = "SkipShuffle";
+
+    public static final int CONTENT_BROWSER = 4444;
 
     private class MenuCallBacks implements MenuItemSelectedCallback {
         @Override
