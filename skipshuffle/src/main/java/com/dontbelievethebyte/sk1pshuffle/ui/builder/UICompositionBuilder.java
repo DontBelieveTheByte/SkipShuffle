@@ -6,12 +6,12 @@ package com.dontbelievethebyte.sk1pshuffle.ui.builder;
 
 import android.app.Fragment;
 
-import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.ui.elements.layout.AbstractLayout;
-import com.dontbelievethebyte.sk1pshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
-import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIComposition;
-import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.AbstractPlayerUI;
-import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.seekbar.CustomSeekBar;
+import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.layout.AbstractLayout;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.navdrawer.ContentBrowserDrawer;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.player.AbstractPlayerUI;
+import com.dontbelievethebyte.sk1pshuffle.ui.element.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 

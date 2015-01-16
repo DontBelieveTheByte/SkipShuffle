@@ -8,7 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
 
-import com.dontbelievethebyte.sk1pshuffle.exceptions.AudioTrackLoadingException;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.AudioTrackLoadingException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 

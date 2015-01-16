@@ -6,7 +6,7 @@ package com.dontbelievethebyte.sk1pshuffle.utilities.media;
 
 import android.content.DialogInterface;
 
-import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
+import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.ui.dialog.MediaScannerDialog;
 import com.dontbelievethebyte.sk1pshuffle.ui.dialog.MediaScannerProgressDialog;
 

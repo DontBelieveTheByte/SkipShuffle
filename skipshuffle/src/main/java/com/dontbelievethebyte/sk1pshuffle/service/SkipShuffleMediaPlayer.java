@@ -13,8 +13,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.provider.MediaStore;
 
-import com.dontbelievethebyte.sk1pshuffle.exceptions.AudioTrackLoadingException;
-import com.dontbelievethebyte.sk1pshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.service.exception.AudioTrackLoadingException;
+import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
@@ -25,8 +25,8 @@ import com.dontbelievethebyte.sk1pshuffle.service.callbacks.OrientationChangeCal
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.TrackCompleteCallback;
 import com.dontbelievethebyte.sk1pshuffle.service.proxy.AndroidPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.remote.widgets.notification.PlayerNotification;
-import com.dontbelievethebyte.sk1pshuffle.ui.remote.widgets.widget.WidgetUpdater;
+import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.notification.PlayerNotification;
+import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.widget.WidgetUpdater;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 

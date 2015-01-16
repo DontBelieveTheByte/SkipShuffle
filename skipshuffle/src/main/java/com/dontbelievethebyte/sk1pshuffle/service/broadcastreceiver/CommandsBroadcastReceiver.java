@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.KeyEvent;
 
-import com.dontbelievethebyte.sk1pshuffle.exceptions.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 

@@ -16,7 +16,7 @@
         android:label="@string/label_app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:name=".activities.PlayerActivity"
+            android:name=".activity.PlayerActivity"
             android:label="@string/label_app_name"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -26,14 +26,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MusicContentBrowserActivity"
+            android:name=".activity.MusicContentBrowserActivity"
             android:label="@string/label_playlist" >
         </activity>
 
         <service android:name=".service.SkipShuffleMediaPlayer" >
         </service>
 
-        <receiver android:name=".ui.remote.widgets.widget.SkipShuffleWidget" >
+        <receiver android:name=".ui.remote.widget.widget.SkipShuffleWidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -44,7 +44,7 @@
         </receiver>
 
         <activity
-            android:name=".activities.ContentBrowserActivity"
+            android:name=".activity.ContentBrowserActivity"
             android:label="@string/title_activity_content_browser" >
         </activity>
     </application>
