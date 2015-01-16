@@ -23,7 +23,7 @@
         android:layout_height="@dimen/single_playlist_item_track_title_height"
         android:text="@string/meta_data_unknown_title"
         android:singleLine="true"
-        android:id="@+id/album_title"
+        android:id="@+id/album_name"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/track_image"
         android:layout_toEndOf="@+id/track_image"
