@@ -11,10 +11,10 @@ import android.widget.TextView;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activities.PlayerActivity;
+import com.dontbelievethebyte.sk1pshuffle.listeners.CurrentPlaylistItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.adapters.NavigationDrawerAdapter;
 import com.dontbelievethebyte.sk1pshuffle.exceptions.NoMediaPlayerException;
-import com.dontbelievethebyte.sk1pshuffle.listeners.CurrentPlaylistClick;
 import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
@@ -106,7 +106,7 @@ public class UICompositionFactory {
         playlistAdapter.setColors(colors);
         playlistAdapter.setTypeface(customTypeface.getTypeFace());
         listView.setAdapter(playlistAdapter);
-        CurrentPlaylistClick currentPlaylistClick = new CurrentPlaylistClick(playerActivity);
+        CurrentPlaylistItemClickListener currentPlaylistClick = new CurrentPlaylistItemClickListener(playerActivity);
         listView.setOnItemClickListener(currentPlaylistClick);
         listView.setOnItemLongClickListener(currentPlaylistClick);
 

@@ -17,10 +17,10 @@ import android.widget.SimpleCursorAdapter;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.ContentBrowserActivity;
-import com.dontbelievethebyte.sk1pshuffle.listeners.AlbumsClick;
-import com.dontbelievethebyte.sk1pshuffle.listeners.ArtistsClick;
-import com.dontbelievethebyte.sk1pshuffle.listeners.GenresClick;
-import com.dontbelievethebyte.sk1pshuffle.listeners.SongsClick;
+import com.dontbelievethebyte.sk1pshuffle.listeners.AlbumsItemClickListener;
+import com.dontbelievethebyte.sk1pshuffle.listeners.ArtistsItemClickListener;
+import com.dontbelievethebyte.sk1pshuffle.listeners.GenresItemClickListener;
+import com.dontbelievethebyte.sk1pshuffle.listeners.SongsItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.media.ContentTypes;
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.AlbumsAdapter;
@@ -66,25 +66,25 @@ public class ContentBrowserFragment extends Fragment implements UIElementComposi
         if (ContentTypes.SONGS.ordinal() == loaderId) {
 
             adapter = new SongsAdapter(getActivity());
-            listView.setOnItemClickListener(new SongsClick());
+            listView.setOnItemClickListener(new SongsItemClickListener());
             return mediaStoreBridge.getSongs();
 
         } else if (ContentTypes.ARTISTS.ordinal() == loaderId) {
 
             adapter = new ArtistsAdapter(getActivity());
-            listView.setOnItemClickListener(new ArtistsClick());
+            listView.setOnItemClickListener(new ArtistsItemClickListener());
             return mediaStoreBridge.getArtists();
 
         } else if (ContentTypes.ALBUMS.ordinal() == loaderId) {
 
             adapter = new AlbumsAdapter(getActivity());
-            listView.setOnItemClickListener(new AlbumsClick());
+            listView.setOnItemClickListener(new AlbumsItemClickListener());
             mediaStoreBridge.getAlbums();
 
         } else if (ContentTypes.GENRES.ordinal() == loaderId) {
 
             adapter = new GenresAdapter(getActivity());
-            listView.setOnItemClickListener(new GenresClick());
+            listView.setOnItemClickListener(new GenresItemClickListener());
             mediaStoreBridge.getGenres();
         }
         return null;

@@ -17,12 +17,12 @@ import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
-public class CurrentPlaylistClick implements AdapterView.OnItemClickListener,
+public class CurrentPlaylistItemClickListener implements AdapterView.OnItemClickListener,
                                              AdapterView.OnItemLongClickListener{
 
     private PlayerActivity playerActivity;
 
-    public CurrentPlaylistClick(PlayerActivity playerActivity)
+    public CurrentPlaylistItemClickListener(PlayerActivity playerActivity)
     {
         this.playerActivity = playerActivity;
     }

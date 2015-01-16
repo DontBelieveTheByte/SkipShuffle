@@ -10,11 +10,12 @@ import android.widget.AdapterView;
 
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 
-public class SongsClick implements AdapterView.OnItemClickListener{
+public class AlbumsItemClickListener implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
         Log.d(BaseActivity.TAG, "Position : " + Integer.toString(position));
+
     }
 }

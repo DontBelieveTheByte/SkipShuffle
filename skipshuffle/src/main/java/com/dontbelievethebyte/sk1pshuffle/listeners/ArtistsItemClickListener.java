@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 
-public class ArtistsClick implements AdapterView.OnItemClickListener {
+public class ArtistsItemClickListener implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
