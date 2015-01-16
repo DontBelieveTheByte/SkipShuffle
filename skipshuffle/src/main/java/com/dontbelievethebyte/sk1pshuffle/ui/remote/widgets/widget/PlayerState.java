@@ -8,7 +8,7 @@ import com.dontbelievethebyte.sk1pshuffle.exceptions.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
 import com.dontbelievethebyte.sk1pshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.types.UITypes;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class PlayerState {
 

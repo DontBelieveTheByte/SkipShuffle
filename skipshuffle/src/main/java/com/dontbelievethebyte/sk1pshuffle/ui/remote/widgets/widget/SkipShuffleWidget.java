@@ -10,7 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.types.UITypes;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class SkipShuffleWidget extends AppWidgetProvider {
 

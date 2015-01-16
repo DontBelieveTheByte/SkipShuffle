@@ -2,12 +2,12 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.ui;
+package com.dontbelievethebyte.sk1pshuffle.ui.theme;
 
 import android.app.Activity;
 import android.graphics.Typeface;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.TypeFaceMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.TypeFaceMapper;
 
 public class CustomTypeface {
 

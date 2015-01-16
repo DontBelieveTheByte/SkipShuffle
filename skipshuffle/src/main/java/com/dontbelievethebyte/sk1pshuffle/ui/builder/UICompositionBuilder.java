@@ -12,8 +12,8 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.navdrawer.ContentBrowserDr
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.seekbar.CustomSeekBar;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public class UICompositionBuilder {
 

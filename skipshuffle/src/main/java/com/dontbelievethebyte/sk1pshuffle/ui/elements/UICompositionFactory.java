@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.activities.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.activities.PlayerActivity;
 import com.dontbelievethebyte.sk1pshuffle.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.adapters.NavigationDrawerAdapter;
@@ -18,7 +17,7 @@ import com.dontbelievethebyte.sk1pshuffle.exceptions.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.listeners.CurrentPlaylistClick;
 import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.CustomTypeface;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
 import com.dontbelievethebyte.sk1pshuffle.ui.builder.UICompositionBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.layout.ListLayout;
@@ -33,8 +32,8 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.buttons.concrete.Ma
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.seekbar.CustomSeekBar;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.seekbar.seeklisteners.SeekListener;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public class UICompositionFactory {
 
@@ -132,11 +131,6 @@ public class UICompositionFactory {
         uiBuilder.setPlayer(player);
         uiBuilder.setSeekbar(customSeekBar);
         return uiBuilder.build();
-    }
-
-    public static UIComposition makeContentBrowser(ContentBrowserActivity contentBrowserActivity, int uiType) throws NoMediaPlayerException
-    {
-          return null;
     }
 
     private static ContentBrowserDrawer buildNavigationDrawer(BaseActivity baseActivity, CustomTypeface customTypeface)

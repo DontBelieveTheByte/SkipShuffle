@@ -7,7 +7,7 @@ package com.dontbelievethebyte.sk1pshuffle.ui.elements.player.labels;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.CustomTypeface;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.layout.AbstractLayout;
 

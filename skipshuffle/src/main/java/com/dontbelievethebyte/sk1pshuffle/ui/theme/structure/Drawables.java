@@ -2,12 +2,12 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.ui.structure;
+package com.dontbelievethebyte.sk1pshuffle.ui.theme.structure;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.DrawableMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DrawableMapper;
 
 public class Drawables {
 

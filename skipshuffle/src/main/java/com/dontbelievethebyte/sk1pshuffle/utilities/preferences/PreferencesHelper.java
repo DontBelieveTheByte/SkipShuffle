@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.types.UITypes;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
 import com.google.gson.Gson;
 

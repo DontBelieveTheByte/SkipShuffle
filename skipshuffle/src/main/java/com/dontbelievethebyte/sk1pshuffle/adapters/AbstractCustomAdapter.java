@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public abstract class AbstractCustomAdapter extends CursorAdapter {
 

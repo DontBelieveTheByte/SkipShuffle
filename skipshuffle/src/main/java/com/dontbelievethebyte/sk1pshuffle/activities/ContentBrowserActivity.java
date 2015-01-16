@@ -6,27 +6,17 @@ package com.dontbelievethebyte.sk1pshuffle.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
+import com.dontbelievethebyte.sk1pshuffle.fragments.ContentBrowserFragment;
 
-public class ContentBrowserActivity extends BaseActivity {
+public class ContentBrowserActivity extends ActionBarActivity {
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
-
-    public static enum ContentTypes {
-        SONGS,
-        ARTISTS,
-        ALBUMS,
-        GENRES
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +25,7 @@ public class ContentBrowserActivity extends BaseActivity {
         parseActivityIntent();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                                       .add(R.id.container, new PlaceholderFragment())
+                                       .add(R.id.container, new ContentBrowserFragment())
                                        .commit();
         }
     }
@@ -67,38 +57,5 @@ public class ContentBrowserActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment implements UIElementCompositeInterface {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_content_browser, container, false);
-            return rootView;
-        }
-    }
-
-    @Override
-    public void onViewModeChanged()
-    {
-
-    }
-
-    @Override
-    protected void setUI(Integer type)
-    {
-//        try {
-////            ui = UICompositionFactory.makeContentBrowser(this, preferencesHelper.getUIType());
-////            ui.player.reboot();
-//        } catch (NoMediaPlayerException e) {
-//            handleNoMediaPlayerException(e);
-//        }
     }
 }

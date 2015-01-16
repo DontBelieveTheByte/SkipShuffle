@@ -8,7 +8,7 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterfac
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.buttons.AbstractPlayerButtons;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.buttons.concrete.ListPlayerButtons;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.buttons.concrete.MainPlayerButtons;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public class DrawablesVisitor {
 

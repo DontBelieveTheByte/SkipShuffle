@@ -15,8 +15,8 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.color.ColorVisitor
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.dimension.DimensionsVisitorFactory;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.exception.NoSuchVisitorException;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
 
 import java.util.ArrayList;

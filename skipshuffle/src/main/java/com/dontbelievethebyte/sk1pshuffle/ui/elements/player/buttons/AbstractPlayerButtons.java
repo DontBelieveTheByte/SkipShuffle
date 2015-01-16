@@ -11,7 +11,7 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.layout.AbstractLayout;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.buttons.animations.PlayerButtonsAnimations;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.drawable.DrawablesVisitor;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public abstract class AbstractPlayerButtons implements UIElementCompositeInterface, DrawablesVisitor.Visitable {
 

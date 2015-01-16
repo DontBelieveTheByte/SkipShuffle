@@ -10,7 +10,7 @@ import android.widget.ListView;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.dimension.AbstractDimensionsVisitor;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.DimensionsMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DimensionsMapper;
 
 public class ListPlayerDimensionsVisitor extends AbstractDimensionsVisitor {
 

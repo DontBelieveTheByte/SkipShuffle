@@ -13,7 +13,7 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.MainPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.color.AbstractColorVisitor;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.ColorMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
 
 public class MainPlayerColorVisitor extends AbstractColorVisitor {
 

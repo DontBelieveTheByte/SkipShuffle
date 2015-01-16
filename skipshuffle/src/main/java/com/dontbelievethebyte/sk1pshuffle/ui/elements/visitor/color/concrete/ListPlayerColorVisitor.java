@@ -11,8 +11,8 @@ import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterfac
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.ListPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.color.AbstractColorVisitor;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.ColorMapper;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
 
 public class ListPlayerColorVisitor extends AbstractColorVisitor {
 

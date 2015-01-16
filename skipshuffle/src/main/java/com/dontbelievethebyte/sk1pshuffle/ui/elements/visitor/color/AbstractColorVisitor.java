@@ -7,7 +7,7 @@ package com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.color;
 import android.app.Activity;
 
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
 
 public abstract class AbstractColorVisitor {
 

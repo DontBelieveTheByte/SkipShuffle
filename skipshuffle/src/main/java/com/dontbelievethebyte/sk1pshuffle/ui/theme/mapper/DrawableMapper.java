@@ -2,10 +2,10 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.ui.mapper;
+package com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.types.UITypes;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class DrawableMapper {
 

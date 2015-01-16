@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.ColorMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
 
 public class NavigationDrawerAdapter extends ArrayAdapter<String> {
 

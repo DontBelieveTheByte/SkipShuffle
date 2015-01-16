@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activities.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.types.UITypes;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class ThemeSelectionDialog {
 

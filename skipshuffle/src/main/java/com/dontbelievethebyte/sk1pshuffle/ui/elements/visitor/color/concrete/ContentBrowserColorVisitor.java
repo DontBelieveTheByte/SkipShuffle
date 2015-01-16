@@ -10,7 +10,7 @@ import android.widget.ListView;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.UIElementCompositeInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.navdrawer.ContentBrowserDrawer;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.visitor.color.AbstractColorVisitor;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
 
 public class ContentBrowserColorVisitor extends AbstractColorVisitor {
 

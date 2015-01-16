@@ -19,8 +19,8 @@ import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
 import com.dontbelievethebyte.sk1pshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Colors;
-import com.dontbelievethebyte.sk1pshuffle.ui.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public class CurrentPlaylistAdapter extends BaseAdapter {
 

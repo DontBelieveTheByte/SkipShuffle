@@ -10,7 +10,7 @@ import android.view.animation.Animation;
 
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.AbstractPlayerUI;
 import com.dontbelievethebyte.sk1pshuffle.ui.elements.player.buttons.animations.listeners.AbstractAnimationListener;
-import com.dontbelievethebyte.sk1pshuffle.ui.mapper.ColorMapper;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
 
 public class PlayAnimationListener extends AbstractAnimationListener {
 
