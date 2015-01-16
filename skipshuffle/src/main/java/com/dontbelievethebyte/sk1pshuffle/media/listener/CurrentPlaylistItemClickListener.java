@@ -64,7 +64,7 @@ public class CurrentPlaylistItemClickListener implements AdapterView.OnItemClick
             SkipShuffleMediaPlayer mediaPlayer = playerActivity.getMediaPlayer();
             RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
             Track track = randomPlaylist.getCurrent();
-            ListPlayer player = (ListPlayer) playerActivity.ui.player;
+            ListPlayer player = (ListPlayer) playerActivity.ui.getPlayer();
             player.listView.setSelection(track.getPosition());
         } catch (NoMediaPlayerException noMediaPlayerException) {
             playerActivity.handleNoMediaPlayerException(noMediaPlayerException);

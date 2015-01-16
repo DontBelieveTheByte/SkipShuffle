@@ -37,7 +37,7 @@ public class PlaylistClickListener extends CustomAbstractClickListener {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
             RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
             Track track = randomPlaylist.getCurrent();
-            ListPlayer player = (ListPlayer) activity.ui.player;
+            ListPlayer player = (ListPlayer) activity.ui.getPlayer();
             player.listView.setSelection(track.getPosition());
         } catch (NoMediaPlayerException noMediaPlayerException) {
             activity.handleNoMediaPlayerException(noMediaPlayerException);

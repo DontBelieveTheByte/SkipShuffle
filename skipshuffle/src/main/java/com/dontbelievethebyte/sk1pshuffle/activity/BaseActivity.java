@@ -163,7 +163,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     {
         preferencesHelper.unRegisterPrefsChangedListener();
         unbindService(mediaPlayerServiceConnection);
-        ui.player.buttons.play.clearAnimation();
+        ui.getPlayer().buttons.play.clearAnimation();
         super.onPause();
     }
 
@@ -226,13 +226,13 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
         if (KeyEvent.KEYCODE_MENU  == keyCode)
             return customOptionsMenu.handleMenuKeyDown(keyCode, keyEvent);
         else if (KeyEvent.KEYCODE_MEDIA_PLAY == keyCode || KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE == keyCode)
-            ui.player.buttons.play.performClick();
+            ui.getPlayer().buttons.play.performClick();
         else if (KeyEvent.KEYCODE_MEDIA_NEXT == keyCode)
-            ui.player.buttons.skip.performClick();
+            ui.getPlayer().buttons.skip.performClick();
         else if (KeyEvent.KEYCODE_MEDIA_PREVIOUS == keyCode)
-            ui.player.buttons.prev.performClick();
+            ui.getPlayer().buttons.prev.performClick();
         else if (KeyEvent.KEYCODE_MEDIA_STOP == keyCode)
-            ui.player.buttons.shuffle.performClick();
+            ui.getPlayer().buttons.shuffle.performClick();
         return super.onKeyDown(keyCode, keyEvent);
     }
 
@@ -290,8 +290,8 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public void onPlayerStateChanged()
     {
-        if (null != ui.player)
-            ui.player.reboot();
+        if (null != ui.getPlayer())
+            ui.getPlayer().reboot();
     }
 
     public void handleNoMediaPlayerException(NoMediaPlayerException noMediaPlayerException)

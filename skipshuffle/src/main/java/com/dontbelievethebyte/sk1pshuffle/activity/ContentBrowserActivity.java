@@ -114,7 +114,7 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
     {
         ToastHelper toastHelper = new ToastHelper(getApplicationContext());
         toastHelper.showLongToast(
-                getString(R.string.)
+                getString(R.string.playlist_build_exception)
         );
         finish();
     }

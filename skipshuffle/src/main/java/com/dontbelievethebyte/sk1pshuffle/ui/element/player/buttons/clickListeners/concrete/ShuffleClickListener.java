@@ -26,7 +26,7 @@ public class ShuffleClickListener extends CustomAbstractClickListener {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
             mediaPlayer.shuffleToggle();
-            activity.ui.player.doShuffle();
+            activity.ui.getPlayer().doShuffle();
         } catch (NoMediaPlayerException n) {
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
@@ -41,7 +41,7 @@ public class ShuffleClickListener extends CustomAbstractClickListener {
         try {
             SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
             mediaPlayer.doShuffle();
-            activity.ui.player.doShuffle();
+            activity.ui.getPlayer().doShuffle();
         } catch (NoMediaPlayerException n) {
             activity.handleNoMediaPlayerException(n);
         } catch (PlaylistEmptyException playlistEmptyException) {
