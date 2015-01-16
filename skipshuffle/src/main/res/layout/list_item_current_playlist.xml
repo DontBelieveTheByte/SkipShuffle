@@ -9,6 +9,16 @@
     android:background="@android:color/transparent"
     android:clickable="false">
 
+    <ImageView
+        android:layout_width="@dimen/common_single_list_item_w_h"
+        android:layout_height="@dimen/common_single_list_item_w_h"
+        android:id="@+id/track_image"
+        android:layout_marginRight="@dimen/single_playlist_item_image_margin_right"
+        android:layout_marginEnd="@dimen/null_size"
+        android:scaleType="fitCenter"
+        android:padding="@dimen/single_playlist_item_image_padding"
+        android:contentDescription="@string/accessibility_play_pause" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/single_playlist_item_track_title_height"
