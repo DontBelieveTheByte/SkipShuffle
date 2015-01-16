@@ -26,8 +26,7 @@
         android:paddingTop="@dimen/single_playlist_item_track_title_padding_top"
         android:paddingRight="@dimen/single_playlist_item_track_title_padding_right"
         android:paddingEnd="@dimen/null_size"
-        android:paddingLeft="@dimen/null_size"
-        android:paddingStart="@dimen/null_size"/>
+        android:paddingLeft="@dimen/null_size"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -45,6 +44,5 @@
         android:paddingRight="@dimen/single_playlist_item_track_artist_padding_right"
         android:paddingEnd="@dimen/null_size"
         android:paddingLeft="@dimen/null_size"
-        android:paddingStart="@dimen/null_size"
         android:paddingBottom="@dimen/single_playlist_item_track_artist_padding_bottom" />
 </RelativeLayout>
