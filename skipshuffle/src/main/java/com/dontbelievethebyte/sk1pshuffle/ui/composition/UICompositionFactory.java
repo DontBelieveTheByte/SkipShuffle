@@ -4,14 +4,13 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.composition;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.v4.widget.DrawerLayout;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
 import com.dontbelievethebyte.sk1pshuffle.adapter.NavigationDrawerAdapter;
@@ -22,8 +21,6 @@ import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.builder.UICompositionBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.ContentBrowserDrawer;
-import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.concrete.BaseActivityClickListener;
-import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.concrete.ContentBrowserActivityClickListener;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.ListPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.MainPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.buttons.animations.PlayerButtonsAnimations;
@@ -161,33 +158,9 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    private static ContentBrowserDrawer buildNavigationDrawer(BaseActivity activity, Theme theme)
+    private static ContentBrowserDrawer buildNavigationDrawer(Activity activity, Theme theme)
     {
         ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(activity, R.id.drawer_list);
-        contentBrowserDrawer.setClickListener(
-                new BaseActivityClickListener(
-                        (DrawerLayout) activity.findViewById(R.id.drawer_layout)
-                )
-        );
-        contentBrowserDrawer.setAdapter(
-                new NavigationDrawerAdapter(
-                        activity,
-                        R.layout.drawer_list_item,
-                        activity.getResources().getStringArray(R.array.drawer_menu),
-                        theme
-                )
-        );
-        return contentBrowserDrawer;
-    }
-
-    private static ContentBrowserDrawer buildNavigationDrawer(ContentBrowserActivity activity, Theme theme)
-    {
-        ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(activity, R.id.drawer_list);
-        contentBrowserDrawer.setClickListener(
-                new ContentBrowserActivityClickListener(
-                        (DrawerLayout) activity.findViewById(R.id.drawer_layout)
-                )
-        );
         contentBrowserDrawer.setAdapter(
                 new NavigationDrawerAdapter(
                         activity,

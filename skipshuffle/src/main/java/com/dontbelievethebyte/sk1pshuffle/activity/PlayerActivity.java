@@ -4,8 +4,12 @@
 
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
+import android.support.v4.widget.DrawerLayout;
+
+import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UICompositionFactory;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.concrete.BaseActivityClickListener;
 
 public class PlayerActivity extends BaseActivity {
 
@@ -33,6 +37,12 @@ public class PlayerActivity extends BaseActivity {
                     UICompositionFactory.createListPlayer(this, type):
                     UICompositionFactory.createMainPlayer(this, type);
             ui.getPlayer().reboot();
+
+            ui.getContentBrowserDrawer().setClickListener(
+                    new BaseActivityClickListener(
+                            (DrawerLayout) findViewById(R.id.drawer_layout)
+                    )
+            );
         } catch (NoMediaPlayerException e) {
             handleNoMediaPlayerException(e);
         }

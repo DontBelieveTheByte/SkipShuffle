@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ListView;
@@ -30,6 +31,8 @@ import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UICompositionFactory;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.ContentBrowserDrawer;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.concrete.ContentBrowserActivityClickListener;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
 public class ContentBrowserActivity extends ActionBarActivity implements ThemableActivityInterface,
@@ -124,6 +127,11 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
         ui = UICompositionFactory.createContentBrowser(
                 this,
                 preferencesHelper.getUIType()
+        );
+        ui.getContentBrowserDrawer().setClickListener(
+                new ContentBrowserActivityClickListener(
+                        (DrawerLayout) findViewById(R.id.drawer_layout)
+                )
         );
         listView = (ListView) findViewById(R.id.current_list);
     }
