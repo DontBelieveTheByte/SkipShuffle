@@ -5,7 +5,6 @@
 package com.dontbelievethebyte.sk1pshuffle.media.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +18,11 @@ import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
 import com.dontbelievethebyte.sk1pshuffle.playlist.TrackPrinter;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
-import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
 
 public class CurrentPlaylistAdapter extends BaseAdapter {
 
     private Context context;
-    private Integer titleColor, artistColor, pauseColor, playColor;
 
     static class ViewHolder {
         ImageView image;
@@ -33,20 +30,25 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         TextView artist;
     }
 
+    private Theme theme;
     private RandomPlaylist randomPlaylist;
-    private Drawables drawables;
-    private Typeface typeface;
     private LayoutInflater layoutInflater;
     private SkipShuffleMediaPlayer mediaPlayer;
     private TrackPrinter trackPrinter;
 
-    public CurrentPlaylistAdapter(Context context, RandomPlaylist randomPlaylist, SkipShuffleMediaPlayer mediaPlayer)
+    public CurrentPlaylistAdapter(Context context, SkipShuffleMediaPlayer mediaPlayer)
     {
         this.context = context;
         trackPrinter = new TrackPrinter(context);
-        this.randomPlaylist = randomPlaylist;
+        this.randomPlaylist = mediaPlayer.getPlaylist();
         layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         this.mediaPlayer = mediaPlayer;
+    }
+
+
+    public void setTheme(Theme theme)
+    {
+        this.theme = theme;
     }
 
     @Override
@@ -85,24 +87,6 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setColors(Colors colors)
-    {
-        titleColor = context.getResources().getColor(colors.playlistTitle);
-        artistColor = context.getResources().getColor(colors.playlistArtist);
-        playColor = context.getResources().getColor(colors.playButton);
-        pauseColor = context.getResources().getColor(colors.pauseButton);
-    }
-
-    public void setDrawables(Drawables drawables)
-    {
-        this.drawables = drawables;
-    }
-
-    public void setTypeface(Typeface typeface)
-    {
-        this.typeface = typeface;
-    }
-
     @SuppressWarnings("SuspiciousNameCombination")
     private void setImage(ImageView imageLabel, int position)
     {
@@ -112,11 +96,11 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         if (randomPlaylist.getCurrentPosition() == position) {
             imageLabel.setColorFilter(
                     mediaPlayer.isPlaying() ?
-                            playColor :
-                            pauseColor
+                            context.getResources().getColor(theme.getColors().playButton) :
+                            context.getResources().getColor(theme.getColors().pauseButton)
 
             );
-            imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? drawables.getPlay() : drawables.getPause());
+            imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? theme.getDrawables().getPlay() : theme.getDrawables().getPause());
             params.width = height;
 
         } else {
@@ -136,18 +120,18 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
             trackTitle.setSelected(false);
             trackTitle.setEllipsize(TextUtils.TruncateAt.END);
         }
-        if (null != titleColor)
-            trackTitle.setTextColor(titleColor);
-        if (null != typeface)
-            trackTitle.setTypeface(typeface);
+        trackTitle.setTextColor(
+                context.getResources().getColor(theme.getColors().playlistTitle)
+        );
+        trackTitle.setTypeface(theme.getCustomTypeface().getTypeFace());
     }
 
     private void setArtist(TextView trackArtist, String string)
     {
         trackArtist.setText(string);
-        if (null != artistColor)
-            trackArtist.setTextColor(artistColor);
-        if (null != typeface)
-            trackArtist.setTypeface(typeface);
+        trackArtist.setTextColor(
+                context.getResources().getColor(theme.getColors().playlistArtist)
+        );
+        trackArtist.setTypeface(theme.getCustomTypeface().getTypeFace());
     }
 }

@@ -97,13 +97,10 @@ public class UICompositionFactory {
 
         CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
                 activity,
-                randomPlaylist,
                 mediaPlayer
         );
 
-        playlistAdapter.setDrawables(theme.getDrawables());
-        playlistAdapter.setColors(theme.getColors());
-        playlistAdapter.setTypeface(theme.getCustomTypeface().getTypeFace());
+        playlistAdapter.setTheme(theme);
         listView.setAdapter(playlistAdapter);
 
         CurrentPlaylistItemClickListener currentPlaylistClick = new CurrentPlaylistItemClickListener(activity);
@@ -123,7 +120,6 @@ public class UICompositionFactory {
                 activity,
                 theme
         );
-
 
         UICompositionBuilder uiBuilder = new UICompositionBuilder();
         uiBuilder.setActivity(activity);
