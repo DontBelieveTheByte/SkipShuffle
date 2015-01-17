@@ -5,7 +5,7 @@
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.UICompositionFactory;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.UICompositionFactory;
 
 public class PlayerActivity extends BaseActivity {
 

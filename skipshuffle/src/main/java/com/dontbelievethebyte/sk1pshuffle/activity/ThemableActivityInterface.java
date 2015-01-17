@@ -4,7 +4,7 @@
 
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
-import com.dontbelievethebyte.sk1pshuffle.ui.element.UIElementCompositeInterface;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIElementCompositeInterface;
 
 public interface ThemableActivityInterface extends UIElementCompositeInterface {
 }

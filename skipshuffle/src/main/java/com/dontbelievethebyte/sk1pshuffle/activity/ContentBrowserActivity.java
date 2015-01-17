@@ -28,8 +28,8 @@ import com.dontbelievethebyte.sk1pshuffle.media.listener.SongsItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Interface.PlaylistBuilderInterface;
 import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.UIComposition;
-import com.dontbelievethebyte.sk1pshuffle.ui.element.UICompositionFactory;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIComposition;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.UICompositionFactory;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
 public class ContentBrowserActivity extends ActionBarActivity implements ThemableActivityInterface,
