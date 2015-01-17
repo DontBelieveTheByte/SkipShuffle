@@ -4,8 +4,6 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.composition.builder;
 
-import android.app.Fragment;
-
 import com.dontbelievethebyte.sk1pshuffle.activity.ThemableActivityInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.ContentBrowserDrawer;
@@ -18,19 +16,12 @@ public class UICompositionBuilder {
     public AbstractPlayerUI player;
     public ContentBrowserDrawer musicPlayerDrawer;
     public ThemableActivityInterface themableActivity;
-    public Fragment fragment;
     public CustomSeekBar customSeekBar;
     public Theme theme;
 
     public UICompositionBuilder setActivity(ThemableActivityInterface themableActivity)
     {
         this.themableActivity = themableActivity;
-        return this;
-    }
-
-    public UICompositionBuilder setFragment(Fragment fragment)
-    {
-        this.fragment = fragment;
         return this;
     }
 
