@@ -6,7 +6,6 @@ package com.dontbelievethebyte.sk1pshuffle.media.listener;
 
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -14,7 +13,6 @@ import com.dontbelievethebyte.sk1pshuffle.media.adapters.SongsAdapter;
 import com.dontbelievethebyte.sk1pshuffle.playlist.Interface.PlaylistBuilderInterface;
 import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
-import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
 
 import java.util.ArrayList;
 
@@ -42,7 +40,7 @@ public class SongsItemClickListener implements AdapterView.OnItemClickListener{
         private PlaylistData buildPlaylist(Cursor cursor, int  position) throws PlaylistBuildFailsException
         {
             PlaylistData playlistData = new PlaylistData();
-            playlistData.trackIds = new ArrayList<String>();
+            playlistData.trackIds = new ArrayList<>();
             playlistData.currentPosition = position;
             while (cursor.moveToNext()) {
                 playlistData.trackIds.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
