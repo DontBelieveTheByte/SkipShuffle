@@ -12,6 +12,28 @@ import java.util.List;
 
 public class PlaylistData implements Parcelable{
 
+    public static final Parcelable.Creator<PlaylistData> CREATOR = new Parcelable.Creator<PlaylistData>()
+    {
+        @Override
+        public PlaylistData createFromParcel(Parcel incoming)
+        {
+            PlaylistData playlistData = new PlaylistData();
+            playlistData.currentPosition = incoming.readInt();
+            playlistData.isShuffleOn = (incoming.readByte() != 0);
+            playlistData.trackIds = new ArrayList<>();
+            incoming.readList(playlistData.trackIds, getClass().getClassLoader());
+            playlistData.shuffledTrackIds = new ArrayList<>();
+            incoming.readList(playlistData.shuffledTrackIds, getClass().getClassLoader());
+            return playlistData;
+        }
+
+        @Override
+        public PlaylistData[] newArray(int size)
+        {
+            return new PlaylistData[size];
+        }
+    };
+
     public int currentPosition = 0;
     public boolean isShuffleOn = false;
     public List<String> trackIds;
@@ -32,26 +54,4 @@ public class PlaylistData implements Parcelable{
         destination.writeList(shuffledTrackIds);
     }
 
-    static final Parcelable.Creator<PlaylistData> CREATOR = new Parcelable.Creator<PlaylistData>()
-    {
-
-        @Override
-        public PlaylistData createFromParcel(Parcel incoming)
-        {
-            PlaylistData playlistData = new PlaylistData();
-            playlistData.currentPosition = incoming.readInt();
-            playlistData.isShuffleOn = (incoming.readByte() != 0);
-            playlistData.trackIds = new ArrayList<>();
-            incoming.readList(playlistData.trackIds, getClass().getClassLoader());
-            playlistData.shuffledTrackIds = new ArrayList<>();
-            incoming.readList(playlistData.shuffledTrackIds, getClass().getClassLoader());
-            return playlistData;
-        }
-
-        @Override
-        public PlaylistData[] newArray(int size)
-        {
-            return new PlaylistData[size];
-        }
-    };
 }
