@@ -12,13 +12,13 @@ import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class PlayerState {
 
-    private Integer uiType;
+    private UITypes uiType;
     private Boolean isPlaying = true;
     private Boolean isShuffle = false;
     private String title;
     private String artist;
 
-    public PlayerState(Integer uiType, Boolean isPlaying, Boolean isShuffle, String title, String artist)
+    public PlayerState(UITypes uiType, Boolean isPlaying, Boolean isShuffle, String title, String artist)
     {
         this.uiType = uiType;
         this.isPlaying = isPlaying;
@@ -43,9 +43,9 @@ public class PlayerState {
         }
     }
 
-    public int getUiType()
+    public UITypes getUiType()
     {
-        return (null != uiType) ? uiType: UITypes.NEON;
+        return uiType;
     }
 
     public boolean isPlaying()

@@ -31,12 +31,13 @@ import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.seekbar.
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.seekbar.seeklisteners.SeekListener;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.CustomTypeface;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Colors;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.structure.Drawables;
 
 public class UICompositionFactory {
 
-    public static UIComposition createMainPlayer(PlayerActivity activity, int uiType)
+    public static UIComposition createMainPlayer(PlayerActivity activity, UITypes uiType)
     {
         activity.setContentView(R.layout.player_mode);
         ViewGroup viewGroup = (ViewGroup) activity.findViewById(R.id.bottom);
@@ -74,7 +75,7 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    public static UIComposition createListPlayer(PlayerActivity activity, int uiType) throws NoMediaPlayerException
+    public static UIComposition createListPlayer(PlayerActivity activity, UITypes uiType) throws NoMediaPlayerException
     {
         Theme theme = buildTheme(activity, uiType);
 
@@ -130,7 +131,7 @@ public class UICompositionFactory {
         return uiBuilder.build();
     }
 
-    public static UIComposition createContentBrowser(ContentBrowserActivity activity, int uiType)
+    public static UIComposition createContentBrowser(ContentBrowserActivity activity, UITypes uiType)
     {
         Theme theme = buildTheme(activity, uiType);
         activity.setContentView(R.layout.activity_content_browser);
@@ -168,7 +169,7 @@ public class UICompositionFactory {
         return contentBrowserDrawer;
     }
 
-    private static Theme buildTheme(Context context, int uiType)
+    private static Theme buildTheme(Context context, UITypes uiType)
     {
         return new Theme(
                 new Colors(uiType),

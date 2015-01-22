@@ -10,6 +10,7 @@ import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UICompositionFactory;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.concrete.BaseActivityClickListener;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class PlayerActivity extends BaseActivity {
 
@@ -30,12 +31,12 @@ public class PlayerActivity extends BaseActivity {
     }
 
     @Override
-    protected void setUI(Integer type)
+    protected void setUI(UITypes uiType)
     {
         try {
             ui = (viewMode) ?
-                    UICompositionFactory.createListPlayer(this, type):
-                    UICompositionFactory.createMainPlayer(this, type);
+                    UICompositionFactory.createListPlayer(this, uiType):
+                    UICompositionFactory.createMainPlayer(this, uiType);
             ui.getPlayer().reboot();
 
             ui.getContentBrowserDrawer().setClickListener(

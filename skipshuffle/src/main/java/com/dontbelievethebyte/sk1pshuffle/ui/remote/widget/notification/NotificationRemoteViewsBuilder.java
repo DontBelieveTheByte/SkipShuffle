@@ -10,6 +10,7 @@ import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.AbstractRemoteViewsBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.widget.PlayerState;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DrawableMapper;
 
@@ -53,7 +54,7 @@ public class NotificationRemoteViewsBuilder extends AbstractRemoteViewsBuilder{
 
     private void colorize(PlayerState playerState)
     {
-        int uiType = playerState.getUiType();
+        UITypes uiType = playerState.getUiType();
         colorize.label(R.id.track_title,
                 context.getResources().getColor(
                         ColorMapper.getPlaylistTitle(uiType)

@@ -7,6 +7,7 @@ package com.dontbelievethebyte.sk1pshuffle.ui.theme.structure;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.DrawableMapper;
 
 public class Drawables {
@@ -28,7 +29,7 @@ public class Drawables {
 
     private Context context;
 
-    public Drawables(Context context, int uiType)
+    public Drawables(Context context, UITypes uiType)
     {
         this.context = context;
 

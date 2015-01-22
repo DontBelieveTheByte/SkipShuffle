@@ -13,7 +13,7 @@ public class CustomTypeface {
 
     private Typeface typeface;
 
-    public CustomTypeface(Context context, int uiType)
+    public CustomTypeface(Context context, UITypes uiType)
     {
         typeface = Typeface.createFromAsset(
                 context.getAssets(),

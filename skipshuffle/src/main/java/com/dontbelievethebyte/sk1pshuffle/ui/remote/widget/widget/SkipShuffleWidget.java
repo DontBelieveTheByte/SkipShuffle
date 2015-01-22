@@ -63,7 +63,7 @@ public class SkipShuffleWidget extends AppWidgetProvider {
     private void parseReceivedIntent(Intent intent)
     {
         playerState = new PlayerState(
-                intent.getIntExtra(WidgetContract.UI_TYPE, UITypes.NEON),
+                UITypes.values()[intent.getIntExtra(WidgetContract.UI_TYPE, 0)],
                 intent.getBooleanExtra(WidgetContract.IS_PLAYING, false),
                 intent.getBooleanExtra(WidgetContract.IS_SHUFFLE, false),
                 intent.getStringExtra(WidgetContract.TITLE),

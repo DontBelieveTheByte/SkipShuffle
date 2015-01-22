@@ -4,7 +4,6 @@
 
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -21,13 +20,14 @@ import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.sk1pshuffle.service.connection.MediaPlayerServiceConnection;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
-import com.dontbelievethebyte.sk1pshuffle.ui.dialog.ThemeSelectionDialog;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.actionbar.CustomActionBarWrapper;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.menu.CustomOptionsMenuInterface;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.menu.builder.OptionsMenuBuilder;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.menu.callbacks.MenuItemSelectedCallback;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.menu.exception.MenuOptionNotHandledException;
+import com.dontbelievethebyte.sk1pshuffle.ui.dialog.ThemeSelectionDialog;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.dontbelievethebyte.sk1pshuffle.utilities.AppRater;
 import com.dontbelievethebyte.sk1pshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.media.MediaScannerHelper;
@@ -74,7 +74,7 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     private MediaScannerHelper mediaScannerHelper;
     private MediaPlayerServiceConnection mediaPlayerServiceConnection;
 
-    protected abstract void setUI(Integer type);
+    protected abstract void setUI(UITypes uiType);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -238,14 +238,24 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (ContentBrowserActivity.REQUEST_CODE) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    toastHelper.showLongToast("OKOKOK!");
-                }
-                break;
-            }
-        }
+//        try {
+//            switch(requestCode) {
+//                case (ContentBrowserActivity.REQUEST_CODE) : {
+//                    if (resultCode == Activity.RESULT_OK) {
+//                        toastHelper.showLongToast("OKOKOK!");
+//                        PlaylistData playlistData = data.getParcelableExtra("derp");
+////                        getMediaPlayer().setPlaylist(
+////                                new RandomPlaylist(playlistData),
+////                                new MediaStoreBridge(getApplicationContext())
+////                        );
+//                        toastHelper.showLongToast("OKOKOK!");
+//                    }
+//                    break;
+//                }
+//            }
+//        } catch (NoMediaPlayerException e) {
+//            handleNoMediaPlayerException(e);
+//        }
     }
 
     public void showThemeSelectionDialog()

@@ -21,10 +21,11 @@ import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.buttons.
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.buttons.clickListeners.concrete.ShuffleClickListener;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.buttons.clickListeners.concrete.SkipClickListener;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.seekbar.CustomSeekBar;
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public abstract class AbstractPlayerUI implements UIElementCompositeInterface {
 
-    public int type;
+    public UITypes type;
     public AbstractPlayerButtons buttons;
     public CustomSeekBar customSeekBar;
 

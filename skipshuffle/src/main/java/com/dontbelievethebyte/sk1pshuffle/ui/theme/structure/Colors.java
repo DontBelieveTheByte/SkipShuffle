@@ -7,6 +7,7 @@ package com.dontbelievethebyte.sk1pshuffle.ui.theme.structure;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 
+import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper.ColorMapper;
 
 public class Colors {
@@ -33,7 +34,7 @@ public class Colors {
     public int seekBarProgress;
     public int seekBarThumb;
 
-    public Colors(int uiType)
+    public Colors(UITypes uiType)
     {
         background = ColorMapper.getBackground(uiType);
         emptyListText = ColorMapper.getEmptyListText(uiType);

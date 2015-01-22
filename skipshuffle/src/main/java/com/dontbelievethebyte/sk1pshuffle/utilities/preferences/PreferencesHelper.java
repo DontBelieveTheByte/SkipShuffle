@@ -19,7 +19,7 @@ public class PreferencesHelper {
 
     private Context context;
     private Boolean isHapticFeedback;
-    private Integer currentUIType;
+    private UITypes currentUIType;
     private SharedPreferences sharedPreferences;
     private Boolean isListViewMode;
     private Integer numberTimesAppWasOpened;
@@ -116,24 +116,25 @@ public class PreferencesHelper {
         return isListViewMode;
     }
 
-    public Integer getUIType()
+    public UITypes getUIType()
     {
         if (null == currentUIType) {
-            currentUIType = sharedPreferences.getInt(
+            int indexPosition = sharedPreferences.getInt(
                     context.getString(R.string.pref_current_ui_type),
-                    UITypes.NEON //Default UI in case anything goes wrong.
+                    UITypes.NEON.ordinal() //Default UI in case anything goes wrong.
             );
+            currentUIType = UITypes.values()[indexPosition];
         }
         return currentUIType;
     }
 
-    public void setUIType(int UIType)
+    public void setUIType(UITypes uiType)
     {
-        currentUIType = UIType;
+        currentUIType = uiType;
         sharedPreferences.edit()
                 .putInt(
                         context.getString(R.string.pref_current_ui_type),
-                        currentUIType
+                        uiType.ordinal()
                 ).apply();
     }
 

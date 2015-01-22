@@ -9,289 +9,289 @@ import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class DrawableMapper {
 
-    public static int getPlay(Integer uiType)
+    public static int getPlay(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.play_states;
         }
     }
 
-    public static int getPlayPressed(Integer uiType)
+    public static int getPlayPressed(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.play_btn_pressed;
         }
     }
 
-    public static int getPause(Integer uiType)
+    public static int getPause(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.pause_states;
         }
     }
 
-    public static int getPausePressed(Integer uiType)
+    public static int getPausePressed(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.pause_btn_pressed;
         }
     }
 
-    public static int getPrev(Integer uiType)
+    public static int getPrev(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.prev_states;
         }
     }
 
-    public static int getPrevPressed(Integer uiType)
+    public static int getPrevPressed(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.prev_btn_pressed;
         }
     }
 
-    public static int getSkip(Integer uiType)
+    public static int getSkip(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.skip_states;
         }
     }
 
-    public static int getSkipPressed(Integer uiType)
+    public static int getSkipPressed(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.next_btn_pressed;
         }
     }
 
-    public static int getShuffle(Integer uiType)
+    public static int getShuffle(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.shuffle_states;
         }
     }
 
-    public static int getShufflePressed(Integer uiType)
+    public static int getShufflePressed(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.shuffle_btn_pressed;
         }
     }
 
-    public static int getPlaylist(Integer uiType)
+    public static int getPlaylist(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS:
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS:
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.playlist_states;
         }
     }
 
-    public static int getNotificationBackground(Integer uiType)
+    public static int getNotificationBackground(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-            case UITypes.XMAS :
-            case UITypes.PINK_PANTHER :
-            case UITypes.JACK_O_LANTERN :
-            case UITypes.SHAMROCK :
-            case UITypes.MURICA :
-            case UITypes.PSYCHEDELIC :
-            case UITypes.RASTA :
-            case UITypes.USSR :
-            case UITypes.TRON :
-            case UITypes.RAMEN :
-            case UITypes.RAINBOW :
-            case UITypes.KOSHER :
-            case UITypes.STAR_WARS :
+            case MONO_LIGHT :
+            case MONO_DARK :
+            case NEON :
+            case XMAS :
+            case PINK_PANTHER :
+            case JACK_O_LANTERN :
+            case SHAMROCK :
+            case MURICA :
+            case PSYCHEDELIC :
+            case RASTA :
+            case USSR :
+            case TRON :
+            case RAMEN :
+            case RAINBOW :
+            case KOSHER :
+            case STAR_WARS :
             default:
                 return R.drawable.notification_background;
         }

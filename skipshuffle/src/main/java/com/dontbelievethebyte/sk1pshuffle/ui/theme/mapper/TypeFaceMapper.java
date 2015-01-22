@@ -4,16 +4,13 @@
 
 package com.dontbelievethebyte.sk1pshuffle.ui.theme.mapper;
 
+
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 
 public class TypeFaceMapper {
-    public static String getTypeFace(Integer uiType)
+    public static String getTypeFace(UITypes uiType)
     {
         switch (uiType) {
-            case UITypes.MONO_LIGHT :
-            case UITypes.MONO_DARK :
-            case UITypes.NEON :
-                return "fonts/UbuntuMono-B.ttf";
             default:
                 return "fonts/UbuntuMono-B.ttf";
         }

@@ -32,7 +32,7 @@ public class ThemeSelectionDialog {
 
         builder.setSingleChoiceItems(
                 R.array.dialog_theme_items,
-                preferencesHelper.getUIType(),
+                preferencesHelper.getUIType().ordinal(),
                 null
         );
 
@@ -42,56 +42,9 @@ public class ThemeSelectionDialog {
                     @Override
                     public void onClick(DialogInterface dialog, int indexPosition) {
                         ListView lw = ((AlertDialog)dialog).getListView();
-                        switch (lw.getCheckedItemPosition()){
-                            case UITypes.MONO_LIGHT:
-                                preferencesHelper.setUIType(UITypes.MONO_LIGHT);
-                                break;
-                            case UITypes.MONO_DARK:
-                                preferencesHelper.setUIType(UITypes.MONO_DARK);
-                                break;
-                            case UITypes.XMAS:
-                                preferencesHelper.setUIType(UITypes.XMAS);
-                                break;
-                            case UITypes.PINK_PANTHER:
-                                preferencesHelper.setUIType(UITypes.PINK_PANTHER);
-                                break;
-                            case UITypes.JACK_O_LANTERN:
-                                preferencesHelper.setUIType(UITypes.JACK_O_LANTERN);
-                                break;
-                            case UITypes.SHAMROCK:
-                                preferencesHelper.setUIType(UITypes.SHAMROCK);
-                                break;
-                            case UITypes.MURICA:
-                                preferencesHelper.setUIType(UITypes.MURICA);
-                                break;
-                            case UITypes.PSYCHEDELIC:
-                                preferencesHelper.setUIType(UITypes.PSYCHEDELIC);
-                                break;
-                            case UITypes.RASTA:
-                                preferencesHelper.setUIType(UITypes.RASTA);
-                                break;
-                            case UITypes.USSR:
-                                preferencesHelper.setUIType(UITypes.USSR);
-                                break;
-                            case UITypes.TRON:
-                                preferencesHelper.setUIType(UITypes.TRON);
-                                break;
-                            case UITypes.RAMEN:
-                                preferencesHelper.setUIType(UITypes.RAMEN);
-                                break;
-                            case UITypes.RAINBOW:
-                                preferencesHelper.setUIType(UITypes.RAINBOW);
-                                break;
-                            case UITypes.KOSHER:
-                                preferencesHelper.setUIType(UITypes.KOSHER);
-                                break;
-                            case UITypes.STAR_WARS:
-                                preferencesHelper.setUIType(UITypes.STAR_WARS);
-                                break;
-                            default: //Equivalent to UIFactory.NEON
-                                preferencesHelper.setUIType(UITypes.NEON);
-                                break;
-                        }
+                        preferencesHelper.setUIType(
+                                UITypes.values()[lw.getCheckedItemPosition()]
+                        );
                         dialog.dismiss();
                     }
                 }
