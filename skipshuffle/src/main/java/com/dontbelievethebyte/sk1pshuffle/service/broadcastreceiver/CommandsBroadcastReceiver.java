@@ -11,8 +11,8 @@ import android.content.IntentFilter;
 import android.view.KeyEvent;
 
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.service.MediaPlayerCommandsContract;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
-import com.dontbelievethebyte.sk1pshuffle.service.SkipShuflleMediaPlayerCommandsContract;
 
 public class CommandsBroadcastReceiver extends BroadcastReceiver {
     private SkipShuffleMediaPlayer skipShuffleMediaPlayer;
@@ -25,7 +25,7 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
     public void register()
     {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(SkipShuflleMediaPlayerCommandsContract.COMMAND);
+        intentFilter.addAction(MediaPlayerCommandsContract.IDENTIFIER);
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
         intentFilter.addAction(Intent.ACTION_MEDIA_BUTTON);
         intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
@@ -41,16 +41,18 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent)
     {
         try {
-            if (intent.hasExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND)) {
-                handleCommand(intent.getStringExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND));
+            if (intent.hasExtra(MediaPlayerCommandsContract.IDENTIFIER)) {
+                handleCommand(
+                        MediaPlayerCommandsContract.COMMANDS.values()[intent.getIntExtra(MediaPlayerCommandsContract.IDENTIFIER, 5)]
+                );
             } else if (Intent.ACTION_HEADSET_PLUG.equals(intent.getAction())) {
                 handleHeadsetIntent(intent);
             } else if (Intent.ACTION_MEDIA_BUTTON.equals(intent.getAction())) {
                 KeyEvent keyEvent = (KeyEvent) intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
                 if (KeyEvent.KEYCODE_HEADSETHOOK == keyEvent.getKeyCode() && KeyEvent.ACTION_UP == keyEvent.getAction()) {
                     handleCommand(skipShuffleMediaPlayer.isPlaying() ?
-                            SkipShuflleMediaPlayerCommandsContract.PAUSE:
-                            SkipShuflleMediaPlayerCommandsContract.PLAY
+                            MediaPlayerCommandsContract.COMMANDS.PAUSE:
+                            MediaPlayerCommandsContract.COMMANDS.PLAY
                     );
                 }
             }
@@ -59,18 +61,25 @@ public class CommandsBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void handleCommand(String command) throws PlaylistEmptyException
+    private void handleCommand(MediaPlayerCommandsContract.COMMANDS command) throws PlaylistEmptyException
     {
-        if (command.equals(SkipShuflleMediaPlayerCommandsContract.PLAY))
+        switch (command) {
+            case PLAY:
                 skipShuffleMediaPlayer.doPlay();
-        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.PAUSE))
-            skipShuffleMediaPlayer.doPause();
-        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.PREV))
-            skipShuffleMediaPlayer.doPrev();
-        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.SKIP))
-            skipShuffleMediaPlayer.doSkip();
-        else if (command.equals(SkipShuflleMediaPlayerCommandsContract.SHUFFLE))
-            skipShuffleMediaPlayer.shuffleToggle();
+                break;
+            case PAUSE:
+                skipShuffleMediaPlayer.doPause();
+                break;
+            case PREV:
+                skipShuffleMediaPlayer.doPrev();
+                break;
+            case SKIP:
+                skipShuffleMediaPlayer.doSkip();
+                break;
+            case SHUFFLE:
+                skipShuffleMediaPlayer.shuffleToggle();
+                break;
+        }
     }
 
     private void handleHeadsetIntent(Intent intent)

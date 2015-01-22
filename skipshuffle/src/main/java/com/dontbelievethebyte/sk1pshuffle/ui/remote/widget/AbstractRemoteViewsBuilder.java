@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
-import com.dontbelievethebyte.sk1pshuffle.service.SkipShuflleMediaPlayerCommandsContract;
+import com.dontbelievethebyte.sk1pshuffle.service.MediaPlayerCommandsContract;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.widget.PlayerState;
 
 public abstract class AbstractRemoteViewsBuilder {
@@ -81,7 +81,7 @@ public abstract class AbstractRemoteViewsBuilder {
         remoteViews.setOnClickPendingIntent(
                 resourceId,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.PREV,
+                        MediaPlayerCommandsContract.COMMANDS.PREV,
                         0
                 )
         );
@@ -96,9 +96,9 @@ public abstract class AbstractRemoteViewsBuilder {
             );
         }
 
-        String command = (isPlaying) ?
-                SkipShuflleMediaPlayerCommandsContract.PAUSE :
-                SkipShuflleMediaPlayerCommandsContract.PLAY;
+        MediaPlayerCommandsContract.COMMANDS command = (isPlaying) ?
+                MediaPlayerCommandsContract.COMMANDS.PAUSE :
+                MediaPlayerCommandsContract.COMMANDS.PLAY;
 
         remoteViews.setOnClickPendingIntent(
                 resourceId,
@@ -121,7 +121,7 @@ public abstract class AbstractRemoteViewsBuilder {
         remoteViews.setOnClickPendingIntent(
                 R.id.notif_shuffle,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.SHUFFLE,
+                        MediaPlayerCommandsContract.COMMANDS.SHUFFLE,
                         1
                 )
         );
@@ -132,7 +132,7 @@ public abstract class AbstractRemoteViewsBuilder {
         remoteViews.setOnClickPendingIntent(
                 resourceId,
                 buildNotificationButtonsPendingIntent(
-                        SkipShuflleMediaPlayerCommandsContract.SKIP,
+                        MediaPlayerCommandsContract.COMMANDS.SKIP,
                         3
                 )
         );
@@ -155,10 +155,10 @@ public abstract class AbstractRemoteViewsBuilder {
         );
     }
 
-    protected PendingIntent buildNotificationButtonsPendingIntent(String command, int requestCode)
+    protected PendingIntent buildNotificationButtonsPendingIntent(MediaPlayerCommandsContract.COMMANDS command, int requestCode)
     {
-        Intent intent = new Intent(SkipShuflleMediaPlayerCommandsContract.COMMAND);
-        intent.putExtra(SkipShuflleMediaPlayerCommandsContract.COMMAND, command);
+        Intent intent = new Intent(MediaPlayerCommandsContract.IDENTIFIER);
+        intent.putExtra(MediaPlayerCommandsContract.IDENTIFIER, command.ordinal());
         intent.setPackage(context.getPackageName());
         return PendingIntent.getBroadcast(
                 context,
