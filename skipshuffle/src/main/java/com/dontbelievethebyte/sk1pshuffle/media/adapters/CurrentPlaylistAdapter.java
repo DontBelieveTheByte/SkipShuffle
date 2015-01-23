@@ -45,7 +45,6 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         this.mediaPlayer = mediaPlayer;
     }
 
-
     public void setTheme(Theme theme)
     {
         this.theme = theme;

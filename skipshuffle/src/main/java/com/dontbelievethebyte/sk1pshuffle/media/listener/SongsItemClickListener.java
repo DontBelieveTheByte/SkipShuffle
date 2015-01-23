@@ -13,6 +13,7 @@ import com.dontbelievethebyte.sk1pshuffle.media.adapters.SongsAdapter;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistBuilderInterface;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistBuildFailsException;
+import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
 
 import java.util.ArrayList;
 
@@ -28,24 +29,28 @@ public class SongsItemClickListener implements AdapterView.OnItemClickListener{
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-            try {
-                SongsAdapter songsAdapter = (SongsAdapter) adapterView.getAdapter();
-                Cursor cursor = songsAdapter.getCursor();
-                PlaylistData playlistData = buildPlaylist(cursor, position);
-                playlistBuilderInterface.setPlaylist(playlistData);
-            } catch (PlaylistBuildFailsException e) {
-                playlistBuilderInterface.handleBuildPlaylistFailsException(e);
-            }
-        }
-        private PlaylistData buildPlaylist(Cursor cursor, int  position) throws PlaylistBuildFailsException
-        {
-            PlaylistData playlistData = new PlaylistData();
-            playlistData.trackIds = new ArrayList<>();
-            playlistData.currentPosition = position;
-            while (cursor.moveToNext()) {
-                playlistData.trackIds.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
-            }
-            return playlistData;
+        LogUtil.writeDebug("Position : " + Integer.toString(position));
+        try {
+            SongsAdapter songsAdapter = (SongsAdapter) adapterView.getAdapter();
+            Cursor cursor = songsAdapter.getCursor();
+            PlaylistData playlistData = buildPlaylist(cursor, position);
+            playlistBuilderInterface.setPlaylist(playlistData);
+        } catch (PlaylistBuildFailsException e) {
+            playlistBuilderInterface.handleBuildPlaylistFailsException(e);
         }
     }
+
+    private PlaylistData buildPlaylist(Cursor cursor, int  position) throws PlaylistBuildFailsException
+    {
+        PlaylistData playlistData = new PlaylistData();
+        playlistData.trackIds = new ArrayList<>();
+        playlistData.currentPosition = position;
+        while (cursor.moveToNext()) {
+            playlistData.trackIds.add(
+                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID))
+            );
+        }
+        return playlistData;
+    }
+}
 

@@ -6,7 +6,6 @@ package com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.list
 
 import android.content.Context;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.AbstractDrawerClickListener;
 import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
@@ -22,7 +21,7 @@ public class ContentBrowserActivityClickListener extends AbstractDrawerClickList
     @Override
     protected void browseSongs(Context context)
     {
-        Log.d(LogUtil.TAG, "DMADOSAMDO");
+        LogUtil.writeDebug("DMADOSAMDO");
     }
 
     @Override

@@ -4,7 +4,6 @@
 
 package com.dontbelievethebyte.sk1pshuffle.media.listener;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -15,7 +14,7 @@ public class ArtistsItemClickListener implements AdapterView.OnItemClickListener
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
     {
-        Log.d(LogUtil.TAG, "Position : " + Integer.toString(position));
+        LogUtil.writeDebug("Position : " + Integer.toString(position));
 
     }
 }

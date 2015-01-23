@@ -12,7 +12,6 @@ import android.media.AudioManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
@@ -170,7 +169,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     @Override
     public void onPlaylistChanged()
     {
-        Log.d(LogUtil.TAG, "55555 PLAYLIST CHANGEDSDADAD!!!! 55555");
+        LogUtil.writeDebug("55555 PLAYLIST CHANGEDSDADAD!!!! 55555");
         PlaylistData playlistData = preferencesHelper.getPlaylist();
         playlist = new RandomPlaylist(
                 preferencesHelper.getPlaylist(),
