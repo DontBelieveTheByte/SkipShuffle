@@ -41,10 +41,10 @@ public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferen
     public PrefsCallbacksManager(Context context)
     {
         this.context = context;
-        themeChangedCallbacks = new HashSet<ThemeChangedCallback>();
-        hapticFeedbackChangedCallbacks = new HashSet<HapticFeedBackChangedCallback>();
-        playlistChangedCallbacks = new HashSet<PlaylistChangedCallback>();
-        viewModeChangedCallbacks = new HashSet<ViewModeChangedCallback>();
+        themeChangedCallbacks = new HashSet<>();
+        hapticFeedbackChangedCallbacks = new HashSet<>();
+        playlistChangedCallbacks = new HashSet<>();
+        viewModeChangedCallbacks = new HashSet<>();
     }
 
     public void registerHapticFeedBackChanged(Context context)
