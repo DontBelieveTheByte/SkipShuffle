@@ -66,9 +66,6 @@ public class BaseActivityClickListener extends AbstractDrawerClickListener {
 
     private void launchChildActivity(Intent intent, Activity activity)
     {
-        activity.startActivityForResult(
-                intent,
-                ContentBrowserActivity.REQUEST_CODE
-        );
+        activity.startActivity(intent);
     }
 }

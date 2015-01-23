@@ -4,19 +4,18 @@
 
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
@@ -143,7 +142,7 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
 
@@ -238,20 +237,6 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
         else if (KeyEvent.KEYCODE_MEDIA_STOP == keyCode)
             ui.getPlayer().buttons.shuffle.performClick();
         return super.onKeyDown(keyCode, keyEvent);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (ContentBrowserActivity.REQUEST_CODE) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    PlaylistData playlistData = data.getParcelableExtra(PlaylistData.INTENT_KEY);
-                    preferencesHelper.setLastPlaylist(playlistData);
-                }
-                break;
-            }
-        }
     }
 
     public void showThemeSelectionDialog()

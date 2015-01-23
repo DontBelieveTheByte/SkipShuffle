@@ -150,7 +150,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
         orientationBroadcastReceiver.unregister();
         notification.cancel();
         doPause();
-        preferencesHelper.setLastPlaylist(playlist.getPlaylistData());
+        preferencesHelper.setPlaylist(playlist.getPlaylistData());
     }
 
     @Override

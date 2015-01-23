@@ -90,7 +90,7 @@ public class PreferencesHelper {
             return null;
     }
 
-    public void setLastPlaylist(PlaylistData playlistData)
+    public void setPlaylist(PlaylistData playlistData)
     {
         Gson gson = new Gson();
         String json = gson.toJson(playlistData);
