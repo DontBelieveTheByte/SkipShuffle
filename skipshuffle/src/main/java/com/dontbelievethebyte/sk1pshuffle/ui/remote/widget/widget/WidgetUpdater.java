@@ -54,7 +54,7 @@ public class WidgetUpdater implements PlayerStateChangedCallback {
                 playerState.isShuffle());
         intent.putExtra(
                 WidgetContract.UI_TYPE,
-                skipShuffleMediaPlayer.getPreferencesHelper().getUIType()
+                skipShuffleMediaPlayer.getPreferencesHelper().getUIType().ordinal()
         );
         skipShuffleMediaPlayer.sendBroadcast(intent);
     }
