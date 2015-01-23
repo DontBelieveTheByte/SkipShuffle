@@ -84,15 +84,15 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     public void onCreate()
     {
         initAudioFocus();
-        playerStateChangedCallbacks = new HashSet<>();
         clientCommandsBroadcastReceiver = new CommandsBroadcastReceiver(this);
         clientCommandsBroadcastReceiver.register();
         orientationBroadcastReceiver = new OrientationBroadcastReceiver(this);
         orientationBroadcastReceiver.register();
         initPrefsHelper();
         notification = new PlayerNotification(this);
-        playerStateChangedCallbacks.add(notification);
         WidgetUpdater widgetUpdater = new WidgetUpdater(this);
+        playerStateChangedCallbacks = new HashSet<>();
+        playerStateChangedCallbacks.add(notification);
         playerStateChangedCallbacks.add(widgetUpdater);
         playerWrapper = new AndroidPlayer(this);
         initPlaylist();

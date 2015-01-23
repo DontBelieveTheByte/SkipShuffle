@@ -110,7 +110,7 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
     public void setPlaylist(PlaylistData playlistData)
     {
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("derp", playlistData);
+        resultIntent.putExtra(PlaylistData.INTENT_KEY, playlistData);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }

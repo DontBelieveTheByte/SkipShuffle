@@ -18,7 +18,7 @@ import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.ListPlay
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
 public class CurrentPlaylistItemClickListener implements AdapterView.OnItemClickListener,
-                                             AdapterView.OnItemLongClickListener{
+                                                         AdapterView.OnItemLongClickListener{
 
     private PlayerActivity playerActivity;
 

@@ -7,6 +7,8 @@ package com.dontbelievethebyte.sk1pshuffle.playlist;
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RandomPlaylist {
@@ -62,9 +64,9 @@ public class RandomPlaylist {
 
     public void shuffle()
     {
-//        if (null == playlistData.shuffledTrackIds)
-//            playlistData.shuffledTrackIds = new ArrayList<>(playlistData.trackIds);
-//        Collections.shuffle(playlistData.shuffledTrackIds);
+        if (null == playlistData.shuffledTrackIds)
+            playlistData.shuffledTrackIds = new ArrayList<>(playlistData.trackIds);
+        Collections.shuffle(playlistData.shuffledTrackIds);
     }
 
     public int getSize()

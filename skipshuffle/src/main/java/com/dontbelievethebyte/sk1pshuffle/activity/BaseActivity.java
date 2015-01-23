@@ -246,9 +246,8 @@ public abstract class BaseActivity extends ActionBarActivity implements ThemeCha
         switch(requestCode) {
             case (ContentBrowserActivity.REQUEST_CODE) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    PlaylistData playlistData = data.getParcelableExtra("derp");
+                    PlaylistData playlistData = data.getParcelableExtra(PlaylistData.INTENT_KEY);
                     preferencesHelper.setLastPlaylist(playlistData);
-                    toastHelper.showLongToast("OKOKOK!");
                 }
                 break;
             }
