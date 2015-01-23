@@ -38,7 +38,6 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
                                                                          PlaylistBuilderInterface {
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
-    public UIComposition ui;
 
     private ListView listView;
     private SimpleCursorAdapter adapter;
@@ -121,6 +120,7 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
     private void setUI()
     {
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
+        UIComposition ui;
         ui = UICompositionFactory.createContentBrowser(
                 this,
                 preferencesHelper.getUIType()
