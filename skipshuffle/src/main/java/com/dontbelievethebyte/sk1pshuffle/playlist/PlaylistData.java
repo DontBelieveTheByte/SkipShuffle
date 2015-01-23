@@ -12,8 +12,6 @@ import java.util.List;
 
 public class PlaylistData implements Parcelable{
 
-    public static final String INTENT_KEY= "com.dontbelievethebyte.skipshuffle.PLAYLISTDATA";
-
     public static final Parcelable.Creator<PlaylistData> CREATOR = new Parcelable.Creator<PlaylistData>()
     {
         @Override
