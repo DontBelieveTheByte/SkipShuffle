@@ -64,30 +64,28 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
     {
         MediaStoreBridge mediaStoreBridge = new MediaStoreBridge(this);
 
-        if (ContentTypes.SONGS.ordinal() == loaderId) {
+        ContentTypes contentType = ContentTypes.values()[loaderId];
 
-            adapter = new SongsAdapter(this);
-            listView.setOnItemClickListener(new SongsItemClickListener(this));
-            return mediaStoreBridge.getSongs();
-        } else if (ContentTypes.ARTISTS.ordinal() == loaderId) {
-
-            adapter = new ArtistsAdapter(this);
-            listView.setOnItemClickListener(new ArtistsItemClickListener());
-            return mediaStoreBridge.getArtists();
-
-        } else if (ContentTypes.ALBUMS.ordinal() == loaderId) {
-
-            adapter = new AlbumsAdapter(this);
-            listView.setOnItemClickListener(new AlbumsItemClickListener());
-            mediaStoreBridge.getAlbums();
-
-        } else if (ContentTypes.GENRES.ordinal() == loaderId) {
-
-            adapter = new GenresAdapter(this);
-            listView.setOnItemClickListener(new GenresItemClickListener());
-            mediaStoreBridge.getGenres();
+        switch (contentType) {
+            case SONGS:
+                adapter = new SongsAdapter(this);
+                listView.setOnItemClickListener(new SongsItemClickListener(this));
+                return mediaStoreBridge.getSongs();
+            case ARTISTS:
+                adapter = new ArtistsAdapter(this);
+                listView.setOnItemClickListener(new ArtistsItemClickListener());
+                return mediaStoreBridge.getArtists();
+            case ALBUMS:
+                adapter = new AlbumsAdapter(this);
+                listView.setOnItemClickListener(new AlbumsItemClickListener());
+                return mediaStoreBridge.getAlbums();
+            case GENRES:
+                adapter = new GenresAdapter(this);
+                listView.setOnItemClickListener(new GenresItemClickListener());
+                return mediaStoreBridge.getGenres();
+            default:
+                return null;
         }
-        return null;
     }
 
     @Override
