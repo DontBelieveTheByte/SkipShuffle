@@ -6,9 +6,9 @@ package com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
-import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
-import com.dontbelievethebyte.sk1pshuffle.playlist.TrackPrinter;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.Track;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.TrackPrinter;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.buttons.concrete.MainPlayerButtons;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.labels.MainPlayerSongLabel;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.seekbar.CustomSeekBar;

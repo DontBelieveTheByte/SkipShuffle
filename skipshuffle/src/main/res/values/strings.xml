@@ -67,7 +67,7 @@
     <!-- Preferences -->
     <string name="pref_haptic_feedback" translatable="false">PREF_HAPTIC_FEEDBACK</string>
     <string name="pref_media_directories" translatable="false">PREF_MEDIA_DIRECTORIES</string>
-    <string name="pref_current_playlist_id" translatable="false">PREF_CURRENT_PLAYLIST</string>
+    <string name="pref_current_playlist" translatable="false">PREF_CURRENT_PLAYLIST</string>
     <string name="pref_current_ui_type" translatable="false">PREF_CURRENT_UI_TYPE</string>
     <string name="pref_current_ui_view_mode" translatable="false">PREF_CURRENT_UI_VIEW_MODE</string>
     <string name="pref_number_times_app_opened" translatable="false">PREF_NUMBER_TIMES_APP_OPENED</string>

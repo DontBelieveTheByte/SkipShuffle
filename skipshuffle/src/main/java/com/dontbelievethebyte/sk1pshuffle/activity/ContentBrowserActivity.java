@@ -25,9 +25,9 @@ import com.dontbelievethebyte.sk1pshuffle.media.listener.AlbumsItemClickListener
 import com.dontbelievethebyte.sk1pshuffle.media.listener.ArtistsItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.media.listener.GenresItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.media.listener.SongsItemClickListener;
-import com.dontbelievethebyte.sk1pshuffle.playlist.Interface.PlaylistBuilderInterface;
-import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistBuilderInterface;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIComposition;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UICompositionFactory;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.listeners.concrete.ContentBrowserActivityClickListener;

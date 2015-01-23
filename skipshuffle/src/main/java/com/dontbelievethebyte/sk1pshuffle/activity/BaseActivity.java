@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
 import com.dontbelievethebyte.sk1pshuffle.service.connection.MediaPlayerServiceConnection;

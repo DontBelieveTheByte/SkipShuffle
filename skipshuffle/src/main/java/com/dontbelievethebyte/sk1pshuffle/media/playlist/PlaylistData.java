@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.playlist;
+package com.dontbelievethebyte.sk1pshuffle.media.playlist;
 
 import android.os.Parcel;
 import android.os.Parcelable;

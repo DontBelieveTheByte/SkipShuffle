@@ -76,7 +76,7 @@ public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferen
             onThemeChanged();
         else if (context.getString(R.string.pref_haptic_feedback).equals(prefsKey))
             onHapticFeedBackChanged();
-        else if (context.getString(R.string.pref_current_playlist_id).equals(prefsKey))
+        else if (context.getString(R.string.pref_current_playlist).equals(prefsKey))
             onPlaylistChanged();
         else if (context.getString(R.string.pref_current_ui_view_mode).equals(prefsKey))
             onViewModeChanged();

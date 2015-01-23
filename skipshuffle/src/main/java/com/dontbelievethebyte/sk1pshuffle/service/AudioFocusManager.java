@@ -6,7 +6,7 @@ package com.dontbelievethebyte.sk1pshuffle.service;
 
 import android.media.AudioManager;
 
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
 
 public class AudioFocusManager implements AudioManager.OnAudioFocusChangeListener{
 

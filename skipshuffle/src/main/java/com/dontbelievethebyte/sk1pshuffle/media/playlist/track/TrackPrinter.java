@@ -2,12 +2,13 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.playlist;
+package com.dontbelievethebyte.sk1pshuffle.media.playlist.track;
 
 import android.content.Context;
 import android.provider.MediaStore;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.Track;
 
 public class TrackPrinter {
 

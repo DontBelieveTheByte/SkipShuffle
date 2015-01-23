@@ -15,9 +15,9 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
-import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
-import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.RandomPlaylist;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.broadcastreceiver.CommandsBroadcastReceiver;
 import com.dontbelievethebyte.sk1pshuffle.service.broadcastreceiver.OrientationBroadcastReceiver;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.HeadsetPluggedStateCallback;
@@ -121,7 +121,7 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
 
     private void initPlaylist()
     {
-        PlaylistData playlistData = preferencesHelper.getLastPlaylist();
+        PlaylistData playlistData = preferencesHelper.getPlaylist();
         if (null == playlistData) {
             playlistData = createPlaylistDataFromNothing();
         }
@@ -171,8 +171,9 @@ public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCa
     public void onPlaylistChanged()
     {
         Log.d(LogUtil.TAG, "55555 PLAYLIST CHANGEDSDADAD!!!! 55555");
+        PlaylistData playlistData = preferencesHelper.getPlaylist();
         playlist = new RandomPlaylist(
-                preferencesHelper.getLastPlaylist(),
+                preferencesHelper.getPlaylist(),
                 new MediaStoreBridge(getApplicationContext())
         );
     }

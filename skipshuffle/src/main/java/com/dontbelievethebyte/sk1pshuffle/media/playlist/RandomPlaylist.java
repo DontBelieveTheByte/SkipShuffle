@@ -2,10 +2,11 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.playlist;
+package com.dontbelievethebyte.sk1pshuffle.media.playlist;
 
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.Track;
 
 import java.util.ArrayList;
 import java.util.Collections;

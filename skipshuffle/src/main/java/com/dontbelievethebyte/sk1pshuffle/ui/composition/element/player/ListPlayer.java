@@ -8,9 +8,9 @@ import android.widget.ListView;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.BaseActivity;
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
-import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.RandomPlaylist;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.Track;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIElementCompositeInterface;

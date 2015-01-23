@@ -10,8 +10,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
-import com.dontbelievethebyte.sk1pshuffle.playlist.TrackPrinter;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.Track;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.TrackPrinter;
 
 public class SongInfoDialog {
 

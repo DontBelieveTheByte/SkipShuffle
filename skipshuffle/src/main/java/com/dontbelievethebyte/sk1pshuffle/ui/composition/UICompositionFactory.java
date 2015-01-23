@@ -13,10 +13,10 @@ import android.widget.TextView;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.activity.ContentBrowserActivity;
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
-import com.dontbelievethebyte.sk1pshuffle.adapter.NavigationDrawerAdapter;
+import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.adapter.ContentBrowserDrawerAdapter;
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.CurrentPlaylistAdapter;
 import com.dontbelievethebyte.sk1pshuffle.media.listener.CurrentPlaylistItemClickListener;
-import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.RandomPlaylist;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.builder.UICompositionBuilder;
@@ -159,7 +159,7 @@ public class UICompositionFactory {
     {
         ContentBrowserDrawer contentBrowserDrawer = new ContentBrowserDrawer(activity, R.id.drawer_list);
         contentBrowserDrawer.setAdapter(
-                new NavigationDrawerAdapter(
+                new ContentBrowserDrawerAdapter(
                         activity,
                         R.layout.drawer_list_item,
                         activity.getResources().getStringArray(R.array.drawer_menu),

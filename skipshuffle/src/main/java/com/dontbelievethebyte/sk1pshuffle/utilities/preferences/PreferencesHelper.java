@@ -10,7 +10,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
-import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.UITypes;
 import com.google.gson.Gson;
 
@@ -24,8 +24,6 @@ public class PreferencesHelper {
     private Integer numberTimesAppWasOpened;
     private Boolean canRateApp;
     private boolean hasVibrator;
-
-
     private PrefsCallbacksManager callbacksManager;
 
     public PreferencesHelper(Context context)
@@ -80,13 +78,13 @@ public class PreferencesHelper {
                 ).apply();
     }
 
-    public PlaylistData getLastPlaylist()
+    public PlaylistData getPlaylist()
     {
-//        String serialized = sharedPreferences.getString(context.getString(R.string.pref_current_playlist_id), null);
-//        if (null != serialized) {
-//            Gson gson = new Gson();
-//            return gson.fromJson(serialized, PlaylistData.class);
-//        } else
+        String serialized = sharedPreferences.getString(context.getString(R.string.pref_current_playlist), null);
+        if (null != serialized) {
+            Gson gson = new Gson();
+            return gson.fromJson(serialized, PlaylistData.class);
+        } else
             return null;
     }
 
@@ -95,7 +93,7 @@ public class PreferencesHelper {
         Gson gson = new Gson();
         String json = gson.toJson(playlistData);
         SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
-        prefsEditor.putString(context.getString(R.string.pref_current_playlist_id), json);
+        prefsEditor.putString(context.getString(R.string.pref_current_playlist), json);
         prefsEditor.apply();
     }
 

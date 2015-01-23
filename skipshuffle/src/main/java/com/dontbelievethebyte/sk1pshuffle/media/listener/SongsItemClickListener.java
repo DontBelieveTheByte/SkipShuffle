@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.SongsAdapter;
-import com.dontbelievethebyte.sk1pshuffle.playlist.Interface.PlaylistBuilderInterface;
-import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistBuildFailsException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistBuilderInterface;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistBuildFailsException;
 
 import java.util.ArrayList;
 

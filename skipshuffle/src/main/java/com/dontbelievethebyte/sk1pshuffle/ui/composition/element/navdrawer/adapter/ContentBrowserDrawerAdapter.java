@@ -2,7 +2,7 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.adapter;
+package com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.dontbelievethebyte.sk1pshuffle.R;
 import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
 
-public class NavigationDrawerAdapter extends ArrayAdapter<String> {
+public class ContentBrowserDrawerAdapter extends ArrayAdapter<String> {
 
     private static class ViewHolder {
         public TextView title;
@@ -28,7 +28,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<String> {
     private int selectedTextBackgroundColor;
     private int textColor;
 
-    public NavigationDrawerAdapter(Context context, int resource, String[] strings, Theme theme)
+    public ContentBrowserDrawerAdapter(Context context, int resource, String[] strings, Theme theme)
     {
         super(context, resource, strings);
         layoutInflater = LayoutInflater.from(context);

@@ -7,9 +7,9 @@ package com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.buttons
 import android.view.View;
 
 import com.dontbelievethebyte.sk1pshuffle.activity.PlayerActivity;
-import com.dontbelievethebyte.sk1pshuffle.playlist.RandomPlaylist;
-import com.dontbelievethebyte.sk1pshuffle.playlist.Track;
-import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.RandomPlaylist;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.track.Track;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.exception.NoMediaPlayerException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.player.ListPlayer;
