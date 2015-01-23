@@ -2,35 +2,25 @@
  * Copyright (c) 2015. Jean-François Bérubé, all rights reserved.
  */
 
-package com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks;
+package com.dontbelievethebyte.sk1pshuffle.utilities.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.HapticFeedBackChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.PlaylistChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.ThemeChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.ViewModeChangedCallback;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferenceChangeListener{
-
-
-
-    public static interface HapticFeedBackChangedCallback {
-        public void onHapticFeedBackChanged();
-    }
-
-    public static interface PlaylistChangedCallback {
-        public void onPlaylistChange();
-    }
-
-    public static interface ThemeChangedCallback {
-        public void onThemeChanged();
-    }
-
-    public static interface ViewModeChangedCallback {
-        public void onViewModeChanged();
-    }
+public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferenceChangeListener,
+        HapticFeedBackChangedCallback,
+        PlaylistChangedCallback,
+        ThemeChangedCallback,
+        ViewModeChangedCallback {
 
     private Context context;
     private Set<ThemeChangedCallback> themeChangedCallbacks;
@@ -92,6 +82,7 @@ public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferen
             onViewModeChanged();
     }
 
+    @Override
     public void onHapticFeedBackChanged()
     {
         for(HapticFeedBackChangedCallback hapticFeedBackChangedCallback : hapticFeedbackChangedCallbacks) {
@@ -99,20 +90,22 @@ public class PrefsCallbacksManager implements SharedPreferences.OnSharedPreferen
         }
     }
 
+    @Override
     public void onThemeChanged()
     {
         for(ThemeChangedCallback themeChangedCallback : themeChangedCallbacks) {
             themeChangedCallback.onThemeChanged();
         }
     }
-
+    @Override
     public void onPlaylistChanged()
     {
         for(PlaylistChangedCallback playlistChangedCallback : playlistChangedCallbacks) {
-            playlistChangedCallback.onPlaylistChange();
+            playlistChangedCallback.onPlaylistChanged();
         }
     }
 
+    @Override
     public void onViewModeChanged()
     {
         for(ViewModeChangedCallback viewModeChangedCallback : viewModeChangedCallbacks) {

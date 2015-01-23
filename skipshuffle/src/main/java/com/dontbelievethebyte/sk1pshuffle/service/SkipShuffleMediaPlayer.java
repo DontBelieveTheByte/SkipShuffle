@@ -12,6 +12,7 @@ import android.media.AudioManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.dontbelievethebyte.sk1pshuffle.media.MediaStoreBridge;
 import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
@@ -27,16 +28,18 @@ import com.dontbelievethebyte.sk1pshuffle.service.exception.AudioTrackLoadingExc
 import com.dontbelievethebyte.sk1pshuffle.service.proxy.AndroidPlayer;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.notification.PlayerNotification;
 import com.dontbelievethebyte.sk1pshuffle.ui.remote.widget.widget.WidgetUpdater;
+import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PrefsCallbacksManager;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.PlaylistChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.ThemeChangedCallback;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksManager.PlaylistChangedCallback,
-                                                               PrefsCallbacksManager.ThemeChangedCallback,
+public class SkipShuffleMediaPlayer extends Service implements PlaylistChangedCallback,
+                                                               ThemeChangedCallback,
                                                                HeadsetPluggedStateCallback,
                                                                OrientationChangeCallback,
                                                                TrackCompleteCallback {
@@ -45,7 +48,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     private AndroidPlayer playerWrapper;
     private PreferencesHelper preferencesHelper;
     private PlayerNotification notification;
-    private WidgetUpdater widgetUpdater;
     private RandomPlaylist playlist;
     private MediaPlayerBinder mediaPlayerBinder = new MediaPlayerBinder();
     private Set<PlayerStateChangedCallback> playerStateChangedCallbacks;
@@ -82,7 +84,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public void onCreate()
     {
         initAudioFocus();
-        playerStateChangedCallbacks = new HashSet<PlayerStateChangedCallback>();
+        playerStateChangedCallbacks = new HashSet<>();
         clientCommandsBroadcastReceiver = new CommandsBroadcastReceiver(this);
         clientCommandsBroadcastReceiver.register();
         orientationBroadcastReceiver = new OrientationBroadcastReceiver(this);
@@ -90,7 +92,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         initPrefsHelper();
         notification = new PlayerNotification(this);
         playerStateChangedCallbacks.add(notification);
-        widgetUpdater = new WidgetUpdater(this);
+        WidgetUpdater widgetUpdater = new WidgetUpdater(this);
         playerStateChangedCallbacks.add(widgetUpdater);
         playerWrapper = new AndroidPlayer(this);
         initPlaylist();
@@ -112,6 +114,7 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
         preferencesHelper = new PreferencesHelper(getApplicationContext());
         PrefsCallbacksManager prefsCallbacksManager = new PrefsCallbacksManager(this);
         prefsCallbacksManager.registerThemeChanged(this);
+        prefsCallbacksManager.registerPlaylistChanged(this);
         preferencesHelper.setCallbacksManager(prefsCallbacksManager);
         preferencesHelper.registerPrefsChangedListener();
     }
@@ -120,15 +123,24 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     {
         PlaylistData playlistData = preferencesHelper.getLastPlaylist();
         if (null == playlistData) {
-            playlistData = new PlaylistData();
-            MediaStoreBridge mediaStoreBridge = new MediaStoreBridge(getApplicationContext());
-            playlistData.trackIds = new ArrayList<String>();
-            Cursor cursor = mediaStoreBridge.getAllSongs();
-            while (cursor.moveToNext()) {
-                playlistData.trackIds.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
-            }
+            playlistData = createPlaylistDataFromNothing();
         }
-        playlist = new RandomPlaylist(playlistData, new MediaStoreBridge(getApplicationContext()));
+        playlist = new RandomPlaylist(
+                playlistData,
+                new MediaStoreBridge(getApplicationContext())
+        );
+    }
+
+    private PlaylistData createPlaylistDataFromNothing()
+    {
+        PlaylistData playlistData = new PlaylistData();
+        MediaStoreBridge mediaStoreBridge = new MediaStoreBridge(getApplicationContext());
+        playlistData.trackIds = new ArrayList<>();
+        Cursor cursor = mediaStoreBridge.getAllSongs();
+        while (cursor.moveToNext()) {
+            playlistData.trackIds.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+        }
+        return playlistData;
     }
 
     @Override
@@ -156,8 +168,9 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     }
 
     @Override
-    public void onPlaylistChange()
+    public void onPlaylistChanged()
     {
+        Log.d(LogUtil.TAG, "55555 PLAYLIST CHANGEDSDADAD!!!! 55555");
         playlist = new RandomPlaylist(
                 preferencesHelper.getLastPlaylist(),
                 new MediaStoreBridge(getApplicationContext())
@@ -261,14 +274,6 @@ public class SkipShuffleMediaPlayer extends Service implements PrefsCallbacksMan
     public RandomPlaylist getPlaylist()
     {
         return playlist;
-    }
-
-    public void setPlaylist(List<String> trackIds)
-    {
-        playlist = new RandomPlaylist(
-          trackIds,
-          new MediaStoreBridge(this)
-        );
     }
 
     public PreferencesHelper getPreferencesHelper()

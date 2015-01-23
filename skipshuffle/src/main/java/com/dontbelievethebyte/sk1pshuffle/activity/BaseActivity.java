@@ -4,6 +4,7 @@
 
 package com.dontbelievethebyte.sk1pshuffle.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.dontbelievethebyte.sk1pshuffle.R;
+import com.dontbelievethebyte.sk1pshuffle.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.playlist.exception.PlaylistEmptyException;
 import com.dontbelievethebyte.sk1pshuffle.service.SkipShuffleMediaPlayer;
 import com.dontbelievethebyte.sk1pshuffle.service.callbacks.PlayerStateChangedCallback;
@@ -32,12 +34,15 @@ import com.dontbelievethebyte.sk1pshuffle.utilities.AppRater;
 import com.dontbelievethebyte.sk1pshuffle.utilities.ToastHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.media.MediaScannerHelper;
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
-import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.PrefsCallbacksManager;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PrefsCallbacksManager;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.HapticFeedBackChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.ThemeChangedCallback;
+import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.callbacks.ViewModeChangedCallback;
 
-public abstract class BaseActivity extends ActionBarActivity implements PrefsCallbacksManager.ThemeChangedCallback,
-                                                                        PrefsCallbacksManager.HapticFeedBackChangedCallback,
+public abstract class BaseActivity extends ActionBarActivity implements ThemeChangedCallback,
+                                                                        HapticFeedBackChangedCallback,
                                                                         MediaPlayerServiceConnection.MediaPlayerConnectedCallback,
-                                                                        PrefsCallbacksManager.ViewModeChangedCallback,
+                                                                        ViewModeChangedCallback,
                                                                         PlayerStateChangedCallback,
                                                                         ThemableActivityInterface {
 
@@ -238,24 +243,16 @@ public abstract class BaseActivity extends ActionBarActivity implements PrefsCal
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        try {
-//            switch(requestCode) {
-//                case (ContentBrowserActivity.REQUEST_CODE) : {
-//                    if (resultCode == Activity.RESULT_OK) {
-//                        toastHelper.showLongToast("OKOKOK!");
-//                        PlaylistData playlistData = data.getParcelableExtra("derp");
-////                        getMediaPlayer().setPlaylist(
-////                                new RandomPlaylist(playlistData),
-////                                new MediaStoreBridge(getApplicationContext())
-////                        );
-//                        toastHelper.showLongToast("OKOKOK!");
-//                    }
-//                    break;
-//                }
-//            }
-//        } catch (NoMediaPlayerException e) {
-//            handleNoMediaPlayerException(e);
-//        }
+        switch(requestCode) {
+            case (ContentBrowserActivity.REQUEST_CODE) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    PlaylistData playlistData = data.getParcelableExtra("derp");
+                    preferencesHelper.setLastPlaylist(playlistData);
+                    toastHelper.showLongToast("OKOKOK!");
+                }
+                break;
+            }
+        }
     }
 
     public void showThemeSelectionDialog()
