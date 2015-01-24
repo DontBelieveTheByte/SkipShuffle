@@ -25,7 +25,7 @@ import com.dontbelievethebyte.sk1pshuffle.media.listener.AlbumsItemClickListener
 import com.dontbelievethebyte.sk1pshuffle.media.listener.ArtistsItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.media.listener.GenresItemClickListener;
 import com.dontbelievethebyte.sk1pshuffle.media.listener.SongsItemClickListener;
-import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistBuilderInterface;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistDataBuilderInterface;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.ui.composition.UIComposition;
@@ -34,8 +34,7 @@ import com.dontbelievethebyte.sk1pshuffle.ui.composition.element.navdrawer.liste
 import com.dontbelievethebyte.sk1pshuffle.utilities.preferences.PreferencesHelper;
 
 public class ContentBrowserActivity extends ActionBarActivity implements ThemableActivityInterface,
-                                                                         LoaderManager.LoaderCallbacks<Cursor>,
-                                                                         PlaylistBuilderInterface {
+                                                                         LoaderManager.LoaderCallbacks<Cursor> {
 
     public final static String CONTENT_TYPE = "com.dontbelievethebyte.CONTENT_TYPE";
 
@@ -69,7 +68,11 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
         switch (contentType) {
             case SONGS:
                 adapter = new SongsAdapter(this);
-                listView.setOnItemClickListener(new SongsItemClickListener(this));
+                listView.setOnItemClickListener(
+                        new SongsItemClickListener(
+
+                        )
+                );
                 return mediaStoreBridge.getSongs();
             case ARTISTS:
                 adapter = new ArtistsAdapter(this);
@@ -101,17 +104,10 @@ public class ContentBrowserActivity extends ActionBarActivity implements Themabl
         adapter.changeCursor(null);
     }
 
-    @Override
-    public void setPlaylist(PlaylistData playlistData)
+    public void setPlaylistDataAndQuit(PlaylistData playlistData)
     {
         PreferencesHelper preferencesHelper = new PreferencesHelper(getApplicationContext());
         preferencesHelper.setPlaylist(playlistData);
-        finish();
-    }
-
-    @Override
-    public void handleBuildPlaylistFailsException(PlaylistBuildFailsException e)
-    {
         finish();
     }
 

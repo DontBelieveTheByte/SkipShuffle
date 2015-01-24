@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.dontbelievethebyte.sk1pshuffle.media.adapters.SongsAdapter;
-import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistBuilderInterface;
+import com.dontbelievethebyte.sk1pshuffle.media.playlist.Interface.PlaylistDataBuilderInterface;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.PlaylistData;
 import com.dontbelievethebyte.sk1pshuffle.media.playlist.exception.PlaylistBuildFailsException;
 import com.dontbelievethebyte.sk1pshuffle.utilities.LogUtil;
@@ -19,11 +19,11 @@ import java.util.ArrayList;
 
 public class SongsItemClickListener implements AdapterView.OnItemClickListener{
 
-    PlaylistBuilderInterface playlistBuilderInterface;
+    PlaylistDataBuilderInterface playlistBuilder;
 
-    public SongsItemClickListener(PlaylistBuilderInterface playlistBuilderInterface)
+    public SongsItemClickListener(PlaylistDataBuilderInterface playlistBuilderInterface)
     {
-        this.playlistBuilderInterface = playlistBuilderInterface;
+        this.playlistBuilder = playlistBuilderInterface;
     }
 
     @Override
@@ -34,9 +34,9 @@ public class SongsItemClickListener implements AdapterView.OnItemClickListener{
             SongsAdapter songsAdapter = (SongsAdapter) adapterView.getAdapter();
             Cursor cursor = songsAdapter.getCursor();
             PlaylistData playlistData = buildPlaylist(cursor, position);
-            playlistBuilderInterface.setPlaylist(playlistData);
+            playlistBuilder.build(cursor);
         } catch (PlaylistBuildFailsException e) {
-            playlistBuilderInterface.handleBuildPlaylistFailsException(e);
+            playlistBuilder.handleBuildPlaylistFailsException(e);
         }
     }
 
