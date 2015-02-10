@@ -96,10 +96,7 @@ public class UICompositionFactory {
         SkipShuffleMediaPlayer mediaPlayer = activity.getMediaPlayer();
         RandomPlaylist randomPlaylist = mediaPlayer.getPlaylist();
 
-        CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(
-                activity,
-                mediaPlayer
-        );
+        CurrentPlaylistAdapter playlistAdapter = new CurrentPlaylistAdapter(mediaPlayer);
 
         playlistAdapter.setTheme(theme);
         listView.setAdapter(playlistAdapter);

@@ -22,9 +22,7 @@ import com.dontbelievethebyte.sk1pshuffle.ui.theme.Theme;
 
 public class CurrentPlaylistAdapter extends BaseAdapter {
 
-    private Context context;
-
-    static class ViewHolder {
+    private static class ViewHolder {
         ImageView image;
         TextView title;
         TextView artist;
@@ -36,12 +34,11 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     private SkipShuffleMediaPlayer mediaPlayer;
     private TrackPrinter trackPrinter;
 
-    public CurrentPlaylistAdapter(Context context, SkipShuffleMediaPlayer mediaPlayer)
+    public CurrentPlaylistAdapter(SkipShuffleMediaPlayer mediaPlayer)
     {
-        this.context = context;
-        trackPrinter = new TrackPrinter(context);
+        trackPrinter = new TrackPrinter(mediaPlayer);
         this.randomPlaylist = mediaPlayer.getPlaylist();
-        layoutInflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        layoutInflater = (LayoutInflater) mediaPlayer.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         this.mediaPlayer = mediaPlayer;
     }
 
@@ -95,8 +92,8 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
         if (randomPlaylist.getCurrentPosition() == position) {
             imageLabel.setColorFilter(
                     mediaPlayer.isPlaying() ?
-                            context.getResources().getColor(theme.getColors().playButton) :
-                            context.getResources().getColor(theme.getColors().pauseButton)
+                            mediaPlayer.getResources().getColor(theme.getColors().playButton) :
+                            mediaPlayer.getResources().getColor(theme.getColors().pauseButton)
 
             );
             imageLabel.setImageDrawable(mediaPlayer.isPlaying() ? theme.getDrawables().getPlay() : theme.getDrawables().getPause());
@@ -120,7 +117,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
             trackTitle.setEllipsize(TextUtils.TruncateAt.END);
         }
         trackTitle.setTextColor(
-                context.getResources().getColor(theme.getColors().playlistTitle)
+                mediaPlayer.getResources().getColor(theme.getColors().playlistTitle)
         );
         trackTitle.setTypeface(theme.getCustomTypeface().getTypeFace());
     }
@@ -129,7 +126,7 @@ public class CurrentPlaylistAdapter extends BaseAdapter {
     {
         trackArtist.setText(string);
         trackArtist.setTextColor(
-                context.getResources().getColor(theme.getColors().playlistArtist)
+                mediaPlayer.getResources().getColor(theme.getColors().playlistArtist)
         );
         trackArtist.setTypeface(theme.getCustomTypeface().getTypeFace());
     }
