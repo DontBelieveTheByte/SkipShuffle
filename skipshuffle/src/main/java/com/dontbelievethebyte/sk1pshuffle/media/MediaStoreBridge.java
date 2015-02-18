@@ -108,19 +108,4 @@ public class MediaStoreBridge {
         );
     }
 
-    public String getSummary(String[] currentProjection, Cursor currentCursor)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String column : currentProjection){
-            String stringColumnResult = currentCursor.getString(currentCursor.getColumnIndex(column));
-            if(stringColumnResult.equals(MediaStore.UNKNOWN_STRING)) {
-                stringColumnResult = "UNKNOWN sHIT";
-            }
-            stringBuilder.append(" *** ");
-            stringBuilder.append(column);
-            stringBuilder.append(" : ");
-            stringBuilder.append(stringColumnResult);
-        }
-        return stringBuilder.toString();
-    }
 }
