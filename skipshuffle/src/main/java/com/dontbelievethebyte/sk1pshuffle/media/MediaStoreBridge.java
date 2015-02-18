@@ -8,23 +8,19 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
-import android.support.v4.content.CursorLoader;
 
 public class MediaStoreBridge {
 
-    private Context context;
     private ContentResolver contentResolver;
 
     public MediaStoreBridge(Context context)
     {
-        this.context = context;
         contentResolver = context.getContentResolver();
     }
 
-    public CursorLoader getAlbums()
+    public Cursor getAlbums()
     {
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
                 MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
                 Projections.albums,
                 null,
@@ -33,10 +29,9 @@ public class MediaStoreBridge {
         );
     }
 
-    public CursorLoader getSongsFromAlbum(String id)
+    public Cursor getSongsFromAlbum(String id)
     {
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 Projections.album,
                 null,
@@ -45,10 +40,9 @@ public class MediaStoreBridge {
         );
     }
 
-    public CursorLoader getGenres()
+    public Cursor getGenres()
     {
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
                 MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI,
                 Projections.genres,
                 null,
@@ -58,10 +52,9 @@ public class MediaStoreBridge {
 
     }
 
-    public CursorLoader getSongsFromGenre(String id) {
+    public Cursor getSongsFromGenre(String id) {
         Long genreToGetSongsFrom = Long.valueOf(id);
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
                 MediaStore.Audio.Genres.Members.getContentUri("external", genreToGetSongsFrom), //URI
                 Projections.genre,
                 null,
@@ -70,10 +63,9 @@ public class MediaStoreBridge {
         );
     }
 
-    public CursorLoader getArtists()
+    public Cursor getArtists()
     {
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
                 MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI,
                 Projections.artists,
                 null,
@@ -82,29 +74,16 @@ public class MediaStoreBridge {
         );
     }
 
-    public CursorLoader getAlbumsFromArtist(String id)
+    public Cursor getAlbumsFromArtist(String id)
     {
         Long artistToGetAlbumsFrom = Long.valueOf(id);
-        return  new CursorLoader(
-                context,
+        return  contentResolver.query(
                 MediaStore.Audio.Artists.Albums.getContentUri("external", artistToGetAlbumsFrom), //URI
                 Projections.artist,
                 null,
                 null, // SelectionArgs
                 MediaStore.Audio.Albums.ALBUM//Sort order
          );
-    }
-
-    public CursorLoader getSongs()
-    {
-        return  new CursorLoader(
-                context,
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                Projections.songs,
-                MediaStore.Audio.Media.IS_MUSIC,
-                null, // SelectionArgs
-                MediaStore.Audio.Media.TITLE //Sort order
-        );
     }
 
     public Cursor getAllSongs()
